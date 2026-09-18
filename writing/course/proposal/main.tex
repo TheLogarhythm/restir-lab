@@ -1,0 +1,86 @@
+% ========== Overleaf Quick Setup ==========
+% If you are not familiar with LaTeX, you can easily use Overleaf online following these instructions:
+% 1. Go to https://www.overleaf.com and log in or sign up.
+% 2. Create a Blank Project (Overleaf will generate a main.tex file).
+% 3. Paste (or upload) this file's content into main.tex, replacing any existing content.
+% 5. Edit and fill in your proposal content.
+% That's it - Overleaf compiles automatically, allows pairs to simulatenously work together on the document (via sharing), and you can see a real-time PDF preview while editing.
+% When done, click the download button to retrieve your final PDF for submission.
+% ===========================================
+
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{fancyhdr}
+\geometry{left=20mm,right=20mm,top=30mm,bottom=30mm}
+
+% ------------------ Project variables (edit these) ------------------
+\newcommand{\GroupNumber}{X}
+\newcommand{\ProjectName}{ReSTIR Lab}
+\newcommand{\ProjectAuthors}{Student A and Student B}
+% --------------------------------------------------------------------
+
+\newcommand{\DocTitle}{Project Proposal}
+\title{{\bf\ProjectName}\\ {\Large\DocTitle}}
+\author{Group \GroupNumber\\ \ProjectAuthors}
+\date{HKUST - COMP5411 - Fall 2026}
+\fancypagestyle{fancy}{
+    %\fancyhf{} % clear all header and footer fields
+    \fancyhead[L]{\DocTitle\\ {\bf\ProjectName}}
+    \fancyhead[R]{\theauthor}
+    \fancyfoot[C]{\thepage}
+}
+\pagestyle{fancy}
+\setlength{\headheight}{20pt}
+\setlength{\parindent}{0pt}     % No indent for new paragraphs
+\setlength{\parskip}{0.25\baselineskip}  % Small vertical space
+
+\begin{document}
+\maketitle
+\thispagestyle{plain}
+
+%-----------------
+
+This document serves as a template for your project proposal. Fill in the project variables at the top, delete this paragraph and all instructions, only leaving the section titles and properly filled content. There are no hard length constraints in the proposal (we expect around 1000 words to be enough). You are encouraged to include images inside any section if it helps convey your ideas. Here is an example of an image that takes up half of the page width using the includegraphics command: \verb|\includegraphics[.5\linewidth]{file.jpg}|
+
+\section*{Background}
+In this section you should have 1-2 sentences describing each group member's graphics programming background (e.g., John Smith has worked on a few simple 3D rendering projects using OpenGL that involved rendering 3D models.).
+
+\section*{Project description}
+The title of your project and a description in 2-3 paragraphs of what you plan to build.
+
+\section*{Key challenges}
+
+\begin{itemize}
+
+\item The {\bf main technical challenges} you will face in this project in bullet-point format.
+\item Be specific about what the challenges are and what makes them difficult to design and implement.
+
+\end{itemize}
+
+\section*{Timeline}
+\begin{tabular}{|c|l|l|}
+\hline
+\textbf{Week} & \textbf{Milestone}        & \textbf{Details / Tasks} \\
+\hline
+1   & Proposal (Sep 23)      &  Enter text here\\
+2   &                        &  Enter text here\\
+3   &                        &  Enter text here\\
+4   &                        &  Enter text here\\
+5   & Progress               &  Enter text here\\
+6   &                        &  Enter text here\\
+7   &                        &  Enter text here\\
+8   & Demo                   &  Enter text here\\
+9   &                        &  Enter text here\\
+10  & Final                  &  Enter text here\\
+\hline
+\end{tabular}
+
+\section*{Design and implementation details}
+
+This {\bf optional} section should contain further details that you did not mention above and are important to convey the main idea. This may include some design or implementation details that you already have in mind to solve your problem.
+
+\end{document}

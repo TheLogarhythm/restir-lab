@@ -1,0 +1,69 @@
+\documentclass[a4paper,twocolumn]{article}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{fancyhdr}
+\usepackage{abstract}
+\geometry{left=20mm,right=20mm,top=30mm,bottom=30mm}
+
+% ------------------ Project variables (edit these) ------------------
+\newcommand{\GroupNumber}{X}
+\newcommand{\ProjectName}{Your project name here}
+\newcommand{\ProjectAuthors}{Student A and Student B}
+% --------------------------------------------------------------------
+
+\title{{\bf\ProjectName}}
+\author{Group \GroupNumber\\ \ProjectAuthors}
+\date{HKUST - COMP5411 - Fall 2025}
+\fancypagestyle{fancy}{
+    %\fancyhf{} % clear all header and footer fields
+    \fancyhead[L]{\DocTitle\\ {\bf\ProjectName}}
+    \fancyhead[R]{\theauthor}
+    \fancyfoot[C]{\thepage}
+}
+\pagestyle{fancy}
+\setlength{\headheight}{20pt}
+\setlength{\parindent}{0pt}     % No indent for new paragraphs
+\setlength{\parskip}{0.25\baselineskip}  % Small vertical space
+
+\begin{document}
+\twocolumn[
+\maketitle
+\begin{onecolabstract}
+This document serves as a template for your project report. Fill in the project variables at the top, delete this section replacing it by an abstract of about 150-180 words, and fill in the remaining sections below. You should organize your report in a format similar to a short academic paper discussing your design and methodology, the details of the technical challenges faced, implementation details, and results including diagrams and results figures, where applicable. There are no hard length constraints in the report (we expect roughly 3500 words would suffice for sections before the appendix). Do not change the formatting and fonts as these sections will be included in a course proceedings. Please keep sections for introduction, results and conclusion (1, 3, and 4), but you may change section 2 to another name and insert additional sections there as you see fit based on your project. The appendix sections A-C are private and will only be read by the course staff.
+\center\rule{0.75\linewidth}{0.5pt}\vspace{0.8em}
+\end{onecolabstract}
+]
+
+\thispagestyle{plain}
+
+%-----------------
+
+\section{Introduction}
+[Add content here]
+
+\section{Method}
+[Add content here; can rename this section and insert more sections here as you see fit.]
+
+\section{Results}
+[Add content here]
+
+\section{Conclusion}
+[Add content here]
+
+\clearpage %KEEP THIS NEW PAGE BEFORE APPENDIX STARTS
+\section*{Appendix}
+\appendix
+
+\section{Division of work}
+[Here you should succinctly state what each member did and a percentage workload breakdown. If members cannot agree on the percentage breakdown, please state that and email the instructor separately.]
+
+\section{Implemented files}
+[If you used libraries or AI coding tools, please specify exactly here which files or sections of your submitted source code were implemented by you and what kind of AI aid you used, where applicable. You are encouraged to take advantage of libraries and other resources as long as you discuss what you implemented and what you used from the source. The difficulty level of your project will be graded taking this into consideration.]
+
+\section{Running instructions}
+[How do we run your submitted program?]
+
+\end{document}

@@ -1,0 +1,19 @@
+{
+  "files": [
+    {
+      "source": "COMP5411/proposal.tex",
+      "repository_path": "writing/course/templates/proposal.tex",
+      "sha256": "149c88dd79ca8da19071e0528b08021e53cf406d76469f9b78afd75b773501e6"
+    },
+    {
+      "source": "COMP5411/report.tex",
+      "repository_path": "writing/course/templates/report.tex",
+      "sha256": "35fe7877588992a2f1299bc294259f03349a6b31ddb27371dc150868a593b907"
+    },
+    {
+      "source": "COMP5411/projguidelines.pdf",
+      "repository_path": "writing/course/guidelines/projguidelines.pdf",
+      "sha256": "9eccf5da5396dc7e9fafd883c6046bb573c3dcb449785558b0ea8c5458097640"
+    }
+  ]
+}

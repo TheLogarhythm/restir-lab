@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "status": "example_not_runnable",
+  "experiment_id": "di-cornell-example",
+  "backend": "rtxdi",
+  "method": "restir_di",
+  "renderer_commit": null,
+  "scene_id": null,
+  "resolution": [
+    1280,
+    720
+  ],
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "settings": {
+    "candidate_count": null,
+    "temporal_reuse": true,
+    "spatial_reuse": true
+  },
+  "sequence": {
+    "trajectory": null,
+    "warmup_frames": null,
+    "measured_frames": null,
+    "time_step_seconds": null
+  },
+  "reference_run_id": null,
+  "output_root": "runs"
+}
