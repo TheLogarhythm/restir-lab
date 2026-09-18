@@ -2,11 +2,11 @@
 
 A two-person COMP5411 project for reproducing selected ReSTIR methods, understanding their behavior, and developing evidence for future rendering research.
 
-**Status:** scaffold only. Renderer dependencies, assets, and experiments have not been installed or run. No reproduction results are claimed. Setup guidance and the roadmap are drafts and will evolve as project decisions are made.
+**Status:** scaffold and initial literature review. Renderer dependencies, assets, and experiments have not been installed or run. No reproduction results are claimed. Setup guidance and the roadmap are drafts and will evolve as project decisions are made.
 
 ## Start here
 
-1. Read [scope](docs/scope.md) and [milestones](docs/roadmap.md).
+1. Read [scope](docs/scope.md), [milestones](docs/roadmap.md), and the [literature review](docs/literature/README.md).
 2. Follow [setup](docs/setup.md) to check the scaffold.
 3. Select and pin the [renderer implementations](renderers/README.md).
 4. Register assets using [the scene manifest](scenes/README.md).

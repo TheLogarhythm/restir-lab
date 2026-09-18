@@ -6,7 +6,7 @@ The repository structure is in place. The full scaffold is still being developed
 
 | Area | Status | Next step |
 | --- | --- | --- |
-| Literature review | Not yet catalogued | Populate the [reading matrix](literature/reading-matrix.csv) and select papers for closer study |
+| Literature review | Initial [review](literature/README.md) and [reading matrix](literature/reading-matrix.csv): 31 papers and 2 supporting resources | Select papers for closer study and reproduction |
 | Repository scaffold | Initial structure and course templates in place | Refine supporting documents as project decisions are made |
 | Milestones | Not yet agreed | Define deliverables and dates with both teammates |
 | Environment setup | Not yet defined | Confirm hardware, dependencies, and setup instructions |
