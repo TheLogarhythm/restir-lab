@@ -1,13 +1,3 @@
-% ========== Overleaf Quick Setup ==========
-% If you are not familiar with LaTeX, you can easily use Overleaf online following these instructions:
-% 1. Go to https://www.overleaf.com and log in or sign up.
-% 2. Create a Blank Project (Overleaf will generate a main.tex file).
-% 3. Paste (or upload) this file's content into main.tex, replacing any existing content.
-% 5. Edit and fill in your proposal content.
-% That's it - Overleaf compiles automatically, allows pairs to simulatenously work together on the document (via sharing), and you can see a real-time PDF preview while editing.
-% When done, click the download button to retrieve your final PDF for submission.
-% ===========================================
-
 \documentclass[a4paper]{article}
 \usepackage{geometry}
 \usepackage{multicol}
@@ -15,12 +5,13 @@
 \usepackage{graphicx}
 \usepackage{titling}
 \usepackage{fancyhdr}
+\usepackage{url} % Bibliography URLs.
 \geometry{left=20mm,right=20mm,top=30mm,bottom=30mm}
 
 % ------------------ Project variables (edit these) ------------------
-\newcommand{\GroupNumber}{X}
-\newcommand{\ProjectName}{ReSTIR Lab}
-\newcommand{\ProjectAuthors}{Student A and Student B}
+\newcommand{\GroupNumber}{7}
+\newcommand{\ProjectName}{ReSTIR Spatial Reuse: Implementation and Evaluation}
+\newcommand{\ProjectAuthors}{Luoyi Zhang and Zelin Gao}
 % --------------------------------------------------------------------
 
 \newcommand{\DocTitle}{Project Proposal}
@@ -34,7 +25,7 @@
     \fancyfoot[C]{\thepage}
 }
 \pagestyle{fancy}
-\setlength{\headheight}{20pt}
+\setlength{\headheight}{24pt}
 \setlength{\parindent}{0pt}     % No indent for new paragraphs
 \setlength{\parskip}{0.25\baselineskip}  % Small vertical space
 
@@ -42,45 +33,52 @@
 \maketitle
 \thispagestyle{plain}
 
-%-----------------
-
-This document serves as a template for your project proposal. Fill in the project variables at the top, delete this paragraph and all instructions, only leaving the section titles and properly filled content. There are no hard length constraints in the proposal (we expect around 1000 words to be enough). You are encouraged to include images inside any section if it helps convey your ideas. Here is an example of an image that takes up half of the page width using the includegraphics command: \verb|\includegraphics[.5\linewidth]{file.jpg}|
-
 \section*{Background}
-In this section you should have 1-2 sentences describing each group member's graphics programming background (e.g., John Smith has worked on a few simple 3D rendering projects using OpenGL that involved rendering 3D models.).
+\textbf{Luoyi Zhang:} Familiar with C++ and Python, with basic knowledge of rendering and geometry processing from coursework.\\
+\textbf{Zelin Gao:} [Briefly describe relevant graphics and programming experience.]
 
 \section*{Project description}
-The title of your project and a description in 2-3 paragraphs of what you plan to build.
+We plan to reproduce and compare three ReSTIR methods: the original ReSTIR DI algorithm~\cite{bitterli2020restir}, PDF-similarity-based spatial reuse~\cite{tokuyoshi2023similarity}, and compatibility-guided neighbor selection (CGNS)~\cite{junkins2026cgns}. Our focus is how these methods reuse samples from nearby pixels, and how their choices affect image quality, rendering time, and stability during camera motion.
+
+We will use an existing renderer, with RTXDI as our preferred starting point~\cite{rtxdi} and Falcor-based author code as a reference~\cite{cgnsCode}. We will implement or adapt the core algorithms and compare them on three public scenes under the same rendering budget. Through these experiments, we hope to understand when each method works well and where it struggles.
 
 \section*{Key challenges}
-
 \begin{itemize}
-
-\item The {\bf main technical challenges} you will face in this project in bullet-point format.
-\item Be specific about what the challenges are and what makes them difficult to design and implement.
-
+\item \textbf{Correct sample weights.} Reusing samples changes how they contribute to the estimate. We need to handle reservoir weights and visibility consistently to avoid incorrect brightness or bias.
+\item \textbf{Adapting the methods.} PDF Similarity requires estimating sampling distributions. CGNS comes from a Falcor path tracer, so its neighbor selection must be checked when adapted to DI.
+\item \textbf{Fair timing.} Better neighbor selection also takes time. Comparisons must include this cost and keep the scene, lighting, and other sampling settings consistent.
+\item \textbf{Motion and visibility changes.} Previously useful samples may become unsuitable as the camera moves. Matching reference sequences will help us distinguish rendering errors from actual scene changes.
 \end{itemize}
 
+\newpage
 \section*{Timeline}
-\begin{tabular}{|c|l|l|}
+This ten-week plan will be adjusted to the course deadlines and our availability.
+
+\begin{tabular}{|c|l|p{0.56\linewidth}|}
 \hline
-\textbf{Week} & \textbf{Milestone}        & \textbf{Details / Tasks} \\
+\textbf{Week} & \textbf{Milestone} & \textbf{Details / Tasks} \\
 \hline
-1   & Proposal (Sep 23)      &  Enter text here\\
-2   &                        &  Enter text here\\
-3   &                        &  Enter text here\\
-4   &                        &  Enter text here\\
-5   & Progress               &  Enter text here\\
-6   &                        &  Enter text here\\
-7   &                        &  Enter text here\\
-8   & Demo                   &  Enter text here\\
-9   &                        &  Enter text here\\
-10  & Final                  &  Enter text here\\
+1 & Proposal & Agree on scope, roles, hardware, and scenes. \\
+2 & Setup & Render a small scene, check how both extensions fit, and fix the renderer version. \\
+3--4 & DI baseline & Implement resampling and reuse controls; check results against a reference. \\
+5 & Progress review & Implement PDF Similarity and validate it on simple scenes; present baseline results. \\
+6--7 & CGNS & Implement CGNS and check both extensions for correctness and cost. \\
+8 & Demo & Demonstrate all three methods and finalize experiment settings. \\
+9--10 & Evaluation and final & Run comparisons and ablations, write the report, and repeat a test on the teammate's machine. \\
 \hline
 \end{tabular}
 
 \section*{Design and implementation details}
+\textbf{Implementation.} All three methods will share one DI renderer. We will keep initial sampling, temporal reuse, and shading consistent, and document any differences the methods require. Since RTXDI includes several later improvements, we will specify which features are enabled in our baseline. The code and report will identify upstream components, adapted code, and our own implementation.
 
-This {\bf optional} section should contain further details that you did not mention above and are important to convey the main idea. This may include some design or implementation details that you already have in mind to solve your problem.
+\textbf{Scenes and evaluation.} We plan to use Cornell Box for basic checks, Bistro for complex geometry, and Arcade for varied materials and emissive surfaces, using the RTXDI assets~\cite{rtxdiAssets}. We will first check that the scenes load correctly and fit the available GPU memory. The initial tests will use one static view per scene and one or two short camera trajectories in total.
 
+We will compare linear HDR images against converged direct-lighting references before denoising or tone mapping. Measurements will include image error and GPU frame time, with matched time budgets and several independent random seeds. For camera sequences, we will also examine error over time. A small set of ablations will test temporal reuse, spatial reuse, and neighbor count. Metric definitions and run settings will be fixed before the main experiments.
+
+\textbf{Team and workload.} One member will lead the renderer and baseline; the other will lead scene setup, reference images, and evaluation scripts. We will split the two extensions and review each other's code. Roles are provisional. We will reserve the final part of the schedule for testing and writing, and reduce optional experiments first if time becomes tight.
+
+\textbf{Deliverables.} We will provide three working methods, repeatable experiments, a demo, and a report discussing where each method succeeds or struggles. The repository will include setup instructions, configurations, and code attribution, including AI assistance. It will also provide a starting point for further ReSTIR research after the course.
+
+\bibliographystyle{plain}
+\IfFileExists{writing/references.bib}{\bibliography{writing/references}}{\bibliography{../../references}}
 \end{document}

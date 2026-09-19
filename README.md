@@ -1,8 +1,8 @@
-# ReSTIR Lab
+# ReSTIR Spatial Reuse: Implementation and Evaluation
 
 A two-person COMP5411 project for reproducing selected ReSTIR methods, understanding their behavior, and developing evidence for future rendering research.
 
-**Status:** scaffold and initial literature review. Renderer dependencies, assets, and experiments have not been installed or run. No reproduction results are claimed. Setup guidance and the roadmap are drafts and will evolve as project decisions are made.
+**Status:** scaffold, literature review, and draft proposal. Renderer dependencies, assets, and experiments have not been installed or run. No reproduction results are claimed. Setup guidance and the roadmap are drafts and will evolve as project decisions are made.
 
 ## Start here
 
@@ -30,7 +30,7 @@ Use Issues for tasks and the roadmap for milestones. See [contributing](CONTRIBU
 
 ## Course writing
 
-Originals are preserved in [templates](writing/course/templates/README.md). Edit the [proposal](writing/course/proposal/main.tex) and [report](writing/course/report/main.tex) working copies. They still contain instructional template text, not completed coursework.
+Originals are preserved in [templates](writing/course/templates/README.md). Edit the [proposal](writing/course/proposal/main.tex) and [report](writing/course/report/main.tex) working copies. The proposal is a draft with references and a provisional timeline; the report still contains instructional template text. Friday will add his background in a separate commit. Confirmed submission dates and task tracking are linked in the [roadmap](docs/roadmap.md).
 
 ## Licensing
 

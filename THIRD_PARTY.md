@@ -10,7 +10,11 @@
 
 All three materials are from the [HKUST COMP5411 course webpage](https://course.cse.ust.hk/comp5411/).
 
-Working copies retain the template structure, use ReSTIR Lab and Fall 2026, and leave author/group fields unfilled. The report working copy defines the missing `DocTitle` macro used in its header. Original templates are unchanged.
+Working copies retain the template structure and use ReSTIR Spatial Reuse: Implementation and Evaluation and Fall 2026. The proposal contains draft project content; the report remains a template. The report working copy defines the missing `DocTitle` macro used in its header. Original templates are unchanged.
+
+## Pitch illustrations
+
+The pitch draft includes attributed Bistro and CGNS illustrations under CC BY 4.0. See [slide sources](writing/course/slides/sources.md) for authors, source links, and figure crops. These illustrate published work, not project results.
 
 ## Planned dependencies (not included)
 

@@ -16,13 +16,21 @@ Follow [the integration procedure](../renderers/README.md). Record OS, GPU/VRAM,
 
 ## Course documents
 
-Edit `writing/course/proposal/main.tex` and `writing/course/report/main.tex`. Preserve the originals in `writing/course/templates/`. Group/author fields and instructional content still need to be filled in. Verify dates rather than assuming embedded template deadlines are current.
+Edit `writing/course/proposal/main.tex` and `writing/course/report/main.tex`. The proposal is a draft with shared references; the report still contains instructional template text. Friday will add his proposal background in a separate commit. Complete the report placeholders when drafting it; see the [roadmap](roadmap.md) for submission dates. Preserve originals in `writing/course/templates/`.
 
-With TeX Live installed, create `build/latex/proposal` and `build/latex/report`, then run from the repository root:
+With TeX Live installed, create `build/latex/proposal` and `build/latex/report`. Run the proposal commands below from the repository root so BibTeX finds the shared bibliography:
 
 ```text
 pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build/latex/proposal writing/course/proposal/main.tex
+bibtex build/latex/proposal/main
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build/latex/proposal writing/course/proposal/main.tex
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build/latex/proposal writing/course/proposal/main.tex
+```
+
+These commands were verified for the current draft with TeX Live 2024. The output is `build/latex/proposal/main.pdf`. The report template can be compiled separately:
+
+```text
 pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build/latex/report writing/course/report/main.tex
 ```
 
-Repeat when cross-references need another pass. Use shared `writing/references.bib` when adding citations; bibliography commands are not yet added to the working templates.
+The report does not yet invoke the shared bibliography. Add citations and bibliography commands when drafting it.

@@ -90,7 +90,7 @@ Gradient-domain rendering estimates differences between image pixels; differenti
 
 ## Implications for this project
 
-Start with ReSTIR DI, then study GRIS/PT through its author implementation or RTXDI. Use the following questions to guide further reading.
+The current [course scope](../scope.md) focuses on ReSTIR DI, PDF Similarity, and compatibility-guided neighbor selection on one backend. GRIS/PT remains a later extension. Use the following questions to guide further reading.
 
 Three reading questions:
 
