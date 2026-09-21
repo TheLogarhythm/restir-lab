@@ -1,11 +1,12 @@
 # Roadmap
 
-**Draft, 2026-09-19.** Relative weeks are planning assumptions, not confirmed course deadlines. The target is three methods from the [scope](scope.md), with one primary backend.
+**Draft, updated 2026-09-21.** Relative weeks are planning assumptions, not confirmed course deadlines. The target is three methods from the [scope](scope.md), with one primary backend.
 
 ## Current progress
 
 | Area | Status | Next step |
 | --- | --- | --- |
+| Pitch | Submitted to Canvas A1 on 2026-09-21; final video duration **3:28** ([completion record](https://github.com/TheLogarhythm/restir-lab/issues/1#issuecomment-5762409423)) | Complete |
 | Literature | [Review](literature/README.md) and [reading matrix](literature/reading-matrix.csv): 31 papers and 2 supporting resources | Closely study DI, PDF Similarity, and CGNS |
 | Proposal | [Working draft](../writing/course/proposal/main.tex) and [references](../writing/references.bib) prepared | Friday adds his background separately; jointly refine the draft using feedback and confirm schedule and hardware |
 | Scaffold | Repository structure, templates, and checks available | Refine only as implementation requires |
@@ -19,7 +20,6 @@ Use the [Project board](https://github.com/users/TheLogarhythm/projects/1/views/
 
 | Task | Deadline (Hong Kong time) | Responsibility |
 | --- | --- | --- |
-| [Pitch slides, script, video, and submission (#1)](https://github.com/TheLogarhythm/restir-lab/issues/1) | 2026-09-22, 23:59 | Logarhythm and Friday prepare and review together; Logarhythm records the video |
 | [Draft, refine, and submit proposal (#2)](https://github.com/TheLogarhythm/restir-lab/issues/2) | 2026-09-29, 23:59 | Logarhythm and Friday refine the draft using feedback and review together |
 
 ## Provisional ten-week plan

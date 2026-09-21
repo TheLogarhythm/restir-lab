@@ -5,85 +5,56 @@ size: 16:9
 paginate: true
 title: "ReSTIR Spatial Reuse: Implementation and Evaluation"
 author: "Luoyi Zhang and Zelin Gao"
-description: "COMP5411 Group 7 — project proposal pitch draft"
+description: "COMP5411 Group 7 — project proposal pitch"
 style: |
-  section {
-    background: #f7f8f6;
-    color: #182c38;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    font-size: 28px;
-    padding: 52px 66px 160px;
-    display: block;
-    line-height: 1.32;
-  }
+  section { background: #f7f8f6; color: #182c38; font-family: 'Segoe UI', Arial, sans-serif; font-size: 28px; padding: 52px 66px 150px; display: block; line-height: 1.32; }
   section::before { content: ''; position: absolute; left: 0; top: 0; width: 12px; height: 100%; background: #16847e; }
   section::after { top: 28px; right: 36px; bottom: auto; color: #70868c; font-size: 17px; }
-  section h1 { font-size: 55px; line-height: 1.08; letter-spacing: -1.5px; color: #182c38; margin: 0 0 22px; }
-  section h2 { font-size: 43px; line-height: 1.12; letter-spacing: -0.8px; color: #182c38; margin: 0 0 24px; }
-  h3 { color: #16847e; font-size: 28px; margin: 0 0 10px; }
-  p { margin: 0 0 20px; }
-  strong { color: #08716c; }
-  a { color: #08716c; }
-  .subtitle { font-size: 29px; color: #506570; }
-  .credit { font-size: 15px; line-height: 1.3; color: #536771; margin-top: 6px; }
-  .bottom { position: absolute; left: 66px; bottom: 50px; width: 890px; font-size: 24px; }
-  section[data-class="cover"] { background: #142b37; color: #f4f6f3; padding-top: 76px; }
-  section[data-class="cover"] h1 { color: #f4f6f3; width: 650px; font-size: 57px; }
-  section[data-class="cover"] .subtitle { color: #9cddd4; font-size: 32px; width: 610px; }
-  section[data-class="cover"] .names { font-size: 25px; margin-top: 50px; line-height: 1.65; }
-  section[data-class="cover"] .hero { position: absolute; right: 0; top: 0; width: 475px; height: 540px; object-fit: cover; object-position: 46% center; }
-  section[data-class="cover"] .credit { position: absolute; right: 28px; top: 548px; width: 440px; color: #bdccc9; }
-  section[data-class="cover"] .bottom { color: #b7c7c9; font-size: 20px; }
-  .wide-figure { display: block; width: 1065px; height: 365px; object-fit: contain; background: #fff; margin: 0; }
-  .columns { display: grid; grid-template-columns: 1fr 1fr; gap: 65px; }
-  .columns p { font-size: 27px; }
-  .columns h3:not(:first-child) { margin-top: 28px; }
-  table { display: table; width: 100%; border-collapse: collapse; font-size: 27px; margin: 12px 0 24px; }
+  section h1 { font-size: 57px; line-height: 1.1; letter-spacing: -1.4px; margin: 0 0 20px; }
+  section h2 { font-size: 43px; line-height: 1.12; letter-spacing: -0.8px; margin: 0 0 30px; color: #182c38; }
+  section h3 { font-size: 27px; margin: 0 0 9px; color: #08716c; }
+  section p { margin: 0 0 20px; }
+  section strong, section a { color: #08716c; }
+  section ul { padding-left: 28px; margin: 0; }
+  section li { padding-left: 5px; margin: 0 0 23px; line-height: 1.4; }
+  section li::marker { color: #16847e; }
+  .credit { font-size: 15px; line-height: 1.3; color: #536771; margin-top: 8px; }
+  .footer { position: absolute; left: 66px; bottom: 46px; width: 950px; font-size: 19px; color: #536771; }
+  .lead { color: #506570; font-size: 26px; margin-bottom: 24px; }
+  section.cover, section.closing { background: #142b37; color: #f4f6f3; }
+  section.cover h1, section.closing h2 { color: #f4f6f3; }
+  section.cover { padding-top: 72px; }
+  section.cover .subtitle { color: #9cddd4; font-size: 31px; }
+  section.cover .names { font-size: 25px; margin-top: 29px; line-height: 1.5; }
+  section.cover .definition { margin-top: 34px; max-width: 1050px; font-size: 32px; line-height: 1.4; }
+  section.cover .expanded { color: #b7c7c9; font-size: 22px; margin-top: 18px; }
+  section.cover strong, section.closing strong, section.closing a { color: #9cddd4; }
+  section.cover .footer, section.closing .footer { color: #b7c7c9; }
+  .explanation { display: grid; grid-template-columns: 490px 1fr; gap: 40px; align-items: start; }
+  .explanation ul { font-size: 27px; }
+  .figure { padding-top: 16px; }
+  .figure img { width: 100%; display: block; object-fit: contain; background: #fff; }
+  .figure .caption { margin-top: 16px; font-size: 24px; color: #304e59; }
+  table { display: table; width: 100%; border-collapse: collapse; font-size: 26px; margin: 12px 0 25px; }
   th { background: #e5edeb; color: #304e59; text-align: left; font-size: 22px; font-weight: 600; }
   td, th { border: none; border-bottom: 1px solid #cbd8d7; padding: 18px 16px; }
   tr { background: transparent !important; }
-  td:first-child { width: 360px; font-weight: 600; }
-  .evaluation { display: grid; grid-template-columns: 540px 1fr; gap: 46px; align-items: start; }
-  .evaluation img { display: block; width: 540px; height: 300px; object-fit: contain; background: #fff; }
-  .evaluation p { font-size: 26px; }
-  .evaluation .credit { font-size: 15px; }
-  section[data-class="schedule"] table { font-size: 26px; }
-  section[data-class="schedule"] td { padding: 16px; }
-  section[data-class="schedule"] td:first-child { width: 150px; color: #08716c; }
-  section[data-class="closing"] { background: #142b37; color: #f4f6f3; }
-  section[data-class="closing"] h2 { color: #f4f6f3; width: 1000px; font-size: 49px; }
-  section[data-class="closing"] strong, section[data-class="closing"] a { color: #9cddd4; }
-  section[data-class="closing"] .outcome { font-size: 35px; margin: 35px 0; }
-  section[data-class="closing"] .bottom { font-size: 23px; }
-  /* Revised copy: the narration is visible in complete bullet points. */
-  section h2 { margin-bottom: 33px; }
-  section ul { padding-left: 29px; margin: 0; }
-  section li { padding-left: 5px; margin: 0 0 22px; line-height: 1.4; }
-  section li::marker { color: #16847e; }
-  section .footer { position: absolute; left: 66px; bottom: 47px; width: 900px; font-size: 20px; color: #536771; }
-  section.cover { background: #142b37; color: #f4f6f3; padding-top: 74px; }
-  section.cover h1 { color: #f4f6f3; width: 670px; font-size: 57px; }
-  section.cover .subtitle { color: #9cddd4; font-size: 32px; width: 610px; }
-  section.cover .names { font-size: 25px; margin: 40px 0 26px; line-height: 1.6; }
-  section.cover .intro { width: 620px; font-size: 27px; line-height: 1.45; margin: 0; }
-  section.cover .hero { position: absolute; right: 0; top: 0; width: 475px; height: 540px; object-fit: cover; object-position: 46% center; }
-  section.cover .credit { position: absolute; right: 28px; top: 548px; width: 440px; color: #bdccc9; }
-  section.cover .footer { color: #b7c7c9; }
-  .explanation { display: grid; grid-template-columns: 510px 1fr; gap: 38px; align-items: start; }
-  .explanation ul { font-size: 27px; line-height: 1.35; }
-  .explanation li { margin-bottom: 18px; }
-  .figure { padding-top: 18px; }
-  .figure img { width: 100%; display: block; object-fit: contain; background: #fff; }
-  section.eval .explanation { grid-template-columns: 595px 1fr; gap: 38px; }
-  section.eval .figure { padding-top: 28px; }
-  section.closing { background: #142b37; color: #f4f6f3; }
-  section.closing h2 { color: #f4f6f3; font-size: 43px; }
-  section.closing ul { font-size: 32px; line-height: 1.45; max-width: 1060px; }
-  section.closing li { margin-bottom: 28px; }
-  section.closing li::marker, section.closing strong, section.closing a { color: #9cddd4; }
-  section.closing .footer { color: #b7c7c9; }
-  section.challenges ul { font-size: 26px; }
-  section.challenges li { line-height: 1.35; margin-bottom: 16px; }
+  td:first-child { width: 300px; font-weight: 600; }
+  td small { display: block; font-size: 20px; font-weight: 400; color: #536771; margin-top: 5px; }
+  .method-note { font-size: 25px; max-width: 1050px; }
+  section.implementation li { margin-bottom: 27px; }
+  .scenes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin: 0 0 24px; }
+  .scene img { display: block; width: 100%; height: 195px; object-fit: cover; }
+  .scene.cornell img { object-fit: cover; object-position: center; }
+  .scene p { margin-top: 10px; font-size: 23px; }
+  section.evaluation ul { font-size: 25px; }
+  section.evaluation li { margin-bottom: 13px; }
+  section.evaluation .credit { max-width: 1100px; margin-top: 15px; }
+  section.schedule td { padding-top: 19px; padding-bottom: 19px; }
+  section.schedule td:first-child { width: 190px; color: #08716c; }
+  section.closing h2 { margin-bottom: 44px; }
+  section.closing li { font-size: 33px; max-width: 1060px; margin-bottom: 32px; }
+  section.closing li::marker { color: #9cddd4; }
 ---
 
 <!-- _class: cover -->
@@ -92,186 +63,173 @@ style: |
 # ReSTIR Spatial Reuse
 
 <p class="subtitle">Implementation and Evaluation</p>
-<p class="names">Group 7<br>Luoyi Zhang · Zelin Gao</p>
-<p class="intro">We&#x27;ll study how ReSTIR reuses samples from nearby pixels, and compare three methods in the same renderer.</p>
-<img class="hero" src="assets/bistro-exterior.png" alt="Bistro exterior, a candidate test scene">
-<p class="credit">Bistro · Amazon Lumberyard / ORCA<br>CC BY 4.0 · cropped to fit</p>
+<p class="names">Group 7 · Luoyi Zhang · Zelin Gao</p>
+<p class="definition"><strong>ReSTIR</strong> is a sampling technique for real-time rendering. It reuses useful light samples across <strong>nearby pixels</strong> and <strong>previous frames</strong> to reduce noise with a small sampling budget.</p>
+<p class="expanded">Reservoir-based Spatiotemporal Importance Resampling</p>
 <p class="footer">COMP5411 · Fall 2026 · Project proposal</p>
 
 <!--
-00:00–00:18 · rehearsal target; read the visible text in order.
+00:00–00:25 · rehearsal target
 
-We're Group Seven, Luoyi Zhang and Zelin Gao. Our project is ReSTIR Spatial Reuse: Implementation and Evaluation.
+We're Group Seven, Luoyi Zhang and Zelin Gao. Our project studies spatial reuse in ReSTIR.
 
-We'll study how ReSTIR reuses samples from nearby pixels, and compare three methods in the same renderer.
+ReSTIR is a sampling technique for real-time rendering. It reuses useful light samples across nearby pixels and previous frames, reducing noise when only a few samples fit within the rendering budget.
 
-Visual source: Amazon Lumberyard Bistro, ORCA (2017), https://developer.nvidia.com/orca/amazon-lumberyard-bistro. CC BY 4.0. This is a source illustration, not a project render.
+Sources: Bitterli et al. (2020), https://research.nvidia.com/labs/rtr/publication/bitterli2020spatiotemporal/; Junkins et al. (2026), https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/. The explanation focuses on direct lighting, the transport target of this project.
 -->
 
 ---
 
-## Why neighbor selection matters
+## Spatial reuse across different surfaces
 
 <div class="explanation">
 <ul>
-<li>With many lights, testing every light at every pixel is too expensive.</li>
-<li>ReSTIR reuses samples from nearby pixels and previous frames to make better use of a small sampling budget.</li>
-<li>Nearby pixels can lie on different surfaces or opposite sides of a shadow, so their samples may be less useful.</li>
-<li>Our question is: which neighbors should we reuse to improve image quality at the same rendering cost?</li>
+<li>Each pixel stores a selected light sample and weight information in a small <strong>reservoir</strong>.</li>
+<li>Spatial reuse combines nearby reservoirs, evaluating their samples at the receiving pixel.</li>
+<li>Neighbors can have different materials, surface directions, or visibility. Their samples may then be poor choices.</li>
 </ul>
 <div class="figure">
-<img src="assets/cgns-comparison.png" alt="Published CGNS paper illustration">
-<p class="credit">Published comparison, not our results.<br>Junkins et al., 2026, Fig. 1 · CC BY 4.0<br>“Ours” means the authors’ method.</p>
+<img src="assets/cgns-comparison.png" alt="Published CGNS comparison of rendering noise and temporal covariance">
+<p class="caption">Neighbor selection affects both image noise and its persistence over time.</p>
+<p class="credit">Junkins et al., 2026, Fig. 1 · CC BY 4.0<br>Published results; “Ours” denotes the authors’ CGNS method.</p>
 </div>
 </div>
 
 <!--
-00:18–00:50 · rehearsal target; read the visible text in order.
+00:25–00:56 · rehearsal target
 
-With many lights, testing every light at every pixel is too expensive.
+Each pixel stores a light sample and weight information in a small reservoir. Spatial reuse combines neighboring reservoirs, reevaluating samples at the receiving pixel.
 
-ReSTIR reuses samples from nearby pixels and previous frames to make better use of a small sampling budget.
+However, neighbors can have different materials, surface directions, or visibility, making their samples less useful. This published example shows that neighbor selection affects both image noise and its persistence over time.
 
-Nearby pixels can lie on different surfaces or opposite sides of a shadow, so their samples may be less useful.
-
-Our question is: which neighbors should we reuse to improve image quality at the same rendering cost?
-
-Sources: Bitterli et al. (2020), https://research.nvidia.com/labs/rtr/publication/bitterli2020spatiotemporal/; Junkins et al. (2026), https://doi.org/10.1145/3820024, Figure 1. Figure rendered from the paper with margins/caption removed; comparison labels and measurements preserved. Copyright the authors, CC BY 4.0. No performance result is claimed for our implementation.
+Sources: Bitterli et al. (2020), DOI 10.1145/3386569.3392481. Figure: Junkins, Kettunen, Lin, Ramamoorthi and Wyman (2026), https://doi.org/10.1145/3820024, Fig. 1. All original comparison labels and measurements retained; margins and caption removed. CC BY 4.0. These are author results, not this project's results.
 -->
 
 ---
 
-## The three methods
+## Three methods for spatial reuse
 
-<ul>
-<li><strong>ReSTIR DI (2020):</strong> we&#x27;ll build the baseline with reservoir sampling and reuse across pixels and frames.</li>
-<li><strong>PDF Similarity (2023):</strong> we&#x27;ll estimate sampling distributions and reject reuse between pixels whose distributions are too different.</li>
-<li><strong>CGNS (2026):</strong> we&#x27;ll score neighbors by geometric compatibility, then choose them randomly using those scores as weights.</li>
-<li>We&#x27;ll compare each extension separately against the baseline, keeping direct lighting, scenes, and other sampling settings consistent.</li>
-</ul>
+<p class="lead">A shared direct-lighting baseline, with two separate changes to neighbor reuse.</p>
+
+<table>
+<thead><tr><th>Work</th><th>How it handles neighboring samples</th></tr></thead>
+<tbody>
+<tr><td>ReSTIR DI <small>Bitterli et al., 2020 · baseline</small></td><td>Reuse nearby reservoirs with standard geometric checks.</td></tr>
+<tr><td>PDF Similarity <small>Tokuyoshi, 2023 · improvement</small></td><td><strong>Reject</strong> reuse when estimated target distributions differ.</td></tr>
+<tr><td>CGNS <small>Junkins et al., 2026 · recent work</small></td><td><strong>Select</strong> neighbors randomly, weighted by geometric compatibility.</td></tr>
+</tbody>
+</table>
+<p class="method-note">Compare each extension against the same baseline, with consistent scenes and transport settings.</p>
 
 <!--
-00:50–01:23 · rehearsal target; read the visible text in order.
+00:56–01:33 · rehearsal target
 
-ReSTIR DI (2020): we'll build the baseline with reservoir sampling and reuse across pixels and frames.
+We will compare three methods in one direct-lighting pipeline.
 
-PDF Similarity (2023): we'll estimate sampling distributions and reject reuse between pixels whose distributions are too different.
+ReSTIR DI is our baseline, reusing nearby reservoirs with standard geometric checks. PDF Similarity rejects reuse when the estimated target sampling distributions are too different.
 
-CGNS (2026): we'll score neighbors by geometric compatibility, then choose them randomly using those scores as weights.
+CGNS instead changes neighbor selection. It scores geometric compatibility and samples neighbors using those scores as weights.
 
-We'll compare each extension separately against the baseline, keeping direct lighting, scenes, and other sampling settings consistent.
+We will test each extension separately against the baseline, keeping scenes, lighting, and other sampling settings consistent.
 
-Sources: Bitterli et al. (2020), DOI 10.1145/3386569.3392481; Tokuyoshi (2023), DOI 10.1145/3585501; Junkins et al. (2026), DOI 10.1145/3820024. Full entries: ../../references.bib. PDF Similarity includes temporal safeguards; CGNS transfer from the authors' path tracer to DI must be validated.
+Sources: Bitterli et al. (2020), DOI 10.1145/3386569.3392481; Tokuyoshi (2023), DOI 10.1145/3585501; Junkins et al. (2026), DOI 10.1145/3820024. Full entries: writing/references.bib. “PDF” means probability density function. PDF Similarity requires distribution estimation and temporal safeguards. CGNS transfer from the authors' path tracer to the shared DI pipeline remains a validation task.
 -->
 
 ---
 
-<!-- _class: challenges -->
+<!-- _class: implementation -->
 
-## Implementation and technical challenges
+## Implementation and correctness
+
+<p class="lead">Extend RTXDI’s sampling passes.</p>
 
 <ul>
-<li>We&#x27;ll build on the RTXDI sample and use the authors&#x27; Falcor code as a reference.</li>
-<li><strong>Correct sample weights:</strong> We must evaluate reused samples at the receiving pixel and handle reservoir normalization and visibility consistently. We&#x27;ll check brightness against a converged reference.</li>
-<li><strong>Stable PDF estimates:</strong> PDF Similarity estimates distributions from limited samples. We&#x27;ll test its rejection decisions near shadow edges and reset invalid history when camera motion reveals new surfaces.</li>
-<li><strong>Adapting CGNS:</strong> We must transfer weighted neighbor selection from the authors&#x27; path tracer to direct lighting, checking which compatibility terms and estimator assumptions still apply.</li>
-<li><strong>Quality versus cost:</strong> Lower image error can still leave persistent noise. We&#x27;ll measure temporal behavior and include neighbor scoring and extra memory accesses in GPU timings.</li>
+<li><strong>Baseline:</strong> check sample weights, visibility, and reservoir normalization against a high-sample direct-lighting reference.</li>
+<li><strong>PDF Similarity:</strong> estimate distributions reliably and handle invalid history when motion reveals new surfaces.</li>
+<li><strong>CGNS:</strong> adapt compatibility scoring and weighted selection to DI, verifying the estimator assumptions.</li>
 </ul>
+<p class="footer">Reuse the renderer infrastructure to keep the two-person workload manageable.</p>
 
 <!--
-01:23–02:10 · rehearsal target; read the visible text in order.
+01:33–02:06 · rehearsal target
 
-We'll build on the RTXDI sample and use the authors' Falcor code as a reference.
+We will extend RTXDI's sampling passes.
 
-Correct sample weights: We must evaluate reused samples at the receiving pixel and handle reservoir normalization and visibility consistently. We'll check brightness against a converged reference.
+First, we must check sample weights, visibility, and reservoir normalization against a high-sample direct-lighting reference. PDF Similarity needs reliable distribution estimates, including when motion reveals new surfaces. For CGNS, we must verify that its scoring and weighted selection remain valid for direct lighting.
 
-Stable PDF estimates: PDF Similarity estimates distributions from limited samples. We'll test its rejection decisions near shadow edges and reset invalid history when camera motion reveals new surfaces.
+Reusing the renderer infrastructure keeps the workload manageable for two people.
 
-Adapting CGNS: We must transfer weighted neighbor selection from the authors' path tracer to direct lighting, checking which compatibility terms and estimator assumptions still apply.
-
-Quality versus cost: Lower image error can still leave persistent noise. We'll measure temporal behavior and include neighbor scoring and extra memory accesses in GPU timings.
-
-Sources: project proposal and scope; Bitterli et al. (2020), https://research.nvidia.com/labs/rtr/publication/bitterli2020spatiotemporal/; Tokuyoshi (2023), https://doi.org/10.1145/3585501; Junkins et al. (2026), https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/; author code, https://github.com/orion-junkins/ReSTIR-CGNS. These are planned validation tasks, not observed implementation failures. Backend and exact revision remain provisional.
+Sources: Project docs/scope.md and writing/course/proposal/main.tex. RTXDI https://github.com/NVIDIA-RTX/RTXDI; CGNS author code https://github.com/orion-junkins/ReSTIR-CGNS. These are planned algorithm and correctness tasks. Official-code environment verification does not establish a paper reproduction.
 -->
 
 ---
 
-<!-- _class: eval -->
+<!-- _class: evaluation -->
 
-## How we will evaluate the methods
+## Scenes and evaluation
 
-<div class="explanation">
-<ul>
-<li>We&#x27;ll use Cornell Box, Bistro, and Arcade, with static views and short camera moves.</li>
-<li>We&#x27;ll measure GPU frame time and compare raw HDR images with a high-sample reference, using the same time budget.</li>
-<li>We&#x27;ll repeat runs with different random seeds, switch reuse on and off, and vary the number of neighbors.</li>
-<li>The paper figure shows errors persisting across frames as vertical streaks. We&#x27;ll look for similar behavior in our results.</li>
-</ul>
-<div class="figure">
-<img src="assets/cgns-temporal.png" alt="Published CGNS paper illustration">
-<p class="credit">Each row is a frame.<br>Junkins et al., 2026, Fig. 5 · CC BY 4.0<br>Published Veach Ajar example; “Ours” means the authors’ method.</p>
+<div class="scenes">
+<div class="scene cornell"><h3>Cornell Box</h3><img src="assets/cornell-box.png" alt="Cornell Box scene preview rendered with official RTXDI"><p>Controlled geometry and shadows</p></div>
+<div class="scene"><h3>Bistro</h3><img src="assets/bistro-exterior.png" alt="Amazon Lumberyard Bistro exterior source illustration"><p>Complex geometry and lighting</p></div>
+<div class="scene"><h3>Arcade</h3><img src="assets/arcade.png" alt="Arcade scene preview rendered with official RTXDI"><p>Material changes and local emitters</p></div>
 </div>
-</div>
+<ul>
+<li>Compare raw HDR error and temporal behavior at <strong>matched GPU time</strong>.</li>
+<li>Use static views and short camera moves; vary seeds, reuse modes, and neighbor count.</li>
+</ul>
+<p class="credit">Scene illustrations, not comparison results. Cornell Box / Arcade: official RTXDI previews, MIT assets.<br>Bistro: Amazon Lumberyard / ORCA, CC BY 4.0. Different preview settings; see sources.</p>
 
 <!--
-02:10–02:44 · rehearsal target; read the visible text in order.
+02:06–02:38 · rehearsal target
 
-We'll use Cornell Box, Bistro, and Arcade, with static views and short camera moves.
+Cornell Box provides controlled geometry and shadows. Bistro adds complex geometry and lighting. Arcade introduces material changes and local emitters.
 
-We'll measure GPU frame time and compare raw HDR images with a high-sample reference, using the same time budget.
+We will compare raw HDR image error and temporal behavior at matched GPU time. Static views and short camera moves test steady images and changing visibility. We will also vary random seeds, reuse modes, and neighbor count.
 
-We'll repeat runs with different random seeds, switch reuse on and off, and vary the number of neighbors.
-
-The paper figure shows errors persisting across frames as vertical streaks. We'll look for similar behavior in our results.
-
-Sources: project scenes/README.md and experiments/protocol.md; assets https://github.com/NVIDIA-RTX/RTXDI-Assets. Illustration: Junkins et al. (2026), DOI 10.1145/3820024, Figure 5, Veach Ajar scene. The pictured author experiment is not our shortlisted scene suite or our own result. Cropped from PDF to preserve the complete figure, without its caption. CC BY 4.0. Our temporal metric definitions will be fixed before experiments.
+Sources: Project scenes/README.md and experiments/protocol.md. Cornell Box and Arcade: official RTXDI v3.1.0, commit a6efab966b7c3b272da0461578eb56ac61c7cbff; RTXDI-Assets commit 1da7b749ef0e3fb606ab46dde8e5bfbacd078a02, root MIT notice. Locally rendered for this pitch with DI, accumulation AA, frame index 240, tone mapping and default bloom; no denoiser. These are scene previews, not raw experiment outputs. Bistro: Amazon Lumberyard, ORCA (2017), https://developer.nvidia.com/orca/amazon-lumberyard-bistro, CC BY 4.0. Image cropped to fit. Preview settings are not matched across scenes. Sources and capture recipe: writing/course/slides/sources.md.
 -->
 
 ---
 
-## Our provisional schedule
+<!-- _class: schedule -->
 
-<ul>
-<li><strong>Weeks 1–2:</strong> get the renderer running and check that both extensions can fit into it.</li>
-<li><strong>Weeks 3–5:</strong> implement ReSTIR DI, check the baseline, and add PDF Similarity.</li>
-<li><strong>Weeks 6–8:</strong> integrate CGNS, check correctness and cost, and prepare the demo.</li>
-<li><strong>Weeks 9–10:</strong> run the main comparisons and finish the report. We&#x27;ll split the work and review each other&#x27;s code.</li>
-</ul>
+## Provisional ten-week plan
+
+<table>
+<thead><tr><th>Weeks</th><th>Milestone</th></tr></thead>
+<tbody>
+<tr><td>1–2</td><td>Environment and integration feasibility</td></tr>
+<tr><td>3–5</td><td>Validate the DI baseline; add PDF Similarity</td></tr>
+<tr><td>6–8</td><td>Integrate CGNS; check correctness and cost; prepare demo</td></tr>
+<tr><td>9–10</td><td>Run comparisons and finish the report</td></tr>
+</tbody>
+</table>
+<p class="footer">Shared baseline; split the extensions and review each other’s code.<br>Relative weeks are provisional planning targets.</p>
 
 <!--
-02:44–03:12 · rehearsal target; read the visible text in order.
+02:38–02:58 · rehearsal target
 
-Weeks 1–2: get the renderer running and check that both extensions can fit into it.
+We reserve two weeks for feasibility, three for the baseline and PDF Similarity, and three for CGNS and the demo. The final two weeks cover comparisons and reporting. We'll split the extensions and review each other's code.
 
-Weeks 3–5: implement ReSTIR DI, check the baseline, and add PDF Similarity.
-
-Weeks 6–8: integrate CGNS, check correctness and cost, and prepare the demo.
-
-Weeks 9–10: run the main comparisons and finish the report. We'll split the work and review each other's code.
-
-Source: docs/roadmap.md. Week numbers are planning assumptions, not confirmed course milestones. Detailed task status lives in https://github.com/users/TheLogarhythm/projects/1.
+Sources: Project docs/roadmap.md. Relative weeks are provisional planning assumptions, not confirmed course deadlines. Existing renderer smoke verification is an initial feasibility step; algorithm work and formal comparisons remain planned.
 -->
 
 ---
 
 <!-- _class: closing -->
 
-## What we plan to deliver
+## A foundation for further ReSTIR research
 
 <ul>
-<li>We&#x27;ll leave three methods running in one renderer, with documented settings and code that we can extend.</li>
-<li>We&#x27;ll provide repeatable tests and a report explaining where each method helps and where it struggles.</li>
+<li><strong>Three selectable methods</strong> in one renderer, with documented settings.</li>
+<li><strong>Repeatable comparisons</strong> and evidence of where each method helps or struggles.</li>
 </ul>
 <p class="footer">Thank you.<br><a href="https://github.com/TheLogarhythm/restir-lab">github.com/TheLogarhythm/restir-lab</a></p>
 
 <!--
-03:12–03:28 · rehearsal target; read the visible text in order.
+02:58–03:10 · rehearsal target
 
-We'll leave three methods running in one renderer, with documented settings and code that we can extend.
+We aim to deliver three selectable methods and repeatable comparisons, leaving documented code and evidence that support further ReSTIR research. Thank you.
 
-We'll provide repeatable tests and a report explaining where each method helps and where it struggles.
-
-Thank you.
-
-Source: project proposal and scope. These are planned deliverables; implementation and experiments have not yet begun.
+Sources: Project scope and proposal. These are intended deliverables, not completed algorithm implementations or measured research results.
 -->
