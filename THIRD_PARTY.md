@@ -1,29 +1,21 @@
 # Third-party materials
 
-## Included course materials
+## Course materials
 
-| Material | Supplied source | Repository copy |
+The original `proposal.tex`, `report.tex`, and `projguidelines.pdf` came from the [COMP5411 course webpage](https://course.cse.ust.hk/comp5411/). They are preserved in `writing/course/templates/` and `writing/course/guidelines/`; working copies are under `writing/course/`.
+
+## Renderer and assets
+
+| Material | Source and revision | License |
 | --- | --- | --- |
-| Proposal template | [COMP5411 course webpage](https://course.cse.ust.hk/comp5411/) (`proposal.tex`) | `writing/course/templates/proposal.tex` |
-| Report template | [COMP5411 course webpage](https://course.cse.ust.hk/comp5411/) (`report.tex`) | `writing/course/templates/report.tex` |
-| Course guidelines | [COMP5411 course webpage](https://course.cse.ust.hk/comp5411/) (`projguidelines.pdf`) | `writing/course/guidelines/projguidelines.pdf` |
+| RTXDI | [v3.1.0](https://github.com/NVIDIA-RTX/RTXDI/tree/a6efab966b7c3b272da0461578eb56ac61c7cbff) | NVIDIA RTX SDKs License; submodule unchanged |
+| Cornell Box and Arcade | [RTXDI Assets](https://github.com/NVIDIA-RTX/RTXDI-Assets/tree/1da7b749ef0e3fb606ab46dde8e5bfbacd078a02) | Root MIT notice; [file hashes](scenes/manifest.yaml) |
+| Bistro | [RTXDI Assets](https://github.com/NVIDIA-RTX/RTXDI-Assets/tree/1da7b749ef0e3fb606ab46dde8e5bfbacd078a02/bistro); [original ORCA source](https://developer.nvidia.com/orca/amazon-lumberyard-bistro) | ORCA scene CC BY 4.0; [bundle hash](scenes/manifest.yaml) |
+| Zero-Day Measure One/Seven | [NVIDIA ORCA / Beeple](https://developer.nvidia.com/orca/beeple-zero-day) | CC BY 4.0; source and conversions remain in ignored `assets/` |
+| Open Sans font | RTXDI Assets, `fonts/OpenSans/` | Bundled Apache 2.0 notice |
 
-All three materials are from the [HKUST COMP5411 course webpage](https://course.cse.ust.hk/comp5411/).
+Nested submodules retain their notices. CMake fetches DXC `v1.8.2505.1`, DLSS `a8ed84e2d1cc1efa7bef63fb9394be6cb06c0d74`, and MathLib `v11`. Falcor is not installed. [Pitch illustrations](writing/course/slides/sources.md) have separate attribution.
 
-Working copies retain the template structure and use ReSTIR Spatial Reuse: Implementation and Evaluation and Fall 2026. The proposal contains draft project content; the report remains a template. The report working copy defines the missing `DocTitle` macro used in its header. Original templates are unchanged.
+## Provenance
 
-## Pitch illustrations
-
-The pitch draft includes attributed Bistro and CGNS illustrations under CC BY 4.0. See [slide sources](writing/course/slides/sources.md) for authors, source links, and figure crops. These illustrate published work, not project results.
-
-## Planned dependencies (not included)
-
-- RTXDI: https://github.com/NVIDIA-RTX/RTXDI
-- A selected Falcor paper implementation; candidate: https://github.com/DQLin/ReSTIR_PT
-- Assets listed in [the scene documentation](scenes/README.md).
-
-When adding a dependency, record its URL, exact commit, license, local modifications, and included notices. Check licenses per asset rather than assuming a code license covers all content.
-
-## Implementation provenance
-
-The initial documentation, examples, validation script, and workflow were prepared with Codex assistance. Course templates and guidelines were copied from supplied originals. No renderer implementation is included. Maintain file-level human, AI-assisted, and upstream provenance in subsequent work and in the report's Implemented files appendix.
+Codex assisted the project documentation, validation script, scene records, conversion tools, and RTXDI runners. The [external-scene patch](scripts/run/rtxdi_external.patch) is project integration code; pinned RTXDI source is restored after building its local variant. Record later contributions and external code in the report.

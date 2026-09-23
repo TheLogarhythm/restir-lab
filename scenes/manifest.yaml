@@ -52,6 +52,33 @@
       "modifications": [],
       "backend_configs": {},
       "role": "MinimalSample hardcoded startup scene; experiment setup pending"
+    },
+    {
+      "id": "bistro",
+      "source_url": "https://github.com/NVIDIA-RTX/RTXDI-Assets/tree/1da7b749ef0e3fb606ab46dde8e5bfbacd078a02/bistro",
+      "source_revision": "1da7b749ef0e3fb606ab46dde8e5bfbacd078a02",
+      "sha256": "bcf132b5ff6b7f292774d81fcd272e6d0c1b823ab8689d2802019cae8ca1ccef",
+      "hash_scope": "SHA-256 of UTF-8 lines: <file sha256><two spaces><relative path><LF>, sorted by path over all 393 bistro files",
+      "license": "CC BY 4.0 (original ORCA Bistro); RTXDI-Assets root MIT notice",
+      "local_path": "renderers/rtxdi/Assets/Media/bistro",
+      "conversion": "none (RTXDI-Assets glTF)",
+      "modifications": [],
+      "backend_configs": {},
+      "role": "FullSample capture verified; experiment setup pending"
+    },
+    {
+      "id": "zero-day-measure-one",
+      "source_url": "https://developer.nvidia.com/orca/beeple-zero-day",
+      "source_revision": "ZeroDay_v1.zip",
+      "source_sha256": "a9d040fe9720ee88937778659205fd76bad4499431a37156aaeeba382f08d592",
+      "sha256": "f7992a63e053d6f1c674981ede2e046c9c6b88a2bc3aa940e12f80c054a9f6df",
+      "hash_scope": "SHA-256 of UTF-8 lines: <file sha256><two spaces><relative path><LF>, sorted by path over measure-one.gltf and its 399 referenced resources",
+      "license": "CC BY 4.0 (ORCA Zero-Day)",
+      "local_path": "assets/converted/zero-day/measure-one.gltf",
+      "conversion": "ORCA FBX/DDS to glTF via scripts/assets/convert_orca_fbx.py",
+      "modifications": ["ORM/normal mapping and UV transform baking; two textures without UV dropped"],
+      "backend_configs": {},
+      "role": "FullSampleExternal capture verified; visual fidelity pending"
     }
   ]
 }

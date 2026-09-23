@@ -1,0 +1,54 @@
+--- a/Samples/FullSample/Source/App/SceneRenderer.cpp
++++ b/Samples/FullSample/Source/App/SceneRenderer.cpp
+@@ -11,6 +11,7 @@
+  */
+ 
+ #include "SceneRenderer.h"
++#include <cstdlib>
+ 
+ #include <donut/render/ToneMappingPasses.h>
+ #include <donut/render/TemporalAntiAliasingPass.h>
+@@ -148,6 +149,9 @@
+     m_rootFs->mount("/shaders/donut", frameworkShaderPath);
+     m_rootFs->mount("/shaders/app", appShaderPath);
+ 
++    if (const char* bias = std::getenv("RTXDI_EXPOSURE_BIAS"))
++        m_ui.exposureBias = static_cast<float>(std::atof(bias));
++
+     m_shaderFactory = std::make_shared<engine::ShaderFactory>(GetDevice(), m_rootFs, "/shaders");
+     m_CommonPasses = std::make_shared<engine::CommonRenderPasses>(GetDevice(), m_shaderFactory);
+ 
+@@ -166,7 +170,19 @@
+ 
+     // std::filesystem::path scenePath = "/Assets/Media/bistro-rtxdi.scene.json";
+     std::filesystem::path scenePath;
+-    switch (m_args.sceneAsset)
++    const char* externalScene = std::getenv("RTXDI_EXTERNAL_SCENE");
++    if (externalScene && *externalScene)
++    {
++        const auto hostPath = std::filesystem::absolute(std::filesystem::path(externalScene));
++        if (!std::filesystem::is_regular_file(hostPath))
++        {
++            log::error("External scene not found: %s", hostPath.string().c_str());
++            return false;
++        }
++        m_rootFs->mount("/Assets/External", hostPath.parent_path());
++        scenePath = std::filesystem::path("/Assets/External") / hostPath.filename();
++    }
++    else switch (m_args.sceneAsset)
+     {
+     case SceneAsset::Arcade:
+         scenePath = "/Assets/Media/Arcade/Arcade.gltf";
+@@ -292,6 +308,12 @@
+     ApplicationBase::SceneLoaded();
+ 
+     m_scene->FinishedLoading(GetFrameIndex());
++    if (const char* scale = std::getenv("RTXDI_EMISSIVE_SCALE"))
++        for (auto& material : m_scene->GetSceneGraph()->GetMaterials())
++        {
++            material->emissiveIntensity *= static_cast<float>(std::atof(scale));
++            material->dirty = true;
++        }
+ 
+     LoadInitialCameraSettings();
+ 
