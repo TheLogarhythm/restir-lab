@@ -1,3 +1,3 @@
-# Rtxdi
+# RTXDI scene settings
 
-RTXDI scene settings: record materials, lights, cameras, units, color conventions, and source-scene overrides.
+[Cornell Box](cornell-box.json) fixes the asset, camera, and animation. The [runner](../../../scripts/run/rtxdi.py) supplies default rendering and capture options.

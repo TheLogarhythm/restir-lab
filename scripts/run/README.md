@@ -1,3 +1,3 @@
 # Run
 
-Add thin RTXDI and Falcor batch wrappers after selecting working implementations. Require complete configurations and emit run manifests described in experiments/protocol.md. No runner is implemented.
+`python scripts/run/rtxdi.py` captures official FullSample on Cornell Box; add `--interactive` to open it. `--config` accepts a complete JSON configuration. See [setup](../../docs/setup.md).

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "scene_id": "cornell-box",
+  "arguments": {
+    "scene.asset": "CornellBox",
+    "scene.animation": 0,
+    "camera.position": "0 5 -15",
+    "camera.direction": "0 0 1"
+  },
+  "notes": "Original glTF, materials and lights; camera matches the pinned FullSample default."
+}

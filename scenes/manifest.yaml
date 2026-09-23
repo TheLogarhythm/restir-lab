@@ -1,4 +1,57 @@
 {
   "schema_version": 1,
-  "scenes": []
+  "scenes": [
+    {
+      "id": "cornell-box",
+      "source_url": "https://github.com/NVIDIA-RTX/RTXDI-Assets",
+      "source_revision": "1da7b749ef0e3fb606ab46dde8e5bfbacd078a02",
+      "sha256": "7a60a69ef2463cbf7fb78631a1247fe7ec6dff0cd47b171147546915f0b156e6",
+      "hash_scope": "SHA-256 of UTF-8 lines: <file sha256><two spaces><relative path><LF>, sorted by path",
+      "file_sha256": {
+        "CornellBox.bin": "79b0535e5f30e78c5fc1878513d056c1a2d28c538d0133581c3c3a86598a75c3",
+        "CornellBox.gltf": "3884b22c26acb5ac8ba975e39d50e055abed285a8fb8d47bc8404c13ed3f0028",
+        "White.png": "9b44fe4ce990a75163d3f440d861f127e8394b328e28cf03c15d480071c8dff3"
+      },
+      "license": "MIT (RTXDI-Assets root LICENSE)",
+      "local_path": "renderers/rtxdi/Assets/Media/CornellBox",
+      "conversion": "none",
+      "modifications": [],
+      "backend_configs": {
+        "rtxdi": "scenes/configs/rtxdi/cornell-box.json"
+      },
+      "role": "FullSample Cornell environment check"
+    },
+    {
+      "id": "arcade",
+      "source_url": "https://github.com/NVIDIA-RTX/RTXDI-Assets",
+      "source_revision": "1da7b749ef0e3fb606ab46dde8e5bfbacd078a02",
+      "sha256": "41302b16a7000a500081c3e465d74184a43f5827f3447bb7f686b619ae10ecb1",
+      "hash_scope": "SHA-256 of UTF-8 lines: <file sha256><two spaces><relative path><LF>, sorted by path",
+      "file_sha256": {
+        "Arcade.bin": "0bbd01f5bf90abeade9311684577c225f450e0a282d790551d3a4c860ab2b1c6",
+        "Arcade.gltf": "ca1a87cec0a492a00ac8084dc3355a1ca195e66d35610f5468c7ca333a84fe05",
+        "Cabinet_BaseColor.png": "11e57ea8394d5426ac8b8568c16f43bb79bb6456e789b3d89d70f3fb5f60eaa6",
+        "Cabinet_Emissive.png": "5025e0607117434bb9a9bb5cfb3688495549d0cff15c250d3b41edabdf325dae",
+        "Cabinet_Normal.png": "677aa5909ed5d0ab3c132ebb024e6c85acde2aea66b57422a0cffa2b8b554a34",
+        "Cabinet_Specular.png": "d704d49d5f2baea53841daa4dadd29e13ccf9b1cda541b0c1d4462c0eaea1472",
+        "Chair_Blue_BaseColor.png": "98151f8cf7003b728db5375a61c29a697eaaeaf00ff7046ddf4ae2c216e97977",
+        "Chair_Normal.png": "eb1ddad5ebc7d556652dcee3e2b6a70528f7bd19a75a0058b38ec652aad620c7",
+        "Chair_Orange_BaseColor.png": "d3908988448e4e41d92a0587c73d7d9bb85b644a65e6284f3797ae6406038623",
+        "Chair_Specular.png": "4e93c42294dd59d10f1adb5a11b6a3c7f4a1ee5e1744c0ba8a2c8ed4242d37dd",
+        "CheckerTile_BaseColor.png": "1329998b70b38a1f5dcf9c9808bd66974e9a452d06c5459207a6a9df3d855a0f",
+        "CheckerTile_Normal.png": "513e8cb3f9bad71c2c403546758bed510e10e6abe5260f775ab72f51ca784f2f",
+        "CheckerTile_Specular.png": "bc3da0574cff7758552e5aa1892d6e3759bcad44e9db32cf6c50fd1a7279b83a",
+        "Poster_BaseColor.png": "117bad24d91ea20c8da72d37a55bcd11abb147536d7b0a60a4b54808266c1a37",
+        "Wall_BaseColor.png": "9a1248bf0e2be92dfa4bc6b65a017204d6c91fa2a5b5b37291f091627256ccf5",
+        "Wall_Normal.png": "82b2bd3c9b139b3da314bfdb509c16636f544a565205da6b02a765fb3eb6b85b",
+        "Wall_Specular.png": "fcb466c3ddad99e2232f09ea5fefd712e2f757df2691f2f2464a2c2a0601474c"
+      },
+      "license": "MIT (RTXDI-Assets root LICENSE)",
+      "local_path": "renderers/rtxdi/Assets/Media/Arcade",
+      "conversion": "none",
+      "modifications": [],
+      "backend_configs": {},
+      "role": "MinimalSample hardcoded startup scene; experiment setup pending"
+    }
+  ]
 }

@@ -1,0 +1,3 @@
+[submodule "rtxdi"]
+	path = renderers/rtxdi
+	url = https://github.com/NVIDIA-RTX/RTXDI.git

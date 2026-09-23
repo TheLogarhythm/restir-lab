@@ -35,3 +35,6 @@ venv/
 Thumbs.db
 *.blend1
 *.blend2
+
+# Native sample UI state
+/imgui.ini
