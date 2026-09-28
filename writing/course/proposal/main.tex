@@ -3,9 +3,11 @@
 \usepackage{multicol}
 \usepackage{enumitem}
 \usepackage{graphicx}
+\usepackage{float}
 \usepackage{titling}
 \usepackage{fancyhdr}
 \usepackage{url} % Bibliography URLs.
+\usepackage{booktabs,tabularx}
 \geometry{left=20mm,right=20mm,top=30mm,bottom=30mm}
 
 % ------------------ Project variables (edit these) ------------------
@@ -35,49 +37,98 @@
 
 \section*{Background}
 \textbf{Luoyi Zhang:} Familiar with C++ and Python, with basic knowledge of rendering and geometry processing from coursework.\\
-\textbf{Zelin Gao:} [Briefly describe relevant graphics and programming experience.]
+\textbf{Zelin Gao:} Familiar with Python and PyTorch, with research experience in neural rendering, 3D reconstruction, and interactive video world models.
 
 \section*{Project description}
-We plan to reproduce and compare three ReSTIR methods: the original ReSTIR DI algorithm~\cite{bitterli2020restir}, PDF-similarity-based spatial reuse~\cite{tokuyoshi2023similarity}, and compatibility-guided neighbor selection (CGNS)~\cite{junkins2026cgns}. Our focus is how these methods reuse samples from nearby pixels, and how their choices affect image quality, rendering time, and stability during camera motion.
+ReSTIR reduces noise in direct-lighting estimates by reusing light samples across pixels and frames~\cite{bitterli2020restir}.
+However, neighboring pixels can differ in geometry, materials, and visibility, limiting the benefit of spatial reuse.
+We will study whether more selective spatial reuse reduces image error under the same GPU time budget, and how this tradeoff changes during camera motion.
 
-We will use an existing renderer, with RTXDI as our preferred starting point~\cite{rtxdi} and Falcor-based author code as a reference~\cite{cgnsCode}. We will implement or adapt the core algorithms and compare them on three public scenes under the same rendering budget. Through these experiments, we hope to understand when each method works well and where it struggles.
+We will reproduce a ReSTIR direct illumination (DI) baseline and compare it with two spatial reuse extensions: PDF Similarity~\cite{tokuyoshi2023similarity}, which rejects reuse between dissimilar target probability density functions (PDFs), and compatibility-guided neighbor selection (CGNS)~\cite{junkins2026cgns}, which uses weighted stochastic sampling to favor geometrically compatible neighbors.
+Each extension will be evaluated separately against the shared baseline on Cornell Box, Bistro, and Arcade.
+
+We have selected RTXDI v3.1.0~\cite{rtxdi} on Windows with Direct3D 12 and verified Cornell Box and Bistro captures using the official renderer.
+These establish the rendering environment; algorithm extensions and controlled comparisons remain to be completed.
+We will extend the sampling shaders and experiment tools to support three selectable methods, linear HDR output, and GPU timing records.
+Figure~\ref{fig:pipeline} summarizes this workflow.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{figures/pipeline.pdf}
+\caption{\textbf{Planned implementation and evaluation pipeline.} Each run selects one spatial reuse method within a shared direct-lighting renderer. HDR frames are evaluated against converged DI references; GPU timings cover all rendering stages and method-specific overhead.}
+\label{fig:pipeline}
+\end{figure}
 
 \section*{Key challenges}
 \begin{itemize}
-\item \textbf{Correct sample weights.} Reusing samples changes how they contribute to the estimate. We need to handle reservoir weights and visibility consistently to avoid incorrect brightness or bias.
-\item \textbf{Adapting the methods.} PDF Similarity requires estimating sampling distributions. CGNS comes from a Falcor path tracer, so its neighbor selection must be checked when adapted to DI.
-\item \textbf{Fair timing.} Better neighbor selection also takes time. Comparisons must include this cost and keep the scene, lighting, and other sampling settings consistent.
-\item \textbf{Motion and visibility changes.} Previously useful samples may become unsuitable as the camera moves. Matching reference sequences will help us distinguish rendering errors from actual scene changes.
+\item \textbf{Correct Weights for Reservoir Reuse.} Reused samples must be evaluated at the receiving pixel, with consistent reservoir normalization and visibility handling. Incorrect weights or unaccounted neighbor selection probabilities can introduce brightness errors or unintended bias.
+\item \textbf{Adapting Spatial Reuse Strategies.} PDF Similarity needs reliable distribution estimates and safeguards when history becomes invalid. CGNS must be transferred from its path-tracing implementation to DI while preserving stochastic selection and the associated weighting assumptions.
+\item \textbf{Measuring Quality at Equal Cost.} Distribution estimation and neighbor selection introduce additional computation. We must include this overhead when comparing image error at the same GPU time budget.
+\item \textbf{Evaluating Reuse during Camera Motion.} Camera motion changes visibility and exposes surfaces without valid history. We need corresponding reference frames to distinguish sampling artifacts from changes in the scene's appearance.
 \end{itemize}
 
-\newpage
 \section*{Timeline}
-This ten-week plan will be adjusted to the course deadlines and our availability.
+The ten-week plan proceeds from environment setup to baseline validation, extension development, and evaluation. Initial renderer setup is complete; reproducible measurement support is the next milestone.
 
-\begin{tabular}{|c|l|p{0.56\linewidth}|}
-\hline
-\textbf{Week} & \textbf{Milestone} & \textbf{Details / Tasks} \\
-\hline
-1 & Proposal & Agree on scope, roles, hardware, and scenes. \\
-2 & Setup & Render a small scene, check how both extensions fit, and fix the renderer version. \\
-3--4 & DI baseline & Implement resampling and reuse controls; check results against a reference. \\
-5 & Progress review & Implement PDF Similarity and validate it on simple scenes; present baseline results. \\
-6--7 & CGNS & Implement CGNS and check both extensions for correctness and cost. \\
-8 & Demo & Demonstrate all three methods and finalize experiment settings. \\
-9--10 & Evaluation and final & Run comparisons and ablations, write the report, and repeat a test on the teammate's machine. \\
-\hline
-\end{tabular}
+\begingroup
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.2}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+\begin{tabularx}{\linewidth}{@{}
+  >{\centering\arraybackslash}m{0.06\linewidth}
+  >{\raggedright\arraybackslash}m{0.16\linewidth}
+  >{\raggedright\arraybackslash}X
+  >{\raggedright\arraybackslash}m{0.22\linewidth}@{}}
+\toprule
+\textbf{Week} & \textbf{Phase} & \textbf{Work and Milestones} & \textbf{Deliverable} \\
+\midrule
+1 & Proposal & Define scope, hardware, scenes, and roles. & Project plan \\
+\addlinespace[4pt]
+2 & Renderer setup & Pin RTXDI and validate captures; complete remaining scene checks. & Cornell and Bistro captures obtained \\
+\midrule
+3--4 & DI baseline & Isolate baseline reuse; add HDR export, seed control, and GPU timing; validate references. & Validated baseline and measurement tools \\
+\addlinespace[4pt]
+5 & PDF Similarity & Implement PDF estimation, reuse rejection, and history safeguards. & Initial comparison for progress review \\
+\addlinespace[4pt]
+6--7 & CGNS & Adapt weighted neighbor sampling to DI; check weights and measure overhead. & CGNS implementation and timings \\
+\midrule
+8 & Demo & Demonstrate all three methods and finalize comparison settings. & Demo and evaluation configurations \\
+\addlinespace[4pt]
+9--10 & Evaluation & Run comparisons and ablations; repeat a test on the teammate's machine. & Final report and reproducible code \\
+\bottomrule
+\end{tabularx}
+\endgroup
 
+\newpage
 \section*{Design and implementation details}
-\textbf{Implementation.} All three methods will share one DI renderer. We will keep initial sampling, temporal reuse, and shading consistent, and document any differences the methods require. Since RTXDI includes several later improvements, we will specify which features are enabled in our baseline. The code and report will identify upstream components, adapted code, and our own implementation.
+\textbf{Shared Renderer for Controlled Comparisons.}
+We will reuse RTXDI's scene loading, ray tracing, and display infrastructure, while modifying reservoir reuse and adding the two extensions.
+All methods will share the DI target, scenes, cameras, and materials; initial sampling and shading will remain fixed where compatible.
+We will isolate the baseline from additional RTXDI features and document any required differences in temporal reuse.
 
-\textbf{Scenes and evaluation.} We plan to use Cornell Box for basic checks, Bistro for complex geometry, and Arcade for varied materials and emissive surfaces, using the RTXDI assets~\cite{rtxdiAssets}. We will first check that the scenes load correctly and fit the available GPU memory. The initial tests will use one static view per scene and one or two short camera trajectories in total.
+\textbf{Spatial Reuse Extensions.}
+PDF Similarity will estimate target distributions and reject ineffective reuse, with history safeguards during motion.
+CGNS will use geometric compatibility to weight stochastic neighbor selection, adapting the Falcor-based author implementation~\cite{cgnsCode} to DI.
+We will check each extension's selection probabilities and reservoir weights before comparing performance; combining the extensions is optional.
 
-We will compare linear HDR images against converged direct-lighting references before denoising or tone mapping. Measurements will include image error and GPU frame time, with matched time budgets and several independent random seeds. For camera sequences, we will also examine error over time. A small set of ablations will test temporal reuse, spatial reuse, and neighbor count. Metric definitions and run settings will be fixed before the main experiments.
+\textbf{Scenes and Reference Images.}
+We will use Cornell Box for correctness checks, Bistro for complex geometry, and Arcade for varied materials and emissive surfaces~\cite{rtxdiAssets}.
+We plan one static view per scene and one or two short camera trajectories overall.
+References will use a conventional high-sample DI estimator with convergence checks and matching scene settings.
 
-\textbf{Team and workload.} One member will lead the renderer and baseline; the other will lead scene setup, reference images, and evaluation scripts. We will split the two extensions and review each other's code. Roles are provisional. We will reserve the final part of the schedule for testing and writing, and reduce optional experiments first if time becomes tight.
+\textbf{Quality, Cost, and Temporal Behavior.}
+The current runner saves preview images and run metadata; we will add linear HDR export, explicit seed control, and GPU timing collection.
+At fixed resolution, equal-time comparisons will include method-specific overhead and report pass times, total rendering time, and memory use.
+Image error will be measured before denoising or tone mapping, with definitions and normalization fixed before evaluation.
+Each run will record the resolved configuration, code and scene revisions, seeds, and GPU environment.
+Independent seeds will quantify variability; sequence tests will cover history start-up, steady state, and disocclusion against corresponding reference frames.
+Ablations will vary candidate count, temporal reuse, spatial reuse, and neighbor count separately.
 
-\textbf{Deliverables.} We will provide three working methods, repeatable experiments, a demo, and a report discussing where each method succeeds or struggles. The repository will include setup instructions, configurations, and code attribution, including AI assistance. It will also provide a starting point for further ReSTIR research after the course.
+\textbf{Implementation Responsibilities and Deliverables.}
+Provisionally, one member will lead the renderer and baseline, and the other scene setup and evaluation; we will divide the extensions and review each other's code.
+Deliverables include three selectable methods, a demo, and a report supported by reproducible configurations and run records, with one experiment repeated on the teammate's machine.
+We will identify upstream code, our adaptations, and AI assistance.
+If time becomes limited, we will reduce optional parameter sweeps before changing the three-method target.
 
 \bibliographystyle{plain}
 \IfFileExists{writing/references.bib}{\bibliography{writing/references}}{\bibliography{../../references}}
