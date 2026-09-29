@@ -13,6 +13,7 @@ import subprocess
 import tempfile
 
 from gltf import bake_texture_transforms, digest, emissive_triangle_count, resource_path
+from gltf_materials import normalize_opaque_materials
 from orca_materials import convert_materials
 
 
@@ -63,6 +64,7 @@ def convert(raw, output, expected_emissive=None):
         copy_resources(gltf, raw.parent, staging)
         counts = convert_materials(gltf, staging)
         baked, accessors = bake_texture_transforms(gltf, staging)
+        alpha_normalization = normalize_opaque_materials(gltf, staging)
         count = emissive_triangle_count(gltf)
         if expected_emissive is not None and count != expected_emissive:
             raise ValueError(f"Expected {expected_emissive} emissive triangles, found {count}")
@@ -78,7 +80,8 @@ def convert(raw, output, expected_emissive=None):
         prepared.write_text(json.dumps(gltf, separators=(",", ":")) + "\n", encoding="utf-8")
         summary = {"source_gltf": str(raw), "source_sha256": digest(raw), "output_gltf": str(output),
                    "output_sha256": digest(prepared), "materials": len(gltf.get("materials", [])),
-                   **counts, "uv_baked_primitives": baked, "uv_baked_accessors": accessors,
+                   **counts, "alpha_normalization": alpha_normalization,
+                   "uv_baked_primitives": baked, "uv_baked_accessors": accessors,
                    "emissive_triangles": count, "images": len(gltf.get("images", [])),
                    "resources": {resource_name + "/" + name: value for name, value in hashes.items()}}
         if destination.exists():

@@ -9,4 +9,10 @@ python scripts/assets/convert_orca_fbx.py --fbx assets/prepared/zero-day-measure
 
 For similar scenes, change the paths and omit the expected count if unknown. The converter requires UV0 and supports packed DDS (R=AO, G=roughness, B=metallic) with DirectX normals. Check its `.conversion.json` and inspect materials before research comparisons.
 
+The reusable `gltf_materials.normalize_opaque_materials` pass promotes `BLEND` to
+`OPAQUE` only when factor and texture alpha are exactly 1. It verifies static
+PNG (up to 8-bit) / JPEG; RGBA vertex colors, material animations, remaining
+extensions and unverified image formats retain blending. `MASK` is preserved.
+The conversion record lists changed material indices and reasons for retained blends.
+
 [Zero-Day source](https://developer.nvidia.com/orca/beeple-zero-day) ZIP SHA-256: `A9D040FE9720EE88937778659205FD76BAD4499431A37156AAEEBA382F08D592`. See [scene status](../../scenes/catalog.md) and [viewer commands](../run/README.md).

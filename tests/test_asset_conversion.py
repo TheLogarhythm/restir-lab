@@ -8,6 +8,7 @@ import sys
 import tempfile
 import unittest
 import zipfile
+import zlib
 
 from PIL import Image
 
@@ -60,6 +61,100 @@ class ConversionTests(unittest.TestCase):
         path = raw.parent / result["images"][normals[0]["source"]]["uri"]
         with Image.open(path) as normal:
             self.assertEqual(normal.getpixel((0, 0)), (128, 191, 255, 255))
+
+    def test_fully_opaque_blend_is_normalized_without_changing_source(self):
+        raw, gltf = self.fixture()
+        material = gltf["materials"][0]
+        material.update(alphaMode="BLEND", name="arbitrary material",
+                        pbrMetallicRoughness={"baseColorTexture": {"index": 0}})
+        result, summary = self.run_conversion(raw, gltf)
+        self.assertEqual(result["materials"][0]["alphaMode"], "OPAQUE")
+        self.assertEqual(json.loads(raw.read_text())["materials"][0]["alphaMode"], "BLEND")
+        self.assertEqual(summary["alpha_normalization"]["converted"], [0])
+        from gltf_materials import normalize_opaque_materials
+        self.assertEqual(normalize_opaque_materials(result, raw.parent)["converted"], [])
+
+    def test_textureless_opaque_blend_is_normalized_but_mask_is_preserved(self):
+        raw, gltf = self.fixture()
+        gltf["materials"][0]["alphaMode"] = "BLEND"
+        gltf["materials"].append({"alphaMode": "MASK", "alphaCutoff": .3})
+        result, _ = self.run_conversion(raw, gltf)
+        self.assertEqual(result["materials"][0]["alphaMode"], "OPAQUE")
+        self.assertEqual(result["materials"][1], {"alphaMode": "MASK", "alphaCutoff": .3})
+
+    def test_factor_or_single_nonopaque_texel_preserves_blending(self):
+        for factor, texel in ((.5, 255), (1, 254), (1, 0)):
+            with self.subTest(factor=factor, texel=texel):
+                raw, gltf = self.fixture(f"alpha-{factor}-{texel}")
+                material = gltf["materials"][0]
+                material.update(alphaMode="BLEND", pbrMetallicRoughness={
+                    "baseColorTexture": {"index": 0}, "baseColorFactor": [1, 1, 1, factor]})
+                with Image.open(raw.parent / "packed.png") as source:
+                    source.putpixel((1, 1), (10, 20, 30, texel))
+                    source.save(raw.parent / "packed.png")
+                result, _ = self.run_conversion(raw, gltf)
+                self.assertEqual(result["materials"][0]["alphaMode"], "BLEND")
+
+    def test_vertex_alpha_protects_all_uses_of_shared_material(self):
+        for components, expected in ((3, "OPAQUE"), (4, "BLEND")):
+            with self.subTest(components=components):
+                raw, gltf = self.fixture(f"vertex-{components}")
+                gltf["materials"][0]["alphaMode"] = "BLEND"
+                data = (raw.parent / "mesh.bin").read_bytes()
+                colors = struct.pack("<" + "f" * (components * 3), *([1, 1, 1, .5][:components] * 3))
+                (raw.parent / "mesh.bin").write_bytes(data + colors)
+                gltf["buffers"][0]["byteLength"] += len(colors)
+                gltf["bufferViews"].append({"buffer": 0, "byteOffset": len(data), "byteLength": len(colors)})
+                gltf["accessors"].append({"bufferView": 2, "count": 3, "componentType": 5126,
+                                          "type": f"VEC{components}"})
+                other = deepcopy(gltf["meshes"][0]["primitives"][0])
+                other["attributes"]["COLOR_0"] = 2
+                gltf["meshes"][0]["primitives"].append(other)
+                result, _ = self.run_conversion(raw, gltf, expected=2)
+                self.assertEqual(result["materials"][0]["alphaMode"], expected)
+
+    def test_material_animation_and_unknown_extensions_preserve_blending(self):
+        for kind in ("animation", "material", "texture", "primitive"):
+            with self.subTest(kind=kind):
+                raw, gltf = self.fixture(kind)
+                material = gltf["materials"][0]
+                material.update(alphaMode="BLEND", pbrMetallicRoughness={"baseColorTexture": {"index": 0}})
+                if kind == "animation":
+                    gltf["extensionsUsed"] = ["KHR_animation_pointer"]
+                    gltf["animations"] = [{"channels": [{"target": {"path": "pointer", "extensions": {
+                        "KHR_animation_pointer": {"pointer": "/materials/0/pbrMetallicRoughness/baseColorFactor"}}}}]}]
+                elif kind == "material":
+                    material["extensions"]["EXT_unknown_material"] = {}
+                elif kind == "texture":
+                    gltf["textures"][0]["extensions"] = {"EXT_unknown_texture": {"source": 0}}
+                else:
+                    gltf["meshes"][0]["primitives"][0]["extensions"] = {"EXT_unknown_primitive": {}}
+                result, _ = self.run_conversion(raw, gltf)
+                self.assertEqual(result["materials"][0]["alphaMode"], "BLEND")
+
+    def test_palette_transparency_preserves_blending(self):
+        raw, gltf = self.fixture()
+        material = gltf["materials"][0]
+        material.update(alphaMode="BLEND", pbrMetallicRoughness={"baseColorTexture": {"index": 0}})
+        image = Image.new("P", (2, 2), 0)
+        image.putpalette([10, 20, 30] * 256)
+        image.save(raw.parent / "packed.png", transparency=0)
+        result, _ = self.run_conversion(raw, gltf)
+        self.assertEqual(result["materials"][0]["alphaMode"], "BLEND")
+
+    def test_16bit_alpha_is_not_mistaken_for_opaque_after_decoding(self):
+        raw, gltf = self.fixture()
+        gltf["materials"][0].update(alphaMode="BLEND",
+            pbrMetallicRoughness={"baseColorTexture": {"index": 0}})
+        def chunk(kind, data):
+            return struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data))
+        # 65534/65535 is transparent, but Pillow's RGBA8 decoding returns alpha 255.
+        row = b"\x00" + struct.pack(">4H", 1000, 2000, 3000, 65534) * 2
+        png = (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">2I5B", 2, 2, 16, 6, 0, 0, 0))
+               + chunk(b"IDAT", zlib.compress(row * 2)) + chunk(b"IEND", b""))
+        (raw.parent / "packed.png").write_bytes(png)
+        result, _ = self.run_conversion(raw, gltf)
+        self.assertEqual(result["materials"][0]["alphaMode"], "BLEND")
 
     def test_two_outputs_do_not_overwrite_shared_texture_paths(self):
         raw, gltf = self.fixture()
