@@ -8,7 +8,7 @@ State the target claim and implementation origin (author code, port, or independ
 
 Each run has a unique ID and a manifest with the actual command, resolved config, code/dependency commits, dirty-state indication, scene hash, GPU/VRAM, driver, OS, compiler, resolution, seeds, and output paths. Preserve failed runs and explain exclusions.
 
-For sequences, record trajectory, frame time, history initialization/reset policy, and warm-up. Evaluate both history start-up/disocclusion and steady state. Repeat with independent seeds; correlated frames are not independent repeats.
+For sequences, record trajectory, frame time, history initialization/reset policy, and warm-up. Evaluate both history start-up/disocclusion and steady state. Label single-seed baselines as descriptive; comparisons claiming repeatability require independent runs. Correlated frames are not independent repeats.
 
 ## Images and references
 
@@ -16,10 +16,10 @@ Retain scene-linear floating-point radiance before denoising and tone mapping. G
 
 ## Performance and quality
 
-Report equal-time quality, sampling settings, GPU pass/total times, memory, and dynamic behavior. Define timing boundaries and separately account for initialization, compilation, and file I/O. Fix resolution and record denoising/upscaling settings. Keep unprocessed outputs even when showing denoised images.
+Report sampling settings, GPU pass/total times and dynamic behavior; distinguish fixed-parameter baselines from equal-time comparisons. Include equal-time quality and memory for the final method evaluation. Define timing boundaries and separately account for initialization, compilation, and file I/O. Fix resolution and record denoising/upscaling settings. Keep unprocessed outputs even when showing denoised images.
 
 Define error metrics, HDR handling, normalization, masks, and aggregation. For temporal diagnostics, compare against a moving reference rather than treating legitimate motion as flicker. Report variability across independent runs.
 
 ## Ablations and records
 
-Vary candidate generation, temporal reuse, spatial reuse, and relevant weighting separately where possible. Register summaries and artifact locations in `results/index.csv`, with config and run IDs supporting each claim. Example configs are not executable benchmark definitions yet.
+Vary candidate generation, temporal reuse, spatial reuse, and relevant weighting separately where possible. Register summaries and artifact locations in `results/index.csv`, with config and run IDs supporting each claim.

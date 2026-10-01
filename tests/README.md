@@ -2,4 +2,4 @@
 
 Add meaningful numerical and small-scene checks as rendering code is integrated: controlled reservoir selection statistics, estimator/reference agreement, invalid values, reprojection/history resets, and repeatable captures.
 
-Run `python -m unittest discover -s tests -v` for asset-conversion, launcher and multi-scene experiment regressions (install scripts/run/requirements.txt; no Blender/GPU needed). Numerical renderer tests remain future work. `python scripts/check_scaffold.py` checks repository structure, not rendering correctness.
+Run `python -m unittest discover -s tests -v` for asset-conversion, launcher, multi-scene experiment and offline analysis regressions (install scripts/run/requirements.txt; no Blender/GPU needed). Numerical renderer tests remain future work. `python scripts/check_scaffold.py` checks repository structure, not rendering correctness.

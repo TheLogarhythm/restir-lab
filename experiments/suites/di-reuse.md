@@ -93,17 +93,18 @@ paths; `run_id` remains its original identifier. Renderer log mount names such a
 `/Assets/Media` are virtual filesystem labels, not host paths.
 Equal-time comparisons remain separate work.
 
-## References
+## References and analysis
 
-Generate references for an existing baseline:
+Generate references for an existing baseline, then compare its linear images:
 
 ~~~powershell
 python scripts/run/build_rtxdi_experiments.py --reference
 python scripts/run/rtxdi_reference.py --baseline runs/di --output-name di-reference --check
 python scripts/run/rtxdi_reference.py --baseline runs/di --output-name di-reference
+python scripts/analysis/di_reuse.py --baseline runs/di --references runs/di-reference
 ~~~
 
-Reference generation accepts `--scene <IDs>` and
+Reference generation and analysis accept `--scene <IDs>` and
 `--scenario static|motion|reset`. References inherit baseline resolution, camera
 and lighting; current assets must match their recorded hashes. Identical targets
 share one reference.
@@ -158,4 +159,28 @@ the scene, and failed attempts remain in seed/checkpoint/attempt directories.
 `--reassess-only` checks all saved pairs without rendering and retains the latest
 reference. Legacy uninterrupted streams and NRMSE records require a new suite.
 
-`reference-index.json` links pose targets, image hashes and convergence records.
+### Analysis outputs
+
+Analysis writes a new `<baseline>/analysis/` directory (`--output` overrides it):
+
+- `summary.md`: endpoint RMAE/NRMSE and phase-averaged GPU cost, error trajectories,
+  reference acceptance ratios and interpretation limits.
+- `metrics.csv`, `summary.csv`, `timings.csv`: complete capture metrics, seed
+  summaries and GPU timings by phase. RMAE uses linear RGB; NRMSE is
+  `sqrt(mean((I-R)^2)/(mean(R^2)+1e-12))`. No exposure fitting is applied.
+- `representative-images.png`, `tail-diagnostics.csv`: one endpoint per scene
+  (static when available), using the lowest baseline seed. The latter records
+  the fraction of squared RGB error in the worst 1% of pixels, rounded up.
+- `analysis.json`: selection, input/code hashes and completion status.
+
+Settings, builds, hardware and seed/capture coverage must match across compared
+modes. Timing records must cover every configured frame once, with finite,
+nonnegative durations. Reference precision is rechecked against the evaluated images; insufficient
+references mark the report provisional. Seeds are scored independently; standard
+deviation is omitted for one seed. Correlated frames are not independent repeats.
+GPU cost uses static frames 33 onward, or the full selected non-static sequence;
+these are fixed-parameter, synchronous measurements, not equal-time comparisons.
+
+Both baseline and reference HDR use `.pfm.gz`; hashes cover compressed bytes.
+A bounded 512 MiB decoded-image cache serves metrics and figures without disk
+extraction. Existing analysis directories are never overwritten.
