@@ -4,12 +4,14 @@ from copy import deepcopy
 from PIL import Image, ImageOps
 
 from gltf import remove_extension, resource_path, texture_infos
+from emissive_materials import preserve_emission
 
 
 def convert_materials(gltf, directory):
     images, textures = gltf.get("images", []), gltf.get("textures", [])
     counts = dict(packed_orm_materials=0, normal_materials=0,
-                  dropped_textures_without_uv=0, discarded_specular_color_materials=0)
+                  dropped_textures_without_uv=0, discarded_specular_color_materials=0,
+                  baked_constant_emissive_materials=preserve_emission(gltf, directory))
     flipped_images, flipped_textures = {}, {}
     for material in gltf.get("materials", []):
         extension = material.get("extensions", {}).pop("KHR_materials_specular", None)

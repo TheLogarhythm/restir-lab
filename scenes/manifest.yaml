@@ -19,7 +19,12 @@
       "backend_configs": {
         "rtxdi": "scenes/configs/rtxdi/cornell-box.json"
       },
-      "role": "FullSample Cornell environment check"
+      "role": "Multi-scene DI reuse harness verified at 1080p",
+      "runtime_assets": {
+        "sha256": "5546e26ce0f81a0343d069fec658f52f3ef3aa993c6dee6165a84d93bf16b06c",
+        "file_count": 3,
+        "hash_scope": "Sorted UTF-8 <sha256><two spaces><path relative to source.root><LF>; scene documents, model resources (Donut DDS preference), referenced IES"
+      }
     },
     {
       "id": "arcade",
@@ -50,8 +55,15 @@
       "local_path": "renderers/rtxdi/Assets/Media/Arcade",
       "conversion": "none",
       "modifications": [],
-      "backend_configs": {},
-      "role": "MinimalSample hardcoded startup scene; experiment setup pending"
+      "backend_configs": {
+        "rtxdi": "scenes/configs/rtxdi/arcade.json"
+      },
+      "role": "Multi-scene DI reuse harness verified at 1080p",
+      "runtime_assets": {
+        "sha256": "0928dbee84d7724c0a82387d8bff5da1899643dc409eaf73c2192cb43e0d8116",
+        "file_count": 17,
+        "hash_scope": "Sorted UTF-8 <sha256><two spaces><path relative to source.root><LF>; scene documents, model resources (Donut DDS preference), referenced IES"
+      }
     },
     {
       "id": "bistro",
@@ -63,22 +75,39 @@
       "local_path": "renderers/rtxdi/Assets/Media/bistro",
       "conversion": "none (RTXDI-Assets glTF)",
       "modifications": [],
-      "backend_configs": {},
-      "role": "FullSample capture verified; experiment setup pending"
+      "backend_configs": {
+        "rtxdi": "scenes/configs/rtxdi/bistro.json"
+      },
+      "role": "Multi-scene DI reuse harness verified at 1080p",
+      "runtime_assets": {
+        "sha256": "33afcfb3676ac4d0554cc1bb9b1a9c991f8f6e5daeb530409f8e0911e186fdf2",
+        "file_count": 358,
+        "hash_scope": "Sorted UTF-8 <sha256><two spaces><path relative to source.root><LF>; scene documents, model resources (Donut DDS preference), referenced IES"
+      }
     },
     {
       "id": "zero-day-measure-one",
       "source_url": "https://developer.nvidia.com/orca/beeple-zero-day",
       "source_revision": "ZeroDay_v1.zip",
       "source_sha256": "a9d040fe9720ee88937778659205fd76bad4499431a37156aaeeba382f08d592",
-      "sha256": "f7992a63e053d6f1c674981ede2e046c9c6b88a2bc3aa940e12f80c054a9f6df",
+      "sha256": "1c692ee0eb6646a98142016c807e892ae4281325d1a8729020c7b1428c73f8b0",
       "hash_scope": "SHA-256 of UTF-8 lines: <file sha256><two spaces><relative path><LF>, sorted by path over measure-one.gltf and its 399 referenced resources",
       "license": "CC BY 4.0 (ORCA Zero-Day)",
       "local_path": "assets/converted/zero-day/measure-one.gltf",
       "conversion": "ORCA FBX/DDS to glTF via scripts/assets/convert_orca_fbx.py",
-      "modifications": ["ORM/normal mapping and UV transform baking; two textures without UV dropped"],
-      "backend_configs": {},
-      "role": "FullSampleExternal capture verified; visual fidelity pending"
+      "modifications": [
+        "ORM/normal mapping and UV transform baking; constant emissive texture without UV folded into linear color; existing non-emissive UV approximations retained",
+        "108 provably opaque BLEND materials normalized to OPAQUE; other alpha modes preserved"
+      ],
+      "backend_configs": {
+        "rtxdi": "scenes/configs/rtxdi/zero-day-measure-one.json"
+      },
+      "role": "DI reuse harness; opaque alpha classification corrected; material/light fidelity review pending",
+      "runtime_assets": {
+        "sha256": "1c692ee0eb6646a98142016c807e892ae4281325d1a8729020c7b1428c73f8b0",
+        "file_count": 400,
+        "hash_scope": "Sorted UTF-8 <sha256><two spaces><path relative to source.root><LF>; scene documents, model resources (Donut DDS preference), referenced IES"
+      }
     }
   ]
 }

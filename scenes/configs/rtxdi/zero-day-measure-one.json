@@ -1,22 +1,21 @@
 {
   "schema_version": 2,
-  "scene_id": "cornell-box",
+  "scene_id": "zero-day-measure-one",
   "source": {
-    "kind": "builtin",
-    "root": "renderers/rtxdi/Assets/Media",
-    "entry": "CornellBox/CornellBox.gltf",
-    "asset": "CornellBox"
+    "kind": "file",
+    "root": "assets/converted/zero-day",
+    "entry": "measure-one.gltf"
   },
   "camera": {
     "position": [
-      0,
-      5,
-      -15
+      7.67003,
+      -0.60688,
+      0.0109
     ],
     "direction": [
-      0,
-      0,
-      1
+      -0.98028,
+      0.10079,
+      -0.16997
     ],
     "up": [
       0,
@@ -27,9 +26,9 @@
   },
   "motion": {
     "end_position": [
-      2,
-      5,
-      -15
+      7.67003,
+      -0.60688,
+      0.2609
     ]
   },
   "lighting": {
@@ -39,6 +38,6 @@
     "emissive_scale": 1
   },
   "preview": {
-    "exposure_ev": 0
+    "exposure_ev": 6
   }
 }

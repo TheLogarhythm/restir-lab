@@ -1,22 +1,22 @@
 {
   "schema_version": 2,
-  "scene_id": "cornell-box",
+  "scene_id": "bistro",
   "source": {
     "kind": "builtin",
     "root": "renderers/rtxdi/Assets/Media",
-    "entry": "CornellBox/CornellBox.gltf",
-    "asset": "CornellBox"
+    "entry": "bistro-rtxdi.scene.json",
+    "asset": "Bistro"
   },
   "camera": {
     "position": [
-      0,
-      5,
-      -15
+      -7.688,
+      2,
+      5.594
     ],
     "direction": [
+      0.3539,
       0,
-      0,
-      1
+      0.9426
     ],
     "up": [
       0,
@@ -27,9 +27,9 @@
   },
   "motion": {
     "end_position": [
+      -6.688,
       2,
-      5,
-      -15
+      5.594
     ]
   },
   "lighting": {
@@ -39,6 +39,6 @@
     "emissive_scale": 1
   },
   "preview": {
-    "exposure_ev": 0
+    "exposure_ev": 4
   }
 }

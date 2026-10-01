@@ -10,7 +10,7 @@ def digest(path):
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
-def resource_path(directory, uri):
+def resource_path(directory, uri, *, root=None):
     parsed = urlsplit(uri)
     if parsed.scheme or parsed.netloc or parsed.query or parsed.fragment:
         raise ValueError(f"Only local relative resource URIs are supported: {uri[:80]}")
@@ -18,7 +18,8 @@ def resource_path(directory, uri):
     if not decoded or "\\" in decoded or ":" in decoded or decoded.startswith("/"):
         raise ValueError(f"Invalid relative resource URI: {uri[:80]}")
     path = (directory / decoded).resolve()
-    if not path.is_relative_to(directory.resolve()):
+    boundary = directory if root is None else root
+    if not path.is_relative_to(boundary.resolve()):
         raise ValueError(f"Resource URI escapes its directory: {uri[:80]}")
     return path
 

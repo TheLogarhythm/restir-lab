@@ -9,6 +9,7 @@ import sys
 import time
 
 from rtxdi_common import ROOT, RENDERER, di_settings, sha, validate_bmp
+from experiment.scenes import scene_arguments
 
 DEFAULT_CONFIG = {
     "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
@@ -54,7 +55,7 @@ def main():
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + "-cornell-" + ("interactive" if args.interactive else "capture")
     output = ROOT / "runs" / run_id
     output.mkdir(parents=True)
-    settings = {**config["arguments"], **scene_config["arguments"]}
+    settings = {**config["arguments"], **(scene_config.get("arguments") or scene_arguments(scene_config))}
     image = output / "cornell.bmp"
     if not args.interactive:
         settings.update({"profiling.saveFrame": config["capture_frame"], "profiling.saveFile": str(image)})
