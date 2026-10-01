@@ -22,4 +22,4 @@ Codex assisted the project documentation, validation script, scene records, conv
 
 The [Multi-scene experiment integration](scripts/run/rtxdi_experiments.patch) and [readback helper](scripts/run/rtxdi_experiments/LabExperiment.h) were developed with Codex. The integration adapts pinned RTXDI; NVIDIA notices and licensing remain applicable to upstream code.
 
-The [conventional reference shader](scripts/run/rtxdi_experiments/ReferenceSamples.hlsl) is project code developed with Codex, using pinned RTXDI's light, material and visibility interfaces.
+The [conventional reference shader](scripts/run/rtxdi_experiments/ReferenceSamples.hlsl), reference runner are project code developed with Codex, using pinned RTXDI's light, material and visibility interfaces.

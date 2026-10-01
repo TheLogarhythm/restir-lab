@@ -18,7 +18,7 @@ The camera above comes from Measure One's animated FBX camera; exposure is a pre
 For controlled multi-scene reuse experiments (linear HDR, fixed PNG previews, frame control and GPU timings), see [the experiment](../../experiments/suites/di-reuse.md).
 
 Shared code lives in `experiment/`: `images.py` handles HDR I/O, `runner.py`
-executes runs, and `artifacts.py` validates and converts captures.
+executes runs, and `reference_runner.py` manages reference checkpoints.
 `config.json` records requested settings, `resolved.json` records renderer
 settings, and `manifest.json` records provenance and status. Failed validation
 or conversion preserves raw captures; failed build restoration retains its

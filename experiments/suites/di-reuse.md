@@ -92,3 +92,70 @@ Renaming the suite within `runs/` preserves these
 paths; `run_id` remains its original identifier. Renderer log mount names such as
 `/Assets/Media` are virtual filesystem labels, not host paths.
 Equal-time comparisons remain separate work.
+
+## References
+
+Generate references for an existing baseline:
+
+~~~powershell
+python scripts/run/build_rtxdi_experiments.py --reference
+python scripts/run/rtxdi_reference.py --baseline runs/di --output-name di-reference --check
+python scripts/run/rtxdi_reference.py --baseline runs/di --output-name di-reference
+~~~
+
+Reference generation accepts `--scene <IDs>` and
+`--scenario static|motion|reset`. References inherit baseline resolution, camera
+and lighting; current assets must match their recorded hashes. Identical targets
+share one reference.
+
+Two streams (default seeds 1001 and 2001) accumulate 16 samples per light class
+per batch. Default checkpoints are 256, 512, 1024, 2048 and 4096 samples **per
+class per stream per pixel**. Their average is the reference, so the default cap
+is 8192 samples per class across both streams. Override with `--seeds`,
+`--batch-samples` (1–64) and `--checkpoints` (doubling multiples of the batch size).
+
+The separate `FullSampleReference.exe` and `shaders/full-sample-reference/`
+evaluate every light sample using the upstream BSDF and final visibility.
+Local lights are sampled directly from their power PDF mipmap, environment
+directions from their PDF mipmap, and distant lights uniformly with their angular
+extent. There is no reservoir or shared RIS pool. `--local-sampling UNIFORM`
+provides a local-light sampling cross-check. Lighting/HDR buffers and progressive
+averaging use FP32. Camera samples stay fixed: averaging reduces illumination
+noise, not aliasing. Upstream emission/background/approximate glass composition
+are retained; this is a matched renderer reference, not independent physical truth.
+
+### Convergence and resume
+
+For stream images `A_n`, `B_n` at checkpoint `n`, let `R_n = (A_n+B_n)/2` and
+`RMAE(I,R) = mean(abs(I-R)) / (mean(abs(R)) + 1e-12)`, over all linear RGB values.
+A checkpoint passes when both:
+
+- Stream disagreement: `RMAE(A_n, R_n) <= alpha * E_n`.
+- Checkpoint change: `RMAE(R_(n/2), R_n) <= alpha * E_n`.
+
+`E_n` is the lowest RMAE among baseline captures of the same target, measured
+against `R_n`. `alpha` defaults to 0.1 (`--noise-ratio`);
+`--scene-noise-ratio SCENE=RATIO` overrides one scene and is saved in its record.
+Disclose relaxed thresholds when reporting results.
+
+Each target stops after **two consecutive passing checkpoints**. The first
+cannot pass; default sampling can therefore stop no earlier than 1024. Reaching
+the cap without passing leaves it unconverged. Only full-image RMAE determines
+acceptance; quadrant metrics and NRMSE are diagnostic. This checks empirical
+agreement and stability, not true residual error or shared estimator bias.
+
+~~~powershell
+python scripts/run/rtxdi_reference.py --baseline runs/di --resume runs/di-reference
+python scripts/run/rtxdi_reference.py --baseline runs/di --resume runs/di-reference --reassess-only
+~~~
+
+Resume with the original seeds, batch size and sampling strategy; extend the
+original doubling sequence with `--checkpoints` for a higher cap. Completed
+segments are reused after target, build, image-hash and accumulation-lineage
+checks. Unfinished segments restart from the preceding saved FP32 stream mean
+and sampling sequence; earlier batches are not resampled. Each segment reloads
+the scene, and failed attempts remain in seed/checkpoint/attempt directories.
+`--reassess-only` checks all saved pairs without rendering and retains the latest
+reference. Legacy uninterrupted streams and NRMSE records require a new suite.
+
+`reference-index.json` links pose targets, image hashes and convergence records.
