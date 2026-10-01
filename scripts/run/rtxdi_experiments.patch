@@ -1,0 +1,268 @@
+--- a/Samples/FullSample/Source/App/SceneRenderer.cpp
++++ b/Samples/FullSample/Source/App/SceneRenderer.cpp
+@@ -42,6 +42,7 @@
+ #include "Scene/Lights.h"
+ #include "Screenshot.h"
+ #include "UserInterface.h"
++#include "LabExperiment.h"
+ 
+ using namespace donut::math;
+ #include "ShaderDebug/DebugVizPasses.h"
+@@ -145,6 +146,8 @@
+ 
+     m_rootFs = std::make_shared<vfs::RootFileSystem>();
+     m_rootFs->mount("/Assets/Media", mediaPath);
++    m_labExperiment = std::make_unique<LabExperiment>();
++    m_labExperiment->ApplySettings(m_ui);
+     m_rootFs->mount("/shaders/donut", frameworkShaderPath);
+     m_rootFs->mount("/shaders/app", appShaderPath);
+ 
+@@ -166,7 +169,12 @@
+ 
+     // std::filesystem::path scenePath = "/Assets/Media/bistro-rtxdi.scene.json";
+     std::filesystem::path scenePath;
+-    switch (m_args.sceneAsset)
++    if (m_labExperiment->IsFileScene())
++    {
++        m_rootFs->mount("/Assets/Experiment", m_labExperiment->AssetRoot());
++        scenePath = std::filesystem::path("/Assets/Experiment") / m_labExperiment->Entry();
++    }
++    else switch (m_args.sceneAsset)
+     {
+     case SceneAsset::Arcade:
+         scenePath = "/Assets/Media/Arcade/Arcade.gltf";
+@@ -196,6 +204,7 @@
+     m_ui.resources->scene = m_scene;
+ 
+     SetAsynchronousLoadingEnabled(true);
++    m_labExperiment->SetScenePath(scenePath);
+     BeginLoadingScene(m_rootFs, scenePath);
+     GetDeviceManager()->SetVsyncEnabled(true);
+ 
+@@ -292,6 +301,12 @@
+     ApplicationBase::SceneLoaded();
+ 
+     m_scene->FinishedLoading(GetFrameIndex());
++    if (m_labExperiment->EmissiveScale() != 1.f)
++        for (auto& material : m_scene->GetSceneGraph()->GetMaterials())
++        {
++            material->emissiveIntensity *= m_labExperiment->EmissiveScale();
++            material->dirty = true;
++        }
+ 
+     LoadInitialCameraSettings();
+ 
+@@ -1025,6 +1040,11 @@
+     return m_isContext->IsLocalLightPowerRISEnabled();
+ }
+ 
++bool SceneRenderer::ExperimentDone() const
++{
++    return m_labExperiment->Done();
++}
++
+ void SceneRenderer::RenderScene(nvrhi::IFramebuffer* framebuffer)
+ {
+     if (ProcessFrameStepMode(framebuffer))
+@@ -1033,7 +1053,11 @@
+     const engine::PerspectiveCamera* activeCamera = nullptr;
+     uint effectiveFrameIndex = m_renderFrameIndex;
+ 
+-    RunBenchmarkAnimation(activeCamera, effectiveFrameIndex);
++    auto& lab = *m_labExperiment;
++    effectiveFrameIndex = lab.Begin(m_camera);
++    m_ui.lightingSettings.enableRayCounts = false;
++    m_profiler->EnableProfiler(true);
++    if (lab.Reset()) m_prevViewValid = false;
+     EnforceFpsLimit();
+ 
+ #if WITH_NRD
+@@ -1087,7 +1111,7 @@
+ 
+     float accumulationWeight = 1.f / (float)m_ui.numAccumulatedFrames;
+ 
+-    m_profiler->ResolvePreviousFrame();
++    m_profiler->EnableAccumulation(false);
+ 
+     UpdateSelectedMaterialInUI();
+     UpdateEnvironmentLightAndSunLight();
+@@ -1106,6 +1130,12 @@
+ #endif
+ 
+     m_commandList->open();
++    lab.RestoreAccumulation(m_commandList, *m_renderTargets);
++    if (lab.Reset())
++    {
++        m_commandList->clearBufferUInt(m_rtxdiResources->DIReservoirBuffer, 0);
++        m_commandList->clearTextureFloat(m_renderTargets->PrevDepth, nvrhi::AllSubresources, nvrhi::Color(BACKGROUND_DEPTH));
++    }
+     m_profiler->BeginFrame(m_commandList);
+     m_shaderDebugPrintPass->InitializeFrame(m_commandList);
+ 
+@@ -1114,6 +1143,7 @@
+     m_rtxdiResources->InitializeNeighborOffsets(m_commandList, m_isContext->GetNeighborOffsetCount()); // TODO Move to be next to other RTXDI passes?
+     UpdateAccelerationStructure();
+     EnvironmentMap();
++    lab.ApplySun(*m_sunLight);
+     nvrhi::utils::ClearColorAttachment(m_commandList, framebuffer, 0, nvrhi::Color(0.f));
+     GBuffer();
+ 
+@@ -1139,20 +1169,19 @@
+     m_isContext->GetReSTIRDIContext().SetShadingParameters(restirDIShadingParams);
+ 
+     LightingPasses::RenderSettings lightingSettings = GetFullyProcessedLightingSettings(denoiserMode, enableDirectReStirPass);
++    lab.Resolved(*m_isContext, m_ui, *m_sunLight, GetDeviceManager()->GetWindow() == nullptr);
+     PresampleLights(enableDirectReStirPass, enableIndirect, lightingSettings);
+     RenderDirectLighting(enableDirectReStirPass, checkerboard, lightingSettings);
+     RenderIndirectLighting(enableBrdfAndIndirectPass, enableDirectReStirPass, lightingSettings);
+     HandleNoLightingCase(enableDirectReStirPass, enableBrdfAndIndirectPass);
+-    m_DLSSRRInputFormattingPass->Render(m_commandList, m_view);
+-    Denoiser(lightingSettings);
++    // Denoising and its input formatting are excluded from this experiment.
+     m_compositingPass->Render(m_commandList, m_view, m_viewPrevious, denoiserMode, checkerboard, m_ui, *m_environmentLight);
+     TransparentGeometry();
++    if (lab.IsReference())
++        m_accumulationPass->Render(m_commandList, m_view, m_upscaledView, lab.AccumulationWeight());
+-    ResolveAA(m_commandList, accumulationWeight);
+-    Bloom();
+-    ReferenceImage(cameraIsStatic);
+-    ToneMapping(exposureResetRequired);
+-    DebugPathViz();
+-    FinalFramebufferOutput(framebuffer);
++    // Window display only. Captures read HdrColor before any display transform.
++    if (GetDeviceManager()->GetWindow())
++        m_CommonPasses->BlitTexture(m_commandList, framebuffer, m_renderTargets->HdrColor, &m_bindingCache);
+ 
+     m_shaderDebugPrintPass->ReadBackPrintData(m_commandList);
+ 
+@@ -1161,7 +1190,12 @@
+     m_commandList->close();
+     GetDevice()->executeCommandList(m_commandList);
+ 
+-    ProcessScreenshotFrame();
++    lab.End(GetDevice(), *m_profiler, *m_renderTargets, *m_rtxdiResources, restirDIContext);
++    if (auto* window = GetDeviceManager()->GetWindow())
++    {
++        GetDeviceManager()->RenderNextFrameWhileUnfocused();
++        if (lab.Done()) glfwSetWindowShouldClose(window, 1);
++    }
+     OutputShaderMessages();
+ 
+     m_ui.gbufferSettings.enableMaterialReadback = false;
+--- a/Samples/FullSample/Source/Profiler.h
++++ b/Samples/FullSample/Source/Profiler.h
+@@ -35,6 +35,8 @@
+     void EnableAccumulation(bool enable);
+     void ResetAccumulation();
+     void ResolvePreviousFrame();
++    // Experiment harness calls after waitForIdle; cancel the normal two-bank advance.
++    void ResolveCompletedFrame() { m_activeBank = !m_activeBank; ResolvePreviousFrame(); }
+     void BeginFrame(nvrhi::ICommandList* commandList);
+     void EndFrame(nvrhi::ICommandList* commandList);
+     void BeginSection(nvrhi::ICommandList* commandList, ProfilerSection::Enum section);
+--- a/Samples/FullSample/Source/App/SceneRenderer.h
++++ b/Samples/FullSample/Source/App/SceneRenderer.h
+@@ -26,6 +26,7 @@
+ #include "UserInterface.h"
+ 
+ class SampleScene;
++class LabExperiment;
+ 
+ class RasterizedGBufferPass;
+ class RaytracedGBufferPass;
+@@ -119,6 +120,13 @@
+     [[nodiscard]] std::shared_ptr<vfs::IFileSystem> GetRootFs() const;
+ 
+     bool Init();
++    bool ShouldRenderUnfocused() override { return true; }
++    bool ExperimentDone() const;
++    uint32_t GetFrameIndex() const
++    {
++        // The window message loop normally advances the device manager's counter.
++        return GetDeviceManager()->GetWindow() ? ApplicationBase::GetFrameIndex() : m_renderFrameIndex;
++    }
+ 
+     void AssignIesProfiles(nvrhi::ICommandList* commandList);
+ 
+@@ -169,6 +177,7 @@
+ private:
+     std::shared_ptr<vfs::RootFileSystem> m_rootFs;
+     std::shared_ptr<SampleScene> m_scene;
++    std::unique_ptr<LabExperiment> m_labExperiment;
+ 
+     // Top level rendering objects
+     std::shared_ptr<engine::ShaderFactory> m_shaderFactory;
+--- a/Samples/FullSample/Source/main.cpp
++++ b/Samples/FullSample/Source/main.cpp
+@@ -183,15 +183,40 @@
+     SceneRenderer sceneRenderer(deviceManager, ui, args.appStartupSettings);
+     if (sceneRenderer.Init())
+     {
+-        UserInterface userInterface(deviceManager, *sceneRenderer.GetRootFs(), ui);
+-        userInterface.Init(sceneRenderer.GetShaderFactory());
+-
+-        deviceManager->AddRenderPassToBack(&sceneRenderer);
+-        deviceManager->AddRenderPassToBack(&userInterface);
+-        deviceManager->RunMessageLoop();
+-        deviceManager->GetDevice()->waitForIdle();
+-        deviceManager->RemoveRenderPass(&sceneRenderer);
+-        deviceManager->RemoveRenderPass(&userInterface);
++        if (deviceManager->GetDeviceParams().headlessDevice)
++        {
++            // Render to an offscreen target: no GLFW window, swapchain, UI or present.
++            const auto& params = deviceManager->GetDeviceParams();
++            nvrhi::TextureDesc desc;
++            desc.width = params.backBufferWidth;
++            desc.height = params.backBufferHeight;
++            desc.format = nvrhi::Format::RGBA8_UNORM;
++            desc.isRenderTarget = true;
++            desc.initialState = nvrhi::ResourceStates::RenderTarget;
++            desc.keepInitialState = true;
++            desc.debugName = "Experiment framebuffer";
++            auto target = deviceManager->GetDevice()->createTexture(desc);
++            auto framebuffer = deviceManager->GetDevice()->createFramebuffer(nvrhi::FramebufferDesc().addColorAttachment(target));
++            while (!sceneRenderer.ExperimentDone())
++            {
++                sceneRenderer.Animate(1.f / 60.f);
++                sceneRenderer.Render(framebuffer);
++                deviceManager->GetDevice()->runGarbageCollection();
++            }
++            deviceManager->GetDevice()->waitForIdle();
++        }
++        else
++        {
++            UserInterface userInterface(deviceManager, *sceneRenderer.GetRootFs(), ui);
++            userInterface.Init(sceneRenderer.GetShaderFactory());
++
++            deviceManager->AddRenderPassToBack(&sceneRenderer);
++            deviceManager->AddRenderPassToBack(&userInterface);
++            deviceManager->RunMessageLoop();
++            deviceManager->GetDevice()->waitForIdle();
++            deviceManager->RemoveRenderPass(&sceneRenderer);
++            deviceManager->RemoveRenderPass(&userInterface);
++        }
+     }
+ 
+     // Clear the shared pointers from 'ui' to graphics objects
+@@ -238,7 +263,10 @@
+ #endif
+ 
+     ProcessApiSpecificDeviceParams(deviceParams, args);
+-    if (!deviceManager->CreateWindowDeviceAndSwapChain(deviceParams, windowTitle.c_str()))
++    const bool deviceCreated = deviceParams.headlessDevice
++        ? deviceManager->CreateHeadlessDevice(deviceParams)
++        : deviceManager->CreateWindowDeviceAndSwapChain(deviceParams, windowTitle.c_str());
++    if (!deviceCreated)
+     {
+         log::error("Cannot initialize a %s graphics device.", apiString);
+         return 1;
+--- a/Samples/FullSample/Source/App/CommandLineArgs.cpp
++++ b/Samples/FullSample/Source/App/CommandLineArgs.cpp
+@@ -432,6 +432,7 @@
+         ("debug.verbose", "Enable debug log messages (0/1)", value(args.appStartupSettings.verbose))
+ 
+         // Device
++        ("device.headless", "Render without a window (0/1)", value(deviceParams.headlessDevice))
+         ("device.backBufferWidth", "Window width", value(deviceParams.backBufferWidth))
+         ("device.backBufferHeight", "Window height", value(deviceParams.backBufferHeight))
+         ("device.borderless", "Run in borderless mode (0/1)", value(deviceParams.startBorderless))

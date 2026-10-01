@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "frames": 128,
+  "seed": 1,
+  "initial_local_candidates": 8,
+  "initial_brdf_candidates": 1,
+  "spatial_neighbors": 4,
+  "spatial_radius": 32,
+  "max_history_length": 20,
+  "captures": {
+    "static": [
+      1,
+      8,
+      32,
+      128
+    ],
+    "motion": [
+      1,
+      32,
+      33,
+      64,
+      96,
+      97,
+      128
+    ],
+    "reset": [
+      1,
+      32,
+      64,
+      65,
+      72,
+      96,
+      128
+    ]
+  },
+  "reset_frame": 65,
+  "motion": {
+    "start_frame": 32,
+    "end_frame": 96,
+    "from": [
+      0,
+      5,
+      -15
+    ],
+    "to": [
+      2,
+      5,
+      -15
+    ]
+  },
+  "preview": "exposure=0 EV; per-channel Reinhard x/(1+x); sRGB; 8-bit RGB"
+}

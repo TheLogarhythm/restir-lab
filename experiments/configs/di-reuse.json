@@ -1,0 +1,50 @@
+{
+  "schema_version": 2,
+  "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "frames": 128,
+  "seed": 1,
+  "initial_local_sampling_mode": "POWER_RIS",
+  "initial_local_candidates": 24,
+  "initial_brdf_candidates": 0,
+  "analytic_sun": true,
+  "spatial_neighbors": 4,
+  "spatial_radius": 32,
+  "max_history_length": 20,
+  "captures": {
+    "static": [
+      1,
+      8,
+      32,
+      128
+    ],
+    "motion": [
+      1,
+      32,
+      33,
+      64,
+      96,
+      97,
+      128
+    ],
+    "reset": [
+      1,
+      32,
+      64,
+      65,
+      72,
+      96,
+      128
+    ]
+  },
+  "reset_frame": 65,
+  "motion": {
+    "start_frame": 32,
+    "end_frame": 96
+  },
+  "initial_infinite_candidates": 1,
+  "initial_environment_candidates": 8
+}

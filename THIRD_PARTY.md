@@ -19,3 +19,7 @@ Nested submodules retain their notices. CMake fetches DXC `v1.8.2505.1`, DLSS `a
 ## Provenance
 
 Codex assisted the project documentation, validation script, scene records, conversion tools, and RTXDI runners. The [external-scene patch](scripts/run/rtxdi_external.patch) is project integration code; pinned RTXDI source is restored after building its local variant. Record later contributions and external code in the report.
+
+The [Multi-scene experiment integration](scripts/run/rtxdi_experiments.patch) and [readback helper](scripts/run/rtxdi_experiments/LabExperiment.h) were developed with Codex. The integration adapts pinned RTXDI; NVIDIA notices and licensing remain applicable to upstream code.
+
+The [conventional reference shader](scripts/run/rtxdi_experiments/ReferenceSamples.hlsl) is project code developed with Codex, using pinned RTXDI's light, material and visibility interfaces.
