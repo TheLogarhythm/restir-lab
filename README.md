@@ -1,6 +1,6 @@
 # ReSTIR Spatial Reuse: Implementation and Evaluation
 
-A two-person COMP5411 project to reproduce and study selected ReSTIR methods. Official RTXDI `v3.1.0` builds and captures Cornell Box with direct lighting; the research implementations are in progress.
+A two-person COMP5411 project to reproduce and study selected ReSTIR methods. The [ReSTIR DI baseline](results/summaries/di-baseline/README.md) evaluates Cornell Box, Arcade and Bistro using RTXDI `v3.1.0`. PDF Similarity and CGNS implementations are next.
 
 Start with the [scope](docs/scope.md), [literature review](docs/literature/README.md), and [roadmap](docs/roadmap.md). Follow [setup](docs/setup.md) to run RTXDI, then use the [scene manifest](scenes/README.md) and [experiment protocol](experiments/protocol.md) for comparisons.
 
@@ -9,7 +9,7 @@ Start with the [scope](docs/scope.md), [literature review](docs/literature/READM
 | `renderers/` | Pinned RTXDI submodule and Falcor slot |
 | `scenes/` | Asset provenance and scene settings |
 | `experiments/`, `results/` | Configurations and research results |
-| `scripts/`, `tests/` | Runners, checks, and future tests |
+| `scripts/`, `tests/` | Runners, analysis, and regression tests |
 | `docs/` | Plans, literature, decisions, and observations |
 | `writing/` | Course templates, working documents, and references |
 

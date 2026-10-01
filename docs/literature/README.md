@@ -17,7 +17,7 @@ ReSTIR combines importance resampling with reuse across space and time. A reserv
 | [GRIS / ReSTIR PT](https://research.nvidia.com/labs/rtr/publication/lin2022generalized/) | 2022, TOG / SIGGRAPH | Formalizes generalized reuse and shift mappings; introduces the ReSTIR PT application. |
 | [Conditional RIS / Suffix ReSTIR](https://research.nvidia.com/labs/rtr/publication/kettunen2023conditional/) | 2023, SIGGRAPH Asia Conference | Derives conditional resampling for reusing subpaths rather than always resampling complete paths. |
 
-**Reading order:** RIS and DI, production ReSTIR and GI, then GRIS/PT and conditional RIS. The [SIGGRAPH 2023 course](https://intro-to-restir.cwyman.org/) is a useful companion. [ReGIR](https://research.nvidia.com/labs/rtr/publication/boksansky2021rendering/) is a related 2021 book chapter on world-space light proposals, useful when studying candidate generation.
+For the current implementation, follow the [course reading sequence](#course-reading-sequence). GI, full path reuse, and conditional RIS provide broader background. [ReGIR](https://research.nvidia.com/labs/rtr/publication/boksansky2021rendering/) is a related 2021 book chapter on world-space light proposals, useful when studying candidate generation.
 
 ## 2. Reuse quality: selection, correlation, and error distribution
 
@@ -90,7 +90,7 @@ Gradient-domain rendering estimates differences between image pixels; differenti
 
 ## Implications for this project
 
-The current [course scope](../scope.md) focuses on ReSTIR DI, PDF Similarity, and compatibility-guided neighbor selection on one backend. GRIS/PT remains a later extension. Use the following questions to guide further reading.
+The current [course scope](../scope.md) focuses on ReSTIR DI, PDF Similarity, and compatibility-guided neighbor selection on one backend. Full path-tracing implementation remains a later extension. Use the following questions to guide further reading.
 
 Three reading questions:
 
@@ -101,3 +101,15 @@ Three reading questions:
 | How do candidate generation and reuse each affect caustic rendering? | FG/FG+, BDPT, manifold sampling, PG |
 
 Keep detailed derivations and paper-specific limitations in [individual notes](notes/README.md), and update this overview only when they change the research map or project choices.
+
+## Course reading sequence
+
+After the original DI paper, follow the [implementation roadmap](../roadmap.md#next-pdf-similarity):
+
+1. [SIGGRAPH 2023 course notes](https://intro-to-restir.cwyman.org/) — revisit RIS, reservoir weights, and direct-light spatiotemporal reuse as needed.
+2. [Production ReSTIR (2021)](https://research.nvidia.com/labs/rtr/publication/wyman2021rearchitecting/) — connect paper concepts to RTXDI's GPU costs and visibility choices.
+3. [PDF Similarity (2023)](https://doi.org/10.1145/3585501) — identify distribution state, rejection rules, and history safeguards for the second implementation.
+4. [GRIS (2022)](https://research.nvidia.com/labs/rtr/publication/lin2022generalized/) — selectively study correlated samples, weighting, domain mappings, and convergence assumptions.
+5. [CGNS (2026)](https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/) and [author code](https://github.com/orion-junkins/ReSTIR-CGNS) — study weighted stochastic neighbor selection and verify its transfer to DI.
+
+Optional afterward: [MCMC mutations (2024)](https://research.nvidia.com/labs/rtr/publication/sawhney2024decorrelating/) for correlation artifacts and sample diversity.

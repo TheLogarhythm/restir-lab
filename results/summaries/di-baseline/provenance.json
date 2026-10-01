@@ -1,0 +1,1932 @@
+{
+  "schema_version": 1,
+  "source_directory": "runs/di-3scenes-analysis-reviewed",
+  "path_convention": "source_analysis paths are relative to source_directory; reference paths are relative to runs/di-3scenes-reference.",
+  "source_analysis": {
+    "status": "completed",
+    "baseline": "../di-3scenes-seed1",
+    "references": "../di-3scenes-reference",
+    "reference_index_sha256": "75baf76e775e8d693cbf8247d1070af0d8d7c9c15bc0fd0428823744944a28ae",
+    "script_sha256": "67ec14eb74ddaa8734cc922c2cca8024a63cc5a9c37432ffaebfc27805ccbfeb",
+    "report_source_sha256": "7f3210dc2e90c23e43b346a48d61bdd129dfaf9ec6b8d8a09fb2a14d424dab37",
+    "metrics_source_sha256": "75031f108023134de9bbd5d8f578bbf3b13729264f007635479c86affe5e0425",
+    "epsilon": 1e-12,
+    "convergence_metric": {
+      "name": "RMAE",
+      "version": 1,
+      "normalization": "mean_absolute_reference",
+      "agreement": "half_stream_difference"
+    },
+    "convergence_regions": [
+      "full"
+    ],
+    "selection": {
+      "scenes": null,
+      "scenario": null
+    },
+    "input_sha256": {
+      "../di-3scenes-seed1/arcade/motion/combined/seed-1/config.json": "1e67875f645dee0ab7fed3bcc9c0407ab80520843cfa9b03478828c99632ce37",
+      "../di-3scenes-seed1/arcade/motion/combined/seed-1/manifest.json": "a7a77e64b96400467bbea3584dd5ee67834eb67588438dd4c5e5195f378cda34",
+      "../di-3scenes-seed1/arcade/motion/combined/seed-1/resolved.json": "cf8617b51aa708221a020a5a13343dd72013464ad9f0923230adda420b27f45f",
+      "../di-3scenes-seed1/arcade/motion/combined/seed-1/timings.csv": "2b9828c5797dedaaa3eb6b7e4c763003440cc703ec6ce8a665e3f10d58e522e3",
+      "../di-3scenes-seed1/arcade/motion/combined/seed-1/frame-0001.pfm.gz": "e388980047d75d24671c734259d1ecaff3c459d1f09b061eacda65b47e672b89",
+      "../di-3scenes-seed1/arcade/motion/combined/seed-1/frame-0032.pfm.gz": "2c3f1f2f0ae8f111cb004139d0efacfab9a622cf2ac42b93c4f3d7e85ff6fcdc",
+      "../di-3scenes-seed1/arcade/motion/combined/seed-1/frame-0033.pfm.gz": "d8a90f278c81046b05ad45204b57a13d9811689e7da25d5a6b36fb4d986581b1",
+      "../di-3scenes-seed1/arcade/motion/combined/seed-1/frame-0064.pfm.gz": "6bdeca147c02b39ab513740bdb16ba6443e3e03c923e49e854fa24d91b6ea492",
+      "../di-3scenes-seed1/arcade/motion/combined/seed-1/frame-0096.pfm.gz": "fa2477f5cf7b06d5bb26c3364f3537df7ebafc0d5646f0798cdf48d6f54df893",
+      "../di-3scenes-seed1/arcade/motion/combined/seed-1/frame-0097.pfm.gz": "ae6dcfa2cb031ddf2f05c7806a7f235f8a3e3e46c941f02f48a274bdc0801d63",
+      "../di-3scenes-seed1/arcade/motion/combined/seed-1/frame-0128.pfm.gz": "aaf7d3a80429404be47a003bc0e9437db9f6e49b9edf9163053ac02013e66ec9",
+      "../di-3scenes-seed1/arcade/motion/initial/seed-1/config.json": "5ce82b30a4e5f2b2314d80e5783bc6fefacec4251206a5640709b9925c0e8ac0",
+      "../di-3scenes-seed1/arcade/motion/initial/seed-1/manifest.json": "664c6677f4ef1026542a0fc5ee53f9ff01dff623bdc60d8ec6df50fd866769c1",
+      "../di-3scenes-seed1/arcade/motion/initial/seed-1/resolved.json": "83f575baebfb7915a685e2467b2493bd6660283481f5fdc6af241631aa34a720",
+      "../di-3scenes-seed1/arcade/motion/initial/seed-1/timings.csv": "8df4d29533eb6c09830112a39b3d883dd72d52012f25ebd50824e508d6c72f8f",
+      "../di-3scenes-seed1/arcade/motion/initial/seed-1/frame-0001.pfm.gz": "af855aa79eda11ff7c6128ca0c44218f9681581b7be83eb9061cafbfabe051ed",
+      "../di-3scenes-seed1/arcade/motion/initial/seed-1/frame-0032.pfm.gz": "74a4c89e2ddd9716eb35f6871654ee4da924105ccc55f06b20568f8e35d15692",
+      "../di-3scenes-seed1/arcade/motion/initial/seed-1/frame-0033.pfm.gz": "9c52f3c0e4d41eb2091b9ab4b01713a1a9690e8caf99b978e9acac087fbf2cb1",
+      "../di-3scenes-seed1/arcade/motion/initial/seed-1/frame-0064.pfm.gz": "65c74ed72b4c5ba26f6f4e0b96466e77e24e91fb79f1bfee96576e3666031351",
+      "../di-3scenes-seed1/arcade/motion/initial/seed-1/frame-0096.pfm.gz": "27a1b8f55f40a4c1e549018cef864a469445f9356526d4737e00ec33c4634484",
+      "../di-3scenes-seed1/arcade/motion/initial/seed-1/frame-0097.pfm.gz": "fdda89ef74526e8ed0f8f48ba9808590abe8a19f6e0dbb842f4f81c7da901002",
+      "../di-3scenes-seed1/arcade/motion/initial/seed-1/frame-0128.pfm.gz": "9b07f8e847a448ad1efd8e8e4b7a710d4a926924d4e4ccf64921135279057d02",
+      "../di-3scenes-seed1/arcade/motion/spatial/seed-1/config.json": "19e79ce9c9bce42263359c533cfba236fc131d7e3529a5b99d50fc237744c002",
+      "../di-3scenes-seed1/arcade/motion/spatial/seed-1/manifest.json": "31e93a4800f8c0692e70f8f91bfef41c541918c5d35a0da973233358f4ed5542",
+      "../di-3scenes-seed1/arcade/motion/spatial/seed-1/resolved.json": "76a9fe99ed0968e95f2354f3173f90b30bcdcdc97351653e3eab9bb79c7710f9",
+      "../di-3scenes-seed1/arcade/motion/spatial/seed-1/timings.csv": "f73b6243885dcc2f5999ab8704a3459923392e946b2bca628514797bebcda25e",
+      "../di-3scenes-seed1/arcade/motion/spatial/seed-1/frame-0001.pfm.gz": "02b8f618181e4fc6df9179da641eebc54ec1b784fb3c05dc5900382ce324dde3",
+      "../di-3scenes-seed1/arcade/motion/spatial/seed-1/frame-0032.pfm.gz": "d721231f164da25d6dc6daab90b59be8db3a60f83cf23db5421ba07f27d6068a",
+      "../di-3scenes-seed1/arcade/motion/spatial/seed-1/frame-0033.pfm.gz": "e3e0dac0615eb184615e6d24d79b5432af05fc042329ac4f53259853ec798c42",
+      "../di-3scenes-seed1/arcade/motion/spatial/seed-1/frame-0064.pfm.gz": "bdc0bd950cc2a4e5ad9dfc7b964ec83c012e04c15790af49b3bfdaa3b5cee987",
+      "../di-3scenes-seed1/arcade/motion/spatial/seed-1/frame-0096.pfm.gz": "cbe67dbe468f11110bcdf6777eb02693465c9819ec60ba0da5de81171c6b1d8d",
+      "../di-3scenes-seed1/arcade/motion/spatial/seed-1/frame-0097.pfm.gz": "fc2ca2a18dcde0ce0e74ac5215613700e0b02c1012e68d60af128f984085d546",
+      "../di-3scenes-seed1/arcade/motion/spatial/seed-1/frame-0128.pfm.gz": "284d01acdb6f6b22ce22a229f466695e9e6f8bc4f761c292d8ab4539ccbd8241",
+      "../di-3scenes-seed1/arcade/motion/temporal/seed-1/config.json": "bb20e3bdd774ff1cf119e3f6458d8cdcfeddb564418e596b91cc89ff5b248396",
+      "../di-3scenes-seed1/arcade/motion/temporal/seed-1/manifest.json": "7ae68a2a8b56a47ca854f43c4cd0838f4f8a7954a9f37d6b26cf77d01f28adb1",
+      "../di-3scenes-seed1/arcade/motion/temporal/seed-1/resolved.json": "e84364c2f5a51aaabca1b869dfbf56d0e38d7feb7f5b7ef031e11a0ee40a2072",
+      "../di-3scenes-seed1/arcade/motion/temporal/seed-1/timings.csv": "73333c239121c762c4b81c8d26021f162be2547bd0cb570af6e27d6456954ab6",
+      "../di-3scenes-seed1/arcade/motion/temporal/seed-1/frame-0001.pfm.gz": "439e3be7dc9610d8433b72d17b85779a615ef2d1e39644c3034cf09d3a13e0b4",
+      "../di-3scenes-seed1/arcade/motion/temporal/seed-1/frame-0032.pfm.gz": "8cd542e18d6d0f93cd2704bdd0c25e49252b3b5c5e8fd3dcb8367c2836f4aa6c",
+      "../di-3scenes-seed1/arcade/motion/temporal/seed-1/frame-0033.pfm.gz": "ecf7d3b4e3edbcb228cb01f1dcb85853bf899945fb70f1e69346b91737d06374",
+      "../di-3scenes-seed1/arcade/motion/temporal/seed-1/frame-0064.pfm.gz": "442e33951c7d742a7ab40d0b651cf3417332e191d3af8811ed7f5fb66d538c15",
+      "../di-3scenes-seed1/arcade/motion/temporal/seed-1/frame-0096.pfm.gz": "8ff49f30469c80a89485bacc36b5d8ba58a7e49d624cc2546edf099a4e0fddea",
+      "../di-3scenes-seed1/arcade/motion/temporal/seed-1/frame-0097.pfm.gz": "82677b5e9680da82f2a7fbd85406f464686c317b63cd28c56f142841fa83034a",
+      "../di-3scenes-seed1/arcade/motion/temporal/seed-1/frame-0128.pfm.gz": "9c49e58ea35ea798fbe042d5ce8fac77f6aa91dfa36303e7156c14717822ec80",
+      "../di-3scenes-seed1/arcade/reset/combined/seed-1/config.json": "6ced88b57a0c323aa34d3a7c8be31cdc14460aa99edf0a584fdd87d2c66e1a02",
+      "../di-3scenes-seed1/arcade/reset/combined/seed-1/manifest.json": "8ce7daf1acfc3f32688a6af8cadf473f171f6903d7cb4336084a1534e8054119",
+      "../di-3scenes-seed1/arcade/reset/combined/seed-1/resolved.json": "cf8617b51aa708221a020a5a13343dd72013464ad9f0923230adda420b27f45f",
+      "../di-3scenes-seed1/arcade/reset/combined/seed-1/timings.csv": "e3f30a028c348e87fdc811c7ae857fa9506248cec444e4b089126d2d186bf5e7",
+      "../di-3scenes-seed1/arcade/reset/combined/seed-1/frame-0001.pfm.gz": "e388980047d75d24671c734259d1ecaff3c459d1f09b061eacda65b47e672b89",
+      "../di-3scenes-seed1/arcade/reset/combined/seed-1/frame-0032.pfm.gz": "2c3f1f2f0ae8f111cb004139d0efacfab9a622cf2ac42b93c4f3d7e85ff6fcdc",
+      "../di-3scenes-seed1/arcade/reset/combined/seed-1/frame-0064.pfm.gz": "fbc3436c24869e1de5192dcc592df01a6f95949f02ef4453c3382efc578f906f",
+      "../di-3scenes-seed1/arcade/reset/combined/seed-1/frame-0065.pfm.gz": "e5322abaffa3b8c5797d09c01e47a9c1a5aadbaadd21c6efa65503abc462d82a",
+      "../di-3scenes-seed1/arcade/reset/combined/seed-1/frame-0072.pfm.gz": "4794f0d262481c806e5533fff2ff242990f905d850f786ede186133edc6f5f50",
+      "../di-3scenes-seed1/arcade/reset/combined/seed-1/frame-0096.pfm.gz": "7c73fa28a8eb1f29e00adcafe1f85729833f1e6332f1fa8b6329f77d154694e1",
+      "../di-3scenes-seed1/arcade/reset/combined/seed-1/frame-0128.pfm.gz": "c067b92011639ccc1eea0e50e26827c83734b5ea9ae571d766a03478abd3a82c",
+      "../di-3scenes-seed1/arcade/reset/initial/seed-1/config.json": "68c4b2e7ff975df3dcb5e109a7e5aaca41ee2419117a0021d2098c850cfa3e99",
+      "../di-3scenes-seed1/arcade/reset/initial/seed-1/manifest.json": "8dcd4b137d2e1dd72379421686c1d1e1cced98454a8d80f4061b20db01997c41",
+      "../di-3scenes-seed1/arcade/reset/initial/seed-1/resolved.json": "83f575baebfb7915a685e2467b2493bd6660283481f5fdc6af241631aa34a720",
+      "../di-3scenes-seed1/arcade/reset/initial/seed-1/timings.csv": "d4120961e09c6562361c977596f13359578f9390f24114265bad62a23349e2ca",
+      "../di-3scenes-seed1/arcade/reset/initial/seed-1/frame-0001.pfm.gz": "af855aa79eda11ff7c6128ca0c44218f9681581b7be83eb9061cafbfabe051ed",
+      "../di-3scenes-seed1/arcade/reset/initial/seed-1/frame-0032.pfm.gz": "74a4c89e2ddd9716eb35f6871654ee4da924105ccc55f06b20568f8e35d15692",
+      "../di-3scenes-seed1/arcade/reset/initial/seed-1/frame-0064.pfm.gz": "d3c55c1d22a65515d15d3fc336c97e8d441c7f48b2792c9bcbcab4a5dad83501",
+      "../di-3scenes-seed1/arcade/reset/initial/seed-1/frame-0065.pfm.gz": "2b48b0daf59269e9ff48f09985f4500aca54acdc969ece9e6f8148740b70d7a3",
+      "../di-3scenes-seed1/arcade/reset/initial/seed-1/frame-0072.pfm.gz": "6d016ccec8c636e2c29338fa5856407467f0540e91ea8afec0f593b9062395a8",
+      "../di-3scenes-seed1/arcade/reset/initial/seed-1/frame-0096.pfm.gz": "6f1a27723824cfb577cfe224fb18c75882b10713fa5e7e41a2e35b6e1ca9ecb6",
+      "../di-3scenes-seed1/arcade/reset/initial/seed-1/frame-0128.pfm.gz": "910cb076d8e0044fbbf0457f862583d7342abf95a4ad4a3784de400cfa7af8d4",
+      "../di-3scenes-seed1/arcade/reset/spatial/seed-1/config.json": "6a85734dcb2a0773355696446ef9d0ee9582f73c351e6c80ea3509093ceef8e6",
+      "../di-3scenes-seed1/arcade/reset/spatial/seed-1/manifest.json": "b4aa1d0709d3e90a12d718ec929ffac08f368fa48ab501b459c7edca523c659a",
+      "../di-3scenes-seed1/arcade/reset/spatial/seed-1/resolved.json": "76a9fe99ed0968e95f2354f3173f90b30bcdcdc97351653e3eab9bb79c7710f9",
+      "../di-3scenes-seed1/arcade/reset/spatial/seed-1/timings.csv": "e9d10c94668fa302aa66a21684e6174bf77ccc8736ad685f7b2fab43babc2c8e",
+      "../di-3scenes-seed1/arcade/reset/spatial/seed-1/frame-0001.pfm.gz": "02b8f618181e4fc6df9179da641eebc54ec1b784fb3c05dc5900382ce324dde3",
+      "../di-3scenes-seed1/arcade/reset/spatial/seed-1/frame-0032.pfm.gz": "d721231f164da25d6dc6daab90b59be8db3a60f83cf23db5421ba07f27d6068a",
+      "../di-3scenes-seed1/arcade/reset/spatial/seed-1/frame-0064.pfm.gz": "599bd8110534111a0288112c9f771f642d7811517aff4584bceb3f2b35f791a5",
+      "../di-3scenes-seed1/arcade/reset/spatial/seed-1/frame-0065.pfm.gz": "aae5535026c56f74701e31166a0055a61bd491d8bd5e7d98d0d525902aff1224",
+      "../di-3scenes-seed1/arcade/reset/spatial/seed-1/frame-0072.pfm.gz": "54bf86f3c1711a9be88ec4c0c3755d75e85f5cef759919d3610693ed0dcbd5c2",
+      "../di-3scenes-seed1/arcade/reset/spatial/seed-1/frame-0096.pfm.gz": "db855ae27cc262f9153ee2fbbb960367d44fd386122bd2bac8cd1afb89ded496",
+      "../di-3scenes-seed1/arcade/reset/spatial/seed-1/frame-0128.pfm.gz": "3ce481744b76971e470282b025c91194a37ca146a75d77e4e28eb4c363638662",
+      "../di-3scenes-seed1/arcade/reset/temporal/seed-1/config.json": "1897a740213774d8371d165487b51ef1273647e5bfbc0a7a379842e71c477d8f",
+      "../di-3scenes-seed1/arcade/reset/temporal/seed-1/manifest.json": "9fff505a35d23405f8848b6383ec541886724b465698e94a68bb5fb915c5a6d0",
+      "../di-3scenes-seed1/arcade/reset/temporal/seed-1/resolved.json": "e84364c2f5a51aaabca1b869dfbf56d0e38d7feb7f5b7ef031e11a0ee40a2072",
+      "../di-3scenes-seed1/arcade/reset/temporal/seed-1/timings.csv": "02ce7d893e61082c7f3c6c18bcdac3eeebd515ab64b5c3d03a5932c52e3caf64",
+      "../di-3scenes-seed1/arcade/reset/temporal/seed-1/frame-0001.pfm.gz": "439e3be7dc9610d8433b72d17b85779a615ef2d1e39644c3034cf09d3a13e0b4",
+      "../di-3scenes-seed1/arcade/reset/temporal/seed-1/frame-0032.pfm.gz": "8cd542e18d6d0f93cd2704bdd0c25e49252b3b5c5e8fd3dcb8367c2836f4aa6c",
+      "../di-3scenes-seed1/arcade/reset/temporal/seed-1/frame-0064.pfm.gz": "33108ddb6d2e6435823491aaf2c22d9438428e3df32d16062ff28467de7d3fc0",
+      "../di-3scenes-seed1/arcade/reset/temporal/seed-1/frame-0065.pfm.gz": "aa84d4d99f4387afee59f5061721a0ca297ec1f8e3e34eef3186fee71fcfd149",
+      "../di-3scenes-seed1/arcade/reset/temporal/seed-1/frame-0072.pfm.gz": "3dee2f424ea398dd76424545d39429fce0fe525c90fb4f18adcf0acfdd4853b8",
+      "../di-3scenes-seed1/arcade/reset/temporal/seed-1/frame-0096.pfm.gz": "bf8fbd5d0eeeed474af8510c94d3d3f15523c7910cc0565ff07d403e614bf947",
+      "../di-3scenes-seed1/arcade/reset/temporal/seed-1/frame-0128.pfm.gz": "0157f23e199f37c80b576ed44c212cc2d95bf7508f9a05bf5c7bff51f932d05c",
+      "../di-3scenes-seed1/arcade/static/combined/seed-1/config.json": "605264b896434d1fc29d29c776ab6800f83b7bc71b8682cb993fd979eb957015",
+      "../di-3scenes-seed1/arcade/static/combined/seed-1/manifest.json": "263cb8cef7b4b992250043f3438e3aa158d02f63174121d490d3cfdfda13b659",
+      "../di-3scenes-seed1/arcade/static/combined/seed-1/resolved.json": "cf8617b51aa708221a020a5a13343dd72013464ad9f0923230adda420b27f45f",
+      "../di-3scenes-seed1/arcade/static/combined/seed-1/timings.csv": "2fb10443b511979b5885dbf4605b6de54730cc498f7de5beb84633771a58c723",
+      "../di-3scenes-seed1/arcade/static/combined/seed-1/frame-0001.pfm.gz": "e388980047d75d24671c734259d1ecaff3c459d1f09b061eacda65b47e672b89",
+      "../di-3scenes-seed1/arcade/static/combined/seed-1/frame-0008.pfm.gz": "9ac41f19bfb00dd43c31b7238cf2b87eee544a003834ca920e24e4c39659ecb1",
+      "../di-3scenes-seed1/arcade/static/combined/seed-1/frame-0032.pfm.gz": "2c3f1f2f0ae8f111cb004139d0efacfab9a622cf2ac42b93c4f3d7e85ff6fcdc",
+      "../di-3scenes-seed1/arcade/static/combined/seed-1/frame-0128.pfm.gz": "00fad96fb0859b52135c281385ac71f951f62abb7ff7b78473dd60a95e0e59f4",
+      "../di-3scenes-seed1/arcade/static/initial/seed-1/config.json": "01dbc12a9fe3eb2d87ace2be887983b5959f848ab0a9e0b336a09d3666227fd2",
+      "../di-3scenes-seed1/arcade/static/initial/seed-1/manifest.json": "8c5b22821591fd998df69e959891a1211cf77ea245e8988c167ae10d834adee0",
+      "../di-3scenes-seed1/arcade/static/initial/seed-1/resolved.json": "83f575baebfb7915a685e2467b2493bd6660283481f5fdc6af241631aa34a720",
+      "../di-3scenes-seed1/arcade/static/initial/seed-1/timings.csv": "052da306cebcede0687a830a33e8262f6385c74ca224f32cef32f816475935af",
+      "../di-3scenes-seed1/arcade/static/initial/seed-1/frame-0001.pfm.gz": "af855aa79eda11ff7c6128ca0c44218f9681581b7be83eb9061cafbfabe051ed",
+      "../di-3scenes-seed1/arcade/static/initial/seed-1/frame-0008.pfm.gz": "cfb01270702db7a9477ad8b602111cf32d81ad07da3a8e0c8f7c31e25c061b44",
+      "../di-3scenes-seed1/arcade/static/initial/seed-1/frame-0032.pfm.gz": "74a4c89e2ddd9716eb35f6871654ee4da924105ccc55f06b20568f8e35d15692",
+      "../di-3scenes-seed1/arcade/static/initial/seed-1/frame-0128.pfm.gz": "910cb076d8e0044fbbf0457f862583d7342abf95a4ad4a3784de400cfa7af8d4",
+      "../di-3scenes-seed1/arcade/static/spatial/seed-1/config.json": "1f1d90566940c5c2caef35409abcec1076c22590c8afa6069c99192c227a8466",
+      "../di-3scenes-seed1/arcade/static/spatial/seed-1/manifest.json": "ab1de18c4fd1d457ec05d2c209e192afef409d01bacc537a3d9d7492fa7aad55",
+      "../di-3scenes-seed1/arcade/static/spatial/seed-1/resolved.json": "76a9fe99ed0968e95f2354f3173f90b30bcdcdc97351653e3eab9bb79c7710f9",
+      "../di-3scenes-seed1/arcade/static/spatial/seed-1/timings.csv": "6a2ff45bf51d0c165bde3d97839da9ee4cf961c1ea3db0b783a142d3a86054a4",
+      "../di-3scenes-seed1/arcade/static/spatial/seed-1/frame-0001.pfm.gz": "02b8f618181e4fc6df9179da641eebc54ec1b784fb3c05dc5900382ce324dde3",
+      "../di-3scenes-seed1/arcade/static/spatial/seed-1/frame-0008.pfm.gz": "a4efa34b1f5523ce89c366cc1b118c8a9e39bc4f4592bd207c51567c630650ed",
+      "../di-3scenes-seed1/arcade/static/spatial/seed-1/frame-0032.pfm.gz": "d721231f164da25d6dc6daab90b59be8db3a60f83cf23db5421ba07f27d6068a",
+      "../di-3scenes-seed1/arcade/static/spatial/seed-1/frame-0128.pfm.gz": "3ce481744b76971e470282b025c91194a37ca146a75d77e4e28eb4c363638662",
+      "../di-3scenes-seed1/arcade/static/temporal/seed-1/config.json": "18348588a05c4d8f99660bf04855e017ec9449be135466e74974ae16cc7d60cf",
+      "../di-3scenes-seed1/arcade/static/temporal/seed-1/manifest.json": "0ea068b8e810aad055b13f1dd12c9a7169467628841a301d9c54c320cd71ba99",
+      "../di-3scenes-seed1/arcade/static/temporal/seed-1/resolved.json": "e84364c2f5a51aaabca1b869dfbf56d0e38d7feb7f5b7ef031e11a0ee40a2072",
+      "../di-3scenes-seed1/arcade/static/temporal/seed-1/timings.csv": "29c3b61da444944fde57bf2f70ccab1b9bafc7835868601a1211ba7eb084bb3c",
+      "../di-3scenes-seed1/arcade/static/temporal/seed-1/frame-0001.pfm.gz": "439e3be7dc9610d8433b72d17b85779a615ef2d1e39644c3034cf09d3a13e0b4",
+      "../di-3scenes-seed1/arcade/static/temporal/seed-1/frame-0008.pfm.gz": "c73bb97542d43abedc2abfc510a541920ccec234d7fe11a4dd14fa2cb329b904",
+      "../di-3scenes-seed1/arcade/static/temporal/seed-1/frame-0032.pfm.gz": "8cd542e18d6d0f93cd2704bdd0c25e49252b3b5c5e8fd3dcb8367c2836f4aa6c",
+      "../di-3scenes-seed1/arcade/static/temporal/seed-1/frame-0128.pfm.gz": "b762d12eaf67bd9323d93e4e540bca050ab5c442fcf8bef40252f4d16fd54611",
+      "../di-3scenes-seed1/bistro/motion/combined/seed-1/config.json": "4aa8798f6163aeb8481662dcd5a22c5afe52baff8e24e956279fcb15c16e88f1",
+      "../di-3scenes-seed1/bistro/motion/combined/seed-1/manifest.json": "2620122915355a12cad926c4664f4767c415bc09e2a2b0edc81924f38d2536c0",
+      "../di-3scenes-seed1/bistro/motion/combined/seed-1/resolved.json": "0e9a16fc64773f6b5c1f09dc959e9f109169faa0c9b69b1b00e90cf469b078ab",
+      "../di-3scenes-seed1/bistro/motion/combined/seed-1/timings.csv": "66289cc6dc37d90b0cdb98fb03a0762a39dd3bbeda17e7dd911748e1f19304b9",
+      "../di-3scenes-seed1/bistro/motion/combined/seed-1/frame-0001.pfm.gz": "6cd446ffe2b3c086d634915be6ac0334917bc855b06524be299634de766848c1",
+      "../di-3scenes-seed1/bistro/motion/combined/seed-1/frame-0032.pfm.gz": "6b1e9c06ebb822a2248631719b17cab559647a73449ae8662fb8bbd1f9a66f3e",
+      "../di-3scenes-seed1/bistro/motion/combined/seed-1/frame-0033.pfm.gz": "43353231ad58c9ade2f5ff0c029c4c26037a171e7015bd87423a35ab7851ba7e",
+      "../di-3scenes-seed1/bistro/motion/combined/seed-1/frame-0064.pfm.gz": "31b452520dcba9e4c6496ada72f80960b57ca870d951d2086178c8d89b7c478f",
+      "../di-3scenes-seed1/bistro/motion/combined/seed-1/frame-0096.pfm.gz": "6c6151f929b7f9f481833b908e70c308995e94e85c025b0288d43167cb86b247",
+      "../di-3scenes-seed1/bistro/motion/combined/seed-1/frame-0097.pfm.gz": "a48b3b5190c279046b20b0c51e0f9b0bc047befe5775cb0a7b9f5405c7b22eb1",
+      "../di-3scenes-seed1/bistro/motion/combined/seed-1/frame-0128.pfm.gz": "b1b87bf47ffd9387df1cd104576c4b84b63f1c9c7e672eaf53f0492531c095a0",
+      "../di-3scenes-seed1/bistro/motion/initial/seed-1/config.json": "350b16874eda77c5252fb44fb90f7696763d50baacbb652e3305ba17d9de99fe",
+      "../di-3scenes-seed1/bistro/motion/initial/seed-1/manifest.json": "d7e9d0eb32bde6cc22b4f67552626afe7cead2ecd1b882e1453bce93cc1c0631",
+      "../di-3scenes-seed1/bistro/motion/initial/seed-1/resolved.json": "3840cecaed03d36cf34263b40ca8377a69980b2caeab1b5acf9bc408aa86c661",
+      "../di-3scenes-seed1/bistro/motion/initial/seed-1/timings.csv": "e96ba0b0e0f33f59f5137ce331502060afb991c719a9403c88ed2e55f839549d",
+      "../di-3scenes-seed1/bistro/motion/initial/seed-1/frame-0001.pfm.gz": "bce66b8f4facaa319c53c39c8808e8486d0a975f3b929249c9c3fa56850c5688",
+      "../di-3scenes-seed1/bistro/motion/initial/seed-1/frame-0032.pfm.gz": "a2628c942e85fa63ec3b263021c13fd73e72b33514d39c31a83ce7f4e5e1c235",
+      "../di-3scenes-seed1/bistro/motion/initial/seed-1/frame-0033.pfm.gz": "efe529c3ba19b4969a6eadf89e5392c92bd0061988182c926e891ee29f48d022",
+      "../di-3scenes-seed1/bistro/motion/initial/seed-1/frame-0064.pfm.gz": "561c7b7b51f50356e3ab4d21d36f6cc79bf7e973a1251626498741872e1bb728",
+      "../di-3scenes-seed1/bistro/motion/initial/seed-1/frame-0096.pfm.gz": "2012c7c462cdbe5937b7895e40a1c8e0e29c87fc95beb9f85655e6c2c501d834",
+      "../di-3scenes-seed1/bistro/motion/initial/seed-1/frame-0097.pfm.gz": "ce1737668d827efa988e4bf020b12b40ac3a3a5dd7612efa069ad9ce2a4fd0fb",
+      "../di-3scenes-seed1/bistro/motion/initial/seed-1/frame-0128.pfm.gz": "dc227723d1d98b66b120751ed5b2a302c04f40f6856b73af8a1371a0de73117f",
+      "../di-3scenes-seed1/bistro/motion/spatial/seed-1/config.json": "b6c086284c78c05fd1c3c83254314471fa9e79a94a19f48711fa83f89cd2e532",
+      "../di-3scenes-seed1/bistro/motion/spatial/seed-1/manifest.json": "94af3def846d06b273cefdfbada7fb6d0a3fb4194a15c05d1039a94b710e46b1",
+      "../di-3scenes-seed1/bistro/motion/spatial/seed-1/resolved.json": "9dbe5d0cbcb7edfb9d316dee9ae297d93ad2c347afcfaf955efda4bf43586a12",
+      "../di-3scenes-seed1/bistro/motion/spatial/seed-1/timings.csv": "c7f7175c8c90c7b1c79de5510f5ba3a147d8f9ac8940f68187ec54a6bdb30523",
+      "../di-3scenes-seed1/bistro/motion/spatial/seed-1/frame-0001.pfm.gz": "ca9227faefc6ed9bc4c8bee317e7f38c378cbb4a6d21cf6f896fe086efca305e",
+      "../di-3scenes-seed1/bistro/motion/spatial/seed-1/frame-0032.pfm.gz": "7e67ae791c2c994afa82acc0755c314a028a49cd269ab66a708c360752163f06",
+      "../di-3scenes-seed1/bistro/motion/spatial/seed-1/frame-0033.pfm.gz": "232193d7cda68a2f978c12bc5ac26f4156ff87ded237750845786278299200eb",
+      "../di-3scenes-seed1/bistro/motion/spatial/seed-1/frame-0064.pfm.gz": "e3cf6e20b5ee86b01167aa99c6a6e2e161adbc9714c0a233bb6d25786c0fc3be",
+      "../di-3scenes-seed1/bistro/motion/spatial/seed-1/frame-0096.pfm.gz": "53eefa08789dcd0728a2fac3602869faf996d8816a80d76f1e55820099addb29",
+      "../di-3scenes-seed1/bistro/motion/spatial/seed-1/frame-0097.pfm.gz": "4a90e2ecf2619f1f50220afc4917518bb656b128972054c868a41559c3196ad3",
+      "../di-3scenes-seed1/bistro/motion/spatial/seed-1/frame-0128.pfm.gz": "bafdfa325b38979007da189d3cc57dff57b96470189a15244eefc448ce531b23",
+      "../di-3scenes-seed1/bistro/motion/temporal/seed-1/config.json": "28e23c3bd9929c76ec1e16f9a9396aeecbb66e67c21261d1d7b1dce8f2a42c8b",
+      "../di-3scenes-seed1/bistro/motion/temporal/seed-1/manifest.json": "2414cbc2d70ac173c0383cde6478c7c8668ade9ac92415a2dcddb01e41ea1526",
+      "../di-3scenes-seed1/bistro/motion/temporal/seed-1/resolved.json": "9fff1cdae754c8661291a7df3889c020ebd1cc83c62fc861cced5a70e196e869",
+      "../di-3scenes-seed1/bistro/motion/temporal/seed-1/timings.csv": "9c89043d9c1919438aa43823b0661e15c174cbfbe2582fa0e712e20213a9fc15",
+      "../di-3scenes-seed1/bistro/motion/temporal/seed-1/frame-0001.pfm.gz": "c117c5f6bb896fb7c0553f3e54da3a856827f1ede9eca62f271d65a67d0ac188",
+      "../di-3scenes-seed1/bistro/motion/temporal/seed-1/frame-0032.pfm.gz": "9519ecdce0d70ea156a7494d79b5062f92a7b48c613e323d39fd079665812f62",
+      "../di-3scenes-seed1/bistro/motion/temporal/seed-1/frame-0033.pfm.gz": "a174baf691e81e31d76212915b0a72877d6971025f94301c27fa1d5815407b8b",
+      "../di-3scenes-seed1/bistro/motion/temporal/seed-1/frame-0064.pfm.gz": "9d3482bc7bb8f645cb4406fd8536648d8fa669247e135dcfcac850f2f1fbae1f",
+      "../di-3scenes-seed1/bistro/motion/temporal/seed-1/frame-0096.pfm.gz": "5a931e8bb9e8aa9b357e08826c1ef77c9ebd013a698cb9398071291ad9bf9f30",
+      "../di-3scenes-seed1/bistro/motion/temporal/seed-1/frame-0097.pfm.gz": "c0aee5ce5ccaadfca80938c68ebd44ba58e9eb654bf23667821250c5cdf0d6c3",
+      "../di-3scenes-seed1/bistro/motion/temporal/seed-1/frame-0128.pfm.gz": "6560fdb75ef80a70e0de6bee4197246c6d580ef1b1ffebd080412eaa057b4823",
+      "../di-3scenes-seed1/bistro/reset/combined/seed-1/config.json": "db215e522ac1218587922b13224b6447fd7d612338acf374a241f15a00e3f4ed",
+      "../di-3scenes-seed1/bistro/reset/combined/seed-1/manifest.json": "2ea610e631fd22dfd952c0905a6cc16664363df5fd9ed6940f80019f2e34ce3c",
+      "../di-3scenes-seed1/bistro/reset/combined/seed-1/resolved.json": "0e9a16fc64773f6b5c1f09dc959e9f109169faa0c9b69b1b00e90cf469b078ab",
+      "../di-3scenes-seed1/bistro/reset/combined/seed-1/timings.csv": "2c177d06bfefce4ac376ebaca11a3749d07797409d962c5c5129fda289587ab5",
+      "../di-3scenes-seed1/bistro/reset/combined/seed-1/frame-0001.pfm.gz": "6cd446ffe2b3c086d634915be6ac0334917bc855b06524be299634de766848c1",
+      "../di-3scenes-seed1/bistro/reset/combined/seed-1/frame-0032.pfm.gz": "6b1e9c06ebb822a2248631719b17cab559647a73449ae8662fb8bbd1f9a66f3e",
+      "../di-3scenes-seed1/bistro/reset/combined/seed-1/frame-0064.pfm.gz": "610eb3a552fabbdae9ba800904ffbd5f2de91eabe8fd1ebc67dd5faca0d19a14",
+      "../di-3scenes-seed1/bistro/reset/combined/seed-1/frame-0065.pfm.gz": "502c1b1daa6cfdda1a049cb9b5863f9bcb8f26c6eff8f363e5b219ae5c462ccf",
+      "../di-3scenes-seed1/bistro/reset/combined/seed-1/frame-0072.pfm.gz": "231c7d8f77672124a502f8e382ea468e97ecef7bd46223982103d8347e86d640",
+      "../di-3scenes-seed1/bistro/reset/combined/seed-1/frame-0096.pfm.gz": "74fd307582cc24f0dc4f84471ea752253571a819b07c89863383670ca4e809ef",
+      "../di-3scenes-seed1/bistro/reset/combined/seed-1/frame-0128.pfm.gz": "4f9c4d71d1536b28bf363096a75e2efc866d2e31aff6e4caa3a8143cee264616",
+      "../di-3scenes-seed1/bistro/reset/initial/seed-1/config.json": "0131948cbe7b1cb450ec5ce1a977a91479a08b92aed4f318b7e35a78f1ee9e68",
+      "../di-3scenes-seed1/bistro/reset/initial/seed-1/manifest.json": "40f0576a90db654e4109ae1b9b347356364a9e1cb98f5f8071509d403a5aacb5",
+      "../di-3scenes-seed1/bistro/reset/initial/seed-1/resolved.json": "3840cecaed03d36cf34263b40ca8377a69980b2caeab1b5acf9bc408aa86c661",
+      "../di-3scenes-seed1/bistro/reset/initial/seed-1/timings.csv": "eefd920871078c484538d5b2a6bef9a8863da1c60fec005ecbedfa10553d750a",
+      "../di-3scenes-seed1/bistro/reset/initial/seed-1/frame-0001.pfm.gz": "bce66b8f4facaa319c53c39c8808e8486d0a975f3b929249c9c3fa56850c5688",
+      "../di-3scenes-seed1/bistro/reset/initial/seed-1/frame-0032.pfm.gz": "a2628c942e85fa63ec3b263021c13fd73e72b33514d39c31a83ce7f4e5e1c235",
+      "../di-3scenes-seed1/bistro/reset/initial/seed-1/frame-0064.pfm.gz": "ecf8a676d7cfd41a15d418a513429b70844bddf7bbd234eef8298b4c905e015f",
+      "../di-3scenes-seed1/bistro/reset/initial/seed-1/frame-0065.pfm.gz": "5ab4c14808957e17567ec6af1dadb90adfa17c78e9095eb77797a0f58ab6cc31",
+      "../di-3scenes-seed1/bistro/reset/initial/seed-1/frame-0072.pfm.gz": "1eb806f8ac4b8643b5df7314e6d17ec58b7e3a16c174acea3408d4dc20192286",
+      "../di-3scenes-seed1/bistro/reset/initial/seed-1/frame-0096.pfm.gz": "875ea01a23a49f0ec9fc984eb7abc27fa01a5ef7fb6d6e44b6d3486933143a1a",
+      "../di-3scenes-seed1/bistro/reset/initial/seed-1/frame-0128.pfm.gz": "f09c8161785076e8995c75ff539af79c1d96eec9067d51018961c82abfdbfdd8",
+      "../di-3scenes-seed1/bistro/reset/spatial/seed-1/config.json": "1650ee61f129e02db19216a324aadb3843ee2870471bcc23f0ae3a21d29845dd",
+      "../di-3scenes-seed1/bistro/reset/spatial/seed-1/manifest.json": "32f5546fa15b40cc8ff2961c921fa2968e79975da8785d42e118f189ff95f26b",
+      "../di-3scenes-seed1/bistro/reset/spatial/seed-1/resolved.json": "9dbe5d0cbcb7edfb9d316dee9ae297d93ad2c347afcfaf955efda4bf43586a12",
+      "../di-3scenes-seed1/bistro/reset/spatial/seed-1/timings.csv": "b44be0ca09e80d357bbeef8bebff98245b24e086354c828a8de52645cc45579e",
+      "../di-3scenes-seed1/bistro/reset/spatial/seed-1/frame-0001.pfm.gz": "ca9227faefc6ed9bc4c8bee317e7f38c378cbb4a6d21cf6f896fe086efca305e",
+      "../di-3scenes-seed1/bistro/reset/spatial/seed-1/frame-0032.pfm.gz": "7e67ae791c2c994afa82acc0755c314a028a49cd269ab66a708c360752163f06",
+      "../di-3scenes-seed1/bistro/reset/spatial/seed-1/frame-0064.pfm.gz": "7c29d9b03accedd0f8d82c4e7e284e99d23a91f95d02207928c9c1c938db4d75",
+      "../di-3scenes-seed1/bistro/reset/spatial/seed-1/frame-0065.pfm.gz": "08e28ebb6d9f00822716113c449bb0d8503e17a3442ecc6aaf4cd38a0bda95a4",
+      "../di-3scenes-seed1/bistro/reset/spatial/seed-1/frame-0072.pfm.gz": "ac7ad0b3786393b82a65da9b57eb80122b74ed1cd0f437984728cfc575b07404",
+      "../di-3scenes-seed1/bistro/reset/spatial/seed-1/frame-0096.pfm.gz": "f828e63852a83194e189b52f6c4da888c7713c4ae437f6eedb4adfd71975c7fb",
+      "../di-3scenes-seed1/bistro/reset/spatial/seed-1/frame-0128.pfm.gz": "c61b37f6796a27cc31bc44d69317197b52df4681eab04127fd3b0ec8ea7c99a2",
+      "../di-3scenes-seed1/bistro/reset/temporal/seed-1/config.json": "6216c079283c62186c3b5b34ad82df48fe058a35a122def859bbbddf08c34c60",
+      "../di-3scenes-seed1/bistro/reset/temporal/seed-1/manifest.json": "f2498f7571e648f726b18e4614e79787234159ff33629ead558a316f0451335f",
+      "../di-3scenes-seed1/bistro/reset/temporal/seed-1/resolved.json": "9fff1cdae754c8661291a7df3889c020ebd1cc83c62fc861cced5a70e196e869",
+      "../di-3scenes-seed1/bistro/reset/temporal/seed-1/timings.csv": "5c8fdbfb97e6e0ae260a8687edf92622e66f4f8ca14257a2a95178bafc5bf53f",
+      "../di-3scenes-seed1/bistro/reset/temporal/seed-1/frame-0001.pfm.gz": "c117c5f6bb896fb7c0553f3e54da3a856827f1ede9eca62f271d65a67d0ac188",
+      "../di-3scenes-seed1/bistro/reset/temporal/seed-1/frame-0032.pfm.gz": "9519ecdce0d70ea156a7494d79b5062f92a7b48c613e323d39fd079665812f62",
+      "../di-3scenes-seed1/bistro/reset/temporal/seed-1/frame-0064.pfm.gz": "0d2639abcfde739eba764668a132faf15ce8a141e277f6b56eee0c2b91d7b912",
+      "../di-3scenes-seed1/bistro/reset/temporal/seed-1/frame-0065.pfm.gz": "92379cd1ed9f968e4101c3a78ee55d1a623ee333d350a5914b5cc6e6419ef194",
+      "../di-3scenes-seed1/bistro/reset/temporal/seed-1/frame-0072.pfm.gz": "7cf922983344cce71620df9a8d952ae891d845f9df15da6912d87344e26e7eb0",
+      "../di-3scenes-seed1/bistro/reset/temporal/seed-1/frame-0096.pfm.gz": "95b2968bece56132753c46099a7a0d41c4ab86599e36f34f0b4699f7b4ea3fe5",
+      "../di-3scenes-seed1/bistro/reset/temporal/seed-1/frame-0128.pfm.gz": "84d7d4d4f863d651d4d16c632231d90d543456aac021683e3d6d0ae0100cde99",
+      "../di-3scenes-seed1/bistro/static/combined/seed-1/config.json": "f30c7a5338ee8ea0da57bf4fdc41ddb3d186b70dae136f767627d6169874750e",
+      "../di-3scenes-seed1/bistro/static/combined/seed-1/manifest.json": "0e32b45f1f16405b1f703832b594d76229b1513671b2a095928da51490de982c",
+      "../di-3scenes-seed1/bistro/static/combined/seed-1/resolved.json": "0e9a16fc64773f6b5c1f09dc959e9f109169faa0c9b69b1b00e90cf469b078ab",
+      "../di-3scenes-seed1/bistro/static/combined/seed-1/timings.csv": "837eb2397f4c90352029f141915121c260e90e178351cb764bcfa77d4c9027ac",
+      "../di-3scenes-seed1/bistro/static/combined/seed-1/frame-0001.pfm.gz": "6cd446ffe2b3c086d634915be6ac0334917bc855b06524be299634de766848c1",
+      "../di-3scenes-seed1/bistro/static/combined/seed-1/frame-0008.pfm.gz": "51e0336f41fba646e73dd22cacdd9fef5b36d3a8016bb266513da9ae0c5634e6",
+      "../di-3scenes-seed1/bistro/static/combined/seed-1/frame-0032.pfm.gz": "6b1e9c06ebb822a2248631719b17cab559647a73449ae8662fb8bbd1f9a66f3e",
+      "../di-3scenes-seed1/bistro/static/combined/seed-1/frame-0128.pfm.gz": "2bb70504ad5df19561687ebbccc7c72f1e72de955dbb1fd5d994781ae9e34baa",
+      "../di-3scenes-seed1/bistro/static/initial/seed-1/config.json": "d9d8047311cc2b5a6df8a5bbfd1ccf163e445615d44e47d1a2b1a271b7885eb0",
+      "../di-3scenes-seed1/bistro/static/initial/seed-1/manifest.json": "fdeab696e1d5f41ea4e64a7004443cc29dde28a3fb5ff8ea8e21b158e7ed1f2e",
+      "../di-3scenes-seed1/bistro/static/initial/seed-1/resolved.json": "3840cecaed03d36cf34263b40ca8377a69980b2caeab1b5acf9bc408aa86c661",
+      "../di-3scenes-seed1/bistro/static/initial/seed-1/timings.csv": "fe2e35f02bb4a8de5bfa3006a53d583e270a387670d92ac7349249df51c5ffb8",
+      "../di-3scenes-seed1/bistro/static/initial/seed-1/frame-0001.pfm.gz": "bce66b8f4facaa319c53c39c8808e8486d0a975f3b929249c9c3fa56850c5688",
+      "../di-3scenes-seed1/bistro/static/initial/seed-1/frame-0008.pfm.gz": "4807a2267bcc341960a3f05a5ccb42fcb2180824402431b7f86d18d8407be8a8",
+      "../di-3scenes-seed1/bistro/static/initial/seed-1/frame-0032.pfm.gz": "a2628c942e85fa63ec3b263021c13fd73e72b33514d39c31a83ce7f4e5e1c235",
+      "../di-3scenes-seed1/bistro/static/initial/seed-1/frame-0128.pfm.gz": "f09c8161785076e8995c75ff539af79c1d96eec9067d51018961c82abfdbfdd8",
+      "../di-3scenes-seed1/bistro/static/spatial/seed-1/config.json": "17f5e8f9ac09369f43e1a5bc909675c07095bd3a5a6062b633b45de6c7719505",
+      "../di-3scenes-seed1/bistro/static/spatial/seed-1/manifest.json": "9134ecce120c4adfc37f4f221a10892d047d8a9786c0d402cbfd9ba2cf8c1f8e",
+      "../di-3scenes-seed1/bistro/static/spatial/seed-1/resolved.json": "9dbe5d0cbcb7edfb9d316dee9ae297d93ad2c347afcfaf955efda4bf43586a12",
+      "../di-3scenes-seed1/bistro/static/spatial/seed-1/timings.csv": "54cfe452afcd3c8fb502680d220d1647d3555973364a5fd2a80ed6b348f6f5f9",
+      "../di-3scenes-seed1/bistro/static/spatial/seed-1/frame-0001.pfm.gz": "ca9227faefc6ed9bc4c8bee317e7f38c378cbb4a6d21cf6f896fe086efca305e",
+      "../di-3scenes-seed1/bistro/static/spatial/seed-1/frame-0008.pfm.gz": "5bf8a153056d3cb1d55fa77205ee7820dcd02dd8c1da684b4abcadf2b1c92d54",
+      "../di-3scenes-seed1/bistro/static/spatial/seed-1/frame-0032.pfm.gz": "7e67ae791c2c994afa82acc0755c314a028a49cd269ab66a708c360752163f06",
+      "../di-3scenes-seed1/bistro/static/spatial/seed-1/frame-0128.pfm.gz": "c61b37f6796a27cc31bc44d69317197b52df4681eab04127fd3b0ec8ea7c99a2",
+      "../di-3scenes-seed1/bistro/static/temporal/seed-1/config.json": "3ae2e993e6e610d523b83bb478fda9254bd680257f30c810c81fcb564e20e689",
+      "../di-3scenes-seed1/bistro/static/temporal/seed-1/manifest.json": "98a8bdf10068f4479ffa4e6b584cce601d09b8ef5ebf33856374abc3782440dd",
+      "../di-3scenes-seed1/bistro/static/temporal/seed-1/resolved.json": "9fff1cdae754c8661291a7df3889c020ebd1cc83c62fc861cced5a70e196e869",
+      "../di-3scenes-seed1/bistro/static/temporal/seed-1/timings.csv": "8c90c517eab0a96506e80101faf187f8df0579d72a198e5e645f44e271a42d4f",
+      "../di-3scenes-seed1/bistro/static/temporal/seed-1/frame-0001.pfm.gz": "c117c5f6bb896fb7c0553f3e54da3a856827f1ede9eca62f271d65a67d0ac188",
+      "../di-3scenes-seed1/bistro/static/temporal/seed-1/frame-0008.pfm.gz": "a99200968fa9d6f2dd3836a97b142069e5ff71bbd8d23fdfefbea8dbae9f6b7e",
+      "../di-3scenes-seed1/bistro/static/temporal/seed-1/frame-0032.pfm.gz": "9519ecdce0d70ea156a7494d79b5062f92a7b48c613e323d39fd079665812f62",
+      "../di-3scenes-seed1/bistro/static/temporal/seed-1/frame-0128.pfm.gz": "df96957f09c26a5c0a811321eba4b700c62a022c0ccbda53013858eb3e08bf39",
+      "../di-3scenes-seed1/cornell-box/motion/combined/seed-1/config.json": "196f39e710a07f8bdc96efa81415710538ee07e1cb91bda91e9e07c28463397d",
+      "../di-3scenes-seed1/cornell-box/motion/combined/seed-1/manifest.json": "242208f7e4a9398e8e7b4b58a087095647852c2d68cee385293b2c252f27c721",
+      "../di-3scenes-seed1/cornell-box/motion/combined/seed-1/resolved.json": "a91766d426e2b26ce94da5fd0df8a7db235dfe68f26258d6aa4c1fe9bac269e0",
+      "../di-3scenes-seed1/cornell-box/motion/combined/seed-1/timings.csv": "64cc49ca336f3b23acb7d35f479104402bd94bb133d035fe01d751e76d11c5cc",
+      "../di-3scenes-seed1/cornell-box/motion/combined/seed-1/frame-0001.pfm.gz": "ff334e4851573b49300c00cea8f36c694d8c614ec22db763a3c8ee0ab2c3d4c1",
+      "../di-3scenes-seed1/cornell-box/motion/combined/seed-1/frame-0032.pfm.gz": "4c914dc4e5772d33ba4ba1ef05bdf6ac14db66b0983c5cf1b8b48684f3b204fe",
+      "../di-3scenes-seed1/cornell-box/motion/combined/seed-1/frame-0033.pfm.gz": "34a73b07135db1737e5afda738c07b112b861d177f014280256667496c356fc8",
+      "../di-3scenes-seed1/cornell-box/motion/combined/seed-1/frame-0064.pfm.gz": "7c53bd308a4ee67530d070606ae303039aad2035edcc22a96460c4600c6c218e",
+      "../di-3scenes-seed1/cornell-box/motion/combined/seed-1/frame-0096.pfm.gz": "fa865716aa1ba803e3423b4eae8e5352e243a19d31c08988c03c7912d084e509",
+      "../di-3scenes-seed1/cornell-box/motion/combined/seed-1/frame-0097.pfm.gz": "3506fbf8290f97926c1520e9fa7d4eef8e9dfd26798530897fd11a3584c2943b",
+      "../di-3scenes-seed1/cornell-box/motion/combined/seed-1/frame-0128.pfm.gz": "f7679494da63e4b0fee136eeac99ab412e85f937579c45e79849974e2bde0648",
+      "../di-3scenes-seed1/cornell-box/motion/initial/seed-1/config.json": "221b99ea2252853f605d4c03a9d00777876aba9265696b8862dd666a394e568b",
+      "../di-3scenes-seed1/cornell-box/motion/initial/seed-1/manifest.json": "953a64cd2a22539d99de08803692d3c0b12abb5a37c84ad4e5ce6476499acdcb",
+      "../di-3scenes-seed1/cornell-box/motion/initial/seed-1/resolved.json": "26fbf86ee93d92d840f5c60900be242a4dbe8c47ddf35afaf6c6f4b8926409c4",
+      "../di-3scenes-seed1/cornell-box/motion/initial/seed-1/timings.csv": "fcae607aaeee375e2f0e458ebb817da50fe744f4bcd9ec2b211ae45924d65250",
+      "../di-3scenes-seed1/cornell-box/motion/initial/seed-1/frame-0001.pfm.gz": "9f2696e6408ed5d630368e5e11030e6e1588244f306e5bdc41621acfce0416a1",
+      "../di-3scenes-seed1/cornell-box/motion/initial/seed-1/frame-0032.pfm.gz": "146ba6c88a25e7405958c31c084955b2dc56e5e91d13dd0a435c2dbd2436c415",
+      "../di-3scenes-seed1/cornell-box/motion/initial/seed-1/frame-0033.pfm.gz": "48ddc3c4ccf8fcbea46749c0fddf5a094800955db5f0222a3a4dd63406b012e6",
+      "../di-3scenes-seed1/cornell-box/motion/initial/seed-1/frame-0064.pfm.gz": "cab9f9348562eed6c244bb930c995df20a1f4c4f9a4e998f1ece95ce83bc2e07",
+      "../di-3scenes-seed1/cornell-box/motion/initial/seed-1/frame-0096.pfm.gz": "f5f4685bac3dd31f3e606929a7b6069f43133d4999d56c609c00cb38a6def7b7",
+      "../di-3scenes-seed1/cornell-box/motion/initial/seed-1/frame-0097.pfm.gz": "3c22ec7e1b0c96c947058ca533182a6321aa04a172e42a8b58e45574c53fc574",
+      "../di-3scenes-seed1/cornell-box/motion/initial/seed-1/frame-0128.pfm.gz": "05c310c4944911ea7080bdff56de4ef823b344d170ab9052e68852ae25a92316",
+      "../di-3scenes-seed1/cornell-box/motion/spatial/seed-1/config.json": "3a9a5191f079d988362b923c2e3ff2d2e2fe787927067678ead971f239322a6a",
+      "../di-3scenes-seed1/cornell-box/motion/spatial/seed-1/manifest.json": "46d0706bb1797c39f20e8da6cd6a770bbe7c73b20f310982fb52b837a146ce79",
+      "../di-3scenes-seed1/cornell-box/motion/spatial/seed-1/resolved.json": "ed67e94930de91d1d1298e4640905d5e4ec93a852ed26c75d2e60fc7d147c9bf",
+      "../di-3scenes-seed1/cornell-box/motion/spatial/seed-1/timings.csv": "92d5aa64ed34b74a61ee2aa4c89ea4f51fc97c7f3131a7038463e92e5aff5929",
+      "../di-3scenes-seed1/cornell-box/motion/spatial/seed-1/frame-0001.pfm.gz": "7eec3bcb4bfed4eccf8c26ac63ae27bc2d152837b8870ecf08785db6645ba6e1",
+      "../di-3scenes-seed1/cornell-box/motion/spatial/seed-1/frame-0032.pfm.gz": "daf2b0c57f4d17225233e6068cbe92eb84e811181de69a5f327a8b564201805e",
+      "../di-3scenes-seed1/cornell-box/motion/spatial/seed-1/frame-0033.pfm.gz": "9d0c3d2d467bfcef4df0a6c6e2be1be7657c2409b42a097702c312d1916bceb8",
+      "../di-3scenes-seed1/cornell-box/motion/spatial/seed-1/frame-0064.pfm.gz": "57286f41bfff6d9987bb181cf4a27c20c87dd94aac8dd83301576f88e84227f0",
+      "../di-3scenes-seed1/cornell-box/motion/spatial/seed-1/frame-0096.pfm.gz": "aea959f384916632b8e1bd0bd1dbdb0e59c853664504fc7dd7453967ede4486a",
+      "../di-3scenes-seed1/cornell-box/motion/spatial/seed-1/frame-0097.pfm.gz": "4ed30fd65318716ffee087db710dac4533d7ad0d16d2aed1b7140ee34510dcb9",
+      "../di-3scenes-seed1/cornell-box/motion/spatial/seed-1/frame-0128.pfm.gz": "ab692af758293b5c1ed24d133305042053d6e783f6f88952d44a31f3a598c884",
+      "../di-3scenes-seed1/cornell-box/motion/temporal/seed-1/config.json": "dd411d8c71c30be5d9c170937c0b6cb9189518acc8d0ae476a8d3cd04e049d21",
+      "../di-3scenes-seed1/cornell-box/motion/temporal/seed-1/manifest.json": "a9be7887d74ba91525525ee12ba25e91fdedc8c79758496371d2e72e52658868",
+      "../di-3scenes-seed1/cornell-box/motion/temporal/seed-1/resolved.json": "b5a11affd8d9bc5830f95d275f48f743b26f08726f0924c673f23a274809e2b6",
+      "../di-3scenes-seed1/cornell-box/motion/temporal/seed-1/timings.csv": "b78860a7dd2566bcf4f783cf753d388ebb8c9721efd3fbbacb4254fe611a02e6",
+      "../di-3scenes-seed1/cornell-box/motion/temporal/seed-1/frame-0001.pfm.gz": "a6ee55baa6ff2d5e6c7f6f3e9ec91cf700f5e06e798d5316dcd48dc2c516b851",
+      "../di-3scenes-seed1/cornell-box/motion/temporal/seed-1/frame-0032.pfm.gz": "9695856b9ac09f53d636c05eea9f033844c2d140e4b14a20bb5a69c0e962845b",
+      "../di-3scenes-seed1/cornell-box/motion/temporal/seed-1/frame-0033.pfm.gz": "193158c1c687720aea6f95a4a033d88071b36fbb7e246911491e80dc8e9e1d8e",
+      "../di-3scenes-seed1/cornell-box/motion/temporal/seed-1/frame-0064.pfm.gz": "d602b1338e122f9a5998366480551407d738c5d2c21a5659295cfb04e7675084",
+      "../di-3scenes-seed1/cornell-box/motion/temporal/seed-1/frame-0096.pfm.gz": "2a8e3d65436069878f61bab5a9c029c93ffeac4de2fcbc0a95de4abd2701a024",
+      "../di-3scenes-seed1/cornell-box/motion/temporal/seed-1/frame-0097.pfm.gz": "c2307fb3e3f8c2e02c3e2738897e5ac6182f1ddfc7d7a731a2d572c1f12411ae",
+      "../di-3scenes-seed1/cornell-box/motion/temporal/seed-1/frame-0128.pfm.gz": "3dbbf5518ec21792b5c450464339cae0c6b59b84cf7dd95c6d4f4031b29fdb7e",
+      "../di-3scenes-seed1/cornell-box/reset/combined/seed-1/config.json": "8e8a88ba5ee0a10b1d382a8022a48abfa76368cae4a613984ff66cba12e67939",
+      "../di-3scenes-seed1/cornell-box/reset/combined/seed-1/manifest.json": "b0f4ce74d99cddd47a85b9288a1b15ec034c8526f4791e9868cddd0776bd7136",
+      "../di-3scenes-seed1/cornell-box/reset/combined/seed-1/resolved.json": "a91766d426e2b26ce94da5fd0df8a7db235dfe68f26258d6aa4c1fe9bac269e0",
+      "../di-3scenes-seed1/cornell-box/reset/combined/seed-1/timings.csv": "6fac0822324c22262fd03e9977714db772f1c191a1ff8078cf53a8ea7a4a6b21",
+      "../di-3scenes-seed1/cornell-box/reset/combined/seed-1/frame-0001.pfm.gz": "ff334e4851573b49300c00cea8f36c694d8c614ec22db763a3c8ee0ab2c3d4c1",
+      "../di-3scenes-seed1/cornell-box/reset/combined/seed-1/frame-0032.pfm.gz": "4c914dc4e5772d33ba4ba1ef05bdf6ac14db66b0983c5cf1b8b48684f3b204fe",
+      "../di-3scenes-seed1/cornell-box/reset/combined/seed-1/frame-0064.pfm.gz": "ebf4a4b4db9a8ef63fd26af44369afa99cc2d59e5b7f1ecaa8760f1136d9bba7",
+      "../di-3scenes-seed1/cornell-box/reset/combined/seed-1/frame-0065.pfm.gz": "e07b030173c23df3ae3543feb22153bb1386732b39ac9c27531cea188311d5ca",
+      "../di-3scenes-seed1/cornell-box/reset/combined/seed-1/frame-0072.pfm.gz": "d28a6ced41cf9cb04b83e524dae27b49e96c90f1357e57e58e586cf1ed12290d",
+      "../di-3scenes-seed1/cornell-box/reset/combined/seed-1/frame-0096.pfm.gz": "4db571a88d8d1fbf4128196c9119596f9b02eba0e9f438765767d6aaf3b1f24f",
+      "../di-3scenes-seed1/cornell-box/reset/combined/seed-1/frame-0128.pfm.gz": "6436ed9044d0d957960ffc64a9f64d0666d92dbf12548e37d4af080d63621cb2",
+      "../di-3scenes-seed1/cornell-box/reset/initial/seed-1/config.json": "50095bd92c3021f4d8066442f4eb2471f29fb3bfef394d87b3137045ccd0c0a4",
+      "../di-3scenes-seed1/cornell-box/reset/initial/seed-1/manifest.json": "3e633f2890af2acda87dd3201a373794125490932345729a169423c431c7a353",
+      "../di-3scenes-seed1/cornell-box/reset/initial/seed-1/resolved.json": "26fbf86ee93d92d840f5c60900be242a4dbe8c47ddf35afaf6c6f4b8926409c4",
+      "../di-3scenes-seed1/cornell-box/reset/initial/seed-1/timings.csv": "bee781ccd081bd714fa3fa63a58c0cf4a108001f0dd18dc7e876d3c86c5b4343",
+      "../di-3scenes-seed1/cornell-box/reset/initial/seed-1/frame-0001.pfm.gz": "9f2696e6408ed5d630368e5e11030e6e1588244f306e5bdc41621acfce0416a1",
+      "../di-3scenes-seed1/cornell-box/reset/initial/seed-1/frame-0032.pfm.gz": "146ba6c88a25e7405958c31c084955b2dc56e5e91d13dd0a435c2dbd2436c415",
+      "../di-3scenes-seed1/cornell-box/reset/initial/seed-1/frame-0064.pfm.gz": "b7ee695788495e82f131509b69454d6767232bf5b44cb7895d1b90b9a442737b",
+      "../di-3scenes-seed1/cornell-box/reset/initial/seed-1/frame-0065.pfm.gz": "ee002f9dc1ae0a618f8f79e811676b092a615d26261536ef5588736e4ee5513d",
+      "../di-3scenes-seed1/cornell-box/reset/initial/seed-1/frame-0072.pfm.gz": "6908727e737471c3ccf374cfc052ff7df4554c04d567b14c111591d60616b661",
+      "../di-3scenes-seed1/cornell-box/reset/initial/seed-1/frame-0096.pfm.gz": "4d2f45c7cf371c2de5640ace9e37ba9bf80c5f1812b69616546b85c6eb073137",
+      "../di-3scenes-seed1/cornell-box/reset/initial/seed-1/frame-0128.pfm.gz": "bcbc1be42a4b196dcd91fc99b87fd39bfe31b11482cb5287fcfc4946a1e4f7a5",
+      "../di-3scenes-seed1/cornell-box/reset/spatial/seed-1/config.json": "a9ada8500d6d31c0d91581bc2d2e90748d132debee4c346cd3896ea1c1d75550",
+      "../di-3scenes-seed1/cornell-box/reset/spatial/seed-1/manifest.json": "a7e63fa36f78a0b3afc59dda33712497b2c73bb06f0f8cd4957a5cdd6983bee9",
+      "../di-3scenes-seed1/cornell-box/reset/spatial/seed-1/resolved.json": "ed67e94930de91d1d1298e4640905d5e4ec93a852ed26c75d2e60fc7d147c9bf",
+      "../di-3scenes-seed1/cornell-box/reset/spatial/seed-1/timings.csv": "a289e196e3759c4efe320647613e80274f6fdef67b491ff0a65fedfd38e2bfc7",
+      "../di-3scenes-seed1/cornell-box/reset/spatial/seed-1/frame-0001.pfm.gz": "7eec3bcb4bfed4eccf8c26ac63ae27bc2d152837b8870ecf08785db6645ba6e1",
+      "../di-3scenes-seed1/cornell-box/reset/spatial/seed-1/frame-0032.pfm.gz": "daf2b0c57f4d17225233e6068cbe92eb84e811181de69a5f327a8b564201805e",
+      "../di-3scenes-seed1/cornell-box/reset/spatial/seed-1/frame-0064.pfm.gz": "cfd8018cadc47f4483f4fe094be1ccebb1e2810ce77e1cdc596217861df7fe61",
+      "../di-3scenes-seed1/cornell-box/reset/spatial/seed-1/frame-0065.pfm.gz": "7d3d0647b1272e527462f2a006423140d61d53d77f3d78a15c8daf63f1c58288",
+      "../di-3scenes-seed1/cornell-box/reset/spatial/seed-1/frame-0072.pfm.gz": "b1b159d89a3f2a0ffd48841aa4977fa9ec325f036e271bc6ffd9f81c7f1a1541",
+      "../di-3scenes-seed1/cornell-box/reset/spatial/seed-1/frame-0096.pfm.gz": "31f3beafd12a709e98dbb356d48ac3fab9da3e545970fecbbca06aa6b1af02df",
+      "../di-3scenes-seed1/cornell-box/reset/spatial/seed-1/frame-0128.pfm.gz": "2891304cc8cc421e52eca0b8076fd08603dfd89e533625a9eecfb58a686c3a8d",
+      "../di-3scenes-seed1/cornell-box/reset/temporal/seed-1/config.json": "acdd3862d835c090aeb68f3a9e22c5c95f17ef9548cd4dac87bdc22be1b7e7c5",
+      "../di-3scenes-seed1/cornell-box/reset/temporal/seed-1/manifest.json": "b5907aa63000d6e0e5aca4bcb679d585fc8aaba6bf2945223a68768c706b390c",
+      "../di-3scenes-seed1/cornell-box/reset/temporal/seed-1/resolved.json": "b5a11affd8d9bc5830f95d275f48f743b26f08726f0924c673f23a274809e2b6",
+      "../di-3scenes-seed1/cornell-box/reset/temporal/seed-1/timings.csv": "e106fa5bbbc0775221adca7682e56d6db8dd5fc97219957b35062a512ba8a566",
+      "../di-3scenes-seed1/cornell-box/reset/temporal/seed-1/frame-0001.pfm.gz": "a6ee55baa6ff2d5e6c7f6f3e9ec91cf700f5e06e798d5316dcd48dc2c516b851",
+      "../di-3scenes-seed1/cornell-box/reset/temporal/seed-1/frame-0032.pfm.gz": "9695856b9ac09f53d636c05eea9f033844c2d140e4b14a20bb5a69c0e962845b",
+      "../di-3scenes-seed1/cornell-box/reset/temporal/seed-1/frame-0064.pfm.gz": "69ea2b9f72aaf19272e0b0692467a00d710aaa765731968443f66d4003279482",
+      "../di-3scenes-seed1/cornell-box/reset/temporal/seed-1/frame-0065.pfm.gz": "cf62509f8f5a3209b04e75d202427ce28fa1960b823bf2344a9593e5a9c4cb5f",
+      "../di-3scenes-seed1/cornell-box/reset/temporal/seed-1/frame-0072.pfm.gz": "c3388c74cb704ab506ee9a18321ac8720b32504beedb8899472fb9977bfb8ab3",
+      "../di-3scenes-seed1/cornell-box/reset/temporal/seed-1/frame-0096.pfm.gz": "5c493c5b417723bebb5a9229bde941ba431f817eae93c93f543edc996aacb99f",
+      "../di-3scenes-seed1/cornell-box/reset/temporal/seed-1/frame-0128.pfm.gz": "9a8d3bfc38d03f223102f3579eb490f5ef0d6df21e9d5b879868d02ca02897f6",
+      "../di-3scenes-seed1/cornell-box/static/combined/seed-1/config.json": "bfeee636d70b93fb572148171830f54a91e345f3a1a58c3ba3aadd9bd30950d9",
+      "../di-3scenes-seed1/cornell-box/static/combined/seed-1/manifest.json": "d765846cd349f76b35e10f6bcdaf93525c46242596238168e7ecc3e9d7d05409",
+      "../di-3scenes-seed1/cornell-box/static/combined/seed-1/resolved.json": "a91766d426e2b26ce94da5fd0df8a7db235dfe68f26258d6aa4c1fe9bac269e0",
+      "../di-3scenes-seed1/cornell-box/static/combined/seed-1/timings.csv": "a2cc865b934aa34dfa854f88cb0da4e95f434841e282642a1c59f3d3199ae2ff",
+      "../di-3scenes-seed1/cornell-box/static/combined/seed-1/frame-0001.pfm.gz": "ff334e4851573b49300c00cea8f36c694d8c614ec22db763a3c8ee0ab2c3d4c1",
+      "../di-3scenes-seed1/cornell-box/static/combined/seed-1/frame-0008.pfm.gz": "266c0a2fb662372cca5c5314a9667d219387f78a68809ea515b47afa3909e3eb",
+      "../di-3scenes-seed1/cornell-box/static/combined/seed-1/frame-0032.pfm.gz": "4c914dc4e5772d33ba4ba1ef05bdf6ac14db66b0983c5cf1b8b48684f3b204fe",
+      "../di-3scenes-seed1/cornell-box/static/combined/seed-1/frame-0128.pfm.gz": "461a7f5a7d5a63bb9e90ca60be2b77f8c19fd1375b4b32108960e4766ba26df4",
+      "../di-3scenes-seed1/cornell-box/static/initial/seed-1/config.json": "51669b35e0db7d96bf2be743227996fe35332675b366545760843b0dbcd65ab7",
+      "../di-3scenes-seed1/cornell-box/static/initial/seed-1/manifest.json": "19587d0d2e7766adf7a2be4731d811f2494de725857495be48fe2aa830f60261",
+      "../di-3scenes-seed1/cornell-box/static/initial/seed-1/resolved.json": "26fbf86ee93d92d840f5c60900be242a4dbe8c47ddf35afaf6c6f4b8926409c4",
+      "../di-3scenes-seed1/cornell-box/static/initial/seed-1/timings.csv": "a95dd01ee64785c52f8565fa521097d60143a00f324ee346108c52f06842e36f",
+      "../di-3scenes-seed1/cornell-box/static/initial/seed-1/frame-0001.pfm.gz": "9f2696e6408ed5d630368e5e11030e6e1588244f306e5bdc41621acfce0416a1",
+      "../di-3scenes-seed1/cornell-box/static/initial/seed-1/frame-0008.pfm.gz": "5163171bf7ab9c1173fe20c792bed265c64585cea93889258563249ba850abac",
+      "../di-3scenes-seed1/cornell-box/static/initial/seed-1/frame-0032.pfm.gz": "146ba6c88a25e7405958c31c084955b2dc56e5e91d13dd0a435c2dbd2436c415",
+      "../di-3scenes-seed1/cornell-box/static/initial/seed-1/frame-0128.pfm.gz": "bcbc1be42a4b196dcd91fc99b87fd39bfe31b11482cb5287fcfc4946a1e4f7a5",
+      "../di-3scenes-seed1/cornell-box/static/spatial/seed-1/config.json": "bac1b738726b84de104c604d0bc1d2adc2bf335901e929029d7c54bb3809e69d",
+      "../di-3scenes-seed1/cornell-box/static/spatial/seed-1/manifest.json": "813c7e8fcbff0b8bacc135834f052accaba120f5eaf053e8a632a94cf8b71598",
+      "../di-3scenes-seed1/cornell-box/static/spatial/seed-1/resolved.json": "ed67e94930de91d1d1298e4640905d5e4ec93a852ed26c75d2e60fc7d147c9bf",
+      "../di-3scenes-seed1/cornell-box/static/spatial/seed-1/timings.csv": "8702746626086b126d6aeb0e8d6d004b3dd65be475e59f58966c3e93444d1662",
+      "../di-3scenes-seed1/cornell-box/static/spatial/seed-1/frame-0001.pfm.gz": "7eec3bcb4bfed4eccf8c26ac63ae27bc2d152837b8870ecf08785db6645ba6e1",
+      "../di-3scenes-seed1/cornell-box/static/spatial/seed-1/frame-0008.pfm.gz": "3ae0c0666c445d4c1d483df50ce997498196faaae32b408575e4558862997b51",
+      "../di-3scenes-seed1/cornell-box/static/spatial/seed-1/frame-0032.pfm.gz": "daf2b0c57f4d17225233e6068cbe92eb84e811181de69a5f327a8b564201805e",
+      "../di-3scenes-seed1/cornell-box/static/spatial/seed-1/frame-0128.pfm.gz": "2891304cc8cc421e52eca0b8076fd08603dfd89e533625a9eecfb58a686c3a8d",
+      "../di-3scenes-seed1/cornell-box/static/temporal/seed-1/config.json": "515eba77dcfdb98a3e41140fa626cfca6fb69ae85a843e5ec3d8aaf415eb13bd",
+      "../di-3scenes-seed1/cornell-box/static/temporal/seed-1/manifest.json": "dfbca5e10b572b775e5da29ea0e243f9829aeac0c6cde552aa4d30640664f695",
+      "../di-3scenes-seed1/cornell-box/static/temporal/seed-1/resolved.json": "b5a11affd8d9bc5830f95d275f48f743b26f08726f0924c673f23a274809e2b6",
+      "../di-3scenes-seed1/cornell-box/static/temporal/seed-1/timings.csv": "9005cda59984e12a8f0d4a13fdd86b311b0754ceb92587356751ec7c57ba42b1",
+      "../di-3scenes-seed1/cornell-box/static/temporal/seed-1/frame-0001.pfm.gz": "a6ee55baa6ff2d5e6c7f6f3e9ec91cf700f5e06e798d5316dcd48dc2c516b851",
+      "../di-3scenes-seed1/cornell-box/static/temporal/seed-1/frame-0008.pfm.gz": "4ff27c0759bda276001ded1a0c66b2831aa4ac5565c36b702499b9223c8e4d22",
+      "../di-3scenes-seed1/cornell-box/static/temporal/seed-1/frame-0032.pfm.gz": "9695856b9ac09f53d636c05eea9f033844c2d140e4b14a20bb5a69c0e962845b",
+      "../di-3scenes-seed1/cornell-box/static/temporal/seed-1/frame-0128.pfm.gz": "42bd32d9c0e284462c9633367511a4e22703aad360353d79c4e58806bb2212e7"
+    },
+    "reference_converged": true,
+    "captures": 216
+  },
+  "source_report_sha256": "4b72d30a74eac1c505c8bd3731cc051599ab7df77447d8d2996155d5fa5935c4",
+  "selection": "metrics.csv retains region=full only; redundant single-seed summary.csv omitted. Figures are copied unchanged; retained CSVs use LF line endings without changing numerical values.",
+  "baseline": {
+    "root": "runs/di-3scenes-seed1",
+    "definition": {
+      "schema_version": 2,
+      "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "frames": 128,
+      "seed": 1,
+      "initial_local_sampling_mode": "POWER_RIS",
+      "initial_local_candidates": 24,
+      "initial_brdf_candidates": 0,
+      "analytic_sun": true,
+      "spatial_neighbors": 4,
+      "spatial_radius": 32,
+      "max_history_length": 20,
+      "captures": {
+        "static": [
+          1,
+          8,
+          32,
+          128
+        ],
+        "motion": [
+          1,
+          32,
+          33,
+          64,
+          96,
+          97,
+          128
+        ],
+        "reset": [
+          1,
+          32,
+          64,
+          65,
+          72,
+          96,
+          128
+        ]
+      },
+      "reset_frame": 65,
+      "motion": {
+        "start_frame": 32,
+        "end_frame": 96
+      },
+      "initial_infinite_candidates": 1,
+      "initial_environment_candidates": 8
+    },
+    "resolution": [
+      1920,
+      1080
+    ],
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU, 8188 MiB, 560.94",
+    "build": {
+      "built_utc": "2026-09-29T13:17:55.551575+00:00",
+      "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+      "configuration": "Release",
+      "integration_sha256": {
+        "scripts/run/rtxdi_experiments.patch": "200553577702e35647b35f816f06b782da4198ee4bdbffb09e18b316e9efc7db",
+        "scripts/run/rtxdi_experiments/LabExperiment.h": "ffa8047eb2bc91e5ebb481e6a96666f9899a4a4fcb785345f306d5f044a699c8",
+        "scripts/run/build_rtxdi_experiments.py": "a5ff4c63ed36a9c2f7360a62066124c1d8a265fa087a9f0b42bb7809824e6ad8"
+      },
+      "compiler_cache_sha256": "1e25a67e0ebd0b132704bf308127e6e22f4ece6ce4b97a28284ddda51de3f055",
+      "shader_directory": "shaders/full-sample",
+      "executable_sha256": "d5170445b3cdc1f96cd0baf3278d023e9a138bf10afae4b0ce97a95057bc4ff5",
+      "shader_sha256": {
+        "dxil\\AccumulationPass.bin": "c495509d43d677aa39c694f332565e6526d8609d81fcd9ee3114ec547a2347fa",
+        "dxil\\CompositingPass.bin": "8aed46e38e2c5fe15c18aa9b2ae76ef52d5427d530591b5de9ca9ee4853fa2ca",
+        "dxil\\GlassPass.bin": "ad108999740a4fecc89a24aa9440dc84b7f9757c649e48a3b5fb9631e59cd316",
+        "dxil\\PostprocessGBuffer.bin": "d1560c925b8b545472604247e0c001c259ba97fd2331a58f38f6568e1fb03de7",
+        "dxil\\PrepareLights.bin": "da670cdeb2de229ea170a61363688f6cb5e21c648563b8e7cb83388b9d84ef30",
+        "dxil\\PreprocessEnvironmentMap.bin": "82caf9c4f0bc4880d12bcb60f0cb9fb65ca22bbac330a4cb2ca0383ea72b9544",
+        "dxil\\RasterizedGBuffer_ps_main.bin": "471054818ef2116735080ea84950cb70a7637343b463a60587de84c6e53dd292",
+        "dxil\\RasterizedGBuffer_vs_main.bin": "0f4b62c6e1648750f8b7e9b0d968ae3251a35baf09afacb8c82d1d7f840b6498",
+        "dxil\\RaytracedGBuffer.bin": "6a4ac7b91e63c34daee1691787da4f4c81065c18cb47227bd157257c86836465",
+        "dxil\\RenderEnvironmentMap.bin": "72fae6e9a7b30802d1d75befbf38c95e49079c7829548aa8450d2b7ce59eeec2",
+        "dxil\\DenoisingPasses\\ComputeGradients.bin": "38781f774057de243bcd22d0a7fff262139334e2ca6cb3f7cd752d67cc9b746b",
+        "dxil\\DenoisingPasses\\ConfidencePass.bin": "5fefdd5bf36fa4981a04e7aaa1cf24a36ed41fe632c57a2105a872c7d7cf9e77",
+        "dxil\\DenoisingPasses\\DLSSRRInputFormattingPass.bin": "a11a623a19725c0f3a92012bdf3ef8bdd03c4308e715c70fc948e497d4ad0601",
+        "dxil\\DenoisingPasses\\FilterGradientsPass.bin": "e18c805fc26e4dde6afe7d9510662a883bcad740060b422dbb1a1c3ac77ade52",
+        "dxil\\LightingPasses\\BrdfRayTracing.bin": "6112eae96aae7554143d345275a28fdb991352040d5f2e1fec2bdea2e38d34d8",
+        "dxil\\LightingPasses\\ShadeSecondarySurfaces.bin": "a243d58e0cf7a9361f3e1f73bdcb18e8264a5ca443162835270569f1af6a99c0",
+        "dxil\\LightingPasses\\DI\\FusedResampling.bin": "20328c4b0e4779245565b6505ca4b60e198beaa3b2331c039bb369bfb6a043f8",
+        "dxil\\LightingPasses\\DI\\GenerateInitialSamples.bin": "80dda56c952703648b3d91deeb805331eb987ceaf1cf89bfd7a8f2d7815b120d",
+        "dxil\\LightingPasses\\DI\\ShadeSamples.bin": "a9bd42895369e480a9320a788a10ca92033587be365be8be422758d1d04879a3",
+        "dxil\\LightingPasses\\DI\\SpatialResampling.bin": "c3f7132d8894f6a3cdab3ccefc05559660763fab9ab4297226897720b9b1a56f",
+        "dxil\\LightingPasses\\DI\\TemporalResampling.bin": "d31e24122f90e2a6768b01148d95d4f859f213e6ba5373f7a584e9d999abcd6c",
+        "dxil\\LightingPasses\\GI\\FinalShading.bin": "3a490673ba0728caf0106eafc079e3683be1e46728997eae9eb792caa4702826",
+        "dxil\\LightingPasses\\GI\\FusedResampling.bin": "b505a1ebbb5c4f4b0222fecb6ee0d3e9b5c61bae5eeebb7c83dec146c12ce814",
+        "dxil\\LightingPasses\\GI\\SpatialResampling.bin": "d0d512ad8db244f2fbde1a2e68e4c783e7c35b48ca88c678d2382834d8713253",
+        "dxil\\LightingPasses\\GI\\TemporalResampling.bin": "c0ca7a5bc616f28199780b34ae0b69807379f57e46d44eb27dc10679a098f6d7",
+        "dxil\\LightingPasses\\Presampling\\PresampleEnvironmentMap.bin": "e3d645dd4362c8f0df5ff93d2304701cdbda61c80c05ab7fa461f5c01ab6defe",
+        "dxil\\LightingPasses\\Presampling\\PresampleLights.bin": "6c2b8a61b9b3797728ff3360710ef9f4a995478df808c05b3475177831882486",
+        "dxil\\LightingPasses\\Presampling\\PresampleReGIR.bin": "ac701ddc8037e531eade8feeef02d66a00f9301be051b306b8a8d61682478346",
+        "dxil\\LightingPasses\\PT\\ComputeDuplicationMap.bin": "9d5e1e3165ad590d72589c0c0e1fef59ad480db62176ec49d1a04a58c0b62475",
+        "dxil\\LightingPasses\\PT\\ComputeSmoothedDuplicationMap.bin": "b0f6f5fe8bac41a7fc8fc3d22c809fcc971ece7e906d4a8949cb751e955e0850",
+        "dxil\\LightingPasses\\PT\\FinalShading.bin": "b51cca39cc12b8416db66bbee0aa8fb581553613a47e302507b317d3aa0741b3",
+        "dxil\\LightingPasses\\PT\\GenerateInitialSamples.bin": "42382b661e66e99e8c4d1c937d64d109f66af2eba3397ded20c1905008d11996",
+        "dxil\\LightingPasses\\PT\\SpatialNeighborSelection.bin": "42187adc17a43e78e5802672a4a320d957f5e73834a68477a87ba68d24d353ff",
+        "dxil\\LightingPasses\\PT\\SpatialResampling.bin": "4c77745bdccf16cb166aa754d95d704fab4c0a4af57938166eafbafab26eac6c",
+        "dxil\\LightingPasses\\PT\\TemporalResampling.bin": "bf0984792ea539ca1f77919156a412259c8d45e11e550654f181f2ff505da7a8",
+        "dxil\\ShaderDebug\\VisualizeConfidence.bin": "52801ec12549af11ee0c45a9d8647f276d59edb83e5b95f01b6b475e2f9aea45",
+        "dxil\\ShaderDebug\\VisualizeHdrSignals.bin": "66060d8ecefecfca787fbaffd88e1242fbc72e727f3a3b6159f321b05ad4a2c1",
+        "dxil\\ShaderDebug\\PackedDataVizPasses\\DecorrelationFactorViz.bin": "1d210808f14b4d17893c9b24b5db62cb09c47b096c3fe5e93c7f23a37a766e34",
+        "dxil\\ShaderDebug\\PackedDataVizPasses\\DuplicationMapViz.bin": "3ef253ef37192c7d4c09ca3dbc53ef63dec473c5f5ac66cfacb28d8411372603",
+        "dxil\\ShaderDebug\\PackedDataVizPasses\\NDirOctUNorm32Viz.bin": "bddccf8845a361ba3c4416fae75ba9d2e85124e5f8c8252b7a1b782160bce7e7",
+        "dxil\\ShaderDebug\\PackedDataVizPasses\\PackedR11G11B10UFloatViz.bin": "1a453f89a8234b00b4556b613b49c4674308b659026022c179e80efb8bd68837",
+        "dxil\\ShaderDebug\\PackedDataVizPasses\\PackedR8G8B8A8GammaUFloatViz.bin": "3b19589cd2e9f17b7ed3777865df01ac89ebdb6aa41e6905d1047c7f4d541720",
+        "dxil\\ShaderDebug\\PackedDataVizPasses\\SampleIDViz.bin": "8b5c656d09638d3076fc922efac2f553b12bcbd76394850ed683b0326f50782e",
+        "dxil\\ShaderDebug\\PackedDataVizPasses\\SmoothedDuplicationMapViz.bin": "5c537b47298f89adc1d9b53b63571b1d5fea5a704c87b925a144fe2e92fe3062",
+        "dxil\\ShaderDebug\\PTPathViz\\PTPathVizLines_ps_ps_main.bin": "9de398558fe005945df7a4fbdc54006d4a01080eb37dfcaf48fca33964272773",
+        "dxil\\ShaderDebug\\PTPathViz\\PTPathVizLines_vs_vs_main.bin": "8e944d87d3d41544f9ad391c40c6bb494b841c90d1dbe3035e8375ec7eb8ff04",
+        "dxil\\ShaderDebug\\PTPathViz\\PTPathVizPreprocess_cs.bin": "04f82eb22f4b7e7a7e4ab731d34766b18fc5e2975f781c0172e77ae06d805e48",
+        "dxil\\ShaderDebug\\ReservoirSubfieldVizPasses\\DIReservoirViz.bin": "be8fe8d3d40a5705c98c12b63f595cca15aa22aa3986b8bb0cb0be9239668e64",
+        "dxil\\ShaderDebug\\ReservoirSubfieldVizPasses\\GIReservoirViz.bin": "55626f16831b99fb2d7ce14a270b32070f56752d6da0b39baf5e1329365ed423",
+        "dxil\\ShaderDebug\\ReservoirSubfieldVizPasses\\PTReservoirViz.bin": "7b1da6d1ff2c5b060f09b63cb2ecb868e47e8a2ead8645fb5eda30de1bd49311"
+      }
+    },
+    "dependencies": [
+      "1da7b749ef0e3fb606ab46dde8e5bfbacd078a02 Assets/Media (heads/main)",
+      " 2cd553031abec76bc4e109f20ef40a23ef0645c7 External/NRD (2cd5530)",
+      " 832a3673d66a0fdf6d6e522468821d5cbd925f23 External/NVAPI (832a367)",
+      " e84ab5f67ca34dfb6d5b1f6801e1d6f338b8ebe5 External/cxxopts (e84ab5f)",
+      " 2c1077673edb0e0d814c202e6ce8e502d245c2da External/donut (2c10776)",
+      " 18f5a344e7ca8fa65daaf079d07bc8ce38453e05 External/donut/ShaderMake (18f5a34)",
+      " 54100464714de88a5a5059d25808f5ccb914ad7d External/donut/nvrhi (5410046)",
+      " 0c9ce1177000d5923e2cc6a35ae9cb7ff03748d2 External/donut/nvrhi/rtxmu (0c9ce11)",
+      " d873b344dc540898868697245f100c2a67fe68d9 External/donut/nvrhi/thirdparty/DirectX-Headers (d873b34)",
+      " 9a0f3099c8a9607a7c0f3127d8abfdc19a93e8c5 External/donut/nvrhi/thirdparty/Vulkan-Headers (9a0f309)",
+      " fa3b80fa762790192c9532b63c441627416ff300 External/donut/thirdparty/cgltf (fa3b80f)",
+      " 7b6aead9fb88b3623e3b3725ebb42670cbe4c579 External/donut/thirdparty/glfw (7b6aead)",
+      " 45acd5e0e82f4c954432533ae9985ff0e1aad6d5 External/donut/thirdparty/imgui (45acd5e)",
+      " 2e2bef463a5b53ddf8bb788e25da6b8506314c08 External/donut/thirdparty/stb (2e2bef4)",
+      " f12037fa8e97ebc08e9e3edfd2de528ed1772a4b Libraries/Rtxdi (heads/main)"
+    ],
+    "sampling_controls": {
+      "restirDI.preset": "UNBIASED",
+      "restirDI.checkerboard": 0,
+      "restirDI.initialSampling.localLightSamplingMode": "POWER_RIS",
+      "restirDI.initialSampling.numLocalLightSamples": 24,
+      "restirDI.neeLocalLightSampling.numLocalLightPowerRISSamples": 24,
+      "restirDI.initialSampling.numBrdfSamples": 0,
+      "restirDI.initialSampling.numInfiniteLightSamples": 1,
+      "restirDI.initialSampling.numEnvironmentSamples": 8,
+      "restirDI.initialSampling.environmentMapImportanceSampling": 1,
+      "restirDI.initialSampling.enableInitialVisibility": 1,
+      "restirDI.temporalResampling.maxHistoryLength": 20,
+      "restirDI.temporalResampling.biasCorrectionMode": "RAYTRACED",
+      "restirDI.temporalResampling.enableVisibilityShortcut": 0,
+      "restirDI.temporalResampling.enablePermutationSampling": 0,
+      "restirDI.spatialResampling.numSamples": 4,
+      "restirDI.spatialResampling.numDisocclusionBoostSamples": 4,
+      "restirDI.spatialResampling.samplingRadius": 32,
+      "restirDI.spatialResampling.biasCorrectionMode": "RAYTRACED",
+      "restirDI.spatialResampling.discountNaiveSamples": 0,
+      "restirDI.boilingFilter.enableBoilingFilter": 0,
+      "restirDI.shading.enableFinalVisibility": 1,
+      "restirDI.shading.reuseFinalVisibility": 0
+    },
+    "scenes": {
+      "arcade": {
+        "profile": {
+          "schema_version": 2,
+          "scene_id": "arcade",
+          "source": {
+            "kind": "builtin",
+            "root": "renderers/rtxdi/Assets/Media",
+            "entry": "Arcade/Arcade.gltf",
+            "asset": "Arcade",
+            "path": "renderers/rtxdi/Assets/Media/Arcade/Arcade.gltf"
+          },
+          "camera": {
+            "position": [
+              -1.658,
+              1.577,
+              1.69
+            ],
+            "direction": [
+              0.693521,
+              -0.30981,
+              -0.65042
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "vertical_fov": 60
+          },
+          "motion": {
+            "end_position": [
+              -1.058,
+              1.577,
+              1.69
+            ]
+          },
+          "lighting": {
+            "environment": "procedural",
+            "environment_intensity_ev": 0,
+            "environment_rotation_degrees": 0,
+            "emissive_scale": 1
+          },
+          "preview": {
+            "exposure_ev": 0
+          },
+          "config_sha256": "304c2af0b9f5df4a788087b2ac78d78b1341553e0854c0e2aab01c193930ae23"
+        },
+        "asset_sha256": "0928dbee84d7724c0a82387d8bff5da1899643dc409eaf73c2192cb43e0d8116",
+        "asset_source_revision": "1da7b749ef0e3fb606ab46dde8e5bfbacd078a02"
+      },
+      "bistro": {
+        "profile": {
+          "schema_version": 2,
+          "scene_id": "bistro",
+          "source": {
+            "kind": "builtin",
+            "root": "renderers/rtxdi/Assets/Media",
+            "entry": "bistro-rtxdi.scene.json",
+            "asset": "Bistro",
+            "path": "renderers/rtxdi/Assets/Media/bistro-rtxdi.scene.json"
+          },
+          "camera": {
+            "position": [
+              -7.688,
+              2,
+              5.594
+            ],
+            "direction": [
+              0.3539,
+              0,
+              0.9426
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "vertical_fov": 60
+          },
+          "motion": {
+            "end_position": [
+              -6.688,
+              2,
+              5.594
+            ]
+          },
+          "lighting": {
+            "environment": "procedural",
+            "environment_intensity_ev": 0,
+            "environment_rotation_degrees": 0,
+            "emissive_scale": 1
+          },
+          "preview": {
+            "exposure_ev": 4
+          },
+          "config_sha256": "0b1b96e2e25d12f7bc7816e6e8065256956f1baa20c252c4ed1785cad579150a"
+        },
+        "asset_sha256": "33afcfb3676ac4d0554cc1bb9b1a9c991f8f6e5daeb530409f8e0911e186fdf2",
+        "asset_source_revision": "1da7b749ef0e3fb606ab46dde8e5bfbacd078a02"
+      },
+      "cornell-box": {
+        "profile": {
+          "schema_version": 2,
+          "scene_id": "cornell-box",
+          "source": {
+            "kind": "builtin",
+            "root": "renderers/rtxdi/Assets/Media",
+            "entry": "CornellBox/CornellBox.gltf",
+            "asset": "CornellBox",
+            "path": "renderers/rtxdi/Assets/Media/CornellBox/CornellBox.gltf"
+          },
+          "camera": {
+            "position": [
+              0,
+              5,
+              -15
+            ],
+            "direction": [
+              0,
+              0,
+              1
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "vertical_fov": 60
+          },
+          "motion": {
+            "end_position": [
+              2,
+              5,
+              -15
+            ]
+          },
+          "lighting": {
+            "environment": "procedural",
+            "environment_intensity_ev": 0,
+            "environment_rotation_degrees": 0,
+            "emissive_scale": 1
+          },
+          "preview": {
+            "exposure_ev": 0
+          },
+          "config_sha256": "afd7d12195e4afa0224260c858763521d40a2e31734f63e23025087ff74a4109"
+        },
+        "asset_sha256": "5546e26ce0f81a0343d069fec658f52f3ef3aa993c6dee6165a84d93bf16b06c",
+        "asset_source_revision": "1da7b749ef0e3fb606ab46dde8e5bfbacd078a02"
+      }
+    },
+    "runs": [
+      {
+        "run_id": "di-3scenes-seed1/arcade/motion/combined/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:36:29.889019+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/arcade/motion/initial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:34:51.248405+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/arcade/motion/spatial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:36:00.800640+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/arcade/motion/temporal/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:35:18.290792+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/arcade/reset/combined/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:38:29.664123+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/arcade/reset/initial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:37:02.086369+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/arcade/reset/spatial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:37:54.254087+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/arcade/reset/temporal/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:37:24.918341+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/arcade/static/combined/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:34:30.082675+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/arcade/static/initial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:33:19.984461+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/arcade/static/spatial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:34:01.832840+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/arcade/static/temporal/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:33:40.194703+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/bistro/motion/combined/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:41:13.281836+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/bistro/motion/initial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:40:11.536273+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/bistro/motion/spatial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:40:56.023031+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/bistro/motion/temporal/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:40:27.643773+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/bistro/reset/combined/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:42:41.548734+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/bistro/reset/initial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:41:43.726712+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/bistro/reset/spatial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:42:24.577098+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/bistro/reset/temporal/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:41:59.989584+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/bistro/static/combined/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:39:48.576756+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/bistro/static/initial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:39:05.011167+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/bistro/static/spatial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:39:34.959180+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/bistro/static/temporal/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:39:17.580228+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/cornell-box/motion/combined/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:31:52.482641+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/cornell-box/motion/initial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:31:03.080588+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/cornell-box/motion/spatial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:31:35.497561+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/cornell-box/motion/temporal/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:31:17.685858+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/cornell-box/reset/combined/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:33:01.172327+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/cornell-box/reset/initial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:32:09.468095+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/cornell-box/reset/spatial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:32:43.461748+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/cornell-box/reset/temporal/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:32:25.219706+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/cornell-box/static/combined/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:30:49.193430+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/cornell-box/static/initial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:30:11.176844+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/cornell-box/static/spatial/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:30:36.680837+00:00"
+      },
+      {
+        "run_id": "di-3scenes-seed1/cornell-box/static/temporal/seed-1",
+        "project_commit": "346d7356f160c3a41a6c33af52a1957adce41963",
+        "dirty": true,
+        "started_utc": "2026-09-30T12:30:23.451932+00:00"
+      }
+    ]
+  },
+  "reference_seeds": [
+    1001,
+    2001
+  ],
+  "references": {
+    "9e65290c8bd00f4f3904cfb7": {
+      "target": {
+        "scene_id": "arcade",
+        "asset_sha256": "0928dbee84d7724c0a82387d8bff5da1899643dc409eaf73c2192cb43e0d8116",
+        "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+        "resolution": [
+          1920,
+          1080
+        ],
+        "camera": {
+          "position": [
+            -1.658,
+            1.577,
+            1.69
+          ],
+          "direction": [
+            0.693521,
+            -0.30981,
+            -0.65042
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ]
+        },
+        "vertical_fov": 60,
+        "lighting": {
+          "environment": "procedural",
+          "environment_intensity_ev": 0,
+          "environment_rotation_degrees": 0,
+          "emissive_scale": 1
+        },
+        "analytic_sun": true,
+        "surface_settings": {
+          "rendering.rayQuery": 1,
+          "rendering.pixelJitter": 0,
+          "postProcessing.textures": 1,
+          "gbuffer.alphaTested": null,
+          "gbuffer.transparent": null,
+          "gbuffer.rasterizeGBuffer": null
+        },
+        "output": "scene-linear direct illumination + upstream emission/background/glass"
+      },
+      "image": "arcade/9e65290c8bd00f4f3904cfb7/reference.pfm.gz",
+      "image_sha256": "c5729fa1c5f9f5d12260a4bca301f3cb75aa553d3fe7a20a69f17a588bcae9c9",
+      "convergence": "arcade/9e65290c8bd00f4f3904cfb7/convergence.json",
+      "convergence_sha256": "3da2b20a30c232dbe1581b6485943a7cd2777f29067f5e1713f6d6d525a776fe",
+      "converged": true,
+      "convergence_metric": {
+        "name": "RMAE",
+        "version": 1,
+        "normalization": "mean_absolute_reference",
+        "agreement": "half_stream_difference"
+      },
+      "samples_per_class_per_stream": 8192,
+      "reference_noise_ratio": 0.1,
+      "last_two_full_image_checks": [
+        {
+          "samples_per_class_per_stream": 4096,
+          "stream_disagreement_rmae": 0.006876460134425868,
+          "change_rmae": 0.006882201981387288,
+          "estimated_reference_rmse": 0.0004174648288541086,
+          "estimated_reference_nrmse": 0.007447708547015484,
+          "change_nrmse": 0.007356022115426189,
+          "threshold_rmae": 0.01232094624013224,
+          "best_baseline_rmae": 0.1232094624013224,
+          "passed": true
+        },
+        {
+          "samples_per_class_per_stream": 8192,
+          "stream_disagreement_rmae": 0.004867153499217648,
+          "change_rmae": 0.004863160234866269,
+          "estimated_reference_rmse": 0.000275789487845965,
+          "estimated_reference_nrmse": 0.004920273026276172,
+          "change_nrmse": 0.004958193774516841,
+          "threshold_rmae": 0.012308686049031464,
+          "best_baseline_rmae": 0.12308686049031463,
+          "passed": true
+        }
+      ]
+    },
+    "62da9b4666a0936c54cc0cc1": {
+      "target": {
+        "scene_id": "arcade",
+        "asset_sha256": "0928dbee84d7724c0a82387d8bff5da1899643dc409eaf73c2192cb43e0d8116",
+        "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+        "resolution": [
+          1920,
+          1080
+        ],
+        "camera": {
+          "position": [
+            -1.648625,
+            1.577,
+            1.69
+          ],
+          "direction": [
+            0.693521,
+            -0.30981,
+            -0.65042
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ]
+        },
+        "vertical_fov": 60,
+        "lighting": {
+          "environment": "procedural",
+          "environment_intensity_ev": 0,
+          "environment_rotation_degrees": 0,
+          "emissive_scale": 1
+        },
+        "analytic_sun": true,
+        "surface_settings": {
+          "rendering.rayQuery": 1,
+          "rendering.pixelJitter": 0,
+          "postProcessing.textures": 1,
+          "gbuffer.alphaTested": null,
+          "gbuffer.transparent": null,
+          "gbuffer.rasterizeGBuffer": null
+        },
+        "output": "scene-linear direct illumination + upstream emission/background/glass"
+      },
+      "image": "arcade/62da9b4666a0936c54cc0cc1/reference.pfm.gz",
+      "image_sha256": "501c891ec0d2f7d17169fa3c761bb5e97ea132d5b45df3692f060cf4fab35788",
+      "convergence": "arcade/62da9b4666a0936c54cc0cc1/convergence.json",
+      "convergence_sha256": "0eeb5bcddf92e40008ceb5b42e73afc85499ab8c53daa4e8bc3cb683e46df8c9",
+      "converged": true,
+      "convergence_metric": {
+        "name": "RMAE",
+        "version": 1,
+        "normalization": "mean_absolute_reference",
+        "agreement": "half_stream_difference"
+      },
+      "samples_per_class_per_stream": 8192,
+      "reference_noise_ratio": 0.1,
+      "last_two_full_image_checks": [
+        {
+          "samples_per_class_per_stream": 4096,
+          "stream_disagreement_rmae": 0.006872241032500359,
+          "change_rmae": 0.006882471600705577,
+          "estimated_reference_rmse": 0.00034344981308471263,
+          "estimated_reference_nrmse": 0.006125905968468026,
+          "change_nrmse": 0.006137348162615397,
+          "threshold_rmae": 0.013586748567064136,
+          "best_baseline_rmae": 0.13586748567064136,
+          "passed": true
+        },
+        {
+          "samples_per_class_per_stream": 8192,
+          "stream_disagreement_rmae": 0.004871561989131462,
+          "change_rmae": 0.004866762656797016,
+          "estimated_reference_rmse": 0.00033311907705266643,
+          "estimated_reference_nrmse": 0.005941656932680056,
+          "change_nrmse": 0.006046304890242691,
+          "threshold_rmae": 0.013576347747971729,
+          "best_baseline_rmae": 0.1357634774797173,
+          "passed": true
+        }
+      ]
+    },
+    "9fb2ff44cf20dd0771da4c0d": {
+      "target": {
+        "scene_id": "arcade",
+        "asset_sha256": "0928dbee84d7724c0a82387d8bff5da1899643dc409eaf73c2192cb43e0d8116",
+        "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+        "resolution": [
+          1920,
+          1080
+        ],
+        "camera": {
+          "position": [
+            -1.358,
+            1.577,
+            1.69
+          ],
+          "direction": [
+            0.693521,
+            -0.30981,
+            -0.65042
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ]
+        },
+        "vertical_fov": 60,
+        "lighting": {
+          "environment": "procedural",
+          "environment_intensity_ev": 0,
+          "environment_rotation_degrees": 0,
+          "emissive_scale": 1
+        },
+        "analytic_sun": true,
+        "surface_settings": {
+          "rendering.rayQuery": 1,
+          "rendering.pixelJitter": 0,
+          "postProcessing.textures": 1,
+          "gbuffer.alphaTested": null,
+          "gbuffer.transparent": null,
+          "gbuffer.rasterizeGBuffer": null
+        },
+        "output": "scene-linear direct illumination + upstream emission/background/glass"
+      },
+      "image": "arcade/9fb2ff44cf20dd0771da4c0d/reference.pfm.gz",
+      "image_sha256": "3fa43dff81a6fb36f8d0da492781fb361a0f7247a27c318577bca3f38f8af30f",
+      "convergence": "arcade/9fb2ff44cf20dd0771da4c0d/convergence.json",
+      "convergence_sha256": "0b0600d464763214f89d69df5d35a32e3f5d56fcde28cc0c250d310bf7255743",
+      "converged": true,
+      "convergence_metric": {
+        "name": "RMAE",
+        "version": 1,
+        "normalization": "mean_absolute_reference",
+        "agreement": "half_stream_difference"
+      },
+      "samples_per_class_per_stream": 8192,
+      "reference_noise_ratio": 0.1,
+      "last_two_full_image_checks": [
+        {
+          "samples_per_class_per_stream": 4096,
+          "stream_disagreement_rmae": 0.007456909589935412,
+          "change_rmae": 0.0074608960802649196,
+          "estimated_reference_rmse": 0.0003782913049583463,
+          "estimated_reference_nrmse": 0.006914389937470951,
+          "change_nrmse": 0.006921297085184301,
+          "threshold_rmae": 0.0146919242750659,
+          "best_baseline_rmae": 0.14691924275065898,
+          "passed": true
+        },
+        {
+          "samples_per_class_per_stream": 8192,
+          "stream_disagreement_rmae": 0.005287428741675761,
+          "change_rmae": 0.005283980279155814,
+          "estimated_reference_rmse": 0.00033520059729997577,
+          "estimated_reference_nrmse": 0.00612687873826754,
+          "change_nrmse": 0.006154363654965505,
+          "threshold_rmae": 0.014680890012079329,
+          "best_baseline_rmae": 0.14680890012079328,
+          "passed": true
+        }
+      ]
+    },
+    "ba8fb7a0d70c0c68548cae7e": {
+      "target": {
+        "scene_id": "arcade",
+        "asset_sha256": "0928dbee84d7724c0a82387d8bff5da1899643dc409eaf73c2192cb43e0d8116",
+        "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+        "resolution": [
+          1920,
+          1080
+        ],
+        "camera": {
+          "position": [
+            -1.058,
+            1.577,
+            1.69
+          ],
+          "direction": [
+            0.693521,
+            -0.30981,
+            -0.65042
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ]
+        },
+        "vertical_fov": 60,
+        "lighting": {
+          "environment": "procedural",
+          "environment_intensity_ev": 0,
+          "environment_rotation_degrees": 0,
+          "emissive_scale": 1
+        },
+        "analytic_sun": true,
+        "surface_settings": {
+          "rendering.rayQuery": 1,
+          "rendering.pixelJitter": 0,
+          "postProcessing.textures": 1,
+          "gbuffer.alphaTested": null,
+          "gbuffer.transparent": null,
+          "gbuffer.rasterizeGBuffer": null
+        },
+        "output": "scene-linear direct illumination + upstream emission/background/glass"
+      },
+      "image": "arcade/ba8fb7a0d70c0c68548cae7e/reference.pfm.gz",
+      "image_sha256": "bb311e3bce7a30ca114181bffdcfb4d035cfa630f285b0b2b4bcd10536eebe54",
+      "convergence": "arcade/ba8fb7a0d70c0c68548cae7e/convergence.json",
+      "convergence_sha256": "0cbf2850bc59723351c179355a7d009e87ca11ca1f522175e307dd54ddae8f1a",
+      "converged": true,
+      "convergence_metric": {
+        "name": "RMAE",
+        "version": 1,
+        "normalization": "mean_absolute_reference",
+        "agreement": "half_stream_difference"
+      },
+      "samples_per_class_per_stream": 8192,
+      "reference_noise_ratio": 0.1,
+      "last_two_full_image_checks": [
+        {
+          "samples_per_class_per_stream": 4096,
+          "stream_disagreement_rmae": 0.00801329778239931,
+          "change_rmae": 0.008012379783131643,
+          "estimated_reference_rmse": 0.000343910594375518,
+          "estimated_reference_nrmse": 0.006289725902868942,
+          "change_nrmse": 0.006142869808792709,
+          "threshold_rmae": 0.013793398756998336,
+          "best_baseline_rmae": 0.13793398756998335,
+          "passed": true
+        },
+        {
+          "samples_per_class_per_stream": 8192,
+          "stream_disagreement_rmae": 0.005673151722108349,
+          "change_rmae": 0.005672477402687528,
+          "estimated_reference_rmse": 0.00027552889642966746,
+          "estimated_reference_nrmse": 0.005039166515283841,
+          "change_nrmse": 0.004968761286413576,
+          "threshold_rmae": 0.013779630177820091,
+          "best_baseline_rmae": 0.1377963017782009,
+          "passed": true
+        }
+      ]
+    },
+    "3cea35b572d61b17fceacc87": {
+      "target": {
+        "scene_id": "bistro",
+        "asset_sha256": "33afcfb3676ac4d0554cc1bb9b1a9c991f8f6e5daeb530409f8e0911e186fdf2",
+        "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+        "resolution": [
+          1920,
+          1080
+        ],
+        "camera": {
+          "position": [
+            -7.688,
+            2.0,
+            5.594
+          ],
+          "direction": [
+            0.3539,
+            0,
+            0.9426
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ]
+        },
+        "vertical_fov": 60,
+        "lighting": {
+          "environment": "procedural",
+          "environment_intensity_ev": 0,
+          "environment_rotation_degrees": 0,
+          "emissive_scale": 1
+        },
+        "analytic_sun": true,
+        "surface_settings": {
+          "rendering.rayQuery": 1,
+          "rendering.pixelJitter": 0,
+          "postProcessing.textures": 1,
+          "gbuffer.alphaTested": null,
+          "gbuffer.transparent": null,
+          "gbuffer.rasterizeGBuffer": null
+        },
+        "output": "scene-linear direct illumination + upstream emission/background/glass"
+      },
+      "image": "bistro/3cea35b572d61b17fceacc87/reference.pfm.gz",
+      "image_sha256": "5c8f1df2b2905f638f49554d223108a41eb1ba3576698eb8fa73d05246f258c6",
+      "convergence": "bistro/3cea35b572d61b17fceacc87/convergence.json",
+      "convergence_sha256": "167dc3b57e96ae5530516b57e3033964066bf504d8cd815b146a958db935a06f",
+      "converged": true,
+      "convergence_metric": {
+        "name": "RMAE",
+        "version": 1,
+        "normalization": "mean_absolute_reference",
+        "agreement": "half_stream_difference"
+      },
+      "samples_per_class_per_stream": 262144,
+      "reference_noise_ratio": 0.3,
+      "last_two_full_image_checks": [
+        {
+          "samples_per_class_per_stream": 131072,
+          "stream_disagreement_rmae": 0.039757923677103596,
+          "change_rmae": 0.04031469404331065,
+          "estimated_reference_rmse": 0.03381793463099282,
+          "estimated_reference_nrmse": 0.2365807591366384,
+          "change_nrmse": 0.2368693485381745,
+          "threshold_rmae": 0.04746793840657027,
+          "best_baseline_rmae": 0.15822646135523424,
+          "passed": true
+        },
+        {
+          "samples_per_class_per_stream": 262144,
+          "stream_disagreement_rmae": 0.031052616391880106,
+          "change_rmae": 0.03058229233358568,
+          "estimated_reference_rmse": 0.021434680065659066,
+          "estimated_reference_nrmse": 0.1527213498397927,
+          "change_nrmse": 0.1502823307471845,
+          "threshold_rmae": 0.04654080382956655,
+          "best_baseline_rmae": 0.15513601276522185,
+          "passed": true
+        }
+      ]
+    },
+    "444893b4543ce22924ff70b5": {
+      "target": {
+        "scene_id": "bistro",
+        "asset_sha256": "33afcfb3676ac4d0554cc1bb9b1a9c991f8f6e5daeb530409f8e0911e186fdf2",
+        "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+        "resolution": [
+          1920,
+          1080
+        ],
+        "camera": {
+          "position": [
+            -7.672375,
+            2.0,
+            5.594
+          ],
+          "direction": [
+            0.3539,
+            0,
+            0.9426
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ]
+        },
+        "vertical_fov": 60,
+        "lighting": {
+          "environment": "procedural",
+          "environment_intensity_ev": 0,
+          "environment_rotation_degrees": 0,
+          "emissive_scale": 1
+        },
+        "analytic_sun": true,
+        "surface_settings": {
+          "rendering.rayQuery": 1,
+          "rendering.pixelJitter": 0,
+          "postProcessing.textures": 1,
+          "gbuffer.alphaTested": null,
+          "gbuffer.transparent": null,
+          "gbuffer.rasterizeGBuffer": null
+        },
+        "output": "scene-linear direct illumination + upstream emission/background/glass"
+      },
+      "image": "bistro/444893b4543ce22924ff70b5/reference.pfm.gz",
+      "image_sha256": "69cbe85d07ec4c47ca521f222ed78bf5aee62cd306b60ccf432f9336926c7619",
+      "convergence": "bistro/444893b4543ce22924ff70b5/convergence.json",
+      "convergence_sha256": "17db5c48266f1019d036dbf8a0edc891dd1dd91b4f2b9fac18021f9ff7499d22",
+      "converged": true,
+      "convergence_metric": {
+        "name": "RMAE",
+        "version": 1,
+        "normalization": "mean_absolute_reference",
+        "agreement": "half_stream_difference"
+      },
+      "samples_per_class_per_stream": 262144,
+      "reference_noise_ratio": 0.3,
+      "last_two_full_image_checks": [
+        {
+          "samples_per_class_per_stream": 131072,
+          "stream_disagreement_rmae": 0.038199868355248696,
+          "change_rmae": 0.03735797373049257,
+          "estimated_reference_rmse": 0.03316205424251284,
+          "estimated_reference_nrmse": 0.2327332359367819,
+          "change_nrmse": 0.23218370155761348,
+          "threshold_rmae": 0.04467852606941065,
+          "best_baseline_rmae": 0.14892842023136882,
+          "passed": true
+        },
+        {
+          "samples_per_class_per_stream": 262144,
+          "stream_disagreement_rmae": 0.031207054950323488,
+          "change_rmae": 0.03127226094356545,
+          "estimated_reference_rmse": 0.023265812708334433,
+          "estimated_reference_nrmse": 0.1654454735174761,
+          "change_nrmse": 0.16473425822777005,
+          "threshold_rmae": 0.04455718395051026,
+          "best_baseline_rmae": 0.14852394650170087,
+          "passed": true
+        }
+      ]
+    },
+    "c7de4a070a0f9ff98909555f": {
+      "target": {
+        "scene_id": "bistro",
+        "asset_sha256": "33afcfb3676ac4d0554cc1bb9b1a9c991f8f6e5daeb530409f8e0911e186fdf2",
+        "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+        "resolution": [
+          1920,
+          1080
+        ],
+        "camera": {
+          "position": [
+            -7.188,
+            2.0,
+            5.594
+          ],
+          "direction": [
+            0.3539,
+            0,
+            0.9426
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ]
+        },
+        "vertical_fov": 60,
+        "lighting": {
+          "environment": "procedural",
+          "environment_intensity_ev": 0,
+          "environment_rotation_degrees": 0,
+          "emissive_scale": 1
+        },
+        "analytic_sun": true,
+        "surface_settings": {
+          "rendering.rayQuery": 1,
+          "rendering.pixelJitter": 0,
+          "postProcessing.textures": 1,
+          "gbuffer.alphaTested": null,
+          "gbuffer.transparent": null,
+          "gbuffer.rasterizeGBuffer": null
+        },
+        "output": "scene-linear direct illumination + upstream emission/background/glass"
+      },
+      "image": "bistro/c7de4a070a0f9ff98909555f/reference.pfm.gz",
+      "image_sha256": "791eded0945665399e9aa7d88e2d3aeae50ffe8046b7b035e10212b78bb39412",
+      "convergence": "bistro/c7de4a070a0f9ff98909555f/convergence.json",
+      "convergence_sha256": "126d3d22464e5df48527b9b5097f3d4b43903f5c7d5cd7d8f566eef0e41124ef",
+      "converged": true,
+      "convergence_metric": {
+        "name": "RMAE",
+        "version": 1,
+        "normalization": "mean_absolute_reference",
+        "agreement": "half_stream_difference"
+      },
+      "samples_per_class_per_stream": 262144,
+      "reference_noise_ratio": 0.3,
+      "last_two_full_image_checks": [
+        {
+          "samples_per_class_per_stream": 131072,
+          "stream_disagreement_rmae": 0.007598061400596355,
+          "change_rmae": 0.007756598636288662,
+          "estimated_reference_rmse": 0.0038976678838330593,
+          "estimated_reference_nrmse": 0.027573824794575718,
+          "change_nrmse": 0.02829486704876436,
+          "threshold_rmae": 0.029988433207669953,
+          "best_baseline_rmae": 0.09996144402556652,
+          "passed": true
+        },
+        {
+          "samples_per_class_per_stream": 262144,
+          "stream_disagreement_rmae": 0.005805096274996708,
+          "change_rmae": 0.00583249426950158,
+          "estimated_reference_rmse": 0.0029808498151022078,
+          "estimated_reference_nrmse": 0.021083428593479992,
+          "change_nrmse": 0.02094671425849599,
+          "threshold_rmae": 0.030052027296640124,
+          "best_baseline_rmae": 0.10017342432213375,
+          "passed": true
+        }
+      ]
+    },
+    "69c76d8331800df55207ef9c": {
+      "target": {
+        "scene_id": "bistro",
+        "asset_sha256": "33afcfb3676ac4d0554cc1bb9b1a9c991f8f6e5daeb530409f8e0911e186fdf2",
+        "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+        "resolution": [
+          1920,
+          1080
+        ],
+        "camera": {
+          "position": [
+            -6.688,
+            2.0,
+            5.594
+          ],
+          "direction": [
+            0.3539,
+            0,
+            0.9426
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ]
+        },
+        "vertical_fov": 60,
+        "lighting": {
+          "environment": "procedural",
+          "environment_intensity_ev": 0,
+          "environment_rotation_degrees": 0,
+          "emissive_scale": 1
+        },
+        "analytic_sun": true,
+        "surface_settings": {
+          "rendering.rayQuery": 1,
+          "rendering.pixelJitter": 0,
+          "postProcessing.textures": 1,
+          "gbuffer.alphaTested": null,
+          "gbuffer.transparent": null,
+          "gbuffer.rasterizeGBuffer": null
+        },
+        "output": "scene-linear direct illumination + upstream emission/background/glass"
+      },
+      "image": "bistro/69c76d8331800df55207ef9c/reference.pfm.gz",
+      "image_sha256": "f376a4403e59be8b881b44253f907464b5b3279b08740b6cd237109d196ea82a",
+      "convergence": "bistro/69c76d8331800df55207ef9c/convergence.json",
+      "convergence_sha256": "7946ef531e40be1c4d928a396806ad675923ede84bee577ecf79620dbbf4303c",
+      "converged": true,
+      "convergence_metric": {
+        "name": "RMAE",
+        "version": 1,
+        "normalization": "mean_absolute_reference",
+        "agreement": "half_stream_difference"
+      },
+      "samples_per_class_per_stream": 262144,
+      "reference_noise_ratio": 0.3,
+      "last_two_full_image_checks": [
+        {
+          "samples_per_class_per_stream": 131072,
+          "stream_disagreement_rmae": 0.008781570325625036,
+          "change_rmae": 0.008713374962979937,
+          "estimated_reference_rmse": 0.01630280330671134,
+          "estimated_reference_nrmse": 0.10957719874233164,
+          "change_nrmse": 0.10931006446027608,
+          "threshold_rmae": 0.02898482484637884,
+          "best_baseline_rmae": 0.09661608282126281,
+          "passed": true
+        },
+        {
+          "samples_per_class_per_stream": 262144,
+          "stream_disagreement_rmae": 0.005979652045307582,
+          "change_rmae": 0.005883515500823635,
+          "estimated_reference_rmse": 0.008225464140582164,
+          "estimated_reference_nrmse": 0.05558587770431342,
+          "change_nrmse": 0.05533927438747364,
+          "threshold_rmae": 0.028722088231723304,
+          "best_baseline_rmae": 0.09574029410574435,
+          "passed": true
+        }
+      ]
+    },
+    "ed4ae7321530079d0b517eb1": {
+      "target": {
+        "scene_id": "cornell-box",
+        "asset_sha256": "5546e26ce0f81a0343d069fec658f52f3ef3aa993c6dee6165a84d93bf16b06c",
+        "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+        "resolution": [
+          1920,
+          1080
+        ],
+        "camera": {
+          "position": [
+            0.0,
+            5.0,
+            -15.0
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ]
+        },
+        "vertical_fov": 60,
+        "lighting": {
+          "environment": "procedural",
+          "environment_intensity_ev": 0,
+          "environment_rotation_degrees": 0,
+          "emissive_scale": 1
+        },
+        "analytic_sun": true,
+        "surface_settings": {
+          "rendering.rayQuery": 1,
+          "rendering.pixelJitter": 0,
+          "postProcessing.textures": 1,
+          "gbuffer.alphaTested": null,
+          "gbuffer.transparent": null,
+          "gbuffer.rasterizeGBuffer": null
+        },
+        "output": "scene-linear direct illumination + upstream emission/background/glass"
+      },
+      "image": "cornell-box/ed4ae7321530079d0b517eb1/reference.pfm.gz",
+      "image_sha256": "07547274c9cd2e7686944e5dd9842c57e6c1f937e9862d146a78744a5754350d",
+      "convergence": "cornell-box/ed4ae7321530079d0b517eb1/convergence.json",
+      "convergence_sha256": "93bd2c2674f2a26567344e34584c4b16801f39c8863435bf62d5e7adc63301af",
+      "converged": true,
+      "convergence_metric": {
+        "name": "RMAE",
+        "version": 1,
+        "normalization": "mean_absolute_reference",
+        "agreement": "half_stream_difference"
+      },
+      "samples_per_class_per_stream": 2048,
+      "reference_noise_ratio": 0.1,
+      "last_two_full_image_checks": [
+        {
+          "samples_per_class_per_stream": 1024,
+          "stream_disagreement_rmae": 0.002178877835108684,
+          "change_rmae": 0.00218154702941389,
+          "estimated_reference_rmse": 0.0005384764810733177,
+          "estimated_reference_nrmse": 0.0006966910778430843,
+          "change_nrmse": 0.0006979003239044186,
+          "threshold_rmae": 0.004001942690394399,
+          "best_baseline_rmae": 0.04001942690394399,
+          "passed": true
+        },
+        {
+          "samples_per_class_per_stream": 2048,
+          "stream_disagreement_rmae": 0.0015425122622218291,
+          "change_rmae": 0.001543208681234478,
+          "estimated_reference_rmse": 0.00038120633821912863,
+          "estimated_reference_nrmse": 0.0004932123556199293,
+          "change_nrmse": 0.0004933720731790768,
+          "threshold_rmae": 0.003997246480006998,
+          "best_baseline_rmae": 0.03997246480006998,
+          "passed": true
+        }
+      ]
+    },
+    "66705238ce6866f13ba6fd0c": {
+      "target": {
+        "scene_id": "cornell-box",
+        "asset_sha256": "5546e26ce0f81a0343d069fec658f52f3ef3aa993c6dee6165a84d93bf16b06c",
+        "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+        "resolution": [
+          1920,
+          1080
+        ],
+        "camera": {
+          "position": [
+            0.03125,
+            5.0,
+            -15.0
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ]
+        },
+        "vertical_fov": 60,
+        "lighting": {
+          "environment": "procedural",
+          "environment_intensity_ev": 0,
+          "environment_rotation_degrees": 0,
+          "emissive_scale": 1
+        },
+        "analytic_sun": true,
+        "surface_settings": {
+          "rendering.rayQuery": 1,
+          "rendering.pixelJitter": 0,
+          "postProcessing.textures": 1,
+          "gbuffer.alphaTested": null,
+          "gbuffer.transparent": null,
+          "gbuffer.rasterizeGBuffer": null
+        },
+        "output": "scene-linear direct illumination + upstream emission/background/glass"
+      },
+      "image": "cornell-box/66705238ce6866f13ba6fd0c/reference.pfm.gz",
+      "image_sha256": "e4b3f600f8a6b86e123a973b8081829ea5af1851d62f13ef626ab85c09db26c6",
+      "convergence": "cornell-box/66705238ce6866f13ba6fd0c/convergence.json",
+      "convergence_sha256": "9ce357304bb7db7d15a6927f204467e6cf8b111c32b2c043e3720ee2abf13f84",
+      "converged": true,
+      "convergence_metric": {
+        "name": "RMAE",
+        "version": 1,
+        "normalization": "mean_absolute_reference",
+        "agreement": "half_stream_difference"
+      },
+      "samples_per_class_per_stream": 2048,
+      "reference_noise_ratio": 0.1,
+      "last_two_full_image_checks": [
+        {
+          "samples_per_class_per_stream": 1024,
+          "stream_disagreement_rmae": 0.002178276640377274,
+          "change_rmae": 0.0021806043148334237,
+          "estimated_reference_rmse": 0.0005382414416980968,
+          "estimated_reference_nrmse": 0.0006965584771874088,
+          "change_nrmse": 0.0006976304165298901,
+          "threshold_rmae": 0.00427710078513783,
+          "best_baseline_rmae": 0.042771007851378294,
+          "passed": true
+        },
+        {
+          "samples_per_class_per_stream": 2048,
+          "stream_disagreement_rmae": 0.001541777599183805,
+          "change_rmae": 0.0015431108455063805,
+          "estimated_reference_rmse": 0.000381009607316277,
+          "estimated_reference_nrmse": 0.000493079251551614,
+          "change_nrmse": 0.0004933259963602472,
+          "threshold_rmae": 0.004272759902469559,
+          "best_baseline_rmae": 0.04272759902469559,
+          "passed": true
+        }
+      ]
+    },
+    "d9866151f884071423d15ef4": {
+      "target": {
+        "scene_id": "cornell-box",
+        "asset_sha256": "5546e26ce0f81a0343d069fec658f52f3ef3aa993c6dee6165a84d93bf16b06c",
+        "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+        "resolution": [
+          1920,
+          1080
+        ],
+        "camera": {
+          "position": [
+            1.0,
+            5.0,
+            -15.0
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ]
+        },
+        "vertical_fov": 60,
+        "lighting": {
+          "environment": "procedural",
+          "environment_intensity_ev": 0,
+          "environment_rotation_degrees": 0,
+          "emissive_scale": 1
+        },
+        "analytic_sun": true,
+        "surface_settings": {
+          "rendering.rayQuery": 1,
+          "rendering.pixelJitter": 0,
+          "postProcessing.textures": 1,
+          "gbuffer.alphaTested": null,
+          "gbuffer.transparent": null,
+          "gbuffer.rasterizeGBuffer": null
+        },
+        "output": "scene-linear direct illumination + upstream emission/background/glass"
+      },
+      "image": "cornell-box/d9866151f884071423d15ef4/reference.pfm.gz",
+      "image_sha256": "2cb3cb549c73b286939d552f85515cb1dfa833e5a9f6e911c52dd04d7d83c1ff",
+      "convergence": "cornell-box/d9866151f884071423d15ef4/convergence.json",
+      "convergence_sha256": "ca0b493cb8b6c49ecdae30288a9e9588db99735392df2b45b565cfb248fd59f4",
+      "converged": true,
+      "convergence_metric": {
+        "name": "RMAE",
+        "version": 1,
+        "normalization": "mean_absolute_reference",
+        "agreement": "half_stream_difference"
+      },
+      "samples_per_class_per_stream": 2048,
+      "reference_noise_ratio": 0.1,
+      "last_two_full_image_checks": [
+        {
+          "samples_per_class_per_stream": 1024,
+          "stream_disagreement_rmae": 0.002182930539045047,
+          "change_rmae": 0.0021810313919821936,
+          "estimated_reference_rmse": 0.0005366506547458234,
+          "estimated_reference_nrmse": 0.0006944334102060702,
+          "change_nrmse": 0.0006942112474825607,
+          "threshold_rmae": 0.004040754399662136,
+          "best_baseline_rmae": 0.040407543996621366,
+          "passed": true
+        },
+        {
+          "samples_per_class_per_stream": 2048,
+          "stream_disagreement_rmae": 0.0015432821604903974,
+          "change_rmae": 0.0015433279588091924,
+          "estimated_reference_rmse": 0.00037976624864177803,
+          "estimated_reference_nrmse": 0.0004914227714061724,
+          "change_nrmse": 0.0004913761537243688,
+          "threshold_rmae": 0.004035723201105109,
+          "best_baseline_rmae": 0.04035723201105109,
+          "passed": true
+        }
+      ]
+    },
+    "a8247454a0dd40469c874c1e": {
+      "target": {
+        "scene_id": "cornell-box",
+        "asset_sha256": "5546e26ce0f81a0343d069fec658f52f3ef3aa993c6dee6165a84d93bf16b06c",
+        "renderer_commit": "a6efab966b7c3b272da0461578eb56ac61c7cbff",
+        "resolution": [
+          1920,
+          1080
+        ],
+        "camera": {
+          "position": [
+            2.0,
+            5.0,
+            -15.0
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ]
+        },
+        "vertical_fov": 60,
+        "lighting": {
+          "environment": "procedural",
+          "environment_intensity_ev": 0,
+          "environment_rotation_degrees": 0,
+          "emissive_scale": 1
+        },
+        "analytic_sun": true,
+        "surface_settings": {
+          "rendering.rayQuery": 1,
+          "rendering.pixelJitter": 0,
+          "postProcessing.textures": 1,
+          "gbuffer.alphaTested": null,
+          "gbuffer.transparent": null,
+          "gbuffer.rasterizeGBuffer": null
+        },
+        "output": "scene-linear direct illumination + upstream emission/background/glass"
+      },
+      "image": "cornell-box/a8247454a0dd40469c874c1e/reference.pfm.gz",
+      "image_sha256": "35ed323b3046f346f7b92af6b1cf70cfdc4db853aff0eae6a6b8696af58f47d7",
+      "convergence": "cornell-box/a8247454a0dd40469c874c1e/convergence.json",
+      "convergence_sha256": "4bf994c548af32c630c013f59015b13b79b618e0fca59f7fcf8e2224456a4092",
+      "converged": true,
+      "convergence_metric": {
+        "name": "RMAE",
+        "version": 1,
+        "normalization": "mean_absolute_reference",
+        "agreement": "half_stream_difference"
+      },
+      "samples_per_class_per_stream": 2048,
+      "reference_noise_ratio": 0.1,
+      "last_two_full_image_checks": [
+        {
+          "samples_per_class_per_stream": 1024,
+          "stream_disagreement_rmae": 0.0021866287430767433,
+          "change_rmae": 0.0021869231334156925,
+          "estimated_reference_rmse": 0.0005341011731336432,
+          "estimated_reference_nrmse": 0.0006913643186804565,
+          "change_nrmse": 0.0006915763783643323,
+          "threshold_rmae": 0.003979617271037964,
+          "best_baseline_rmae": 0.03979617271037964,
+          "passed": true
+        },
+        {
+          "samples_per_class_per_stream": 2048,
+          "stream_disagreement_rmae": 0.0015450200685107995,
+          "change_rmae": 0.0015451645861641143,
+          "estimated_reference_rmse": 0.0003779059299725604,
+          "estimated_reference_nrmse": 0.0004891778811519716,
+          "change_nrmse": 0.0004888016763083159,
+          "threshold_rmae": 0.003974932048640169,
+          "best_baseline_rmae": 0.03974932048640169,
+          "passed": true
+        }
+      ]
+    }
+  },
+  "archived_files_sha256": {
+    "error-trajectories.png": "48650a7ca4f86a575b2c4d2d995354e13f6670704338896a054153244bc1f5f7",
+    "metrics.csv": "d343967d5bde4cbb269c6838ebd9c206957026e66c9413d5f830064a511923fa",
+    "README.md": "329f54f2f8306c46c419a0cb4ddc3a6cfebaff62bbaf8d36ec3b0dc1f99c871d",
+    "representative-images.png": "b6856cb744ce66c007f60d1ba900b93a8d09c178b69cdf6aa829ecd1f5832a69",
+    "tail-diagnostics.csv": "69b22bb273fee42a10f4e79541f8dc03f367041342e8629b71454f4bf098d56d",
+    "timings.csv": "944ba9e92c756fae68f7d32e619790721b4f9ea35d58b5337af126a097f3e9b4"
+  },
+  "analysis_code_lf_sha256": {
+    "scripts/analysis/di_reuse.py": "67ec14eb74ddaa8734cc922c2cca8024a63cc5a9c37432ffaebfc27805ccbfeb",
+    "scripts/analysis/di_reuse_report.py": "7f3210dc2e90c23e43b346a48d61bdd129dfaf9ec6b8d8a09fb2a14d424dab37",
+    "scripts/run/experiment/reference.py": "d8a21282cb32a790f086870f8d2804b6ff86c16b35fbd048706045bf8ea9f1fe"
+  },
+  "hash_convention": "source_analysis preserves hashes of original local bytes, including Windows line endings. analysis_code_lf_sha256 and archived_files_sha256 identify Git-normalized code and report files."
+}

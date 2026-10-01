@@ -1,0 +1,13 @@
+scene,scenario,mode,frame,seed,top_1pct_squared_error_share
+arcade,static,combined,128,1,0.6276969704702399
+arcade,static,initial,128,1,0.2751304014373897
+arcade,static,spatial,128,1,0.3432574939526431
+arcade,static,temporal,128,1,0.44825539460576735
+bistro,static,combined,128,1,0.9997955389905998
+bistro,static,initial,128,1,0.9924021003311183
+bistro,static,spatial,128,1,0.993562776412155
+bistro,static,temporal,128,1,0.9998805375979157
+cornell-box,static,combined,128,1,0.7371282933965557
+cornell-box,static,initial,128,1,0.3381490451752885
+cornell-box,static,spatial,128,1,0.45902038536814027
+cornell-box,static,temporal,128,1,0.6164105955070431

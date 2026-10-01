@@ -1,5 +1,5 @@
 # Reproductions
 
-Each record should include the paper, backend/commit, target figure or claim, implementation origin, scene versions, config, reference construction, run IDs, deviations, findings, and limitations.
+Record the target claim, code and scene revisions, settings, reference, run IDs, deviations, and limitations. Distinguish running author code from reproducing a paper result.
 
-Distinguish author-code execution, reproduction of a paper result, and an independent implementation. A working demo alone does not establish reproduction. No reproduction has been performed in this scaffold.
+The [DI baseline](../../results/summaries/di-baseline/README.md) evaluates adapted RTXDI author code; it does not claim reproduction of a paper figure.

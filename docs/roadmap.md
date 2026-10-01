@@ -2,13 +2,24 @@
 
 **Draft.** The [scope](scope.md) proposes ReSTIR DI, PDF Similarity, and CGNS on one primary backend. Weeks below are planning estimates.
 
-The [literature review](literature/README.md) and [proposal draft](../writing/course/proposal/main.tex) are ready. RTXDI `v3.1.0` captures Cornell Box and Bistro. Arcade needs visual inspection; Zero-Day Measure One loads, but its appearance is not yet validated. Algorithm extensions and comparisons remain pending.
+The [proposal](../writing/course/proposal/main.tex) and [DI baseline](../results/summaries/di-baseline/README.md) are ready. The baseline covers Cornell Box, Arcade and Bistro: four reuse modes, static/motion/reset sequences, linear HDR, GPU timings and checked conventional references. It is a single-seed, fixed-parameter evaluation. Zero-Day remains optional pending material/light validation.
+
+## Next: PDF Similarity
+
+1. Read [PDF Similarity](literature/README.md#course-reading-sequence) and define the minimal RTXDI integration and controls.
+2. Implement the extension behind an explicit switch, retaining the baseline modes.
+3. Compare with baseline spatial/combined reuse using the same scenes, cameras and metrics; add an equal-time comparison when the implementation is ready.
+4. Use the findings to scope CGNS and prepare the progress demo.
+
+Follow the [experiment protocol](../experiments/protocol.md).
+
+## Course schedule
 
 | Weeks | Target |
 | --- | --- |
 | 1–2 | Proposal, backend feasibility, and a repeatable Cornell run |
 | 3–4 | ReSTIR DI baseline, reuse controls, and a direct-light reference |
-| 5 | PDF Similarity and progress review |
+| 5 | PDF Similarity; [project progress video](https://github.com/TheLogarhythm/restir-lab/issues/3) due Oct 25, 23:59 |
 | 6–7 | CGNS implementation and integration |
 | 8 | Demo and experiment freeze |
 | 9–10 | Evaluation, report, and teammate reproduction check |
