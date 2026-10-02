@@ -1,6 +1,6 @@
 # Scene asset sources
 
-Checked 2026-09-23. Bistro size sums Git LFS payloads; Zero-Day and San Miguel sizes are measured ZIP bytes.
+Source survey: 2026-09-23; San Miguel/Classroom import checks: 2026-10-02. Sizes are source ZIP bytes except Bistro (Git LFS payloads).
 
 ## Ready for the current RTXDI sample
 
@@ -9,11 +9,19 @@ Checked 2026-09-23. Bistro size sums Git LFS payloads; Zero-Day and San Miguel s
 | Bistro | [RTXDI Assets](https://github.com/NVIDIA-RTX/RTXDI-Assets/tree/main/bistro) | glTF   | ~2.27 GiB (393 LFS payloads) | Acquired; FullSample 1280×720 capture passed. [Original ORCA terms](https://developer.nvidia.com/orca/amazon-lumberyard-bistro): CC BY 4.0. |
 | Zero-Day Measure One | [ORCA](https://developer.nvidia.com/orca/beeple-zero-day) | FBX/DDS → glTF | 1.14 GB source ZIP (shared) | CC BY 4.0; RTXDI capture passed with no texture warnings; fidelity review pending. [Conversion](../scripts/assets/README.md). |
 
+San Miguel and Classroom are optional imports, excluded from the default baseline
+scene list. Both passed static 1280×720 previews; no baseline evaluation or motion
+validation was performed. [Conversion and limitations](../scripts/assets/README.md).
+
+| Scene | Download | Format | Size | Import details |
+| --- | --- | --- | --- | --- |
+| San Miguel 2.1 (low-poly) | [McGuire ZIP](https://casual-effects.com/g3d/data10/research/model/San_Miguel/San_Miguel.zip) | OBJ/PNG → glTF | 535.5 MB | Research/educational use with attribution; PNG cutouts restored, approximate PBR; no local lights added. |
+| Classroom | [Blender ZIP](https://download.blender.org/demo/test/classroom.zip) | Blender → glTF | 70.3 MB | Christophe Seux, CC0; source lamps and emissive material overrides restored; use `.scene.json`. Baked portal/PBR approximations; no invented local lights. |
+
 ## Free source; RTXDI conversion/import needed
 
 | Scene              | Download                                                                                                                             | Format          | Size | Note                                                                                                                   |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | --------------- | ---- | ---------------------------------------------------------------------------------------------------------------------- |
-| San Miguel         | [pbrt-v4](https://github.com/mmp/pbrt-v4-scenes/tree/master/sanmiguel/) or [McGuire archive](https://casual-effects.com/g3d/data10/) | pbrt or OBJ/PNG | 535.5 MB ZIP | McGuire low-poly draft glTF exported; lighting and materials need validation. |
 | Zero-Day Measure Seven | [ORCA](https://developer.nvidia.com/orca/beeple-zero-day) | FBX/DDS → glTF | same source ZIP | Extracted and converted; current RTXDI capture timed out after texture loading. Source README emissive count differs by eight. |
 | Emerald Square     | [ORCA](https://developer.nvidia.com/orca/nvidia-emerald-square)                                                                      | FBX/Falcor      | —    | CC BY-NC-SA 3.0; large scene.                                                                                          |
 | Sun Temple         | [ORCA](https://developer.nvidia.com/ue4-sun-temple)                                                                                  | FBX/Falcor      | —    | CC BY-NC-SA 4.0.                                                                                                       |

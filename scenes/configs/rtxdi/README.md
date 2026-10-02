@@ -1,7 +1,11 @@
 # RTXDI scene profiles
 
 Profiles: [Cornell](cornell-box.json), [Arcade](arcade.json),
-[Bistro](bistro.json), [Zero-Day Measure One](zero-day-measure-one.json).
+[Bistro](bistro.json), [Zero-Day Measure One](zero-day-measure-one.json),
+[San Miguel](san-miguel.json), [Classroom](classroom.json).
+
+San Miguel and Classroom are optional static import previews; they are excluded
+from the default baseline scene list. Motion paths are not validated.
 
 Schema 2 separates scene settings from the shared [experiment](../../../experiments/configs/di-reuse.json):
 source (repository-relative asset root and entry), camera (position/direction/up/FOV),

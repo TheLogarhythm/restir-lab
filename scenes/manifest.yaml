@@ -94,7 +94,7 @@
       "hash_scope": "SHA-256 of UTF-8 lines: <file sha256><two spaces><relative path><LF>, sorted by path over measure-one.gltf and its 399 referenced resources",
       "license": "CC BY 4.0 (ORCA Zero-Day)",
       "local_path": "assets/converted/zero-day/measure-one.gltf",
-      "conversion": "ORCA FBX/DDS to glTF via scripts/assets/convert_orca_fbx.py",
+      "conversion": "ORCA FBX/DDS to glTF via scripts/assets/convert_scene.py --profile orca",
       "modifications": [
         "ORM/normal mapping and UV transform baking; constant emissive texture without UV folded into linear color; existing non-emissive UV approximations retained",
         "108 provably opaque BLEND materials normalized to OPAQUE; other alpha modes preserved"
@@ -107,6 +107,56 @@
         "sha256": "1c692ee0eb6646a98142016c807e892ae4281325d1a8729020c7b1428c73f8b0",
         "file_count": 400,
         "hash_scope": "Sorted UTF-8 <sha256><two spaces><path relative to source.root><LF>; scene documents, model resources (Donut DDS preference), referenced IES"
+      }
+    },
+    {
+      "id": "san-miguel",
+      "source_url": "https://casual-effects.com/g3d/data10/research/model/San_Miguel/San_Miguel.zip",
+      "source_revision": "San Miguel 2.1, McGuire 2017 low-poly OBJ",
+      "source_sha256": "85874077735808150e679b3c71d70a37a270cb8833f4911325aa1099da3f7d4a",
+      "license": "Research and educational use with attribution; bundled license.txt",
+      "local_path": "assets/converted/san-miguel/san-miguel.gltf",
+      "conversion": "scripts/assets/convert_scene.py --profile san-miguel",
+      "modifications": [
+        "Restored embedded PNG cutout alpha with threshold 0.5; no added local lights; default RTXDI sun and sky remain available"
+      ],
+      "backend_configs": {
+        "rtxdi": "scenes/configs/rtxdi/san-miguel.json"
+      },
+      "role": "Static RTXDI import; no added local lights; default sun/sky available; no baseline evaluation",
+      "runtime_assets": {
+        "sha256": "ae19e9c474e9e963e925947953dd4993b0d2860862782e837f5a61b930d1723b",
+        "file_count": 270,
+        "hash_scope": "Runtime resource closure; sorted UTF-8 <sha256><two spaces><relative path><LF>"
+      },
+      "sha256": "ae19e9c474e9e963e925947953dd4993b0d2860862782e837f5a61b930d1723b",
+      "hash_scope": "Runtime resource closure; sorted UTF-8 <sha256><two spaces><relative path><LF>"
+    },
+    {
+      "id": "classroom",
+      "source_url": "https://download.blender.org/demo/test/classroom.zip",
+      "source_revision": "Blender Classroom demo, 2019-06-13 archive",
+      "source_sha256": "0f0ecc58d45f12b2f4272a53e2d8e69135518e16e956b118f10c20d8dcfdf5e6",
+      "sha256": "2b90ae6c88b1a900c53d7485a7343d76e77a168346fd2dbfac757891111c1b57",
+      "hash_scope": "Runtime resource closure; sorted UTF-8 <sha256><two spaces><relative path><LF>",
+      "license": "CC0; Christophe Seux; Blender demo-files webpage",
+      "local_path": "assets/converted/classroom/classroom.scene.json",
+      "conversion": "Blender 5.2 via scripts/assets/convert_scene.py --profile classroom; glTF geometry/materials + native Donut source lights",
+      "modifications": [
+        "Legacy color graphs baked per shared mesh; instance-dependent variation frozen to representative",
+        "Scalar roughness; micro-bump, displacement and volumetric effects omitted",
+        "Pure glossy shaders approximated as metallic; glass approximated with alpha",
+        "Daylight portal sky color baked; backface emission mapped to one-sided geometry; camera/shadow-invisible window emitter uses zero opacity",
+        "Authored lights use radiometric units; point intensity is power / (4 pi); area radiance is power / (pi area)"
+      ],
+      "backend_configs": {
+        "rtxdi": "scenes/configs/rtxdi/classroom.json"
+      },
+      "role": "Source lamps and emissive overrides restored; approximate baked portal/PBR materials; no invented local lights; no baseline evaluation",
+      "runtime_assets": {
+        "sha256": "2b90ae6c88b1a900c53d7485a7343d76e77a168346fd2dbfac757891111c1b57",
+        "file_count": 335,
+        "hash_scope": "Runtime resource closure; sorted UTF-8 <sha256><two spaces><relative path><LF>"
       }
     }
   ]

@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "scene_id": "san-miguel",
+  "source": {
+    "kind": "file",
+    "root": "assets/converted/san-miguel",
+    "entry": "san-miguel.gltf"
+  },
+  "camera": {
+    "position": [
+      15,
+      1.8,
+      11
+    ],
+    "direction": [
+      -0.8,
+      0.1,
+      -0.6
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "vertical_fov": 60
+  },
+  "motion": {
+    "end_position": [
+      15.5,
+      1.8,
+      11
+    ]
+  },
+  "lighting": {
+    "environment": "procedural",
+    "environment_intensity_ev": 0,
+    "environment_rotation_degrees": 0,
+    "emissive_scale": 1
+  },
+  "preview": {
+    "exposure_ev": 2
+  }
+}

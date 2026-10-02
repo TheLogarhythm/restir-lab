@@ -12,6 +12,8 @@ The original `proposal.tex`, `report.tex`, and `projguidelines.pdf` came from th
 | Cornell Box and Arcade | [RTXDI Assets](https://github.com/NVIDIA-RTX/RTXDI-Assets/tree/1da7b749ef0e3fb606ab46dde8e5bfbacd078a02) | Root MIT notice; [file hashes](scenes/manifest.yaml) |
 | Bistro | [RTXDI Assets](https://github.com/NVIDIA-RTX/RTXDI-Assets/tree/1da7b749ef0e3fb606ab46dde8e5bfbacd078a02/bistro); [original ORCA source](https://developer.nvidia.com/orca/amazon-lumberyard-bistro) | ORCA scene CC BY 4.0; [bundle hash](scenes/manifest.yaml) |
 | Zero-Day Measure One/Seven | [NVIDIA ORCA / Beeple](https://developer.nvidia.com/orca/beeple-zero-day) | CC BY 4.0; source and conversions remain in ignored `assets/` |
+| San Miguel 2.1 (low-poly) | [McGuire archive](https://casual-effects.com/g3d/data10/); Guillermo M. Leal Llaguno, 2017 updates by Morgan McGuire, Guedis Cardenas, Michael Mara and Nicholas Hull | Bundled license: research and educational use with attribution; source/conversion in ignored `assets/` |
+| Classroom | [Blender demo](https://www.blender.org/download/demo-files/), Christophe Seux; [source ZIP](https://download.blender.org/demo/test/classroom.zip) | CC0; source/conversion in ignored `assets/` |
 | Open Sans font | RTXDI Assets, `fonts/OpenSans/` | Bundled Apache 2.0 notice |
 
 Nested submodules retain their notices. CMake fetches DXC `v1.8.2505.1`, DLSS `a8ed84e2d1cc1efa7bef63fb9394be6cb06c0d74`, and MathLib `v11`. Falcor is not installed. [Pitch illustrations](writing/course/slides/sources.md) have separate attribution.

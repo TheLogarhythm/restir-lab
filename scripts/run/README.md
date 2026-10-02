@@ -24,6 +24,26 @@ settings, and `manifest.json` records provenance and status. Failed validation
 or conversion preserves raw captures; failed build restoration retains its
 `experiment-build-*` / `external-build-*` backup and prints the recovery path.
 
+For a single registered-scene import preview, use the existing experiment backend
+(`build_rtxdi_experiments.py` if it has not been built):
+
+```powershell
+python scripts/run/rtxdi_preview.py --scene san-miguel --average-frames 32
+python scripts/run/rtxdi_preview.py --scene classroom --average-frames 32
+```
+
+This captures one static view with the profile camera, lighting and exposure,
+then averages the last 32 linear HDR frames into `preview.png` and
+`preview.pfm.gz`. `preview.json` records inputs and settings. It runs no comparison
+suite or reference generation. Use `--check` for resource validation only.
+
+Classroom's interactive viewer must load the native scene wrapper to include its
+source area lights (1920×1080):
+
+```powershell
+python scripts/run/rtxdi_external.py --scene assets/converted/classroom/classroom.scene.json --camera-position 2.576395 1.094476 4.465751 --camera-direction -0.252050 0.011199 -0.967649 --width 1920 --height 1080 --exposure-bias 1 --interactive
+```
+
 Both local build variants temporarily enable `KHR_materials_emissive_strength`
 in pinned Donut, then restore its source. Rebuild them after changing this adapter.
 Builds require a clean renderer and dependencies. Reference generation and analysis

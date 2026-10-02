@@ -14,7 +14,8 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts/assets"))
-from convert_orca_fbx import convert, emissive_triangle_count
+from profiles.orca import convert
+from gltf import emissive_triangle_count
 
 
 class ConversionTests(unittest.TestCase):

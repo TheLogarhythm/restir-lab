@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "scene_id": "classroom",
+  "source": {
+    "kind": "file",
+    "root": "assets/converted/classroom",
+    "entry": "classroom.scene.json"
+  },
+  "camera": {
+    "position": [
+      2.576395273208618,
+      1.094475507736206,
+      4.465750694274902
+    ],
+    "direction": [
+      -0.2520502209663391,
+      0.011198729276657104,
+      -0.9676494002342224
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "vertical_fov": 39.597755335771296
+  },
+  "motion": {
+    "end_position": [
+      2.576395273208618,
+      1.094475507736206,
+      4.465750694274902
+    ]
+  },
+  "lighting": {
+    "environment": "procedural",
+    "environment_intensity_ev": 0,
+    "environment_rotation_degrees": 0,
+    "emissive_scale": 1
+  },
+  "preview": {
+    "exposure_ev": 1
+  }
+}
