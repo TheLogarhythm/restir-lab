@@ -21,7 +21,7 @@ class BuildRecoveryTests(unittest.TestCase):
         shaders.mkdir(parents=True)
         source = renderer / "source.cpp"
         official = binary / "FullSample.exe"
-        for path, data in ((source, b"source"), (official, b"official"),
+        for path, data in ((source, b"source"), (renderer / "importer.cpp", b"importer"), (official, b"official"),
                            (shaders / "original.bin", b"shader"),
                            (build / "CMakeCache.txt", b"cache")):
             path.write_bytes(data)
@@ -50,7 +50,7 @@ class BuildRecoveryTests(unittest.TestCase):
 
         constants = {"ROOT": root, "RENDERER": renderer, "BUILD": build, "BIN": binary,
                      "FILES": ["source.cpp"], "PATCH": patch, "HELPER": helper,
-                     "DEST": destination, "__file__": str(script),
+                     "DEST": destination, "__file__": str(script), "SUPPORT_FILE": helper, "BUILD_SUPPORT_FILE": helper, "IMPORTER": Path("importer.cpp"),
                      "REFERENCE_FILES": [], "REFERENCE_SHADER": helper}
         with ExitStack() as stack:
             for name, value in constants.items():
@@ -58,6 +58,10 @@ class BuildRecoveryTests(unittest.TestCase):
             stack.enter_context(mock.patch.object(sys, "argv", [str(script)] + (["--reference"] if reference else [])))
             stack.enter_context(mock.patch.object(builder, "run", side_effect=command))
             stack.enter_context(mock.patch.object(builder, "adapt_reference"))
+            stack.enter_context(mock.patch.object(builder, "require_clean_renderer"))
+            stack.enter_context(mock.patch.object(builder, "checked_submodule",
+                return_value={"commit": "donut-revision", "source_sha256": {"src/engine/GltfImporter.cpp": "source-hash"}}))
+            stack.enter_context(mock.patch.object(builder, "emission_support", return_value=nullcontext()))
             stack.enter_context(mock.patch.object(builder.shutil, "copy2", side_effect=copy))
             stack.enter_context(mock.patch.object(builder.subprocess, "check_output",
                 side_effect=lambda command, **kw: "" if command[0] == "powershell" else "revision"))
@@ -97,6 +101,8 @@ class BuildRecoveryTests(unittest.TestCase):
                 self.assertEqual({p.name: p.read_bytes() for p in shaders.iterdir()}, {"original.bin": b"shader"})
                 record = json.loads(variant.with_suffix(".build.json").read_text())
                 self.assertEqual(record["executable_sha256"], builder.sha(variant))
+                self.assertEqual(record["donut"]["commit"], "donut-revision")
+                self.assertEqual(record["donut"]["source_sha256"]["src/engine/GltfImporter.cpp"], "source-hash")
                 self.assertEqual(record["shader_sha256"], builder.tree_hashes(binary / record["shader_directory"]))
                 if reference:
                     self.assertEqual((binary / record["shader_directory"] / "added.bin").read_bytes(), b"extra")

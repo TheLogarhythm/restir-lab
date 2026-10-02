@@ -8,7 +8,7 @@ import math
 from rtxdi_common import ROOT, RENDERER, sha
 from experiment.artifacts import save_json
 from experiment.reference import (suite_captures, reference_config, pfm_path, ImageCache,
-                                  CONVERGENCE_METRIC, REFERENCE_SCHEMA_VERSION)
+                                  CONVERGENCE_METRIC, REFERENCE_SCHEMA_VERSION, validate_lighting)
 from experiment.reference_runner import (BUILD_FIELDS, run_pose, validate_checkpoint, validate_resume)
 from experiment.runner import output_directory, preflight, run_one, relative_path
 from experiment.scenes import ACTIVE_SCENES, validate_assets
@@ -96,6 +96,7 @@ def main():
         raise ValueError("Reference renderer/shaders changed; use a new suite")
     if build and any(job[3][0]["definition"]["renderer_commit"] != build["renderer_commit"] for job in jobs):
         raise ValueError("All baseline targets must match the reference renderer revision")
+    validate_lighting(captures, build)
     if not args.resume:
         output.mkdir(parents=True, exist_ok=False)
     index = existing or {"schema_version": REFERENCE_SCHEMA_VERSION, "baseline": relative_path(args.baseline.resolve(), output),

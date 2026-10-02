@@ -61,7 +61,7 @@ def main():
         settings.update({"profiling.saveFrame": config["capture_frame"], "profiling.saveFile": str(image)})
     command = [str(exe)]
     for key, value in settings.items():
-        command.extend(["--" + key, str(value)])
+        command.append(f"--{key}={value}")
     resolved = {"launcher": config, "scene": scene_config, "arguments": settings}
     (output / "config.json").write_text(json.dumps(resolved, indent=2) + "\n", encoding="utf-8")
     (output / "command.txt").write_text(subprocess.list2cmdline(command) + "\n", encoding="utf-8")

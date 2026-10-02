@@ -1,4 +1,4 @@
-"""Run the local external-scene RTXDI FullSample variant with a glTF scene."""
+"""Run the local external-scene RTXDI FullSample variant with a glTF or Donut scene."""
 
 import argparse
 from datetime import datetime, timezone
@@ -13,16 +13,15 @@ import sys
 from PIL import Image, ImageStat
 
 
-from rtxdi_common import ROOT, di_settings, sha, validate_bmp
+from rtxdi_common import ROOT, RENDERER, di_settings, sha, validate_bmp
+from rtxdi_build import SUPPORT_FILE as BUILD_SUPPORT_FILE, validate_integration
+from rtxdi_emission import SUPPORT_FILE as EMISSION_SUPPORT_FILE
 EXE = ROOT / "renderers/rtxdi/build/bin/FullSampleExternal.exe"
-sys.path.insert(0, str(ROOT))
-from scripts.assets.gltf import resource_path
+from experiment.scenes import asset_files
 
 
 def scene_resource_hashes(scene):
-    document = json.loads(scene.read_text(encoding="utf-8"))
-    uris = {entry["uri"] for field in ("buffers", "images") for entry in document.get(field, [])}
-    return {uri: sha(resource_path(scene.parent, uri)) for uri in sorted(uris)}
+    return asset_files(scene, scene.parent)
 
 
 def gpu_description():
@@ -35,7 +34,7 @@ def gpu_description():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--scene", type=Path, required=True, help="Converted .gltf in a directory with its textures and buffers")
+    parser.add_argument("--scene", type=Path, required=True, help="Converted .gltf or .scene.json with local resources")
     parser.add_argument("--camera-position", nargs=3, type=float, metavar=("X", "Y", "Z"), required=True)
     parser.add_argument("--camera-direction", nargs=3, type=float, metavar=("X", "Y", "Z"), required=True)
     parser.add_argument("--width", type=int, default=640)
@@ -57,8 +56,8 @@ def main():
     if args.emissive_scale is not None and args.emissive_scale <= 0:
         parser.error("--emissive-scale must be positive")
     scene = args.scene.resolve()
-    if scene.suffix.lower() != ".gltf" or not scene.is_file():
-        parser.error("--scene must name an existing .gltf file")
+    if not (scene.suffix.lower() == ".gltf" or scene.name.endswith(".scene.json")) or not scene.is_file():
+        parser.error("--scene must name an existing .gltf or .scene.json file")
     if not EXE.is_file():
         parser.error("Build FullSampleExternal first with scripts/run/build_rtxdi_external.py")
     try:
@@ -71,6 +70,16 @@ def main():
     provenance = json.loads(build_record.read_text(encoding="utf-8"))
     if sha(EXE) != provenance["executable_sha256"]:
         parser.error("FullSampleExternal differs from its build record; rebuild it")
+    required = [Path(__file__).with_name("build_rtxdi_external.py"),
+                Path(__file__).with_name("rtxdi_external.patch"),
+                BUILD_SUPPORT_FILE, EMISSION_SUPPORT_FILE]
+    validate_integration(provenance, ROOT, required)
+    revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=RENDERER, text=True).strip()
+    if revision != provenance.get("renderer_commit"):
+        raise RuntimeError("Renderer revision changed; rebuild the viewer")
+    for name, digest in provenance.get("shader_sha256", {}).items():
+        if sha(EXE.parent / provenance["shader_directory"] / name) != digest:
+            raise RuntimeError("Viewer shaders changed; rebuild the viewer")
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + "-external"
     output = ROOT / "runs" / run_id
     output.mkdir(parents=True)
@@ -83,7 +92,7 @@ def main():
         settings.update({"profiling.saveFrame": args.frame, "profiling.saveFile": str(image)})
     command = [str(EXE)]
     for key, value in settings.items():
-        command.extend(["--" + key, str(value)])
+        command.append(f"--{key}={value}")
     record = {
         "run_id": run_id, "started_utc": datetime.now(timezone.utc).isoformat(),
         "kind": "project_external_scene_capture",

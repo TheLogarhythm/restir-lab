@@ -7,6 +7,10 @@ import shutil
 import subprocess
 import tempfile
 from rtxdi_common import ROOT, RENDERER, sha
+from rtxdi_emission import emission_support, SUPPORT_FILE, IMPORTER
+from rtxdi_build import (SUPPORT_FILE as BUILD_SUPPORT_FILE, backup_renderer, integration_hashes, checked_submodule,
+                         restore_renderer, restore_shader_tree, tree_hashes, invalidate_cpp,
+                         remove_backup as remove_build_backup, require_clean_renderer)
 
 HERE = Path(__file__).resolve().parent
 BUILD = RENDERER / "build"
@@ -54,60 +58,8 @@ def run(*args, cwd=ROOT):
     subprocess.run(args, cwd=cwd, check=True)
 
 
-def tree_hashes(directory):
-    return {str(p.relative_to(directory)): sha(p) for p in directory.rglob("*") if p.is_file()}
-
-
-def restore_shader_tree(backup, destination):
-    """Restore files and remove outputs absent from the backup."""
-    expected = tree_hashes(backup)
-    shutil.copytree(backup, destination, dirs_exist_ok=True)
-    for path in destination.rglob("*"):
-        if path.is_file() and str(path.relative_to(destination)) not in expected:
-            if not path.resolve().is_relative_to(destination.resolve()):
-                raise RuntimeError(f"Shader output escapes its directory: {path}")
-            path.unlink()
-    if tree_hashes(destination) != expected:
-        raise RuntimeError("Shader restoration verification failed")
-
-
-def restore_official(backup, files, official, shader_dir):
-    """Attempt every recovery step; retain all backups if any step fails."""
-    errors = []
-    for name in files:
-        try:
-            source = backup / "sources" / name
-            destination = RENDERER / name
-            shutil.copy2(source, destination)
-            if sha(source) != sha(destination):
-                raise RuntimeError("Source restoration verification failed")
-        except Exception as exc:
-            errors.append(f"{name}: {exc}")
-    try:
-        DEST.unlink(missing_ok=True)
-    except OSError as exc:
-        errors.append(f"helper: {exc}")
-    try:
-        shutil.copy2(backup / "official.exe", official)
-        if sha(official) != sha(backup / "official.exe"):
-            raise RuntimeError("Executable restoration verification failed")
-    except Exception as exc:
-        errors.append(f"executable: {exc}")
-    try:
-        restore_shader_tree(backup / "shaders", shader_dir)
-    except Exception as exc:
-        errors.append(f"shaders: {exc}")
-    if errors:
-        raise RuntimeError(f"Official renderer restoration failed; recovery files retained at {backup}: "
-                           + "; ".join(errors))
-
-
 def remove_backup(backup):
-    # The only recursive removal is a verified temporary directory under this build.
-    resolved = backup.resolve()
-    if resolved.parent != BUILD.resolve() or not resolved.name.startswith("experiment-build-"):
-        raise RuntimeError(f"Unexpected backup directory: {backup}")
-    shutil.rmtree(resolved)
+    remove_build_backup(backup, BUILD, "experiment-build-")
 
 
 def main():
@@ -124,33 +76,32 @@ def main():
         raise RuntimeError("Close FullSample before building its experiment variant")
     if DEST.exists():
         raise RuntimeError(f"Refusing to overwrite {DEST}")
-    run("git", "diff", "--exit-code", "HEAD", "--", *files, cwd=RENDERER)
+    require_clean_renderer(RENDERER)
+    donut = checked_submodule(RENDERER, "External/donut", ["src/engine/GltfImporter.cpp"])
+    files.append(str(IMPORTER))
     run("git", "apply", "--check", str(PATCH), cwd=RENDERER)
     shader_dir = BIN / "shaders/full-sample"
     shader_hashes = tree_hashes(shader_dir)
-    record = {"built_utc": datetime.now(timezone.utc).isoformat(),
+    record = {"built_utc": datetime.now(timezone.utc).isoformat(), "donut": donut,
               "renderer_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=RENDERER, text=True).strip(),
-              "configuration": "Release", "integration_sha256": {
-                  str(p.relative_to(ROOT)).replace("\\", "/"): sha(p) for p in [PATCH, HELPER, Path(__file__), *([REFERENCE_SHADER] if args.reference else [])]},
+              "configuration": "Release", "integration_sha256": integration_hashes(
+                  [PATCH, HELPER, SUPPORT_FILE, BUILD_SUPPORT_FILE, Path(__file__),
+                   *([REFERENCE_SHADER] if args.reference else [])], ROOT),
               "compiler_cache_sha256": sha(BUILD / "CMakeCache.txt")}
     variant = BIN / ("FullSampleReference.exe" if args.reference else "FullSampleExperiments.exe")
     record["shader_directory"] = "shaders/full-sample-reference" if args.reference else "shaders/full-sample"
     temporary = Path(tempfile.mkdtemp(prefix="experiment-build-", dir=BUILD))
     restored = False
     try:
-        for name in files:
-            target = temporary / "sources" / name
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(RENDERER / name, target)
-        shutil.copy2(official, temporary / "official.exe")
-        # No shader changes are intended; preserve the official outputs even if CMake rebuilds them.
-        shutil.copytree(shader_dir, temporary / "shaders")
+        backup_renderer(temporary, RENDERER, files, official, shader_dir)
         try:
             run("git", "apply", str(PATCH), cwd=RENDERER)
             shutil.copy2(HELPER, DEST)
             if args.reference:
                 adapt_reference()
-            run("cmake", "--build", str(BUILD), "--config", "Release", "--target", "FullSample", "--parallel", "4")
+            invalidate_cpp(RENDERER)
+            with emission_support(RENDERER / IMPORTER):
+                run("cmake", "--build", str(BUILD), "--config", "Release", "--target", "FullSample", "--parallel", "4")
             current = tree_hashes(shader_dir)
             if not args.reference and current != shader_hashes:
                 raise RuntimeError("Unexpected compiled shader changes; experiment variant was not published")
@@ -159,7 +110,7 @@ def main():
             shutil.copy2(official, temporary / variant.name)
             record["executable_sha256"] = sha(temporary / variant.name)
         finally:
-            restore_official(temporary, files, official, shader_dir)
+            restore_renderer(temporary, RENDERER, files, official, shader_dir, created=[DEST])
             restored = True
         shutil.copy2(temporary / variant.name, variant)
         if args.reference:

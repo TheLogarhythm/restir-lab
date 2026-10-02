@@ -15,7 +15,7 @@ from rtxdi_common import sha
 from experiment.artifacts import save_json
 from experiment.reference import (
     CONVERGENCE_METRIC, EPSILON, REFERENCE_SCHEMA_VERSION, ImageCache,
-    metrics, reference_ready, regions, suite_captures,
+    metrics, reference_ready, regions, suite_captures, validate_lighting,
 )
 from experiment.runner import relative_path
 from experiment.scenes import ACTIVE_SCENES
@@ -84,6 +84,7 @@ def load_references(index_path, reference_root, captures):
     if (index.get("schema_version") != REFERENCE_SCHEMA_VERSION
             or index.get("convergence_metric") != CONVERGENCE_METRIC):
         raise ValueError("Unsupported reference suite; generate a new suite")
+    validate_lighting(captures, index.get("build", {}))
     references = index["references"]
     for capture in captures:
         item = references.get(capture["key"])

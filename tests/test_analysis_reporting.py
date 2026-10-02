@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / "scripts/run"))
 sys.path.insert(0, str(ROOT))
 from experiment import artifacts, reference
 from rtxdi_common import sha
+from build_fixtures import lighting_build
 
 
 class AnalysisReportingTests(unittest.TestCase):
@@ -34,7 +35,7 @@ class AnalysisReportingTests(unittest.TestCase):
                 artifacts.save_json(directory / "manifest.json", {
                     "status": "completed", "config_sha256": sha(directory / "config.json"),
                     "scene": {"sha256": "fixture-assets"}, "gpu": "fixture-gpu",
-                    "build": {"executable_sha256": "fixture-build"}})
+                    "build": lighting_build()})
                 artifacts.save_json(directory / "resolved.json", {})
                 (directory / "timings.csv").write_text("frame,gpu_ms\n1,1\n128,1\n")
                 for frame in (1, 128):
@@ -54,7 +55,7 @@ class AnalysisReportingTests(unittest.TestCase):
             item = {"target": captures[0]["target"], "image": image.name, "image_sha256": sha(image),
                     "convergence": convergence.name, "convergence_sha256": sha(convergence), "converged": True}
             artifacts.save_json(refs / "reference-index.json", {"schema_version": reference.REFERENCE_SCHEMA_VERSION, "convergence_metric": reference.CONVERGENCE_METRIC, "references": {captures[0]["key"]: item},
-                "samples_per_class_per_stream": 64, "seeds": [1001, 2001]})
+                "samples_per_class_per_stream": 64, "seeds": [1001, 2001], "build": lighting_build()})
             with mock.patch.object(sys, "argv", ["di_reuse", "--baseline", str(baseline), "--references", str(refs)]), \
                  mock.patch.object(reference, "read_pfm", wraps=reference.read_pfm) as reader:
                 report.main()
@@ -75,7 +76,7 @@ class AnalysisReportingTests(unittest.TestCase):
             old.pop("convergence_metric")
             artifacts.save_json(convergence, old)
             item["convergence_sha256"] = sha(convergence)
-            artifacts.save_json(refs / "reference-index.json", {"schema_version": reference.REFERENCE_SCHEMA_VERSION, "convergence_metric": reference.CONVERGENCE_METRIC, "references": {captures[0]["key"]: item}})
+            artifacts.save_json(refs / "reference-index.json", {"schema_version": reference.REFERENCE_SCHEMA_VERSION, "convergence_metric": reference.CONVERGENCE_METRIC, "references": {captures[0]["key"]: item}, "build": lighting_build()})
             legacy_output = baseline / "legacy-analysis"
             with mock.patch.object(sys, "argv", ["di_reuse", "--baseline", str(baseline), "--references", str(refs), "--output", str(legacy_output)]):
                 with self.assertRaisesRegex(ValueError, "Unsupported convergence metric"):

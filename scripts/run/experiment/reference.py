@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import numpy as np
 from rtxdi_common import sha
+from rtxdi_build import lighting_signature
 from .config import make_config
 from .images import read_pfm
 
@@ -138,6 +139,13 @@ def target(config, frame, asset_hash):
 
 def target_key(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[:24]
+
+
+def validate_lighting(captures, reference_build):
+    expected = lighting_signature(reference_build)
+    for capture in captures:
+        if lighting_signature(capture["manifest"].get("build", {})) != expected:
+            raise ValueError("Baseline and reference lighting implementations differ; regenerate compatible runs")
 
 
 def suite_captures(suite, scenes=None, scenario=None):

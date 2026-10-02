@@ -9,6 +9,7 @@ import platform
 import subprocess
 import time
 from rtxdi_common import ROOT, RENDERER, sha
+from rtxdi_build import validate_integration
 from .artifacts import save_json, finalize_outputs
 
 EXE = RENDERER / "build/bin/FullSampleExperiments.exe"
@@ -51,9 +52,7 @@ def preflight(definition, executable=None):
         raise RuntimeError("Build renderer revision differs from the experiment; rebuild first")
     if sha(executable) != build["executable_sha256"]:
         raise RuntimeError("Experiment executable differs from its build record")
-    for name, digest in build["integration_sha256"].items():
-        if sha(ROOT / name) != digest:
-            raise RuntimeError("Integration changed; rebuild the experiment executable")
+    validate_integration(build, ROOT)
     shader_dir = executable.parent / build.get("shader_directory", "shaders/full-sample")
     for name, digest in build["shader_sha256"].items():
         if sha(shader_dir / name) != digest:
