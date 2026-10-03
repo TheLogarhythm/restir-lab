@@ -9,6 +9,10 @@ a linked image comparison and explicit reference precision limits.
 python scripts/analysis/di_reuse.py --baseline runs/di-3scenes-seed1 --references runs/di-3scenes-reference --output runs/di-3scenes-analysis
 ```
 
+For PDF on/off, pass both suite directories after `--baseline` and an explicit
+`--output`. Use the same PDF-enabled build for both runs. CSVs, plots and timings
+separate methods; other settings, seeds, capture frames and targets must match.
+
 Outputs include `summary.md`, complete metric/phase-timing CSVs, pixel-tail
 diagnostics and input/code hashes in `analysis.json`. Existing output directories
 are never overwritten. See [the protocol](../../experiments/suites/di-reuse.md#analysis-outputs).

@@ -18,6 +18,28 @@ from rtxdi_common import sha
 
 
 class AnalysisValidationTests(unittest.TestCase):
+    def test_pdf_toggle_is_allowed_but_other_controls_stay_matched(self):
+        report = importlib.import_module("scripts.analysis.di_reuse")
+        from copy import deepcopy
+        config = make_config(load_scene("cornell-box"), load_definition(), "combined", "static")
+        capture = {"config": config, "manifest": {"gpu": "gpu", "build": {"shader": "same"}},
+                   "frame": {"frame": 1}, "key": "same-pose"}
+        pdf = deepcopy(capture)
+        pdf["config"]["definition"]["pdf_similarity"] = True
+        report.validate_comparison([capture, pdf])
+        for field in ("budget", "build", "coverage", "pose"):
+            changed = deepcopy(pdf)
+            if field == "budget":
+                changed["config"]["definition"]["spatial_neighbors"] += 1
+            elif field == "build":
+                changed["manifest"]["build"]["shader"] = "different"
+            elif field == "coverage":
+                changed["config"]["seed"] += 1
+            else:
+                changed["key"] = "different-pose"
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, "Compared"):
+                report.validate_comparison([capture, changed])
+
     def test_analysis_rejects_cross_mode_budget_or_hardware_changes(self):
         report = importlib.import_module("scripts.analysis.di_reuse")
         for changed in ("budget", "gpu", "shader", "coverage"):

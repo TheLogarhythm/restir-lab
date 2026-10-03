@@ -1,6 +1,7 @@
 """Report aggregation, timing weighting and image reuse checks."""
 from collections import Counter
 import importlib
+import csv
 import json
 from pathlib import Path
 import sys
@@ -19,6 +20,12 @@ from build_fixtures import lighting_build
 
 class AnalysisReportingTests(unittest.TestCase):
     def test_analysis_decodes_each_image_once_for_metrics_and_figures(self):
+        self.check_analysis_fixture()
+
+    def test_pdf_comparison_keeps_metrics_costs_and_images_separate(self):
+        self.check_analysis_fixture(pdf_comparison=True)
+
+    def check_analysis_fixture(self, pdf_comparison=False):
         from experiment.config import make_config, load_definition
         from experiment.scenes import load_scene
         report = importlib.import_module("scripts.analysis.di_reuse")
@@ -26,10 +33,14 @@ class AnalysisReportingTests(unittest.TestCase):
             root = Path(folder)
             baseline, refs = root / "baseline", root / "references"
             refs.mkdir()
-            for mode, value in (("initial", 3.), ("combined", 2.1)):
-                directory = baseline / mode
+            cases = (("off", "combined", 3.), ("on", "combined", 2.1)) if pdf_comparison else (
+                ("initial", "initial", 3.), ("combined", "combined", 2.1))
+            for name, mode, value in cases:
+                directory = baseline / name
                 directory.mkdir(parents=True)
                 config = make_config(load_scene("cornell-box"), load_definition(), mode, "static", resolution=[2, 2])
+                if name == "on":
+                    config["definition"]["pdf_similarity"] = True
                 config["frames"] = [config["frames"][0], config["frames"][-1]]
                 artifacts.save_json(directory / "config.json", config)
                 artifacts.save_json(directory / "manifest.json", {
@@ -37,7 +48,8 @@ class AnalysisReportingTests(unittest.TestCase):
                     "scene": {"sha256": "fixture-assets"}, "gpu": "fixture-gpu",
                     "build": lighting_build()})
                 artifacts.save_json(directory / "resolved.json", {})
-                (directory / "timings.csv").write_text("frame,gpu_ms\n1,1\n128,1\n")
+                cost = 3 if name == "on" else 1
+                (directory / "timings.csv").write_text(f"frame,gpu_ms\n1,{cost}\n128,{cost}\n")
                 for frame in (1, 128):
                     artifacts.write_pfm(directory / f"frame-{frame:04d}.pfm.gz",
                                         np.full((2, 2, 3), value, dtype=np.float32))
@@ -56,7 +68,10 @@ class AnalysisReportingTests(unittest.TestCase):
                     "convergence": convergence.name, "convergence_sha256": sha(convergence), "converged": True}
             artifacts.save_json(refs / "reference-index.json", {"schema_version": reference.REFERENCE_SCHEMA_VERSION, "convergence_metric": reference.CONVERGENCE_METRIC, "references": {captures[0]["key"]: item},
                 "samples_per_class_per_stream": 64, "seeds": [1001, 2001], "build": lighting_build()})
-            with mock.patch.object(sys, "argv", ["di_reuse", "--baseline", str(baseline), "--references", str(refs)]), \
+            arguments = ["di_reuse", "--baseline"]
+            arguments += [str(baseline / name) for name in ("off", "on")] if pdf_comparison else [str(baseline)]
+            arguments += ["--references", str(refs), "--output", str(baseline / "analysis")]
+            with mock.patch.object(sys, "argv", arguments), \
                  mock.patch.object(reference, "read_pfm", wraps=reference.read_pfm) as reader:
                 report.main()
                 counts = Counter(Path(call.args[0]) for call in reader.call_args_list)
@@ -71,6 +86,19 @@ class AnalysisReportingTests(unittest.TestCase):
             self.assertIn("Single baseline seed", summary)
             self.assertIn("Steady GPU ms", summary)
             self.assertTrue((output / "tail-diagnostics.csv").is_file())
+            if pdf_comparison:
+                for filename in ("metrics.csv", "summary.csv", "timings.csv", "tail-diagnostics.csv"):
+                    with (output / filename).open(newline="") as stream:
+                        rows = list(csv.DictReader(stream))
+                    self.assertEqual({r["method"] for r in rows}, {"restir_di", "pdf_similarity"})
+                with (output / "summary.csv").open(newline="") as stream:
+                    rows = [r for r in csv.DictReader(stream) if r["frame"] == "128" and r["region"] == "full"]
+                self.assertEqual(len(rows), 2)
+                errors = {r["method"]: float(r["rmae_mean"]) for r in rows}
+                self.assertAlmostEqual(errors["restir_di"], .5)
+                self.assertAlmostEqual(errors["pdf_similarity"], .05, places=6)
+                self.assertIn("| PDF off | combined | 0.5000 | 0.5000 | 1.00 |", summary)
+                self.assertIn("| PDF on | combined | 0.0500 | 0.0500 | 3.00 |", summary)
             self.assertEqual(list(root.rglob("*.pfm")), [])
             old = json.loads(convergence.read_text())
             old.pop("convergence_metric")
@@ -78,7 +106,7 @@ class AnalysisReportingTests(unittest.TestCase):
             item["convergence_sha256"] = sha(convergence)
             artifacts.save_json(refs / "reference-index.json", {"schema_version": reference.REFERENCE_SCHEMA_VERSION, "convergence_metric": reference.CONVERGENCE_METRIC, "references": {captures[0]["key"]: item}, "build": lighting_build()})
             legacy_output = baseline / "legacy-analysis"
-            with mock.patch.object(sys, "argv", ["di_reuse", "--baseline", str(baseline), "--references", str(refs), "--output", str(legacy_output)]):
+            with mock.patch.object(sys, "argv", arguments[:-1] + [str(legacy_output)]):
                 with self.assertRaisesRegex(ValueError, "Unsupported convergence metric"):
                     report.main()
             self.assertFalse(legacy_output.exists())
@@ -101,6 +129,16 @@ class AnalysisReportingTests(unittest.TestCase):
         self.assertIsNone(report.summarize(rows[:1])[0]["nrmse_std"])
         with self.assertRaises(ValueError):
             report.summarize(rows + rows)
+
+    def test_summary_never_merges_methods_with_different_seeds(self):
+        report = importlib.import_module("scripts.analysis.di_reuse")
+        common = dict(scene="test", scenario="static", mode="combined", frame=1, region="full",
+                      reference_converged=True, rmse=1, nrmse=1, relative_luminance_offset=0, gpu_ms=1)
+        rows = [{**common, "method": "restir_di", "seed": 1, "rmae": 1},
+                {**common, "method": "pdf_similarity", "seed": 2, "rmae": .1}]
+        summaries = report.summarize(rows)
+        self.assertEqual({r["method"]: r["rmae_mean"] for r in summaries},
+                         {"restir_di": 1, "pdf_similarity": .1})
 
     def test_error_concentration_uses_pixels_and_handles_exact_match(self):
         module = importlib.import_module("scripts.analysis.di_reuse_report")

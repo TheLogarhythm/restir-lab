@@ -20,6 +20,7 @@ from experiment.reference import (
 from experiment.runner import relative_path
 from experiment.scenes import ACTIVE_SCENES
 from scripts.analysis.di_reuse_report import write_report
+from scripts.analysis.di_methods import method, row_method
 
 
 def csv_file(path, rows):
@@ -31,14 +32,15 @@ def csv_file(path, rows):
 
 def summarize(rows):
     groups = defaultdict(list)
-    keys = ("scene", "scenario", "mode", "frame", "region")
+    keys = ("scene", "scenario", "method", "mode", "frame", "region")
     for row in rows:
+        row = {**row, "method": row_method(row)}
         groups[tuple(row[k] for k in keys)].append(row)
     result = []
     for key, group in sorted(groups.items()):
         seeds = [r["seed"] for r in group]
         if len(set(seeds)) != len(seeds):
-            raise ValueError("Duplicate scene/scenario/mode/frame/seed records")
+            raise ValueError("Duplicate scene/scenario/method/mode/frame/seed records")
         summary = dict(zip(keys, key))
         summary.update(seeds=len(group), reference_converged=all(r["reference_converged"] for r in group))
         for name in ("rmse", "nrmse", "rmae", "relative_luminance_offset", "gpu_ms"):
@@ -59,17 +61,21 @@ def phase(config, frame):
 
 
 def validate_comparison(captures):
-    """Require matched controls, targets and capture coverage across modes/seeds."""
+    """Allow mode/seed/PDF toggles; require all other controls and targets to match."""
     controls, poses, coverage = {}, {}, defaultdict(lambda: defaultdict(set))
     for capture in captures:
         config, manifest = capture["config"], capture["manifest"]
         group = (config["scene_id"], config["scenario"])
         settings = {"arguments": {k: v for k, v in config["arguments"].items() if k != "restirDI.diMode"},
                     "gpu": manifest["gpu"], "build": manifest["build"],
-                    "definition": {k: v for k, v in config["definition"].items() if k != "seed"}}
+                    "definition": {k: v for k, v in config["definition"].items() if k not in ("seed", "pdf_similarity")}}
         if controls.setdefault(group, settings) != settings:
             raise ValueError("Compared modes/seeds have different settings/build/hardware; use separate reports")
-        coverage[group][config["mode"]].add((config["seed"], capture["frame"]["frame"]))
+        variant = (method(config), config["mode"])
+        point = (config["seed"], capture["frame"]["frame"])
+        if point in coverage[group][variant]:
+            raise ValueError("Duplicate scene/scenario/method/mode/seed/frame captures")
+        coverage[group][variant].add(point)
         pose_group = (config["scene_id"], config["scenario"], capture["frame"]["frame"])
         if poses.setdefault(pose_group, capture["key"]) != capture["key"]:
             raise ValueError("Compared modes/seeds have different lighting targets or camera poses")
@@ -126,7 +132,7 @@ def read_timings(directory, config):
         by_phase[phase(config, frame)].append(row)
     phases = [{
         "scene": config["scene_id"], "scenario": config["scenario"],
-        "mode": config["mode"], "seed": config["seed"], "phase": name,
+        "method": method(config), "mode": config["mode"], "seed": config["seed"], "phase": name,
         "frames": len(group), "headless": bool(config["arguments"]["device.headless"]),
         **{field: float(np.mean([row[field] for row in group])) for field in fields},
     } for name, group in by_phase.items()]
@@ -147,7 +153,7 @@ def collect_measurements(captures, references, reference_root, output, record, l
         image = load_image(capture["image"])
         record["input_sha256"][relative_path(capture["image"], output)] = sha(capture["image"])
         for name, region in regions(*reference.shape[:2]).items():
-            rows.append({"scene": config["scene_id"], "scenario": config["scenario"], "mode": config["mode"],
+            rows.append({"scene": config["scene_id"], "scenario": config["scenario"], "method": method(config), "mode": config["mode"],
                          "seed": config["seed"], "frame": capture["frame"]["frame"], "region": name,
                          "reference_key": capture["key"], "reference_converged": ref["converged"],
                          **metrics(image[region], reference[region]),
@@ -169,27 +175,30 @@ def recheck_references(rows, references, reference_root):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--baseline", required=True, type=Path)
+    parser.add_argument("--baseline", required=True, type=Path, nargs="+", help="One or more saved DI suites")
     parser.add_argument("--references", required=True, type=Path)
     parser.add_argument("--scene", nargs="+")
     parser.add_argument("--scenario", choices=["static", "motion", "reset"])
     parser.add_argument("--output", type=Path, help="New directory; default <baseline>/analysis")
     args = parser.parse_args()
-    baseline, reference_root = args.baseline.resolve(), args.references.resolve()
-    output = (args.output or baseline / "analysis").resolve()
+    baselines, reference_root = [p.resolve() for p in args.baseline], args.references.resolve()
+    if len(baselines) > 1 and args.output is None:
+        parser.error("Multiple suites require an explicit --output directory")
+    output = (args.output or baselines[0] / "analysis").resolve()
     if output.exists():
         parser.error("Output already exists; choose a new --output directory")
-    captures = suite_captures(baseline, args.scene or ACTIVE_SCENES, args.scenario)
+    captures = [c for baseline in baselines for c in suite_captures(baseline, args.scene or ACTIVE_SCENES, args.scenario)]
     validate_comparison(captures)
     index_path = reference_root / "reference-index.json"
     references = load_references(index_path, reference_root, captures)
     output.mkdir(parents=True, exist_ok=False)
     record = {
-        "status": "running", "baseline": relative_path(baseline, output),
+        "status": "running", "baselines": [relative_path(p, output) for p in baselines],
         "references": relative_path(reference_root, output),
         "reference_index_sha256": sha(index_path),
         "script_sha256": sha(Path(__file__)),
         "report_source_sha256": sha(Path(__file__).with_name("di_reuse_report.py")),
+        "methods_source_sha256": sha(Path(__file__).with_name("di_methods.py")),
         "metrics_source_sha256": sha(ROOT / "scripts/run/experiment/reference.py"),
         "epsilon": EPSILON, "convergence_metric": CONVERGENCE_METRIC,
         "convergence_regions": ["full"],

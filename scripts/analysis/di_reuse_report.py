@@ -6,9 +6,26 @@ import math
 import os
 import numpy as np
 from experiment.images import preview_rgb
+from scripts.analysis.di_methods import METHODS, method, row_method, method_label
 
 MODES = ("initial", "temporal", "spatial", "combined")
 COLORS = dict(zip(MODES, ("#666666", "#0072B2", "#E69F00", "#009E73")))
+
+
+def variant(row):
+    return row_method(row), row["mode"]
+
+
+def variants(rows):
+    return sorted({variant(r) for r in rows}, key=lambda v: (MODES.index(v[1]), METHODS.index(v[0])))
+
+
+def variant_label(value):
+    return f"{method_label(value[0])} / {value[1].capitalize()}"
+
+
+def identity(row):
+    return row["scene"], row["scenario"], *variant(row)
 
 
 def mean_gpu_time(rows):
@@ -37,7 +54,8 @@ def selected_endpoints(captures, summaries):
         scenario = "static" if "static" in scenarios else sorted(scenarios)[0]
         rows = [r for r in summaries if r["scene"] == scene and r["scenario"] == scenario and r["region"] == "full"]
         last = max(r["frame"] for r in rows)
-        result.extend(sorted((r for r in rows if r["frame"] == last), key=lambda r: MODES.index(r["mode"])))
+        result.extend(sorted((r for r in rows if r["frame"] == last),
+                             key=lambda r: (MODES.index(r["mode"]), METHODS.index(row_method(r)))))
     return result
 
 
@@ -54,15 +72,16 @@ def plot_trajectories(plt, output, captures, summaries, scenes, scenarios):
             if not group:
                 ax.set_axis_off()
                 continue
-            for mode in MODES:
-                points = sorted((r for r in summaries if (r["scene"], r["scenario"], r["mode"], r["region"]) ==
-                                 (scene, scenario, mode, "full")), key=lambda r: r["frame"])
+            for name, mode in variants(summaries):
+                points = sorted((r for r in summaries if (r["scene"], r["scenario"], row_method(r), r["mode"], r["region"]) ==
+                                 (scene, scenario, name, mode, "full")), key=lambda r: r["frame"])
                 if points:
                     yerr = [p["rmae_std"] or 0 for p in points] if any(p["seeds"] > 1 for p in points) else None
                     handle = ax.errorbar([p["frame"] for p in points], [p["rmae_mean"] for p in points],
                                          yerr=yerr, color=COLORS[mode], marker="o", markersize=3,
-                                         linewidth=1.2, capsize=2, label=mode.capitalize())
-                    handles[mode] = handle
+                                         linewidth=1.2, capsize=2, linestyle="--" if name == "pdf_similarity" else "-",
+                                         label=variant_label((name, mode)))
+                    handles[(name, mode)] = handle
             definition = group[0]["config"]["definition"]
             if scenario == "motion":
                 ax.axvspan(definition["motion"]["start_frame"]+1, definition["motion"]["end_frame"], color="gray", alpha=.1)
@@ -71,14 +90,17 @@ def plot_trajectories(plt, output, captures, summaries, scenes, scenarios):
             ax.set(title=f"{scene} / {scenario}", xlabel="Logical frame", ylim=(0, max(maximum * 1.08, 1e-6)))
             if j == 0:
                 ax.set_ylabel("Linear RGB RMAE")
-    fig.legend([handles[m] for m in MODES if m in handles],
-               [m.capitalize() for m in MODES if m in handles], loc="outside upper center", ncols=4, frameon=False)
+    ordered = [v for v in variants(summaries) if v in handles]
+    fig.legend([handles[v] for v in ordered], [variant_label(v) for v in ordered],
+               loc="outside upper center", ncols=min(4, len(ordered)), frameon=False)
     fig.savefig(output / "error-trajectories.png", dpi=160)
     plt.close(fig)
 
 
 def plot_images(plt, output, captures, references, reference_root, endpoints, scenes, load_image):
-    fig, axes = plt.subplots(len(scenes), 5, squeeze=False, figsize=(12, 2.15 * len(scenes)), layout="constrained")
+    columns = variants(endpoints)
+    fig, axes = plt.subplots(len(scenes), len(columns)+1, squeeze=False,
+                             figsize=(2.4*(len(columns)+1), 2.15 * len(scenes)), layout="constrained")
     tails = []
     for i, scene in enumerate(scenes):
         row = next(r for r in endpoints if r["scene"] == scene)
@@ -96,11 +118,12 @@ def plot_images(plt, output, captures, references, reference_root, endpoints, sc
         axes[i, 0].set_title(f"{scene}\nReference / f{row['frame']} / seed {seed}", fontsize=8)
         for c in selected:
             mode = c["config"]["mode"]
+            name = method(c["config"])
             image = load_image(c["image"])
-            ax = axes[i, MODES.index(mode)+1]
+            ax = axes[i, columns.index((name, mode))+1]
             ax.imshow(preview_rgb(image, exposure))
-            ax.set_title(mode.capitalize(), fontsize=8)
-            tails.append({"scene": scene, "scenario": row["scenario"], "mode": mode, "frame": row["frame"],
+            ax.set_title(variant_label((name, mode)), fontsize=8)
+            tails.append({"scene": scene, "scenario": row["scenario"], "method": name, "mode": mode, "frame": row["frame"],
                           "seed": seed, "top_1pct_squared_error_share": error_concentration(image, reference)})
     fig.savefig(output / "representative-images.png", dpi=160)
     plt.close(fig)
@@ -139,10 +162,10 @@ def write_report(output, captures, summaries, timing_rows, references, reference
                      f"{d['initial_local_candidates']}/{d['initial_environment_candidates']}/{d['initial_infinite_candidates']}; "
                      f"{d['spatial_neighbors']} spatial neighbors, {d['spatial_radius']} px radius; history limit {d['max_history_length']}")
     hardware = sorted({c["manifest"].get("gpu", "unrecorded GPU") for c in captures})
-    lines = ["# ReSTIR DI baseline evaluation", "", "## Experimental design", "",
-             f"Controlled ablation of initial sampling, temporal reuse, spatial reuse, and combined reuse: "
+    lines = ["# ReSTIR DI evaluation", "", "## Experimental design", "",
+             f"Controlled comparison of DI reuse modes and PDF Similarity settings: "
              f"{len(configs)} runs, baseline seed(s) {', '.join(map(str,seeds))}. "
-             "Camera paths, candidate budgets, lighting and materials are matched across modes; denoising and AA are disabled.", "",
+             "Camera paths, candidate budgets, lighting and materials are matched across methods/modes; denoising and AA are disabled.", "",
              "Settings: " + " / ".join(sorted(settings)) + ". GPU record: " + "; ".join(hardware) + ".", "",
              "Primary metric: RMAE = mean(|I-R|)/(mean(|R|)+1e-12), over linear RGB. "
              "NRMSE = sqrt(mean((I-R)^2)/(mean(R^2)+1e-12)) additionally exposes large errors. Lower is better.", "",
@@ -151,38 +174,38 @@ def write_report(output, captures, summaries, timing_rows, references, reference
              "GPU cost is the mean over static frames 33 onward "
              "(Steady GPU ms); for other scenarios it covers the full sequence. "
              "This is a fixed-parameter comparison, not an equal-time comparison.", "",
-             "| Scene / sequence | Frame | Mode | RMAE | NRMSE | Steady GPU ms* |",
-             "|---|---:|---|---:|---:|---:|"]
+             "| Scene / sequence | Frame | Method | Mode | RMAE | NRMSE | Steady GPU ms* |",
+             "|---|---:|---|---|---:|---:|---:|"]
     costs = {}
     def number(row, metric):
         value = f"{row[metric+'_mean']:.4f}"
         return value if row[metric+'_std'] is None else value + f" ± {row[metric+'_std']:.4f}"
     for r in endpoints:
-        times = [t for t in timing_rows if (t["scene"],t["scenario"],t["mode"]) == (r["scene"],r["scenario"],r["mode"])
+        times = [t for t in timing_rows if identity(t) == identity(r)
                  and (r["scenario"] != "static" or t["phase"] == "steady")]
         cost = mean_gpu_time(times)
-        costs[(r["scene"], r["mode"])] = cost
+        costs[identity(r)] = cost
         cost_text = "—" if cost is None else f"{cost:.2f}"
-        lines.append(f"| {r['scene']} / {r['scenario']} | {r['frame']} | {r['mode']} | {number(r,'rmae')} | {number(r,'nrmse')} | {cost_text} |")
+        lines.append(f"| {r['scene']} / {r['scenario']} | {r['frame']} | {method_label(row_method(r))} | {r['mode']} | {number(r,'rmae')} | {number(r,'nrmse')} | {cost_text} |")
     lines += ["", "*Non-static selections use full-sequence GPU means. Timing excludes export/present and does not measure real-time FPS.", ""]
     if not ready:
         lines += ["**Provisional:** at least one reference fails the precision recheck; endpoint rankings below are descriptive only.", ""]
     for scene in sorted({r["scene"] for r in endpoints}):
         rows = [r for r in endpoints if r["scene"] == scene]
         best = min(rows, key=lambda r:r["rmae_mean"])
-        initial = next((r for r in rows if r["mode"] == "initial"), None)
-        text = f"- **{scene}:** {best['mode']} has the lowest observed endpoint RMAE"
+        initial = next((r for r in rows if r["mode"] == "initial" and row_method(r) == "restir_di"), None)
+        text = f"- **{scene}:** {variant_label(variant(best))} has the lowest observed endpoint RMAE"
         if initial and initial["rmae_mean"] > 0 and best["mode"] != "initial":
             text += f", {100*(1-best['rmae_mean']/initial['rmae_mean']):.1f}% below initial-only"
-            base_cost, best_cost = costs[(scene,"initial")], costs[(scene,best["mode"])]
+            base_cost, best_cost = costs[identity(initial)], costs[identity(best)]
             if base_cost and best_cost is not None:
                 text += f" at {best_cost/base_cost:.2f}x its measured GPU cost"
         text += "."
         squared_best = min(rows, key=lambda r:r["nrmse_mean"])
-        if squared_best["mode"] != best["mode"]:
-            text += f" NRMSE instead favors {squared_best['mode']}; the ranking depends on the error metric."
-            tail = next(t for t in tails if t["scene"] == scene and t["mode"] == best["mode"])
-            text += (f" For {best['mode']}, the worst 1% of pixels contribute "
+        if variant(squared_best) != variant(best):
+            text += f" NRMSE instead favors {variant_label(variant(squared_best))}; the ranking depends on the error metric."
+            tail = next(t for t in tails if identity(t) == identity(best))
+            text += (f" For {variant_label(variant(best))}, the worst 1% of pixels contribute "
                      f"{100*tail['top_1pct_squared_error_share']:.2f}% of squared error in the illustrated seed.")
         lines.append(text)
     lines += ["", "## Temporal behavior", "", "![Full-image error across saved frames](error-trajectories.png)", "",
@@ -191,12 +214,13 @@ def write_report(output, captures, summaries, timing_rows, references, reference
     reset = [r for r in summaries if r["scenario"] == "reset" and r["region"] == "full"]
     reset_ratios = []
     recovered = []
-    for scene in sorted({r["scene"] for r in reset}):
+    for scene, name in sorted({(r["scene"], row_method(r)) for r in reset if r["mode"] == "temporal"}):
         config = next(c for c in configs.values() if c["scene_id"] == scene and c["scenario"] == "reset")
         at = config["definition"]["reset_frame"]
-        points = {r["frame"]:r["rmae_mean"] for r in reset if r["scene"] == scene and r["mode"] == "temporal"}
+        points = {r["frame"]:r["rmae_mean"] for r in reset
+                  if r["scene"] == scene and row_method(r) == name and r["mode"] == "temporal"}
         if at in points and at-1 in points and points[at-1]>0:
-            reset_ratios.append(f"{scene} {points[at]/points[at-1]:.2f}x")
+            reset_ratios.append(f"{scene} / {method_label(name)} {points[at]/points[at-1]:.2f}x")
             if max(points) > at:
                 recovered.append(points[max(points)] < points[at])
     if reset_ratios:
