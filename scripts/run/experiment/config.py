@@ -20,6 +20,8 @@ def load_definition(path=DEFAULT_CONFIG):
 
 
 def validate_definition(definition, seed, resolution):
+    if type(definition.get("pdf_similarity", False)) is not bool:
+        raise ValueError("pdf_similarity must be a boolean")
     def integer(value, minimum, maximum, name):
         if type(value) is not int or not minimum <= value <= maximum:
             raise ValueError(f"{name} must be an integer in {minimum}..{maximum}")
@@ -61,6 +63,8 @@ def make_config(scene, definition, mode, scenario, seed=None, resolution=None, d
     validate_definition(definition, seed, (width, height))
     if mode not in MODES or scenario not in SCENARIOS:
         raise ValueError("Unknown reuse mode or scenario")
+    if definition.get("pdf_similarity", False) and mode not in ("spatial", "combined"):
+        raise ValueError("pdf_similarity requires spatial or combined reuse")
     settings = di_settings(width, height)
     settings.update(scene_arguments(scene))
     local_mode = definition.get("initial_local_sampling_mode", "UNIFORM")

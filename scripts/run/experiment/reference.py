@@ -200,7 +200,7 @@ def reference_config(base, pose, checkpoints, batch_samples, seed, sampling, *,
                       captures={key: [n // batch_samples for n in checkpoints] for key in ("static", "motion", "reset")},
                       initial_local_candidates=batch_samples, initial_environment_candidates=batch_samples,
                       initial_infinite_candidates=batch_samples, initial_brdf_candidates=0,
-                      initial_local_sampling_mode=sampling)
+                      initial_local_sampling_mode=sampling, pdf_similarity=False)
     if (type(previous_samples) is not int or previous_samples < 0
             or previous_samples % batch_samples or previous_samples >= checkpoints[0]
             or bool(previous_samples) != (resume_image is not None)):

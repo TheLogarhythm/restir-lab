@@ -81,6 +81,8 @@ def validate_run_outputs(output, config):
            float(row["gpu_ms"]) <= 0 for row in timings):
         raise RuntimeError("Invalid GPU frame timing")
     resolved = json.loads((output / "resolved.json").read_text())
+    if bool(resolved.get("pdf_similarity", False)) != config["definition"].get("pdf_similarity", False):
+        raise RuntimeError("Resolved PDF similarity differs from requested mode")
     if config.get("reference"):
         if resolved.get("estimator") != "conventional_light_sampling" or resolved.get("source_format") != "RGBA32_FLOAT accumulated reference":
             raise RuntimeError("Reference estimator/precision differs from requested mode")

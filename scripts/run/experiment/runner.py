@@ -48,6 +48,8 @@ def preflight(definition, executable=None):
     if not executable.is_file():
         raise RuntimeError("Run python scripts/run/build_rtxdi_experiments.py first")
     build = json.loads(executable.with_suffix(".build.json").read_text())
+    if definition.get("pdf_similarity", False) and not build.get("pdf_similarity", False):
+        raise RuntimeError("PDF similarity requires build_rtxdi_pdf.py")
     if build.get("renderer_commit") != definition["renderer_commit"]:
         raise RuntimeError("Build renderer revision differs from the experiment; rebuild first")
     if sha(executable) != build["executable_sha256"]:
@@ -96,7 +98,12 @@ def run_one(config, output, build, scene, timeout=600, *, executable=None, resum
         for key, value in config["arguments"].items():
             # cxxopts bool flags need '=0'; a separate '0' can leave the flag true.
             command.append(f"--{key}={value}")
-        record.update({"status": "running", "kind": "conventional_reference_on_author_renderer" if config.get("reference") else "adapted_author_code", "command": command,
+        kind = "adapted_author_code"
+        if config.get("reference"):
+            kind = "conventional_reference_on_author_renderer"
+        elif config["definition"].get("pdf_similarity", False):
+            kind = "independent_pdf_similarity_on_author_renderer"
+        record.update({"status": "running", "kind": kind, "command": command,
                   "project_commit": query("git", "rev-parse", "HEAD"),
                   "project_status": query("git", "status", "--porcelain", "--ignore-submodules=all"),
                   "build": build, "scene": scene, "cwd": ".",
