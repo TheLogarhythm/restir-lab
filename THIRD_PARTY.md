@@ -27,3 +27,5 @@ The [Multi-scene experiment integration](scripts/run/rtxdi_experiments.patch) an
 The [conventional reference shader](scripts/run/rtxdi_experiments/ReferenceSamples.hlsl), reference runner and analysis tools are project code developed with Codex, using pinned RTXDI's light, material and visibility interfaces.
 
 The local renderer builds apply [emissive-strength support](scripts/run/rtxdi_emission.py) to Donut temporarily and restore its source afterward.
+
+The [PDF Similarity extension](docs/reproductions/pdf-similarity.md) is an independent implementation developed with Codex from Tokuyoshi's 2023 paper. Its build-time spatial shader adaptation retains the pinned NVIDIA source notice; no author implementation was imported.

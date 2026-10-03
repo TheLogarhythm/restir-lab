@@ -6,10 +6,13 @@ The [proposal](../writing/course/proposal/main.tex) and [DI baseline](../results
 
 ## Next: PDF Similarity
 
-1. Read [PDF Similarity](literature/README.md#course-reading-sequence) and define the minimal RTXDI integration and controls.
-2. Implement the extension behind an explicit switch, retaining the baseline modes.
-3. Compare with baseline spatial/combined reuse using the same scenes, cameras and metrics; add an equal-time comparison when the implementation is ready.
-4. Use the findings to scope CGNS and prepare the progress demo.
+The [PDF Similarity DI extension](reproductions/pdf-similarity.md) is implemented; [runtime checks and remaining validation](reproductions/pdf-similarity.md#validation) are recorded.
+
+Direction MIS and fractional-M spatial tests are in place; analysis distinguishes PDF on/off.
+
+1. Resolve the existing reference index's missing lighting provenance.
+2. Compare PDF on/off spatial/combined reuse with matched builds, scenes, cameras and metrics. Include an equal-time comparison.
+3. Use the findings to scope CGNS and prepare the progress demo.
 
 Follow the [experiment protocol](../experiments/protocol.md).
 
@@ -24,4 +27,4 @@ Follow the [experiment protocol](../experiments/protocol.md).
 | 8 | Demo and experiment freeze |
 | 9–10 | Evaluation, report, and teammate reproduction check |
 
-The [pitch was submitted](https://github.com/TheLogarhythm/restir-lab/issues/1#issuecomment-5762409423) on 2026-09-21. The [proposal task](https://github.com/TheLogarhythm/restir-lab/issues/2) is due **2026-09-29, 23:59 Hong Kong time**. Track work on the [Project board](https://github.com/users/TheLogarhythm/projects/1/views/1); record decisions in [docs/decisions](decisions/) and measured runs in [results/index.csv](../results/index.csv). Split implementation and evaluation between teammates, and review each other's work.
+Track tasks on the [Project board](https://github.com/users/TheLogarhythm/projects/1/views/1), decisions in [docs/decisions](decisions/), and measured runs in [results/index.csv](../results/index.csv).

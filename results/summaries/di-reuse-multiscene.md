@@ -13,6 +13,5 @@ modes across static, motion and history-reset sequences: **48 runs** at
 This establishes the experiment harness. Quantitative quality and timing results
 are in the subsequent [three-scene DI baseline](di-baseline/README.md).
 
-The main local suite is `runs/20260929T031207094424Z-di-reuse`; its saved configs
-record the settings used at that time. See the [run index](../index.csv) and
-[experiment controls](../../experiments/suites/di-reuse.md).
+See the [run index](../index.csv) for retained baseline results and the
+[experiment controls](../../experiments/suites/di-reuse.md) for their settings.
