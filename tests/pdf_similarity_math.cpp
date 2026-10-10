@@ -19,6 +19,13 @@ int main()
     assert(LabPdfConfidence(21.f, 21.f) == 1.f);
     assert(LabDirectionHistory(21.f, 1.f) == 20.f);
     assert(LabDirectionHistory(21.f, -1.f) == 0.f);
+    // Stationary/diffuse controls and increasingly narrow/moving lobes.
+    assert(LabViewHistoryScale(0.1f, 1.f, 1.f) == 1.f);
+    assert(LabViewHistoryScale(0.1f, 1.f, 0.9999999f) == 1.f);
+    assert(LabViewHistoryScale(0.1f, 0.f, -1.f) == 1.f);
+    assert(LabViewHistoryScale(0.1f, 1.f, 0.999f) < LabViewHistoryScale(0.5f, 1.f, 0.999f));
+    assert(LabViewHistoryScale(0.1f, 1.f, 0.999f) < LabViewHistoryScale(0.1f, 0.5f, 0.999f));
+    assert(std::isfinite(LabViewHistoryScale(0.f, 1.f, -1.f)));
     for (int a = 0; a <= 100; ++a)
         for (int b = 0; b <= 100; ++b) {
             float x = LabPdfSimilarity(a / 100.f, b / 100.f, 0.93f);

@@ -58,6 +58,15 @@ void LabUpdateDirection(uint2 pixel, RAB_Surface surface, RTXDI_DIReservoir init
                     RAB_LightSample oldAtHere = LabDirectionSample(uint(mapped), old.uvData, surface, false);
                     float cosine = dot(LabLightDirection(previous, oldAtOld), LabLightDirection(surface, oldAtHere));
                     float oldM = LabDirectionHistory(old.M, cosine);
+                    uint historyMode = g_Const.restirDI.spatialResamplingParams.pad2;
+                    if (historyMode == 1) oldM = min(oldM, 4.f);
+                    if (historyMode == 2) {
+                        float3 oldReflection = reflect(-previous.viewDir, previous.normal);
+                        float3 newReflection = reflect(-surface.viewDir, surface.normal);
+                        float specularFraction = 1.f - min(previous.diffuseProbability, surface.diffuseProbability);
+                        oldM *= LabViewHistoryScale(min(previous.material.roughness, surface.material.roughness),
+                            specularFraction, dot(oldReflection, newReflection));
+                    }
                     float pOld = RAB_GetLightSampleTargetPdfForSurface(oldAtOld, previous);
                     float pHere = RAB_GetLightSampleTargetPdfForSurface(oldAtHere, surface);
                     float pInitial = result.W > 0.f ? initial.targetPdf : 0.f;

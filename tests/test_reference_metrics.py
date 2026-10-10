@@ -124,6 +124,20 @@ class ReferenceTests(unittest.TestCase):
                     self.assertEqual(tail["frames"], expected)
                     self.assertEqual(base, original)
 
+    def test_reference_clears_research_history_mode_for_new_and_resumed_streams(self):
+        for mode in (1, 2):
+            definition = load_definition()
+            definition.update(pdf_similarity=True, pdf_history_mode=mode)
+            base = make_config(load_scene("cornell-box"), definition, "combined", "motion")
+            original = copy.deepcopy(base)
+            for previous, image in ((0, None), (32, Path("previous.pfm.gz"))):
+                with self.subTest(mode=mode, previous=previous):
+                    config = ref.reference_config(base, base["frames"][63], [64], 8, 1001,
+                        "POWER_RIS", previous_samples=previous, resume_image=image)
+                    self.assertIs(config["definition"]["pdf_similarity"], False)
+                    self.assertEqual(config["definition"]["pdf_history_mode"], 0)
+            self.assertEqual(base, original)
+
     def test_pose_key_ignores_reuse_but_detects_camera_lighting_and_assets(self):
         configs = [make_config(load_scene("cornell-box"), load_definition(), mode, "motion")
                    for mode in ("initial", "combined")]

@@ -51,7 +51,15 @@ def adapt(renderer, helper):
         if (IsViewer()) enabled &= supported;
         else if (enabled && !supported)
             throw std::runtime_error("PDF similarity requires unfused spatial DI, initial visibility, raytraced correction and no checkerboard");
-        spatial.pad1 = enabled; // App-private flag; preserves the pinned constant-buffer ABI.
+        auto historyValue = IsViewer() ? Json::Value(0) : config["definition"].get("pdf_history_mode", 0);
+        if ((historyValue.type() != Json::intValue && historyValue.type() != Json::uintValue)
+            || !historyValue.isUInt() || historyValue.asUInt() > 2)
+            throw std::runtime_error("pdf_history_mode must be an integer in 0..2");
+        unsigned historyMode = historyValue.asUInt();
+        if (historyMode != 0 && !enabled)
+            throw std::runtime_error("pdf_history_mode requires pdf_similarity");
+        spatial.pad1 = enabled; // App-private flags; preserve the pinned constant-buffer ABI.
+        spatial.pad2 = historyMode;
         di.SetSpatialResamplingParameters(spatial);
     }
 
@@ -59,6 +67,7 @@ def adapt(renderer, helper):
     replace(helper, '        record["scene_id"] = config["scene_id"];',
             '        record["scene_id"] = config["scene_id"];\n'
             '        record["pdf_similarity"] = bool(p.spatialResamplingParams.pad1);\n'
+            '        record["pdf_history_mode"] = p.spatialResamplingParams.pad2;\n'
             '        record["pdf_direction_bytes"] = uint64_t(di.GetStaticParameters().RenderWidth) * di.GetStaticParameters().RenderHeight * 64;')
 
     replace(source / "RtxdiResources.h", '    nvrhi::BufferHandle DIReservoirBuffer;',

@@ -38,5 +38,16 @@ LAB_INLINE float LabDirectionHistory(float count, float cosine)
     cosine = cosine < -1.f ? -1.f : (cosine > 1.f ? 1.f : cosine);
     return (count < 20.f ? count : 20.f) * exp(1000.f * (cosine - 1.f));
 }
+// Research heuristic: approximate overlap of moving specular lobes.
+// Donut uses GGX alpha=roughness^2; this is not an exact GGX overlap.
+LAB_INLINE float LabViewHistoryScale(float roughness, float specularFraction, float reflectionCosine)
+{
+    float r = LabClamp01(roughness), alpha = r*r;
+    float width2 = alpha*alpha > 1e-6f ? alpha*alpha : 1e-6f;
+    reflectionCosine = reflectionCosine < -1.f ? -1.f : (reflectionCosine > 1.f ? 1.f : reflectionCosine);
+    // Ignore sub-ulp direction normalization error in a stationary view.
+    float change = 1.f - reflectionCosine - 1e-6f;
+    return exp(-LabClamp01(specularFraction) * (change > 0.f ? change : 0.f) / width2);
+}
 #undef LAB_INLINE
 #endif

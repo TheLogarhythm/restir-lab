@@ -25,6 +25,9 @@ def validate_definition(definition, seed, resolution):
     def integer(value, minimum, maximum, name):
         if type(value) is not int or not minimum <= value <= maximum:
             raise ValueError(f"{name} must be an integer in {minimum}..{maximum}")
+    integer(definition.get("pdf_history_mode", 0), 0, 2, "pdf_history_mode")
+    if definition.get("pdf_history_mode", 0) and not definition.get("pdf_similarity", False):
+        raise ValueError("pdf_history_mode requires pdf_similarity")
     integer(seed, 0, 4095, "seed")
     if len(resolution) != 2:
         raise ValueError("Resolution must contain width and height")
