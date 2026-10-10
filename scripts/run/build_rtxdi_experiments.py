@@ -50,8 +50,16 @@ def adapt_reference():
     replace_once(path,
                  '        ExecuteRayTracingPass(commandList, m_generateInitialSamplesPass, m_enableRayCounts, "DIGenerateInitialSamples", dispatchSize, *m_profiler, ProfilerSection::InitialSamples, m_descriptorTable, m_bindingSet);',
                  '        // Conventional reference: no initial RIS or reservoir generation.')
-    shutil.copy2(REFERENCE_SHADER, RENDERER / REFERENCE_FILES[-1])
+    # ShaderMake compares mtimes; copy2 can leave the replacement older than
+    # an official blob and silently publish the wrong estimator.
+    shutil.copyfile(REFERENCE_SHADER, RENDERER / REFERENCE_FILES[-1])
     DEST.write_text("#define LAB_REFERENCE_BUILD\n" + HELPER.read_text(encoding="utf-8"), encoding="utf-8")
+
+
+def validate_reference_shaders(official, current):
+    shading = [name for name in official if name.replace("\\", "/").endswith("/ShadeSamples.bin")]
+    if not shading or any(name not in current or current[name] == official[name] for name in shading):
+        raise RuntimeError("Conventional reference shader did not rebuild; refusing publication")
 
 
 def run(*args, cwd=ROOT):
@@ -106,6 +114,7 @@ def main():
             if not args.reference and current != shader_hashes:
                 raise RuntimeError("Unexpected compiled shader changes; experiment variant was not published")
             if args.reference:
+                validate_reference_shaders(shader_hashes, current)
                 shutil.copytree(shader_dir, temporary / "reference-shaders")
             shutil.copy2(official, temporary / variant.name)
             record["executable_sha256"] = sha(temporary / variant.name)

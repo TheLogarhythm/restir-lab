@@ -11,9 +11,18 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts/run"))
 import build_rtxdi_experiments as builder
 
+SHADE = 'dxil/LightingPasses/DI/ShadeSamples.bin'
+ORIGINAL_SHADERS = {'original.bin': b'shader', SHADE: b'official shading'}
+
 
 class BuildRecoveryTests(unittest.TestCase):
-    def run_build(self, root, *, fail_restore=False, fail_compile=True, reference=False):
+    @staticmethod
+    def shader_bytes(directory):
+        return {p.relative_to(directory).as_posix(): p.read_bytes()
+                for p in directory.rglob('*') if p.is_file()}
+
+    def run_build(self, root, *, fail_restore=False, fail_compile=True, reference=False,
+                  stale_reference=False):
         renderer = root / "renderer"
         build = renderer / "build"
         binary = build / "bin"
@@ -22,8 +31,9 @@ class BuildRecoveryTests(unittest.TestCase):
         source = renderer / "source.cpp"
         official = binary / "FullSample.exe"
         for path, data in ((source, b"source"), (renderer / "importer.cpp", b"importer"), (official, b"official"),
-                           (shaders / "original.bin", b"shader"),
+                           (shaders / "original.bin", b"shader"), (shaders / SHADE, b"official shading"),
                            (build / "CMakeCache.txt", b"cache")):
+            path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(data)
         script = root / "build.py"
         patch = root / "integration.patch"
@@ -45,6 +55,8 @@ class BuildRecoveryTests(unittest.TestCase):
                 if fail_compile or reference:
                     (shaders / "original.bin").write_bytes(b"changed")
                     (shaders / "added.bin").write_bytes(b"extra")
+                if reference and not stale_reference:
+                    (shaders / SHADE).write_bytes(b"conventional shading")
                 if fail_compile:
                     raise RuntimeError("compile failed")
 
@@ -65,7 +77,9 @@ class BuildRecoveryTests(unittest.TestCase):
             stack.enter_context(mock.patch.object(builder.shutil, "copy2", side_effect=copy))
             stack.enter_context(mock.patch.object(builder.subprocess, "check_output",
                 side_effect=lambda command, **kw: "" if command[0] == "powershell" else "revision"))
-            with self.assertRaises((RuntimeError, OSError)) if fail_compile or fail_restore else nullcontext():
+            expected = (self.assertRaisesRegex(RuntimeError, "reference shader") if stale_reference else
+                        self.assertRaises((RuntimeError, OSError)) if fail_compile or fail_restore else nullcontext())
+            with expected:
                 builder.main()
         return renderer, build, binary, shaders
 
@@ -74,7 +88,7 @@ class BuildRecoveryTests(unittest.TestCase):
             renderer, build, binary, shaders = self.run_build(Path(folder))
             self.assertEqual((renderer / "source.cpp").read_bytes(), b"source")
             self.assertEqual((binary / "FullSample.exe").read_bytes(), b"official")
-            self.assertEqual({p.name: p.read_bytes() for p in shaders.iterdir()}, {"original.bin": b"shader"})
+            self.assertEqual(self.shader_bytes(shaders), ORIGINAL_SHADERS)
             self.assertFalse((renderer / "helper.h").exists())
             self.assertFalse((binary / "FullSampleExperiments.exe").exists())
             self.assertEqual(list(build.glob("experiment-build-*")), [])
@@ -88,7 +102,7 @@ class BuildRecoveryTests(unittest.TestCase):
             self.assertEqual((backups[0] / "sources/source.cpp").read_bytes(), b"source")
             self.assertEqual((backups[0] / "shaders/original.bin").read_bytes(), b"shader")
             self.assertEqual((renderer / "source.cpp").read_bytes(), b"source")
-            self.assertEqual({p.name: p.read_bytes() for p in shaders.iterdir()}, {"original.bin": b"shader"})
+            self.assertEqual(self.shader_bytes(shaders), ORIGINAL_SHADERS)
 
     def test_success_publishes_variant_after_restoring_official_files(self):
         for reference in (False, True):
@@ -98,7 +112,7 @@ class BuildRecoveryTests(unittest.TestCase):
                 self.assertEqual(variant.read_bytes(), b"variant")
                 self.assertEqual((renderer / "source.cpp").read_bytes(), b"source")
                 self.assertEqual((binary / "FullSample.exe").read_bytes(), b"official")
-                self.assertEqual({p.name: p.read_bytes() for p in shaders.iterdir()}, {"original.bin": b"shader"})
+                self.assertEqual(self.shader_bytes(shaders), ORIGINAL_SHADERS)
                 record = json.loads(variant.with_suffix(".build.json").read_text())
                 self.assertEqual(record["executable_sha256"], builder.sha(variant))
                 self.assertEqual(record["donut"]["commit"], "donut-revision")
@@ -106,7 +120,18 @@ class BuildRecoveryTests(unittest.TestCase):
                 self.assertEqual(record["shader_sha256"], builder.tree_hashes(binary / record["shader_directory"]))
                 if reference:
                     self.assertEqual((binary / record["shader_directory"] / "added.bin").read_bytes(), b"extra")
+                    self.assertEqual((binary / record["shader_directory"] / SHADE).read_bytes(), b"conventional shading")
                 self.assertEqual(list(build.glob("experiment-build-*")), [])
+
+    def test_stale_reference_shader_refuses_publication_and_restores_files(self):
+        with tempfile.TemporaryDirectory() as folder:
+            renderer, build, binary, shaders = self.run_build(
+                Path(folder), fail_compile=False, reference=True, stale_reference=True)
+            self.assertEqual((renderer / 'source.cpp').read_bytes(), b'source')
+            self.assertEqual((binary / 'FullSample.exe').read_bytes(), b'official')
+            self.assertEqual(self.shader_bytes(shaders), ORIGINAL_SHADERS)
+            self.assertFalse((binary / 'FullSampleReference.exe').exists())
+            self.assertEqual(list(build.glob('experiment-build-*')), [])
 
 
 if __name__ == "__main__":

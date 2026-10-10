@@ -110,6 +110,34 @@ class BuildIsolationTests(unittest.TestCase):
                         with self.assertRaisesRegex(RuntimeError, "local changes"):
                             builder.main()
 
+    def test_reference_shader_replacement_invalidates_newer_official_blob(self):
+        import build_rtxdi_experiments as builder
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            payload = root / "reference.hlsl"
+            payload.write_bytes(b"conventional estimator")
+            os.utime(payload, (1000000000, 1000000000))
+            destination = root / builder.REFERENCE_FILES[-1]
+            destination.parent.mkdir(parents=True)
+            destination.write_bytes(b"official reservoir shader")
+            os.utime(destination, (1500000000, 1500000000))
+            helper = root / "helper.h"
+            helper.write_text("helper")
+            with patch.object(builder, "RENDERER", root), patch.object(builder, "REFERENCE_SHADER", payload), \
+                    patch.object(builder, "DEST", root / "generated.h"), patch.object(builder, "HELPER", helper), \
+                    patch.object(builder, "replace_once"):
+                builder.adapt_reference()
+            self.assertEqual(destination.read_bytes(), payload.read_bytes())
+            self.assertGreater(destination.stat().st_mtime, 1500000000)
+
+    def test_reference_publication_rejects_unchanged_or_missing_shading_blob(self):
+        import build_rtxdi_experiments as builder
+        old = {"dxil\\LightingPasses\\DI\\ShadeSamples.bin": "official"}
+        for current in (old, {}):
+            with self.subTest(current=current), self.assertRaisesRegex(RuntimeError, "reference shader"):
+                builder.validate_reference_shaders(old, current)
+        builder.validate_reference_shaders(old, {next(iter(old)): "conventional"})
+
     def test_restored_sources_are_newer_than_variant_objects(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
