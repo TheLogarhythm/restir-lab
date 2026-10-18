@@ -10,9 +10,11 @@ The [PDF Similarity DI extension](reproductions/pdf-similarity.md) is implemente
 
 Direction MIS and fractional-M spatial tests are in place; analysis distinguishes PDF on/off.
 
-1. Resolve the existing reference index's missing lighting provenance.
-2. Compare PDF on/off spatial/combined reuse with matched builds, scenes, cameras and metrics. Include an equal-time comparison.
-3. Use the findings to scope CGNS and prepare the progress demo.
+Follow the [controlled comparison plan](../experiments/suites/pdf-similarity.md):
+
+1. SMAPE/TRMAE, error-map/video export, deterministic camera/light controls and frozen-state reference generation are implemented. The approved order is technical pilot checks, all 78 method runs (main, ablation and equal-time) and reference-free comparison products, then matched references.
+2. Run the 1080p comparison, emphasizing Bistro interior/exterior, 30 FPS motion clips (32 static / 32 moving / 32 stopped frames) and one isolated lighting change; retain original PDF/history defaults (`pdf_history_mode=0`).
+3. Use the remainder of the fixed 30-hour total budget, including elapsed work, for references; acceptance gates quantitative error analysis and reference-based products. Keep the 1,048,576-local-sample per-stream cap and precision gates unless explicitly approved in advance. Prioritize static pairs and one referenced Bistro motion clip for Oct 25, then complete evaluation alongside CGNS.
 
 Follow the [experiment protocol](../experiments/protocol.md).
 

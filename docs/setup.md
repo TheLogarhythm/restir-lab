@@ -22,6 +22,10 @@ python scripts/run/rtxdi.py
 
 The run saves a 1280 × 720 Cornell Box BMP and its command, configuration, and log under ignored `runs/`. Use `python scripts/run/rtxdi.py --interactive` for an interactive FullSample, or `./renderers/rtxdi/build/bin/MinimalSample.exe` for Arcade. Keep DLSS compiled in for this upstream revision; the Cornell runner selects denoising and AA `OFF` at runtime. See the [RTXDI decision](decisions/0002-rtxdi-environment.md).
 
+## Controlled PDF comparison
+
+Build both variants with `python scripts/run/build_rtxdi_pdf.py` and `python scripts/run/build_rtxdi_experiments.py --reference`. Run `python scripts/run/rtxdi_pdf_controlled.py --pilot-only` for technical checks only, or omit `--pilot-only` to resume the approved [experiment](../experiments/suites/pdf-similarity.md): all method captures and direct comparison products precede references. Quantitative error products require accepted references. Status, immutable checkpoints, figures and videos are saved under `runs/pdf-controlled-20261018/`; restarting reuses verified work and preserves the total 30-hour deadline in `execution-budget.json`. The 1M reference maximum, budget and precision may change only with prior explicit user approval.
+
 ## Course documents
 
 Edit [proposal/main.tex](../writing/course/proposal/main.tex) and [report/main.tex](../writing/course/report/main.tex); keep [original templates](../writing/course/templates/README.md) unchanged. With TeX Live installed, create `build/latex/proposal` and `build/latex/report`, then run from the repository root:

@@ -8,5 +8,6 @@ Reproduce and evaluate ReSTIR using RTXDI and selected Falcor implementations.
 - Preserve original course templates and guidelines; edit working copies only.
 - Follow `experiments/protocol.md` for reproducibility and comparisons; maintain provenance in `THIRD_PARTY.md`.
 - Distinguish author-code runs, reproduced results, and independent implementations; separate observations from hypotheses.
+- Respect approved experiment budgets, checkpoint limits and precision; obtain explicit approval before changing them.
 - Run `python scripts/check_scaffold.py` after structural changes and relevant checks after renderer changes. Report only verified outcomes and state limitations.
 - Use ignored `tmp/` for disposable test files only; it may be deleted at any time. Keep source assets, experiment results, and recovery backups elsewhere.
