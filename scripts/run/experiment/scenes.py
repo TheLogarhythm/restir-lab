@@ -27,6 +27,20 @@ def vector(value, name):
     return value
 
 
+def camera_basis(direction, up, name="Camera"):
+    direction, up = vector(direction, name + ".direction"), vector(up, name + ".up")
+    def normalized(v):
+        length = math.hypot(*v)
+        if length < 1e-12:
+            raise ValueError(f"{name} direction/up must be nonzero and not parallel")
+        return [x / length for x in v]
+    def cross(a, b):
+        return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]
+    direction, up = normalized(direction), normalized(up)
+    right = normalized(cross(up, direction))
+    return right, cross(direction, right), direction
+
+
 def validate_scene(scene):
     if scene["schema_version"] != 2 or not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", scene["scene_id"]):
         raise ValueError("Invalid scene version or ID")
@@ -37,15 +51,12 @@ def validate_scene(scene):
         raise ValueError("Unknown upstream scene asset; use a file source for new scenes")
     camera = scene["camera"]
     vector(camera["position"], "camera.position")
-    direction, up = vector(camera["direction"], "camera.direction"), vector(camera["up"], "camera.up")
-    cross = [direction[1]*up[2]-direction[2]*up[1],
-             direction[2]*up[0]-direction[0]*up[2],
-             direction[0]*up[1]-direction[1]*up[0]]
-    if not all(math.isfinite(x) for x in cross) or sum(x*x for x in cross) < 1e-12:
-        raise ValueError("Camera direction/up must be nonzero and not parallel")
+    camera_basis(camera["direction"], camera["up"])
     if not math.isfinite(camera["vertical_fov"]) or not 0 < camera["vertical_fov"] < 180:
         raise ValueError("Camera vertical_fov must be in (0, 180) degrees")
     vector(scene["motion"]["end_position"], "motion.end_position")
+    camera_basis(scene["motion"].get("end_direction", camera["direction"]),
+                 scene["motion"].get("end_up", camera["up"]), "motion")
     lighting = scene["lighting"]
     if lighting["environment"] != "procedural":
         raise ValueError("Only the pinned sample's procedural environment is currently supported")

@@ -19,7 +19,9 @@ PATCH = HERE / "rtxdi_experiments.patch"
 HELPER = HERE / "rtxdi_experiments/LabExperiment.h"
 FILES = ["Samples/FullSample/Source/App/SceneRenderer.cpp", "Samples/FullSample/Source/Profiler.h",
          "Samples/FullSample/Source/App/SceneRenderer.h", "Samples/FullSample/Source/main.cpp",
-         "Samples/FullSample/Source/App/CommandLineArgs.cpp"]
+         "Samples/FullSample/Source/App/CommandLineArgs.cpp",
+         "Samples/FullSample/Source/RenderPasses/PrepareLightsPass.cpp",
+         "Samples/FullSample/Source/RenderPasses/PrepareLightsPass.h"]
 DEST = RENDERER / "Samples/FullSample/Source/App/LabExperiment.h"
 REFERENCE_SHADER = HERE / "rtxdi_experiments/ReferenceSamples.hlsl"
 REFERENCE_FILES = ["Samples/FullSample/Source/RenderTargets.cpp",

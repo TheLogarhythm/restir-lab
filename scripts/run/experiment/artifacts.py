@@ -8,6 +8,7 @@ import numpy as np
 from PIL import Image, PngImagePlugin
 from .config import LOCAL_SAMPLING_MODES, MODE_VALUES
 from .images import write_pfm, preview_rgb
+from .scenes import camera_basis
 
 def save_json(path, value):
     path = Path(path)
@@ -137,3 +138,78 @@ def validate_run_outputs(output, config):
     for key in ("environment_intensity_ev", "environment_rotation_degrees", "emissive_scale"):
         if not math.isclose(resolved[key], expected_scene["lighting"][key], rel_tol=1e-6, abs_tol=1e-6):
             raise RuntimeError(f"Renderer lighting differs from requested {key}")
+    validate_frame_states(output, config)
+
+
+def validate_frame_states(output, config):
+    """Require new controls to be acknowledged by the material/light preparation path."""
+    path = Path(output) / "resolved-frames.jsonl"
+    controlled = (any("logical_time_seconds" in frame or "lighting" in frame for frame in config["frames"])
+                  or (config["scenario"] == "motion" and any(
+                      key in config["scene"]["motion"] for key in ("end_direction", "end_up"))))
+    if not path.is_file():
+        if controlled:
+            raise RuntimeError("Missing resolved frame states for deterministic controls")
+        return  # Older ordinary experiments retain their historical output contract.
+    def number(value):
+        return type(value) in (int, float) and math.isfinite(value)
+    def close(actual, expected):
+        return number(actual) and math.isclose(actual, expected, rel_tol=1e-5, abs_tol=1e-6)
+    def positive_integer(value):
+        return type(value) is int and value > 0
+    try:
+        records = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+        if len(records) != len(config["frames"]):
+            raise ValueError("Missing or duplicate frame states")
+        previous, original_material = None, None
+        for record, expected in zip(records, config["frames"]):
+            if any(type(record[key]) is not int or record[key] != expected[key]
+                   for key in ("frame", "sampling_frame")) or record["history_reset"] is not expected["reset"]:
+                raise ValueError("Resolved state sequence/reset differs from requested sequence")
+            _, expected_up, expected_direction = camera_basis(expected["direction"], expected["up"])
+            for key, value in (("position", expected["position"]), ("direction", expected_direction), ("up", expected_up)):
+                if len(record[key]) != 3 or any(not close(a, b) for a, b in zip(record[key], value)):
+                    raise ValueError("Resolved camera pose differs from requested pose")
+            if "logical_time_seconds" in expected and not close(
+                    record["logical_time_seconds"], expected["logical_time_seconds"]):
+                raise ValueError("Resolved logical scene time differs from requested time")
+            if "lighting" in expected:
+                requested, actual = expected["lighting"], record["lighting"]
+                if (actual["material"] != requested["material"] or not close(
+                        actual["emissive_intensity_multiplier"], requested["emissive_intensity_multiplier"])):
+                    raise ValueError("Resolved material lighting differs from requested lighting")
+                update = record["material_update"]
+                intensity = update["original_emissive_intensity"]
+                if (not number(intensity) or intensity <= 0 or not close(update["emissive_intensity"],
+                        intensity * requested["emissive_intensity_multiplier"])
+                        or update["dirty_before_upload"] is not True
+                        or not positive_integer(update["emitting_triangles"])
+                        or not positive_integer(update["emitting_geometries"])
+                        or type(update["material_id"]) is not int or update["material_id"] < 0):
+                    raise ValueError("Material update was not positive, absolute, and dirty before upload")
+                identity = (actual["material"], update["material_id"], intensity,
+                            update["emitting_triangles"], update["emitting_geometries"], update["emissive_color"])
+                if original_material is not None and identity != original_material:
+                    raise ValueError("Material/emitter identity changed during lighting modulation")
+                original_material = identity
+            correspondence = record["light_correspondence"]
+            for total, matched, same_offset in (("emissive_triangles", "mapped_emissive_triangles", "same_offset_emissive_triangles"),
+                    ("primitive_lights", "mapped_primitive_lights", "same_offset_primitive_lights")):
+                values = [correspondence[key] for key in (total, matched, same_offset)]
+                if any(type(value) is not int or value < 0 for value in values):
+                    raise ValueError("Invalid light correspondence counts")
+                wanted = correspondence[total] if previous else 0
+                if correspondence[matched] != wanted or correspondence[same_offset] != wanted:
+                    raise ValueError("Incomplete or reordered current/previous light correspondence")
+                if previous and correspondence[total] != previous["light_correspondence"][total]:
+                    raise ValueError("Emitting identities/counts changed during controlled rendering")
+            if correspondence["sampling_pdf_mip0_refreshed"] is not True or (
+                    config["definition"].get("initial_local_sampling_mode", "UNIFORM") == "POWER_RIS"
+                    and correspondence["sampling_pdf_mips_refreshed"] is not True):
+                raise ValueError("Light sampling PDF was not refreshed")
+            if previous and any(record[key] != previous[key]
+                                for key in ("local_lights", "infinite_lights", "environment_present")):
+                raise ValueError("Light counts changed during controlled rendering")
+            previous = record
+    except (KeyError, TypeError, ValueError, OverflowError) as error:
+        raise RuntimeError(f"Invalid resolved frame states: {error}") from error

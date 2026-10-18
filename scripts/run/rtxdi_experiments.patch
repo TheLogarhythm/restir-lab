@@ -52,7 +52,16 @@
  
      LoadInitialCameraSettings();
  
-@@ -1025,6 +1040,11 @@
+@@ -547,6 +562,8 @@
+ 
+ void SceneRenderer::Animate(float fElapsedTimeSeconds)
+ {
++    if (m_labExperiment && m_labExperiment->HasLogicalTime())
++        fElapsedTimeSeconds = m_labExperiment->FrameElapsedSeconds();
+     if (m_ui.isLoading)
+         return;
+ 
+@@ -1025,6 +1042,11 @@
      return m_isContext->IsLocalLightPowerRISEnabled();
  }
  
@@ -64,7 +73,7 @@
  void SceneRenderer::RenderScene(nvrhi::IFramebuffer* framebuffer)
  {
      if (ProcessFrameStepMode(framebuffer))
-@@ -1033,7 +1053,11 @@
+@@ -1033,7 +1055,11 @@
      const engine::PerspectiveCamera* activeCamera = nullptr;
      uint effectiveFrameIndex = m_renderFrameIndex;
  
@@ -77,7 +86,7 @@
      EnforceFpsLimit();
  
  #if WITH_NRD
-@@ -1087,7 +1111,7 @@
+@@ -1087,7 +1113,7 @@
  
      float accumulationWeight = 1.f / (float)m_ui.numAccumulatedFrames;
  
@@ -86,7 +95,7 @@
  
      UpdateSelectedMaterialInUI();
      UpdateEnvironmentLightAndSunLight();
-@@ -1106,6 +1130,12 @@
+@@ -1106,14 +1132,22 @@
  #endif
  
      m_commandList->open();
@@ -99,7 +108,9 @@
      m_profiler->BeginFrame(m_commandList);
      m_shaderDebugPrintPass->InitializeFrame(m_commandList);
  
-@@ -1114,6 +1143,7 @@
+     AssignIesProfiles(m_commandList);
++    lab.ApplyLighting(*m_scene->GetSceneGraph());
+     m_scene->RefreshBuffers(m_commandList, GetFrameIndex());
      m_rtxdiResources->InitializeNeighborOffsets(m_commandList, m_isContext->GetNeighborOffsetCount()); // TODO Move to be next to other RTXDI passes?
      UpdateAccelerationStructure();
      EnvironmentMap();
@@ -107,7 +118,15 @@
      nvrhi::utils::ClearColorAttachment(m_commandList, framebuffer, 0, nvrhi::Color(0.f));
      GBuffer();
  
-@@ -1139,20 +1169,19 @@
+@@ -1123,6 +1157,7 @@
+     UpdateRtxdiFrameIndex(effectiveFrameIndex);
+     PrepareLights();
+     ProcessLocalLightPdfMipMap();
++    lab.RecordFrame(*m_isContext, *m_prepareLightsPass);
+     ApplyNrdCheckerboardSettings();
+     CopyPSRBuffers();
+ 
+@@ -1139,20 +1174,19 @@
      m_isContext->GetReSTIRDIContext().SetShadingParameters(restirDIShadingParams);
  
      LightingPasses::RenderSettings lightingSettings = GetFullyProcessedLightingSettings(denoiserMode, enableDirectReStirPass);
@@ -121,21 +140,21 @@
 +    // Denoising and its input formatting are excluded from this experiment.
      m_compositingPass->Render(m_commandList, m_view, m_viewPrevious, denoiserMode, checkerboard, m_ui, *m_environmentLight);
      TransparentGeometry();
-+    if (lab.IsReference())
-+        m_accumulationPass->Render(m_commandList, m_view, m_upscaledView, lab.AccumulationWeight());
 -    ResolveAA(m_commandList, accumulationWeight);
 -    Bloom();
 -    ReferenceImage(cameraIsStatic);
 -    ToneMapping(exposureResetRequired);
 -    DebugPathViz();
 -    FinalFramebufferOutput(framebuffer);
++    if (lab.IsReference())
++        m_accumulationPass->Render(m_commandList, m_view, m_upscaledView, lab.AccumulationWeight());
 +    // Window display only. Captures read HdrColor before any display transform.
 +    if (GetDeviceManager()->GetWindow())
 +        m_CommonPasses->BlitTexture(m_commandList, framebuffer, m_renderTargets->HdrColor, &m_bindingCache);
  
      m_shaderDebugPrintPass->ReadBackPrintData(m_commandList);
  
-@@ -1161,7 +1190,12 @@
+@@ -1161,7 +1195,12 @@
      m_commandList->close();
      GetDevice()->executeCommandList(m_commandList);
  
@@ -266,3 +285,58 @@
          ("device.backBufferWidth", "Window width", value(deviceParams.backBufferWidth))
          ("device.backBufferHeight", "Window height", value(deviceParams.backBufferHeight))
          ("device.borderless", "Run in borderless mode (0/1)", value(deviceParams.startBorderless))
+--- a/Samples/FullSample/Source/RenderPasses/PrepareLightsPass.h
++++ b/Samples/FullSample/Source/RenderPasses/PrepareLightsPass.h
+@@ -51,7 +51,19 @@
+ 
+     uint32_t GetMaxLightsInBuffer() const;
+ 
++    struct LabCorrespondence
++    {
++        uint32_t emissiveTriangles = 0;
++        uint32_t mappedEmissiveTriangles = 0;
++        uint32_t sameOffsetEmissiveTriangles = 0;
++        uint32_t primitiveLights = 0;
++        uint32_t mappedPrimitiveLights = 0;
++        uint32_t sameOffsetPrimitiveLights = 0;
++    };
++    const LabCorrespondence& GetLabCorrespondence() const { return m_labCorrespondence; }
++
+ private:
++    LabCorrespondence m_labCorrespondence;
+     nvrhi::DeviceHandle m_device;
+ 
+     nvrhi::ShaderHandle m_computeShader;
+--- a/Samples/FullSample/Source/RenderPasses/PrepareLightsPass.cpp
++++ b/Samples/FullSample/Source/RenderPasses/PrepareLightsPass.cpp
+@@ -348,6 +348,7 @@
+     bool enableImportanceSampledEnvironmentLight)
+ {
+     RTXDI_LightBufferParameters outLightBufferParams = {};
++    m_labCorrespondence = {};
+     const rtxdi::ReSTIRDIStaticParameters& contextParameters = context.GetStaticParameters();
+ 
+     commandList->beginMarker("PrepareLights");
+@@ -391,6 +392,11 @@
+             task.instanceAndGeometryIndex = (instance->GetInstanceIndex() << 12) | uint32_t(geometryIndex & 0xfff);
+             task.lightBufferOffset = lightBufferOffset;
+             task.triangleCount = geometry->numIndices / 3;
++            m_labCorrespondence.emissiveTriangles += task.triangleCount;
++            if (pOffset != m_instanceLightBufferOffsets.end())
++                m_labCorrespondence.mappedEmissiveTriangles += task.triangleCount;
++            if (pOffset != m_instanceLightBufferOffsets.end() && pOffset->second == task.lightBufferOffset)
++                m_labCorrespondence.sameOffsetEmissiveTriangles += task.triangleCount;
+             task.prevLightBufferOffset = (pOffset != m_instanceLightBufferOffsets.end()) ? int(pOffset->second) : -1;
+ 
+             // record the current offset of this instance for use on the next frame
+@@ -429,6 +435,10 @@
+         task.instanceAndGeometryIndex = TASK_PRIMITIVE_LIGHT_BIT | uint32_t(primitiveLightInfos.size());
+         task.lightBufferOffset = lightBufferOffset;
+         task.triangleCount = 1; // technically zero, but we need to allocate 1 thread in the grid to process this light
++        ++m_labCorrespondence.primitiveLights;
++        if (pOffset != m_primitiveLightBufferOffsets.end()) ++m_labCorrespondence.mappedPrimitiveLights;
++        if (pOffset != m_primitiveLightBufferOffsets.end() && pOffset->second == task.lightBufferOffset)
++            ++m_labCorrespondence.sameOffsetPrimitiveLights;
+         task.prevLightBufferOffset = (pOffset != m_primitiveLightBufferOffsets.end()) ? pOffset->second : -1;
+ 
+         // record the current offset of this instance for use on the next frame

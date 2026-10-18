@@ -1,10 +1,14 @@
 // Project integration for pinned RTXDI: deterministic frames and unprocessed readback.
 #pragma once
 #include <donut/core/json.h>
+#include <donut/engine/SceneGraph.h>
+#include <cmath>
 #include <cstdlib>
 #include <fstream>
 #include <iomanip>
+#include <memory>
 #include <stdexcept>
+#include <unordered_map>
 #include <vector>
 
 void FillReSTIRDIConstants(RTXDI_Parameters&, const rtxdi::ReSTIRDIContext&, const RTXDI_LightBufferParameters&);
@@ -15,6 +19,9 @@ class LabExperiment
     Json::ArrayIndex index = 0;
     std::filesystem::path output;
     std::ofstream timings;
+    std::ofstream frameStates;
+    Json::Value frameState;
+    std::unordered_map<std::string, std::pair<std::shared_ptr<donut::engine::Material>, float>> originalMaterials;
     std::string loadedScene;
     static constexpr const char* sections[] = {
         "tlas", "environment", "gbuffer", "mesh", "light_pdf", "presample_lights",
@@ -34,6 +41,12 @@ class LabExperiment
     static dm::float3 Vector(const Json::Value& v)
     {
         return dm::float3(v[0].asFloat(), v[1].asFloat(), v[2].asFloat());
+    }
+    static Json::Value JsonVector(const dm::float3& v)
+    {
+        Json::Value result(Json::arrayValue);
+        result.append(v.x); result.append(v.y); result.append(v.z);
+        return result;
     }
 
 public:
@@ -55,6 +68,7 @@ public:
             throw std::runtime_error("Experiment has no frame sequence");
         output = config["output"].asString();
         timings = Open(output / "timings.csv");
+        frameStates = Open(output / "resolved-frames.jsonl");
         timings << "frame,sampling_frame,capture,history_reset";
         for (auto section : sections) timings << ',' << section << "_ms";
         timings << '\n' << std::setprecision(9);
@@ -87,6 +101,7 @@ public:
 
     void ApplySettings(UIData& ui) const
     {
+        ui.enableAnimations = false;
         ui.verticalFov = config["scene"]["camera"]["vertical_fov"].asFloat();
         ui.environmentIntensityBias = config["scene"]["lighting"]["environment_intensity_ev"].asFloat();
         ui.environmentRotation = config["scene"]["lighting"]["environment_rotation_degrees"].asFloat();
@@ -102,11 +117,101 @@ public:
     bool Reset() const { return Frame()["reset"].asBool(); }
     bool Done() const { return index == config["frames"].size(); }
 
+    bool HasLogicalTime() const { return Frame().isMember("logical_time_seconds"); }
+    float FrameElapsedSeconds() const
+    {
+        if (!HasLogicalTime() || index == 0) return 0.f;
+        const double previous = config["frames"][index - 1]["logical_time_seconds"].asDouble();
+        const double elapsed = Frame()["logical_time_seconds"].asDouble() - previous;
+        if (!std::isfinite(elapsed) || elapsed < 0.)
+            throw std::runtime_error("Logical scene time must be finite and nondecreasing");
+        return float(elapsed);
+    }
+
     uint32_t Begin(donut::app::FirstPersonCamera& camera)
     {
         auto position = Vector(Frame()["position"]);
         camera.LookAt(position, position + Vector(Frame()["direction"]), Vector(Frame()["up"]));
+        frameState = Json::Value(Json::objectValue);
+        frameState["frame"] = Frame()["frame"];
+        frameState["sampling_frame"] = Frame()["sampling_frame"];
+        frameState["position"] = JsonVector(camera.GetPosition());
+        frameState["direction"] = JsonVector(camera.GetDir());
+        frameState["up"] = JsonVector(camera.GetUp());
+        frameState["history_reset"] = Reset();
+        if (HasLogicalTime()) frameState["logical_time_seconds"] = Frame()["logical_time_seconds"];
         return Frame()["sampling_frame"].asUInt();
+    }
+
+    void ApplyLighting(donut::engine::SceneGraph& scene)
+    {
+        if (!Frame().isMember("lighting")) return;
+        const auto& lighting = Frame()["lighting"];
+        const auto multiplierValue = lighting["emissive_intensity_multiplier"];
+        if (!lighting.isObject() || lighting.size() != 2 || !lighting["material"].isString()
+            || lighting["material"].asString().empty() || !multiplierValue.isNumeric())
+            throw std::runtime_error("Invalid per-frame material lighting state");
+        const double multiplier = multiplierValue.asDouble();
+        if (!std::isfinite(multiplier) || multiplier <= 0.)
+            throw std::runtime_error("Material intensity multiplier must be positive and finite");
+        const auto name = lighting["material"].asString();
+        std::shared_ptr<donut::engine::Material> target;
+        unsigned matches = 0;
+        for (const auto& material : scene.GetMaterials())
+            if (material->name == name) { target = material; ++matches; }
+        if (matches != 1)
+            throw std::runtime_error("Lighting material must resolve to exactly one existing material: " + name);
+        auto original = originalMaterials.find(name);
+        if (original == originalMaterials.end())
+            original = originalMaterials.emplace(name, std::make_pair(target, target->emissiveIntensity)).first;
+        if (original->second.first != target || !std::isfinite(original->second.second)
+            || original->second.second <= 0.f || !dm::any(target->emissiveColor != 0.f))
+            throw std::runtime_error("Lighting target must remain the same positive emissive material");
+        const float intensity = float(double(original->second.second) * multiplier);
+        if (!std::isfinite(intensity) || intensity <= 0.f
+            || !target->SetProperty("emissiveIntensity", dm::float4(intensity, 0.f, 0.f, 0.f)))
+            throw std::runtime_error("Cannot set positive material emissive intensity");
+        uint64_t triangles = 0, geometries = 0;
+        for (const auto& instance : scene.GetMeshInstances())
+            for (const auto& geometry : instance->GetMesh()->geometries)
+                if (geometry->material == target)
+                { triangles += geometry->numIndices / 3; ++geometries; }
+        if (!triangles) throw std::runtime_error("Lighting material has no emitting triangles");
+        frameState["lighting"] = lighting;
+        auto& resolved = frameState["material_update"];
+        resolved["material_id"] = target->materialID;
+        resolved["original_emissive_intensity"] = original->second.second;
+        resolved["emissive_intensity"] = target->emissiveIntensity;
+        resolved["emissive_color"] = JsonVector(target->emissiveColor);
+        resolved["emitting_geometries"] = Json::UInt64(geometries);
+        resolved["emitting_triangles"] = Json::UInt64(triangles);
+        resolved["dirty_before_upload"] = target->dirty;
+    }
+
+    template<typename LightPreparation>
+    void RecordFrame(const rtxdi::ImportanceSamplingContext& context, const LightPreparation& preparation)
+    {
+        if (!frameStates.is_open()) return;
+        const auto& lights = context.GetLightBufferParameters();
+        const auto& correspondence = preparation.GetLabCorrespondence();
+        frameState["local_lights"] = lights.localLightBufferRegion.numLights;
+        frameState["local_light_buffer_offset"] = lights.localLightBufferRegion.firstLightIndex;
+        frameState["infinite_lights"] = lights.infiniteLightBufferRegion.numLights;
+        frameState["environment_present"] = lights.environmentLightParams.lightPresent;
+        auto& record = frameState["light_correspondence"];
+        record["emissive_triangles"] = correspondence.emissiveTriangles;
+        record["mapped_emissive_triangles"] = correspondence.mappedEmissiveTriangles;
+        record["same_offset_emissive_triangles"] = correspondence.sameOffsetEmissiveTriangles;
+        record["primitive_lights"] = correspondence.primitiveLights;
+        record["mapped_primitive_lights"] = correspondence.mappedPrimitiveLights;
+        record["same_offset_primitive_lights"] = correspondence.sameOffsetPrimitiveLights;
+        record["source"] = "CPU PrepareLights tasks; stable instance/geometry and primitive-light identities";
+        record["sampling_pdf_mip0_refreshed"] = true;
+        record["sampling_pdf_mips_refreshed"] = context.IsLocalLightPowerRISEnabled();
+        Json::StreamWriterBuilder writer;
+        writer["indentation"] = "";
+        frameStates << Json::writeString(writer, frameState) << '\n';
+        frameStates.flush();
     }
 
     void Resolved(const rtxdi::ImportanceSamplingContext& context, const UIData& ui,
