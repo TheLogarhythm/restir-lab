@@ -11,6 +11,8 @@ void AddSample(RAB_Surface surface, uint index, float2 uv, float sourcePdf,
     if (sourcePdf <= 0 || count == 0) return;
     RAB_LightSample sample = RAB_SamplePolymorphicLight(RAB_LoadLightInfo(index, false), surface, uv);
     if (sample.solidAnglePdf <= 0) return;
+    float3 L = normalize(sample.position - surface.worldPos);
+    if (dot(L, surface.geoNormal) <= 0) return;
     SplitBrdf brdf = EvaluateBrdf(surface, sample.position);
     if (brdf.demodulatedDiffuse == 0 && !any(brdf.specular > 0)) return;
     float3 radiance = sample.radiance * GetFinalVisibility(SceneBVH, surface, sample.position)
@@ -79,3 +81,4 @@ void RayGen()
     u_DiffuseLighting[pixel] = float4(diffuse, 0);
     u_SpecularLighting[pixel] = float4(DemodulateSpecular(surface.material.specularF0, specular), 0);
 }
+

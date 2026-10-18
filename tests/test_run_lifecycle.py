@@ -40,6 +40,28 @@ class RunLifecycleTests(unittest.TestCase):
             self.assertEqual(record["stage"], "preparing")
             self.assertIn("metadata failed", record["error"])
 
+    def test_deadline_timeout_is_resolved_after_preparation_before_gpu_launch(self):
+        with tempfile.TemporaryDirectory() as folder:
+            output = Path(folder) / "run"
+            events = []
+            def metadata(*args, **kwargs):
+                events.append("prepare")
+                return "fixture"
+            def deadline():
+                events.append("deadline")
+                raise RuntimeError("Budget exhausted")
+            with mock.patch.object(runner, "query", side_effect=metadata), \
+                 mock.patch.object(runner.platform, "platform", return_value="fixture"), \
+                 mock.patch.object(runner.subprocess, "run") as launch, \
+                 mock.patch.object(runner, "finalize_outputs", return_value=[]):
+                with self.assertRaisesRegex(RuntimeError, "Budget exhausted"):
+                    runner.run_one(self.config(), output, {}, {}, timeout=deadline)
+                launch.assert_not_called()
+            self.assertEqual(events[-1], "deadline")
+            self.assertIn("prepare", events[:-1])
+            record = json.loads((output / "manifest.json").read_text())
+            self.assertEqual(record["status"], "failed")
+
     def test_invalid_timings_preserve_raw_outputs(self):
         with tempfile.TemporaryDirectory() as folder:
             output = Path(folder)

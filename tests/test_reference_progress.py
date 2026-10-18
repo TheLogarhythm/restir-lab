@@ -129,7 +129,9 @@ class ProgressTests(unittest.TestCase):
                 "scene":{"sha256":"fixture-assets"},"build":build,
                 "captures":[{"frame":2,"image_sha256":sha(image)}]})
             sample={"target":target(base,base["frames"][0],"fixture-assets")}
-            ref_runner.validate_checkpoint(image,sample,1001,16,8,build)
+            # Runtime acknowledgements are covered separately; this fixture tests hashes.
+            with mock.patch("experiment.artifacts.validate_run_outputs"):
+                ref_runner.validate_checkpoint(image,sample,1001,16,8,build)
             with self.assertRaisesRegex(ValueError,"shaders changed"):
                 ref_runner.validate_checkpoint(image,sample,1001,16,8,{**build,"shader_sha256":{}})
             write_pfm(image,np.full((2,2,3),2,dtype=np.float32))

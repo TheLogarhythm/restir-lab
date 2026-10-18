@@ -86,6 +86,16 @@ def run_one(config, output, build, scene, timeout=600, *, executable=None, resum
             source = Path(resume).resolve()
             if sha(source) != config["reference"]["resume_image_sha256"]:
                 raise ValueError("Reference resume image was modified")
+            if config["reference"].get("allocation") is not None:
+                from .reference_allocation import allocation_totals
+                allocation_totals(config)
+                parent_path = source.parent / "config.json"
+                if sha(parent_path) != config["reference"].get("resume_config_sha256"):
+                    raise ValueError("Reference parent config was modified")
+                parent = json.loads(parent_path.read_text())
+                if (parent["seed"] != config["seed"]
+                        or allocation_totals(parent) != config["reference"]["allocation"]["previous_samples"]):
+                    raise ValueError("Reference parent light-class counts differ")
             rgb = read_pfm(source) if resume_rgb is None else resume_rgb
             if rgb.shape != (config["height"], config["width"], 3):
                 raise ValueError("Resume image dimensions differ")
@@ -129,8 +139,9 @@ def run_one(config, output, build, scene, timeout=600, *, executable=None, resum
         with (output / "renderer.log").open("w", encoding="utf-8") as log:
             # Windows resolves the executable before applying cwd; only the launch
             # override is absolute. The saved command stays relative to the run.
+            launch_timeout = timeout() if callable(timeout) else timeout
             result = subprocess.run(command, executable=str(executable), cwd=output, env=env,
-                                    stdout=log, stderr=subprocess.STDOUT, timeout=timeout)
+                                    stdout=log, stderr=subprocess.STDOUT, timeout=launch_timeout)
         record["exit_code"] = result.returncode
         if result.returncode:
             raise RuntimeError(f"Renderer exited {result.returncode}; inspect renderer.log")

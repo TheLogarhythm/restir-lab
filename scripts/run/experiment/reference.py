@@ -7,8 +7,9 @@ from pathlib import Path
 import numpy as np
 from rtxdi_common import sha
 from rtxdi_build import lighting_signature
-from .config import make_config
+from .config import NEE_SAMPLE_COUNTS, make_config
 from .images import read_pfm
+from .reference_allocation import allocation_record
 
 EPSILON = 1e-12
 REFERENCE_SCHEMA_VERSION = 3
@@ -126,7 +127,7 @@ def regions(height, width):
 
 def target(config, frame, asset_hash):
     # Sampling budgets, seeds and reuse modes change variance, not the lighting target.
-    return {"scene_id": config["scene_id"], "asset_sha256": asset_hash,
+    value = {"scene_id": config["scene_id"], "asset_sha256": asset_hash,
             "renderer_commit": config["definition"]["renderer_commit"],
             "resolution": [config["width"], config["height"]],
             "camera": {key: frame[key] for key in ("position", "direction", "up")},
@@ -135,6 +136,9 @@ def target(config, frame, asset_hash):
             "analytic_sun": config["definition"].get("analytic_sun", True),
             "surface_settings": {key: config["arguments"].get(key) for key in SURFACE_ARGUMENTS},
             "output": "scene-linear direct illumination + upstream emission/background/glass"}
+    if "lighting" in frame and frame["lighting"].get("emissive_intensity_multiplier") != 1.0:
+        value["lighting_state"] = copy.deepcopy(frame["lighting"])
+    return value
 
 
 def target_key(value):
@@ -186,7 +190,7 @@ def suite_captures(suite, scenes=None, scenario=None):
 
 
 def reference_config(base, pose, checkpoints, batch_samples, seed, sampling, *,
-                     previous_samples=0, resume_image=None):
+                     previous_samples=0, resume_image=None, class_counts=None, previous_class_samples=None):
     if (not checkpoints or any(type(n) is not int or n < 1 for n in checkpoints)
             or type(batch_samples) is not int or not 1 <= batch_samples <= 64
             or any(n % batch_samples for n in checkpoints)
@@ -196,6 +200,7 @@ def reference_config(base, pose, checkpoints, batch_samples, seed, sampling, *,
     if not 2 <= count <= 1048576:
         raise ValueError("Reference requires 2..1048576 batches per stream")
     definition = copy.deepcopy(base["definition"])
+    definition.pop("lighting", None)
     definition.update(frames=count, reset_frame=2, motion={"start_frame": 1, "end_frame": 2},
                       captures={key: [n // batch_samples for n in checkpoints] for key in ("static", "motion", "reset")},
                       initial_local_candidates=batch_samples, initial_environment_candidates=batch_samples,
@@ -209,6 +214,11 @@ def reference_config(base, pose, checkpoints, batch_samples, seed, sampling, *,
     scene["camera"].update({key: pose[key] for key in ("position", "direction", "up")})
     config = make_config(scene, definition, "initial", "static", seed,
                          [base["width"], base["height"]], headless=True)
+    # Reference batches advance only RNG, never the captured physical state.
+    for frame in config["frames"]:
+        for key in ("lighting", "logical_time_seconds"):
+            if key in pose:
+                frame[key] = copy.deepcopy(pose[key])
     config["arguments"].update({key: base["arguments"][key] for key in SURFACE_ARGUMENTS if key in base["arguments"]})
     config["reference"] = {"schema_version": REFERENCE_SCHEMA_VERSION, "estimator": "conventional_light_sampling", "checkpoints": checkpoints,
                            "batch_samples_per_light_class": batch_samples, "accumulation": "FP32 running mean"}
@@ -217,4 +227,15 @@ def reference_config(base, pose, checkpoints, batch_samples, seed, sampling, *,
         config["frames"][0]["reset"] = True  # Fresh geometry/history, retained reference mean.
         config["reference"].update(resume_batches=previous_samples // batch_samples,
                                    resume_image=str(resume_image))
+    if class_counts is not None:
+        allocation = allocation_record(class_counts, batch_samples, checkpoints[-1],
+                                       previous_samples, previous_class_samples)
+        for name, count in allocation["batch_counts"].items():
+            config["definition"][f"initial_{name}_candidates"] = count
+        for name, argument in (("local", "LocalLight"), ("environment", "Environment"), ("infinite", "InfiniteLight")):
+            config["arguments"][f"restirDI.initialSampling.num{argument}Samples"] = allocation["batch_counts"][name]
+        config["arguments"]["restirDI.neeLocalLightSampling." + NEE_SAMPLE_COUNTS[sampling]] = class_counts["local"]
+        config["reference"]["allocation"] = allocation
+    elif previous_class_samples is not None:
+        raise ValueError("Parent class counts require an explicit allocation")
     return config

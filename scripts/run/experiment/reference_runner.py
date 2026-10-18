@@ -7,6 +7,7 @@ from .images import read_pfm, write_pfm, preview_rgb
 from .reference import (EPSILON, CONVERGENCE_METRIC, REFERENCE_SCHEMA_VERSION,
                         ImageCache, convergence, pfm_path, regions, rmae, target)
 from .runner import relative_path
+from .reference_allocation import allocation_totals
 
 BUILD_FIELDS = ("renderer_commit", "executable_sha256", "shader_sha256", "integration_sha256")
 
@@ -85,9 +86,10 @@ class PoseAssessment:
         return result
 
 
-def run_pose(directory, captures, checkpoints, batch, seeds, ratio, run_stream, validate=None, load_image=None):
+def run_pose(directory, captures, checkpoints, batch, seeds, ratio, run_stream, validate=None, load_image=None,
+             *, assessment_factory=PoseAssessment):
     load_image = load_image or ImageCache()
-    assessment = PoseAssessment(captures, ratio, load_image)
+    assessment = assessment_factory(captures, ratio, load_image)
     previous_samples, previous_paths, previous_images = 0, dict.fromkeys(seeds), dict.fromkeys(seeds)
     for samples in checkpoints:
         paths = {seed: checkpoint_image(directory, seed, samples, batch) for seed in seeds}
@@ -125,6 +127,7 @@ def validate_checkpoint(image, sample, seed, samples, batch, build=None, *, prev
             or [f["frame"] for f in config["frames"] if f["capture"]] != [samples // batch]
             or any(f["sampling_frame"] != seed * 1048576 + f["frame"] - 1 for f in config["frames"])):
         raise ValueError("Reference checkpoint accumulation or sampling sequence differs")
+    allocation_totals(config)
     frame = next((f for f in config["frames"] if f["frame"] == samples // batch and f["capture"]), None)
     if frame is None or any(target(config, f, manifest["scene"]["sha256"]) != sample["target"] for f in config["frames"]):
         raise ValueError("Reference checkpoint lighting target differs")
@@ -143,3 +146,27 @@ def validate_checkpoint(image, sample, seed, samples, batch, build=None, *, prev
             raise ValueError("Reference checkpoint resumes from a different stream checkpoint")
         if sha(source) != ref.get("resume_image_sha256"):
             raise ValueError("Reference resume dependency was modified")
+        parent_path = source.parent / "config.json"
+        parent = json.loads(parent_path.read_text())
+        parent_manifest = json.loads((source.parent / "manifest.json").read_text())
+        parent_capture = next((c for c in parent_manifest.get("captures", [])
+                               if c["frame"] == resumed), {})
+        if (parent_manifest.get("status") != "completed"
+                or sha(parent_path) != parent_manifest.get("config_sha256")
+                or parent_capture.get("image_sha256") != ref["resume_image_sha256"]
+                or parent["seed"] != seed or parent["reference"]["checkpoints"] != [resumed * batch]
+                or parent["reference"].get("batch_samples_per_light_class") != batch
+                or target(parent, parent["frames"][-1], parent_manifest["scene"]["sha256"]) != sample["target"]
+                or build and any(parent_manifest["build"].get(k) != build[k] for k in BUILD_FIELDS)):
+            raise ValueError("Reference parent checkpoint provenance differs")
+        parent_totals = allocation_totals(parent)
+        if ref.get("allocation") is not None:
+            if sha(parent_path) != ref.get("resume_config_sha256"):
+                raise ValueError("Reference parent config was modified")
+            if parent_totals != ref["allocation"]["previous_samples"]:
+                raise ValueError("Reference parent light-class counts differ")
+        elif parent["reference"].get("allocation") is not None:
+            raise ValueError("Reference allocation history requires explicit metadata")
+    if build:
+        from .artifacts import validate_run_outputs
+        validate_run_outputs(directory, config)
