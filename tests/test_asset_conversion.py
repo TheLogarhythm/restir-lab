@@ -75,6 +75,21 @@ class ConversionTests(unittest.TestCase):
         from gltf_materials import normalize_opaque_materials
         self.assertEqual(normalize_opaque_materials(result, raw.parent)["converted"], [])
 
+    def test_punctual_lights_do_not_prevent_opaque_classification(self):
+        raw, gltf = self.fixture()
+        gltf["materials"][0].update(alphaMode="BLEND", pbrMetallicRoughness={
+            "baseColorTexture": {"index": 0}})
+        lights = {"lights": [{"type": "directional", "intensity": 50}]}
+        gltf["extensions"] = {"KHR_lights_punctual": lights}
+        gltf["extensionsUsed"] = ["KHR_lights_punctual"]
+        gltf["extensionsRequired"] = ["KHR_lights_punctual"]
+        gltf["nodes"].append({"extensions": {"KHR_lights_punctual": {"light": 0}}})
+        gltf["scenes"][0]["nodes"].append(1)
+        result, _ = self.run_conversion(raw, gltf)
+        self.assertEqual(result["materials"][0]["alphaMode"], "OPAQUE")
+        self.assertEqual(result["extensions"]["KHR_lights_punctual"], lights)
+        self.assertEqual(result["nodes"][1]["extensions"]["KHR_lights_punctual"], {"light": 0})
+
     def test_textureless_opaque_blend_is_normalized_but_mask_is_preserved(self):
         raw, gltf = self.fixture()
         gltf["materials"][0]["alphaMode"] = "BLEND"

@@ -8,10 +8,11 @@ from blender_runner import export_scene
 from gltf import digest
 
 PROFILES = {"orca": (".fbx", ".gltf"), "san-miguel": (".obj", ".gltf"),
-            "classroom": (".blend",)}
+            "classroom": (".blend",), "orca-scene": (".fbx",), "tungsten": (".json",)}
 
 
-def convert_scene(source, output, profile, *, blender=None, texture_size=512, expected_emissive=None):
+def convert_scene(source, output, profile, *, blender=None, texture_size=512, expected_emissive=None,
+                  source_archive_sha256=None):
     source, output = Path(source).resolve(), Path(output).resolve()
     if profile not in PROFILES or source.suffix.lower() not in PROFILES[profile]:
         raise ValueError("Source format does not match conversion profile")
@@ -33,7 +34,10 @@ def convert_scene(source, output, profile, *, blender=None, texture_size=512, ex
         stage.mkdir()
         staged_output = stage / output.name
         version = None
-        if profile == "classroom":
+        if profile == "tungsten":
+            from profiles.tungsten import convert
+            record = convert(source, staged_output)
+        elif profile == "classroom":
             version = export_scene(source, staged_output, "classroom", blender=blender, texture_size=texture_size)
             record = json.loads(staged_output.with_suffix(".conversion.json").read_text(encoding="utf-8"))
         else:
@@ -41,10 +45,15 @@ def convert_scene(source, output, profile, *, blender=None, texture_size=512, ex
                 raw = source
                 if source.suffix.lower() != ".gltf":
                     raw = Path(raw_directory) / "raw.gltf"
-                    version = export_scene(source, raw, "fbx" if profile == "orca" else "obj", blender=blender)
-                if profile == "orca":
+                    worker_profile = {"orca": "fbx", "orca-scene": "orca-scene", "san-miguel": "obj"}[profile]
+                    version = export_scene(source, raw, worker_profile, blender=blender)
+                if profile in ("orca", "orca-scene"):
                     from profiles.orca import convert
                     record = convert(raw, staged_output, expected_emissive)
+                    if profile == "orca-scene":
+                        from profiles.orca_scene import finish_scene
+                        metadata = json.loads(raw.with_suffix(".import.json").read_text(encoding="utf-8"))
+                        record.update(finish_scene(source, staged_output, metadata))
                 else:
                     from profiles.san_miguel import prepare
                     record = prepare(raw, staged_output)
@@ -53,6 +62,8 @@ def convert_scene(source, output, profile, *, blender=None, texture_size=512, ex
         record.update(profile=profile, source=str(source), source_sha256=digest(source),
                       output_gltf=output.name, output_sha256=digest(staged_output),
                       resources=validate_bundle(staged_output))
+        if source_archive_sha256 is not None:
+            record["source_archive_sha256"] = source_archive_sha256.lower()
         if version:
             record["blender_version"] = version
         staged_output.with_suffix(".conversion.json").write_text(

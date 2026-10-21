@@ -42,7 +42,12 @@ def normalize_opaque_materials(gltf, directory):
             if color is not None and gltf["accessors"][color].get("type") != "VEC3":
                 protected[material] = "vertex_alpha"
 
-    extensions = bool(gltf.get("extensionsUsed") or gltf.get("extensionsRequired") or gltf.get("extensions"))
+    # Punctual lights affect illumination, not surface opacity. Keep unknown
+    # extensions conservative; material/texture/primitive extensions are checked below.
+    declared_extensions = (set(gltf.get("extensionsUsed", []))
+                           | set(gltf.get("extensionsRequired", []))
+                           | set(gltf.get("extensions", {})))
+    extensions = bool(declared_extensions - {"KHR_lights_punctual"})
     animated_materials = any(
         _has_extensions(channel.get("target", {})) or channel.get("target", {}).get("path") == "pointer"
         for animation in gltf.get("animations", []) for channel in animation.get("channels", []))

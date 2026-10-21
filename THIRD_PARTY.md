@@ -29,3 +29,14 @@ The [conventional reference shader](scripts/run/rtxdi_experiments/ReferenceSampl
 The local renderer builds apply [emissive-strength support](scripts/run/rtxdi_emission.py) to Donut temporarily and restore its source afterward.
 
 The [PDF Similarity extension](docs/reproductions/pdf-similarity.md) is an independent implementation developed with Codex from Tokuyoshi's 2023 paper. Its build-time spatial shader adaptation retains the pinned NVIDIA source notice; no author implementation was imported.
+
+## Additional scene imports
+
+- [Emerald Square](https://developer.nvidia.com/orca/nvidia-emerald-square): NVIDIA / Nicholas Hull, Kate Anderson and Nir Benty; CC BY-NC-SA 3.0. Uses the ORCA Dusk variant.
+- [Sun Temple](https://developer.nvidia.com/ue4-sun-temple): Epic Games; CC BY-NC-SA 4.0.
+- [Veach Ajar](https://benedikt-bitterli.me/resources/): Benedikt Bitterli; bundled notice confirms CC0/public domain.
+
+Original notices remain in ignored `assets/prepared/<scene>/`; archive hashes and
+adaptations are in [the scene manifest](scenes/manifest.yaml). The Tungsten converter
+follows the documented WO3 layout and transform conventions in
+[Tungsten](https://github.com/tunabrain/tungsten); it is a local implementation.

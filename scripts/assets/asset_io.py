@@ -39,4 +39,6 @@ def validate_bundle(output):
         if scene.get("models") != [output.name]:
             raise ValueError("Scene wrapper must reference the converted glTF")
         hashes[wrapper.name] = digest(wrapper)
+        for uri in scene.get("environmentMaps", []):
+            hashes[uri] = digest(resource_path(output.parent, uri))
     return hashes
