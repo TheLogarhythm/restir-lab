@@ -20,8 +20,8 @@ Missing emissive UVs are accepted only for proven constant static 8-bit PNG/JPEG
 
 The reusable `gltf_materials.normalize_opaque_materials` pass promotes `BLEND` to
 `OPAQUE` only when factor and texture alpha are exactly 1. It verifies static
-PNG (up to 8-bit) / JPEG; RGBA vertex colors, material animations, remaining
-extensions and unverified image formats retain blending. `MASK` is preserved.
+PNG (up to 8-bit) / JPEG; RGBA vertex colors, material animations, unknown
+extensions and unverified image formats retain blending. Punctual lights do not affect opacity. `MASK` is preserved.
 The conversion record lists changed material indices and reasons for retained blends.
 
 [Zero-Day source](https://developer.nvidia.com/orca/beeple-zero-day) ZIP SHA-256: `A9D040FE9720EE88937778659205FD76BAD4499431A37156AAEEBA382F08D592`. See [scene status](../../scenes/catalog.md) and [viewer commands](../run/README.md).
@@ -51,3 +51,21 @@ uses zero opacity. Mixed/translucent surfaces and glass remain approximate; unsu
 use a recorded neutral-gray fallback. Bump and volumes are omitted.
 Both retain `.conversion.json` records. Validate resource hashes and inspect the
 [preview](../run/README.md) after conversion; this is not full Cycles equivalence.
+
+## Emerald Square, Sun Temple and Veach Ajar
+
+Use `install_scene.py --scene <id>` with `emerald-square`, `sun-temple`, or
+`veach-ajar`. It verifies the pinned archive, extracts source assets and notices,
+and calls the unified converter. Matching existing installations are verified and reused;
+modified directories are rejected. `--download-only` skips conversion; `--blender PATH`
+selects an executable. The registered ORCA bundles use Blender 5.2.0 LTS
+(glTF exporter 5.2.39); other exporters may produce different hashes. Installation
+checks the registered runtime bundle before reporting success. See [viewer commands and scene settings](../../scenes/configs/rtxdi/README.md#cgns-scene-imports).
+
+The `orca-scene` profile reads the sibling Falcor `.pyscene` as data to retain its
+HDR and emissive multiplier, without executing it. FBX cameras and punctual lights
+are exported with radiometric units; Blender 5.2's removed Cycles shadow property
+is supplied only during import. The `tungsten` profile converts WO3 meshes directly,
+including source transforms, UVs, camera and emissive quads. Conductor/glass PBR
+approximations are listed in `.conversion.json`. Original path-traced indirect
+illumination and caustics are outside the DI preview.

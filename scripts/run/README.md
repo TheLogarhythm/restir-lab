@@ -49,3 +49,8 @@ in pinned Donut, then restore its source. Rebuild them after changing this adapt
 Builds require a clean renderer and dependencies. Reference generation and analysis
 require matching shared lighting provenance; regenerate runs whose build records
 lack the importer or emission-adapter hashes.
+
+For Emerald Square, Sun Temple and Veach Ajar, see the concise
+[installation and viewer commands](../../scenes/configs/rtxdi/README.md#cgns-scene-imports).
+`rtxdi_pdf_viewer.py --denoise` enables the existing NRD/TAA display;
+`--indirect RESTIRPT` is useful for Veach Ajar's indirect lighting.

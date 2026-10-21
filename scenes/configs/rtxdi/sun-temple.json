@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "scene_id": "sun-temple",
+  "source": {
+    "kind": "file",
+    "root": "assets/converted/sun-temple",
+    "entry": "sun-temple.scene.json"
+  },
+  "camera": {
+    "position": [
+      0.12808285653591156,
+      3.1698083877563477,
+      70.87351989746094
+    ],
+    "direction": [
+      -0.06616725772619247,
+      -0.05673898011445999,
+      -0.9961941242218018
+    ],
+    "up": [
+      -0.003760297317057848,
+      0.9983891248703003,
+      -0.05661419406533241
+    ],
+    "vertical_fov": 33.96661366396131
+  },
+  "motion": {
+    "end_position": [
+      0.12808285653591156,
+      3.1698083877563477,
+      70.87351989746094
+    ]
+  },
+  "lighting": {
+    "environment": "file",
+    "environment_intensity_ev": 0,
+    "environment_rotation_degrees": 0,
+    "emissive_scale": 1,
+    "environment_map": "environment.hdr"
+  },
+  "preview": {
+    "exposure_ev": 0
+  }
+}

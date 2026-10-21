@@ -75,6 +75,7 @@ public:
     }
 
     bool IsFileScene() const { return config["scene"]["source"]["kind"].asString() == "file"; }
+    bool HasProceduralEnvironment() const { return config["scene"]["lighting"]["environment"].asString() == "procedural"; }
     bool IsReference() const { return config.isMember("reference"); }
     float AccumulationWeight() const { return 1.f / float(config["reference"].get("resume_batches", 0).asUInt() + index + 1); }
     void RestoreAccumulation(nvrhi::ICommandList* command, const RenderTargets& targets) const
@@ -107,10 +108,25 @@ public:
         ui.environmentRotation = config["scene"]["lighting"]["environment_rotation_degrees"].asFloat();
     }
 
+    void ConfigureEnvironment(SampleScene& scene, UIData& ui, donut::engine::DirectionalLight& sun) const
+    {
+        const auto kind = config["scene"]["lighting"]["environment"].asString();
+        if (kind == "none") { ui.environmentMapIndex = -1; sun.irradiance = 0.f; }
+        else if (kind == "file")
+        {
+            const auto name = config["scene"]["lighting"]["environment_map"].asString();
+            auto& maps = scene.GetEnvironmentMaps();
+            maps.push_back((std::filesystem::path("/Assets/Experiment") / name).generic_string());
+            ui.environmentMapIndex = int(maps.size()) - 1;
+        }
+        ui.environmentMapDirty = 2;
+    }
+
     void ApplySun(donut::engine::DirectionalLight& sun) const
     {
         // Keep the procedural sky intact; disable the separate analytic light before light preparation.
-        if (!config["definition"].get("analytic_sun", true).asBool()) sun.irradiance = 0.f;
+        if (!config["definition"].get("analytic_sun", true).asBool()
+            || !HasProceduralEnvironment()) sun.irradiance = 0.f;
     }
 
     const Json::Value& Frame() const { return config["frames"][index]; }

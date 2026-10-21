@@ -3,7 +3,7 @@ import copy
 import hashlib
 import json
 import math
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import re
 import sys
 
@@ -58,8 +58,14 @@ def validate_scene(scene):
     camera_basis(scene["motion"].get("end_direction", camera["direction"]),
                  scene["motion"].get("end_up", camera["up"]), "motion")
     lighting = scene["lighting"]
-    if lighting["environment"] != "procedural":
-        raise ValueError("Only the pinned sample's procedural environment is currently supported")
+    if lighting["environment"] not in ("procedural", "file", "none"):
+        raise ValueError("Environment must be procedural, file or none")
+    if lighting["environment"] == "file":
+        uri = lighting.get("environment_map", "")
+        path = PurePosixPath(uri)
+        if (source["kind"] != "file" or not uri or path.is_absolute() or ".." in path.parts
+                or ":" in uri or "\\" in uri or path.suffix.lower() not in (".hdr", ".exr")):
+            raise ValueError("Environment map must be a local HDR/EXR inside the file scene's asset root")
     for key in ("environment_intensity_ev", "environment_rotation_degrees", "emissive_scale"):
         if not isinstance(lighting[key], (int, float)) or not math.isfinite(lighting[key]):
             raise ValueError(f"Non-finite lighting setting: {key}")
@@ -170,6 +176,10 @@ def bundle_digest(files):
 def validate_assets(scene, root=ROOT):
     files = asset_files(resource_path(root, scene["source"]["path"]),
                         resource_path(root, scene["source"]["root"]))
+    if scene["lighting"]["environment"] == "file":
+        uri = scene["lighting"]["environment_map"]
+        if uri not in files:
+            raise ValueError("Source environment map must be included in the scene wrapper's environmentMaps")
     digest = bundle_digest(files)
     expected = scene["registry"].get("runtime_assets")
     if not expected or digest != expected["sha256"] or len(files) != expected["file_count"]:

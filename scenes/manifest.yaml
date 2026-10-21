@@ -158,6 +158,100 @@
         "file_count": 335,
         "hash_scope": "Runtime resource closure; sorted UTF-8 <sha256><two spaces><relative path><LF>"
       }
+    },
+    {
+      "id": "emerald-square",
+      "source_url": "https://developer.nvidia.com/orca/nvidia-emerald-square",
+      "source_download_url": "https://developer.nvidia.com/emerald-square",
+      "source_revision": "EmeraldSquare_v4_1.zip",
+      "source_sha256": "a63d08531c8a3245b722a2407b57385b191064090487ef3fee3c4e796b41e2f6",
+      "license": "CC BY-NC-SA 3.0; NVIDIA / Nicholas Hull, Kate Anderson, Nir Benty",
+      "installation": {
+        "source_entry": "EmeraldSquare_v4_1/EmeraldSquare_Dusk.fbx",
+        "profile": "orca-scene",
+        "output_entry": "emerald-square.gltf"
+      },
+      "local_path": "assets/converted/emerald-square/emerald-square.scene.json",
+      "conversion": "scripts/assets/convert_scene.py --profile orca-scene",
+      "modifications": [
+        "ORCA Dusk variant; source HDR and emissive multiplier x5 retained",
+        "FBX material and punctual-light import follows Blender's conversion; not exact Falcor equivalence",
+        "Static source view; animation is omitted"
+      ],
+      "role": "Optional CGNS scene import; interactive rendering and renderer-owned capture verified; motion and paper equivalence unvalidated",
+      "sha256": "a6f130f9122a843ce333578dbfccbf75efa82eaa58f9746bcdc5efb147eb93c6",
+      "hash_scope": "Runtime resource closure including source HDR",
+      "backend_configs": {
+        "rtxdi": "scenes/configs/rtxdi/emerald-square.json"
+      },
+      "runtime_assets": {
+        "sha256": "a6f130f9122a843ce333578dbfccbf75efa82eaa58f9746bcdc5efb147eb93c6",
+        "file_count": 455,
+        "hash_scope": "Sorted UTF-8 <sha256><two spaces><relative path><LF>"
+      }
+    },
+    {
+      "id": "sun-temple",
+      "source_url": "https://developer.nvidia.com/ue4-sun-temple",
+      "source_download_url": "https://developer.nvidia.com/sun-temple",
+      "source_revision": "SunTemple_v4.zip",
+      "source_sha256": "672b2ee05f5c7f3b51b56602d7ffe1cb2ce17a7df4038109dda942872aec16ac",
+      "license": "CC BY-NC-SA 4.0; Epic Games",
+      "installation": {
+        "source_entry": "SunTemple_v4/SunTemple/SunTemple.fbx",
+        "profile": "orca-scene",
+        "output_entry": "sun-temple.gltf"
+      },
+      "local_path": "assets/converted/sun-temple/sun-temple.scene.json",
+      "conversion": "scripts/assets/convert_scene.py --profile orca-scene",
+      "modifications": [
+        "Source HDR and emissive multiplier x1000 retained; 13 FBX punctual lights imported",
+        "FBX material and punctual-light import follows Blender's conversion; not exact Falcor equivalence",
+        "Static source view; animation is omitted"
+      ],
+      "role": "Optional CGNS scene import; interactive rendering and renderer-owned capture verified; motion and paper equivalence unvalidated",
+      "sha256": "3e2d567e0f015c8b9fe4da0d14a20424725b688c9f9bb70e2c4991dc018a8161",
+      "hash_scope": "Runtime resource closure, including source HDR where present",
+      "backend_configs": {
+        "rtxdi": "scenes/configs/rtxdi/sun-temple.json"
+      },
+      "runtime_assets": {
+        "sha256": "3e2d567e0f015c8b9fe4da0d14a20424725b688c9f9bb70e2c4991dc018a8161",
+        "file_count": 200,
+        "hash_scope": "Sorted UTF-8 <sha256><two spaces><relative path><LF>"
+      }
+    },
+    {
+      "id": "veach-ajar",
+      "source_url": "https://benedikt-bitterli.me/resources/",
+      "source_download_url": "https://benedikt-bitterli.me/resources/tungsten/veach-ajar.zip",
+      "source_revision": "veach-ajar.zip",
+      "source_sha256": "448130c70cc566e61811d111c0671d7f0bfef0765a1b1186d1bd12bf93bdf5f2",
+      "license": "CC0/public domain; Benedikt Bitterli; bundled LICENSE.txt",
+      "installation": {
+        "source_entry": "veach-ajar/scene.json",
+        "profile": "tungsten",
+        "output_entry": "veach-ajar.gltf"
+      },
+      "local_path": "assets/converted/veach-ajar/veach-ajar.gltf",
+      "conversion": "scripts/assets/convert_scene.py --profile tungsten",
+      "modifications": [
+        "Tungsten conductor BRDFs mapped to metallic PBR; dielectric uses Donut thin-surface transmission",
+        "RTXDI DI does not reproduce the scene's indirect illumination, dielectric refraction or caustics",
+        "Procedural checker baked to 8 texels per cell; source image filtering and transfer curve may differ",
+        "Source camera, static transforms and quad emission retained; not the CGNS authors' scene configuration"
+      ],
+      "role": "Optional CGNS scene import; interactive rendering and renderer-owned capture verified; motion and paper equivalence unvalidated",
+      "sha256": "10f67a8de44b5cc6530952297fc68626d869bc3c89c888cc34738a5ca2964bbc",
+      "hash_scope": "Runtime resource closure, including source HDR where present",
+      "backend_configs": {
+        "rtxdi": "scenes/configs/rtxdi/veach-ajar.json"
+      },
+      "runtime_assets": {
+        "sha256": "10f67a8de44b5cc6530952297fc68626d869bc3c89c888cc34738a5ca2964bbc",
+        "file_count": 6,
+        "hash_scope": "Sorted UTF-8 <sha256><two spaces><relative path><LF>"
+      }
     }
   ]
 }

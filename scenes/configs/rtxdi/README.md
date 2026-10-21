@@ -2,15 +2,17 @@
 
 Profiles: [Cornell](cornell-box.json), [Arcade](arcade.json),
 [Bistro](bistro.json), [Zero-Day Measure One](zero-day-measure-one.json),
-[San Miguel](san-miguel.json), [Classroom](classroom.json).
+[San Miguel](san-miguel.json), [Classroom](classroom.json),
+[Emerald Square](emerald-square.json), [Sun Temple](sun-temple.json), [Veach Ajar](veach-ajar.json).
 
 San Miguel and Classroom are optional static import previews; they are excluded
 from the default baseline scene list. Motion paths are not validated.
 
 Schema 2 separates scene settings from the shared [experiment](../../../experiments/configs/di-reuse.json):
 source (repository-relative asset root and entry), camera (position/direction/up/FOV),
-motion endpoint, lighting and fixed PNG exposure. Currently lighting uses the
-sample's procedural environment, with explicit intensity/rotation and emissive scale.
+motion endpoint, lighting and fixed PNG exposure. Lighting supports the sample's procedural environment, a local HDR/EXR (`environment: file`,
+`environment_map` relative to the asset root), or no environment (`none`).
+File maps must also appear in the scene wrapper's `environmentMaps`; they are hashed with the assets.
 Preview exposure never changes PFM radiance.
 
 To add a scene:
@@ -35,3 +37,28 @@ The dependency check follows scene wrappers, local glTF resources, Donut's DDS
 texture preference and referenced IES profiles. Missing files, LFS pointers and
 paths outside the configured asset root fail before rendering. GLB is not supported
 by this validator yet. Adding a supported scene requires no Python/C++ changes.
+
+## CGNS scene imports
+
+Install the public source versions (archives are pinned in the manifest), then open the existing viewer:
+
+```powershell
+python scripts/assets/install_scene.py --scene emerald-square
+python scripts/assets/install_scene.py --scene sun-temple
+python scripts/assets/install_scene.py --scene veach-ajar
+python scripts/run/build_rtxdi_pdf.py
+python scripts/run/rtxdi_pdf_viewer.py --scene emerald-square --off --denoise
+```
+
+Use `--scene sun-temple` for the temple. For Veach Ajar, whose room relies on indirect lighting:
+
+```powershell
+python scripts/run/rtxdi_pdf_viewer.py --scene veach-ajar --off --indirect RESTIRPT --denoise
+```
+
+`--indirect` selects existing RTXDI transport; `--denoise` enables NRD RELAX and TAA for viewing.
+These options do not change controlled experiment defaults. Close the viewer before opening another.
+Emerald uses ORCA Dusk with its HDR and emission x5; Sun Temple retains source HDR,
+lamps and emission x1000. Veach Ajar uses the original static Tungsten scene with
+its emitter and no added sun/sky. These are public-source adaptations; exact CGNS
+camera/material equivalence and motion paths have not been established. They remain optional scenes.

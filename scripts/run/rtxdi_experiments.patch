@@ -52,6 +52,25 @@
  
      LoadInitialCameraSettings();
  
+@@ -299,7 +314,9 @@
+ 
+     for (const auto& pLight : sceneGraph->GetLights())
+     {
+-        if (pLight->GetLightType() == LightType_Directional)
++        // File/no-environment scenes retain authored directionals independently of the sky sun.
++        if (pLight->GetLightType() == LightType_Directional
++            && m_labExperiment->HasProceduralEnvironment())
+         {
+             m_sunLight = std::static_pointer_cast<engine::DirectionalLight>(pLight);
+             break;
+@@ -324,6 +339,7 @@
+     sceneGraph->AttachLeafNode(sceneGraph->GetRootNode(), m_environmentLight);
+     m_environmentLight->SetName("Environment");
+     m_ui.environmentMapDirty = 2;
+     m_ui.environmentMapIndex = 0;
++    m_labExperiment->ConfigureEnvironment(*m_scene, m_ui, *m_sunLight);
+ 
+     m_rasterizedGBufferPass->CreateBindingSet();
 @@ -547,6 +562,8 @@
  
  void SceneRenderer::Animate(float fElapsedTimeSeconds)

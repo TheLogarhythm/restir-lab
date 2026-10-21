@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "scene_id": "veach-ajar",
+  "source": {
+    "kind": "file",
+    "root": "assets/converted/veach-ajar",
+    "entry": "veach-ajar.gltf"
+  },
+  "camera": {
+    "position": [
+      4.05402,
+      1.61647,
+      -2.30652
+    ],
+    "direction": [
+      -0.9900147994416205,
+      -0.03229833330162711,
+      -0.13721339057287696
+    ],
+    "up": [
+      -0.03199251933557684,
+      0.9994782727332981,
+      -0.004434077201147619
+    ],
+    "vertical_fov": 35.98339777135764
+  },
+  "motion": {
+    "end_position": [
+      4.05402,
+      1.61647,
+      -2.30652
+    ]
+  },
+  "lighting": {
+    "environment": "none",
+    "environment_intensity_ev": 0,
+    "environment_rotation_degrees": 0,
+    "emissive_scale": 1
+  },
+  "preview": {
+    "exposure_ev": 0
+  }
+}

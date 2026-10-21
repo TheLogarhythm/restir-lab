@@ -18,14 +18,30 @@ validation was performed. [Conversion and limitations](../scripts/assets/README.
 | San Miguel 2.1 (low-poly) | [McGuire ZIP](https://casual-effects.com/g3d/data10/research/model/San_Miguel/San_Miguel.zip) | OBJ/PNG → glTF | 535.5 MB | Research/educational use with attribution; PNG cutouts restored, approximate PBR; no local lights added. |
 | Classroom | [Blender ZIP](https://download.blender.org/demo/test/classroom.zip) | Blender → glTF | 70.3 MB | Christophe Seux, CC0; source lamps and emissive material overrides restored; use `.scene.json`. Baked portal/PBR approximations; no invented local lights. |
 
+## Additional CGNS scene imports
+
+| Scene | Public version | Status / limits |
+| --- | --- | --- |
+| Emerald Square | ORCA v4.1 Dusk, CC BY-NC-SA 3.0 | Source camera, HDR and emission x5; interactive viewer checked. |
+| Sun Temple | ORCA v4, CC BY-NC-SA 4.0 | Source camera, HDR, lamps and emission x1000; interactive viewer checked. |
+| Veach Ajar | Bitterli Tungsten, CC0 | Original static camera and emitter; approximate conductor/glass materials; interactive viewer checked. |
+
+[Install and open](configs/rtxdi/README.md#cgns-scene-imports). Source hashes and notices
+are registered in [the manifest](manifest.yaml). These public versions are not confirmed
+to match CGNS's scene modifications. Motion and quantitative comparisons remain unvalidated.
+
+Acceptance (2026-10-21): all three ran in interactive mode at 1280x720 and exited
+normally after renderer-owned framebuffer captures. NRD/TAA previews were inspected;
+Veach Ajar passed ReSTIR PT, Sun Temple retained its source directional light and
+rendered with transparent geometry disabled, and Cornell Box passed a regression check.
+Local images/logs: `build/scene-viewer-acceptance/review-20261021/`.
+Keyboard/mouse interaction was not automatically verified.
+
 ## Free source; RTXDI conversion/import needed
 
 | Scene              | Download                                                                                                                             | Format          | Size | Note                                                                                                                   |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | --------------- | ---- | ---------------------------------------------------------------------------------------------------------------------- |
 | Zero-Day Measure Seven | [ORCA](https://developer.nvidia.com/orca/beeple-zero-day) | FBX/DDS → glTF | same source ZIP | Extracted and converted; current RTXDI capture timed out after texture loading. Source README emissive count differs by eight. |
-| Emerald Square     | [ORCA](https://developer.nvidia.com/orca/nvidia-emerald-square)                                                                      | FBX/Falcor      | —    | CC BY-NC-SA 3.0; large scene.                                                                                          |
-| Sun Temple         | [ORCA](https://developer.nvidia.com/ue4-sun-temple)                                                                                  | FBX/Falcor      | —    | CC BY-NC-SA 4.0.                                                                                                       |
-| Veach Ajar         | [Bitterli ZIP](https://benedikt-bitterli.me/resources/tungsten/veach-ajar.zip)                                                       | Tungsten        | —    | Author-created/public domain; [Falcor demo](https://github.com/DQLin/ReSTIR_PT) also exists.                           |
 | Wooden Staircase   | [Bitterli ZIP](https://benedikt-bitterli.me/resources/tungsten/staircase.zip)                                                        | Tungsten        | —    | Check ZIP license; [third-party glTF](https://github.com/ErfanMo77/gltf-research-scenes) is an approximate conversion. |
 | Modern Living Room | [Bitterli ZIP](https://benedikt-bitterli.me/resources/tungsten/living-room-3.zip)                                                    | Tungsten        | —    | Check ZIP license; [third-party glTF](https://github.com/ErfanMo77/gltf-research-scenes) is an approximate conversion. |
 

@@ -121,6 +121,9 @@ def make_config(scene, definition, mode, scenario, seed=None, resolution=None, d
     seed = definition["seed"] if seed is None else seed
     width, height = resolution or definition["resolution"]
     validate_scene(scene)
+    if scene["lighting"]["environment"] == "none":
+        # There is no environment sampling domain; record the effective budget.
+        definition["initial_environment_candidates"] = 0
     validate_definition(definition, seed, (width, height))
     if mode not in MODES or scenario not in (*SCENARIOS, "lighting"):
         raise ValueError("Unknown reuse mode or scenario")

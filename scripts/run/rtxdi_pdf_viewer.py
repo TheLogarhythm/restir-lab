@@ -10,7 +10,7 @@ from experiment.runner import preflight, relative_path
 from rtxdi_common import ROOT, RENDERER
 
 
-def viewer_config(scene, mode, resolution, enabled=True, frames=0):
+def viewer_config(scene, mode, resolution, enabled=True, frames=0, *, indirect="NONE", denoise=False):
     definition = load_definition()
     definition["pdf_similarity"] = enabled
     config = make_config(scene, definition, mode, "static", resolution=resolution, headless=False)
@@ -18,6 +18,11 @@ def viewer_config(scene, mode, resolution, enabled=True, frames=0):
     config["frames"] = config["frames"][:1]
     config["frames"][0]["capture"] = False
     config["arguments"]["postProcessing.toneMapping"] = 1
+    if indirect not in ("NONE", "BRDF", "RESTIRGI", "RESTIRPT"):
+        raise ValueError("Unsupported viewer indirect lighting mode")
+    config["arguments"]["lighting.indirectMode"] = indirect
+    if denoise:
+        config["arguments"].update({"denoiser.mode": "NRD_RELAX", "postProcessing.aaMode": "TAA"})
     return config
 
 
@@ -26,6 +31,9 @@ def main():
     parser.add_argument("--scene", default="cornell-box")
     parser.add_argument("--mode", choices=["spatial", "combined"], default="combined")
     parser.add_argument("--resolution", type=int, nargs=2, default=[1280, 720])
+    parser.add_argument("--indirect", choices=["NONE", "BRDF", "RESTIRGI", "RESTIRPT"], default="NONE",
+                        help="Existing RTXDI indirect-lighting mode for scene inspection")
+    parser.add_argument("--denoise", action="store_true", help="Use the existing NRD RELAX denoiser and TAA for viewing")
     parser.add_argument("--off", action="store_true", help="Start with PDF similarity disabled")
     parser.add_argument("--frames", type=int, default=0, help="Close after N frames; 0 keeps the viewer open")
     parser.add_argument("--check", action="store_true")
@@ -33,7 +41,8 @@ def main():
     if args.frames < 0:
         parser.error("frames must be nonnegative")
     scene = load_scene(args.scene)
-    config = viewer_config(scene, args.mode, args.resolution, not args.off, args.frames)
+    config = viewer_config(scene, args.mode, args.resolution, not args.off, args.frames,
+                           indirect=args.indirect, denoise=args.denoise)
     validate_assets(scene)
     exe = RENDERER / "build/bin/FullSamplePdf.exe"
     build = preflight({**config["definition"], "pdf_similarity": True}, executable=exe)

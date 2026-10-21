@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "scene_id": "emerald-square",
+  "source": {
+    "kind": "file",
+    "root": "assets/converted/emerald-square",
+    "entry": "emerald-square.scene.json"
+  },
+  "camera": {
+    "position": [
+      -38.47235107421875,
+      1.795238971710205,
+      75.7105712890625
+    ],
+    "direction": [
+      0.12186798453330994,
+      0.004566818941384554,
+      -0.9925358891487122
+    ],
+    "up": [
+      -0.0005565584287978709,
+      0.9999896287918091,
+      0.004532777704298496
+    ],
+    "vertical_fov": 33.96661366396131
+  },
+  "motion": {
+    "end_position": [
+      -38.47235107421875,
+      1.795238971710205,
+      75.7105712890625
+    ]
+  },
+  "lighting": {
+    "environment": "file",
+    "environment_map": "environment.hdr",
+    "environment_intensity_ev": 0,
+    "environment_rotation_degrees": 0,
+    "emissive_scale": 1
+  },
+  "preview": {
+    "exposure_ev": 0
+  }
+}
