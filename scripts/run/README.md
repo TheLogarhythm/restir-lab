@@ -62,3 +62,4 @@ are no longer maintained entry points. They belonged to historical cleanup/diagn
 normal rendering, reference generation, scene conversion and video encoding remain supported.
 The old `build/pdf-controlled/reset-sparse-references.py` caller and its archive audit copy are
 historical records; running them would require restoring their retired helper.
+For paired scene galleries use [scripts/gallery](../gallery/README.md).
