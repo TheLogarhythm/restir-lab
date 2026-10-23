@@ -2,7 +2,8 @@
 import importlib
 import json
 import ntpath
-from pathlib import Path
+import posixpath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 import sys
 import tempfile
 import unittest
@@ -90,7 +91,42 @@ class RunnerTests(unittest.TestCase):
 
             check(record)
             check(saved)
-            self.assertNotIn(str(ROOT), (output / "renderer.log").read_text())
+            message = (output / "renderer.log").read_text().rstrip("\n")
+            self.assertTrue(message.startswith("Loaded "))
+            logged_path = Path(message.removeprefix("Loaded "))
+            self.assertFalse(logged_path.is_absolute())
+            self.assertFalse(ntpath.isabs(str(logged_path)))
+            self.assertEqual((output / logged_path).resolve(), ROOT / "assets/example.gltf")
+
+    def test_posix_log_path_is_replaced_once_even_when_relative_text_contains_root(self):
+        root = PurePosixPath("/home/runner/restir-lab")
+        output = PurePosixPath("/tmp/suite/seed-1")
+        message = f"Loaded {root / 'assets/example.gltf'}\n"
+        with mock.patch.object(self.runner, "ROOT", root), \
+             mock.patch.object(self.runner, "relative_path", side_effect=posixpath.relpath):
+            actual = self.runner.portable_message(message, output)
+        expected = "../../../home/runner/restir-lab/assets/example.gltf"
+        self.assertEqual(actual, f"Loaded {expected}\n")
+        logged_path = PurePosixPath(actual.removeprefix("Loaded ").rstrip("\n"))
+        self.assertFalse(logged_path.is_absolute())
+        self.assertEqual(posixpath.normpath(posixpath.join(str(output), str(logged_path))),
+                         str(root / "assets/example.gltf"))
+
+    def test_windows_log_spellings_keep_output_paths_more_specific_than_root(self):
+        root = PureWindowsPath("C:/work/restir-lab[1]+")
+        output = root / "runs/suite/seed-1"
+        message = (f"Loaded {root / 'assets/example.gltf'}\n"
+                   f"Loaded {(root / 'assets/example.gltf').as_posix()}\n"
+                   f"Saved {output / 'renderer.log'}\n"
+                   f"Saved {(output / 'renderer.log').as_posix()}\n")
+        def windows_relative(path, base):
+            return PureWindowsPath(ntpath.relpath(path, base)).as_posix()
+        with mock.patch.object(self.runner, "ROOT", root), \
+             mock.patch.object(self.runner, "relative_path", side_effect=windows_relative):
+            actual = self.runner.portable_message(message, output)
+        self.assertEqual(actual, "Loaded ../../..\\assets\\example.gltf\n"
+                                 "Loaded ../../../assets/example.gltf\n"
+                                 "Saved .\\renderer.log\nSaved ./renderer.log\n")
 
 
 if __name__ == "__main__":

@@ -34,10 +34,14 @@ def relative_path(path, base):
 
 
 def portable_message(text, output):
-    # Third-party log/error messages may print resolved host paths.
+    # Match original text once: POSIX spellings can be identical, and replacement
+    # text can itself contain a repository-path substring. Prefer specific paths.
+    replacements = {}
     for path, replacement in ((output, "."), (ROOT, relative_path(ROOT, output))):
-        text = text.replace(str(path), replacement).replace(path.as_posix(), replacement)
-    return text
+        for spelling in (str(path), path.as_posix()):
+            replacements[spelling] = replacement
+    pattern = "|".join(re.escape(path) for path in sorted(replacements, key=len, reverse=True))
+    return re.sub(pattern, lambda match: replacements[match.group(0)], text)
 
 def preflight(definition, executable=None):
     executable = executable or EXE
