@@ -54,3 +54,11 @@ For Emerald Square, Sun Temple and Veach Ajar, see the concise
 [installation and viewer commands](../../scenes/configs/rtxdi/README.md#cgns-scene-imports).
 `rtxdi_pdf_viewer.py --denoise` enables the existing NRD/TAA display;
 `--indirect RESTIRPT` is useful for Veach Ajar's indirect lighting.
+
+## Script maintenance
+
+The retired `bistro_reference_cleanup.py`, `controlled_cleanup.py` and FBX inspection helper
+are no longer maintained entry points. They belonged to historical cleanup/diagnostic work;
+normal rendering, reference generation, scene conversion and video encoding remain supported.
+The old `build/pdf-controlled/reset-sparse-references.py` caller and its archive audit copy are
+historical records; running them would require restoring their retired helper.
