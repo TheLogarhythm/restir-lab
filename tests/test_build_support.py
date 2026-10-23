@@ -105,7 +105,7 @@ class BuildIsolationTests(unittest.TestCase):
                             side_effect=lambda args, **kw: "" if args[0] == "powershell" else check_output(args, **kw)))
                         # No compilation or source patching; reaching backup is already a failure.
                         stack.enter_context(patch.object(builder, "run"))
-                        stack.enter_context(patch.object(builder, "backup_renderer",
+                        stack.enter_context(patch.object(build_support, "backup_renderer",
                             side_effect=AssertionError("Dirty inputs reached the build stage")))
                         with self.assertRaisesRegex(RuntimeError, "local changes"):
                             builder.main()

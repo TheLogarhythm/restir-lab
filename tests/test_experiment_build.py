@@ -10,6 +10,8 @@ from unittest import mock
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts/run"))
 import build_rtxdi_experiments as builder
+import build_rtxdi_pdf as pdf_builder
+import rtxdi_build as build_support
 
 SHADE = 'dxil/LightingPasses/DI/ShadeSamples.bin'
 ORIGINAL_SHADERS = {'original.bin': b'shader', SHADE: b'official shading'}
@@ -22,7 +24,7 @@ class BuildRecoveryTests(unittest.TestCase):
                 for p in directory.rglob('*') if p.is_file()}
 
     def run_build(self, root, *, fail_restore=False, fail_compile=True, reference=False,
-                  stale_reference=False):
+                  stale_reference=False, pdf_variant=False, fail_publish=False):
         renderer = root / "renderer"
         build = renderer / "build"
         binary = build / "bin"
@@ -44,6 +46,8 @@ class BuildRecoveryTests(unittest.TestCase):
         real_copy = builder.shutil.copy2
 
         def copy(source_path, target_path, *args, **kwargs):
+            if fail_publish and Path(target_path) == binary / "FullSampleExperiments.exe":
+                raise OSError("publication blocked")
             if fail_restore and Path(source_path).name == "official.exe" and Path(target_path) == official:
                 raise OSError("restore blocked")
             return real_copy(source_path, target_path, *args, **kwargs)
@@ -52,7 +56,7 @@ class BuildRecoveryTests(unittest.TestCase):
             if args[0] == "cmake":
                 source.write_bytes(b"modified")
                 official.write_bytes(b"variant")
-                if fail_compile or reference:
+                if fail_compile or reference or pdf_variant:
                     (shaders / "original.bin").write_bytes(b"changed")
                     (shaders / "added.bin").write_bytes(b"extra")
                 if reference and not stale_reference:
@@ -70,17 +74,27 @@ class BuildRecoveryTests(unittest.TestCase):
             stack.enter_context(mock.patch.object(sys, "argv", [str(script)] + (["--reference"] if reference else [])))
             stack.enter_context(mock.patch.object(builder, "run", side_effect=command))
             stack.enter_context(mock.patch.object(builder, "adapt_reference"))
-            stack.enter_context(mock.patch.object(builder, "require_clean_renderer"))
+            stack.enter_context(mock.patch.object(build_support, "require_clean_renderer"))
             stack.enter_context(mock.patch.object(builder, "checked_submodule",
                 return_value={"commit": "donut-revision", "source_sha256": {"src/engine/GltfImporter.cpp": "source-hash"}}))
             stack.enter_context(mock.patch.object(builder, "emission_support", return_value=nullcontext()))
             stack.enter_context(mock.patch.object(builder.shutil, "copy2", side_effect=copy))
             stack.enter_context(mock.patch.object(builder.subprocess, "check_output",
                 side_effect=lambda command, **kw: "" if command[0] == "powershell" else "revision"))
+            if pdf_variant:
+                stack.enter_context(mock.patch.object(pdf_builder, "__file__", str(script)))
+                stack.enter_context(mock.patch.object(pdf_builder, "checked_submodule",
+                    return_value={"commit": "pdf-dependency", "source_sha256": {}}))
+                stack.enter_context(mock.patch.object(pdf_builder, "emission_support", return_value=nullcontext()))
+                stack.enter_context(mock.patch.object(pdf_builder.pdf, "FILES", []))
+                stack.enter_context(mock.patch.object(pdf_builder.pdf, "CREATED", ["pdf-added.h"]))
+                stack.enter_context(mock.patch.object(pdf_builder.pdf, "SUPPORT", [helper]))
+                stack.enter_context(mock.patch.object(pdf_builder.pdf, "adapt",
+                    side_effect=lambda *_: (renderer / "pdf-added.h").write_bytes(b"temporary PDF header")))
             expected = (self.assertRaisesRegex(RuntimeError, "reference shader") if stale_reference else
-                        self.assertRaises((RuntimeError, OSError)) if fail_compile or fail_restore else nullcontext())
+                        self.assertRaises((RuntimeError, OSError)) if fail_compile or fail_restore or fail_publish else nullcontext())
             with expected:
-                builder.main()
+                (pdf_builder if pdf_variant else builder).main()
         return renderer, build, binary, shaders
 
     def test_compile_failure_restores_exact_original_files(self):
@@ -104,6 +118,26 @@ class BuildRecoveryTests(unittest.TestCase):
             self.assertEqual((renderer / "source.cpp").read_bytes(), b"source")
             self.assertEqual(self.shader_bytes(shaders), ORIGINAL_SHADERS)
 
+    def test_successful_compile_cannot_publish_when_restore_fails(self):
+        with tempfile.TemporaryDirectory() as folder:
+            renderer, build, binary, shaders = self.run_build(Path(folder), fail_restore=True, fail_compile=False)
+            self.assertFalse((binary / "FullSampleExperiments.exe").exists())
+            self.assertFalse((binary / "FullSampleExperiments.build.json").exists())
+            self.assertEqual((renderer / "source.cpp").read_bytes(), b"source")
+            self.assertEqual(self.shader_bytes(shaders), ORIGINAL_SHADERS)
+            self.assertEqual(len(list(build.glob("experiment-build-*"))), 1)
+
+    def test_failed_publication_retains_staged_variant_and_restored_originals(self):
+        with tempfile.TemporaryDirectory() as folder:
+            renderer, build, binary, shaders = self.run_build(Path(folder), fail_compile=False, fail_publish=True)
+            self.assertEqual((renderer / "source.cpp").read_bytes(), b"source")
+            self.assertEqual((binary / "FullSample.exe").read_bytes(), b"official")
+            self.assertEqual(self.shader_bytes(shaders), ORIGINAL_SHADERS)
+            backups = list(build.glob("experiment-build-*"))
+            self.assertEqual(len(backups), 1)
+            self.assertEqual((backups[0] / "FullSampleExperiments.exe").read_bytes(), b"variant")
+            self.assertFalse((binary / "FullSampleExperiments.build.json").exists())
+
     def test_success_publishes_variant_after_restoring_official_files(self):
         for reference in (False, True):
             with self.subTest(reference=reference), tempfile.TemporaryDirectory() as folder:
@@ -122,6 +156,27 @@ class BuildRecoveryTests(unittest.TestCase):
                     self.assertEqual((binary / record["shader_directory"] / "added.bin").read_bytes(), b"extra")
                     self.assertEqual((binary / record["shader_directory"] / SHADE).read_bytes(), b"conventional shading")
                 self.assertEqual(list(build.glob("experiment-build-*")), [])
+
+    def test_pdf_entry_uses_the_same_compile_restore_and_publication_guards(self):
+        for compile_failure, restore_failure in ((True, False), (False, True), (False, False)):
+            with self.subTest(compile=compile_failure, restore=restore_failure), tempfile.TemporaryDirectory() as folder:
+                renderer, build, binary, shaders = self.run_build(Path(folder), pdf_variant=True,
+                    fail_compile=compile_failure, fail_restore=restore_failure)
+                self.assertEqual((renderer / "source.cpp").read_bytes(), b"source")
+                self.assertEqual(self.shader_bytes(shaders), ORIGINAL_SHADERS)
+                self.assertFalse((renderer / "helper.h").exists())
+                self.assertFalse((renderer / "pdf-added.h").exists())
+                variant = binary / "FullSamplePdf.exe"
+                if compile_failure or restore_failure:
+                    self.assertFalse(variant.exists())
+                    self.assertFalse(variant.with_suffix(".build.json").exists())
+                else:
+                    self.assertEqual((binary / "FullSample.exe").read_bytes(), b"official")
+                    self.assertEqual(variant.read_bytes(), b"variant")
+                    record = json.loads(variant.with_suffix(".build.json").read_text())
+                    self.assertEqual(record["executable_sha256"], builder.sha(variant))
+                    self.assertEqual(record["shader_sha256"], build_support.tree_hashes(binary / "shaders/full-sample-pdf"))
+                self.assertEqual(len(list(build.glob("experiment-build-*"))), int(restore_failure))
 
     def test_stale_reference_shader_refuses_publication_and_restores_files(self):
         with tempfile.TemporaryDirectory() as folder:

@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts/run"))
 import rtxdi_external as runner
 import build_rtxdi_external as builder
+import rtxdi_build as build_support
 from rtxdi_common import validate_bmp
 
 
@@ -73,7 +74,7 @@ class ExternalRunnerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             source = root / "SceneRenderer.cpp"
-            original = builder.SOURCE.read_bytes()
+            original = b"original scene source\n"
             source.write_bytes(original)
             exe = root / "FullSample.exe"
             exe.write_bytes(b"official binary")
@@ -89,7 +90,7 @@ class ExternalRunnerTests(unittest.TestCase):
                  patch.object(builder, "SOURCE", source), patch.object(builder, "BUILD", root), \
                  patch.object(builder, "emission_support", return_value=nullcontext()), \
                  patch.object(builder, "checked_submodule", return_value={"commit": "test-donut"}), \
-                 patch.object(builder, "require_clean_renderer"), \
+                 patch.object(build_support, "require_clean_renderer"), \
                  patch.object(builder, "BIN", root), patch.object(builder, "run", side_effect=fail_build), \
                  patch.object(builder, "IMPORTER", Path("importer.cpp")), \
                  patch.object(builder, "PATCH", fixture), patch.object(builder, "SUPPORT_FILE", fixture), \

@@ -1,6 +1,8 @@
 """Shared build fingerprints and recoverable restoration for pinned renderer variants."""
 from pathlib import Path
 import shutil
+import json
+import tempfile
 import subprocess
 from rtxdi_common import sha
 
@@ -126,3 +128,64 @@ def remove_backup(backup, build, prefix):
     if resolved.parent != build.resolve() or not resolved.name.startswith(prefix) or backup.is_symlink():
         raise RuntimeError(f"Unexpected backup directory: {backup}")
     shutil.rmtree(resolved)
+
+
+def prepare_variant(renderer, official, created=()):
+    """Reject active, dirty, or conflicting inputs before making a backup."""
+    if not official.is_file():
+        raise RuntimeError("Build official FullSample first; see docs/setup.md")
+    running = subprocess.check_output(["powershell", "-NoProfile", "-Command",
+        "Get-Process FullSample* -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Id"], text=True)
+    if running.strip():
+        raise RuntimeError("Close FullSample before building a variant")
+    if any(path.exists() for path in created):
+        raise RuntimeError("An integration destination already exists")
+    require_clean_renderer(renderer)
+
+
+def build_variant(*, renderer, build, official, variant, files, shader_dir, record,
+                  patch, run, emission, adapt=lambda: None, created=(),
+                  shader_destination=None, validate_shaders=None, prefix="experiment-build-"):
+    """Patch, compile, stage, restore, then publish through one recovery path.
+
+    Adaptation and shader validation belong to each estimator. A failed restore
+    always retains the backup and prevents executable/record publication.
+    """
+    original_shaders = tree_hashes(shader_dir)
+    backup = Path(tempfile.mkdtemp(prefix=prefix, dir=build))
+    restored, staged, published = False, False, False
+    try:
+        backup_renderer(backup, renderer, files, official, shader_dir)
+        try:
+            run("git", "apply", str(patch), cwd=renderer)
+            adapt()
+            invalidate_cpp(renderer)
+            with emission:
+                run("cmake", "--build", str(build), "--config", "Release", "--target", "FullSample", "--parallel", "4")
+            current = tree_hashes(shader_dir)
+            if validate_shaders is not None:
+                validate_shaders(original_shaders, current)
+            elif shader_destination is None and current != original_shaders:
+                raise RuntimeError("Unexpected compiled shader changes; variant was not published")
+            if shader_destination is not None:
+                shutil.copytree(shader_dir, backup / "variant-shaders")
+            shutil.copy2(official, backup / variant.name)
+            record["executable_sha256"] = sha(backup / variant.name)
+            record["shader_sha256"] = current
+            staged = True
+        finally:
+            restore_renderer(backup, renderer, files, official, shader_dir, created=created)
+            restored = True
+        if shader_destination is not None:
+            restore_shader_tree(backup / "variant-shaders", shader_destination)
+        shutil.copy2(backup / variant.name, variant)
+        if sha(variant) != record["executable_sha256"]:
+            raise RuntimeError("Published executable verification failed")
+        variant.with_suffix(".build.json").write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+        published = True
+    finally:
+        if restored and (not staged or published):
+            remove_backup(backup, build, prefix)
+        else:
+            print(f"Recovery backup retained: {backup}")
+    return record

@@ -57,6 +57,13 @@ For Emerald Square, Sun Temple and Veach Ajar, see the concise
 
 ## Script maintenance
 
+All variant builders use `rtxdi_build.prepare_variant` and `build_variant`. They check inputs,
+back up official files, compile temporary integrations, restore and verify the official files,
+then publish the variant and provenance. Compilation/restoration failures cannot publish a
+variant; failed restoration or publication retains recovery files. The external, experiment,
+reference and PDF entry points remain distinct and keep their estimator-specific adaptation.
+A change to the shared builder requires rebuilding every affected executable.
+
 The retired `bistro_reference_cleanup.py`, `controlled_cleanup.py` and FBX inspection helper
 are no longer maintained entry points. They belonged to historical cleanup/diagnostic work;
 normal rendering, reference generation, scene conversion and video encoding remain supported.
