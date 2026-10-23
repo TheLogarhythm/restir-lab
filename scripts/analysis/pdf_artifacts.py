@@ -26,6 +26,7 @@ from PIL import Image, ImageDraw, ImageFont
 RUN_SCRIPTS = Path(__file__).resolve().parents[1] / "run"
 if str(RUN_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(RUN_SCRIPTS))
+from experiment.controlled_evaluation import validate_selection
 from experiment.images import preview_rgb, read_pfm
 from experiment.reference import metrics as spatial_metrics
 
@@ -41,6 +42,22 @@ METRIC_DEFINITIONS = {
     "rmae": "mean(abs(I-R)) / (mean(abs(R))+1e-12), linear RGB",
     "nrmse": "sqrt(mean((I-R)^2) / (mean(R^2)+1e-12)), linear RGB",
 }
+
+
+def _reference_policy_metadata(value):
+    """Retain the exact authorized policy without asserting reference precision."""
+    if value is None:
+        return {}
+    from experiment.bistro_fixed_reference import validate_bistro_policy
+    validate_bistro_policy(value)
+    policy = json.loads(json.dumps(value, allow_nan=False))
+    batches = policy["batch_counts"]
+    caption = (f"{policy['label']}; seed {policy['seeds'][0]}; "
+               f"{policy['local_samples_per_stream']} local samples; "
+               f"local/environment/infinite batches {batches['local']}/{batches['environment']}/{batches['infinite']}. "
+               "Reference uncertainty: NOT EVALUATED under the original dual-stream standard.")
+    return {"reference_policy": policy, "reference_precision_verified": False,
+            "reference_caption": caption}
 
 
 def map_scale(metric, temporal_scale=None):
@@ -257,17 +274,26 @@ def _phase(frame):
 
 def export_condition(output, off_dir, on_dir, references_mapping, *, references_accepted,
                      fps=30, rois=(), temporal_scale=None, exposure_ev=0., write_videos=True,
-                     expected_resolution=(1920, 1080), expected_frames=None):
+                     expected_resolution=(1920, 1080), expected_frames=None, evaluation=None,
+                     reference_policy=None):
     """Export an explicitly selected seed-one pair after reference acceptance.
 
-    Input frame sets must match exactly. Consecutive captures receive adjacent
-    TRMAE maps; gaps never create temporal pairs. temporal_scale=(0, pilot_max)
+    Off/on capture sets must match exactly. With a canonical ``evaluation``,
+    references need only its selected frames; export spatial artifacts at the
+    representatives and TRMAE at its declared local pairs. Sparse exports require
+    write_videos=False. Without evaluation, all capture/reference sets match and
+    consecutive captures receive adjacent TRMAE maps. temporal_scale=(0, pilot_max)
     must already be frozen whenever an adjacent pair exists. All PFM inputs are
     validated before any output is created. A fresh output directory is required.
     PNGs/maps retain native pixels; comparison videos alone resize for presentation.
+    The optional fixed Bistro reference_policy records user authorization separately
+    from precision verification and requires write_videos=False.
     """
     if references_accepted is not True:
         raise ValueError("References must be explicitly accepted before artifact export")
+    reference_metadata = _reference_policy_metadata(reference_policy)
+    if reference_metadata and write_videos:
+        raise ValueError("Fixed Bistro reference exports cannot create reference or error videos; set write_videos=False")
     if fps != 30 or isinstance(fps, bool):
         raise ValueError("Controlled comparison videos require logical 30 FPS")
     if not math.isfinite(exposure_ev):
@@ -282,12 +308,25 @@ def export_condition(output, off_dir, on_dir, references_mapping, *, references_
     if expected_frames is not None and (len(set(expected_frames)) != len(expected_frames)
             or sorted(expected_frames) != frames):
         raise ValueError("Capture frames do not match expected_frames")
+    capture_frames = frames
+    if evaluation is not None:
+        scenario = "static" if evaluation.get("spatial_frames") == [128] else "motion"
+        evaluation = validate_selection(evaluation, scenario)
+        if write_videos:
+            raise ValueError("Sparse reference exports cannot create reference or frame-error videos; set write_videos=False")
+        frames = evaluation["reference_frames"]
+        if not set(frames) <= set(capture_frames):
+            raise ValueError("Sparse evaluation requires all representative and local support captures")
+        for method in METHODS:
+            sources[method] = {frame: sources[method][frame] for frame in frames}
+    export_frames = evaluation["spatial_frames"] if evaluation is not None else frames
     if any(type(frame) is not int or frame < 1 for frame in references_mapping):
         raise ValueError("Reference mapping keys must be positive integer frames")
     if set(references_mapping) != set(frames):
         raise ValueError("Reference frame alignment mismatch: provide exactly one reference per captured frame")
     sources["reference"] = {frame: Path(path).resolve() for frame, path in references_mapping.items()}
-    temporal_pairs = [[previous, current] for previous, current in zip(frames, frames[1:]) if current == previous + 1]
+    temporal_pairs = (evaluation["temporal_pairs"] if evaluation is not None else
+                      [[previous, current] for previous, current in zip(frames, frames[1:]) if current == previous + 1])
     if temporal_pairs:
         map_scale("trmae", temporal_scale)
     if write_videos and len(temporal_pairs) != len(frames) - 1:
@@ -326,21 +365,27 @@ def export_condition(output, off_dir, on_dir, references_mapping, *, references_
             for name in ("comparison", "smape", "reference"):
                 writers[name] = _VideoWriter(stage / f"videos/{name}.mp4", (1920, 1080), fps, executable)
         previous, previous_frame = {}, None
-        selected = {128} if 128 in frames else {frames[-1]}
-        selected.update(frame for frame in KEYFRAMES if frame in frames and temporal_pairs)
+        selected = set(export_frames) if evaluation is not None else ({128} if 128 in frames else {frames[-1]})
+        if evaluation is None:
+            selected.update(frame for frame in KEYFRAMES if frame in frames and temporal_pairs)
+        pair_set = {tuple(pair) for pair in temporal_pairs}
         for frame in frames:
             images = {method: read_pfm(paths[frame]) for method, paths in sources.items()}
+            if frame not in export_frames:
+                previous, previous_frame = images, frame
+                continue
             display = {method: Image.fromarray(preview_rgb(image, exposure_ev)) for method, image in images.items()}
             maps, colored = {}, {}
             for method in METHODS:
                 values = {"smape": smape_map(images[method], images["reference"]),
                           "signed_relative": signed_relative_map(images[method], images["reference"])}
-                if previous_frame is not None and frame == previous_frame + 1:
+                if (previous_frame, frame) in pair_set:
                     values["trmae"] = trmae_map(images[method], previous[method], images["reference"], previous["reference"])
                 maps[method], colored[method] = values, {}
                 standard = spatial_metrics(images[method], images["reference"])
                 row = {"frame": frame, "previous_frame": previous_frame if "trmae" in values else None,
-                    "phase": _phase(frame), "method": method, "smape": float(np.mean(values["smape"])),
+                    "phase": (f"frame-{frame}" if evaluation is not None and temporal_pairs else _phase(frame)),
+                    "method": method, "smape": float(np.mean(values["smape"])),
                     "rmae": standard["rmae"], "nrmse": standard["nrmse"],
                     "trmae": float(np.mean(values["trmae"])) if "trmae" in values else None}
                 for metric, value in values.items():
@@ -355,6 +400,10 @@ def export_condition(output, off_dir, on_dir, references_mapping, *, references_
                 _save_rgb(stage / f"frames/{method}/frame-{frame:04d}.png", image)
             if frame in selected:
                 footer = f"Frame {frame}; fixed exposure {exposure_ev:g} EV; native {width}x{height}"
+                if reference_metadata:
+                    policy = reference_metadata["reference_policy"]
+                    footer += (f"; fixed single-stream reference seed {policy['seeds'][0]}, "
+                               f"{policy['local_samples_per_stream']} local samples; uncertainty: NOT EVALUATED")
                 _save_rgb(stage / f"panels/frame-{frame:04d}-rendered.png", _panel(
                     [display[key] for key in ("reference", *METHODS)], ["Reference", "PDF off", "PDF on"], footer=footer))
                 for metric in ("smape", "signed_relative", "trmae"):
@@ -364,7 +413,7 @@ def export_condition(output, off_dir, on_dir, references_mapping, *, references_
                     _save_rgb(stage / f"panels/frame-{frame:04d}-{metric}.png", _panel(
                         [colored[method][metric] for method in METHODS], [f"PDF off | {pair_label}", f"PDF on | {pair_label}"],
                         footer=footer, metric=metric, temporal_scale=temporal_scale))
-                    if metric == "trmae" and frame in KEYFRAMES:
+                    if metric == "trmae" and (evaluation is not None or frame in KEYFRAMES):
                         temporal_keyframes[str(frame)] = {"pair": [previous_frame, frame], "label": pair_label,
                             "panel": f"panels/frame-{frame:04d}-trmae.png"}
                 for roi in rois:
@@ -403,7 +452,8 @@ def export_condition(output, off_dir, on_dir, references_mapping, *, references_
             writer.writeheader()
             writer.writerows(rows)
         manifest = {"schema_version": 1, "references_accepted": True, "seed": 1,
-            "frames": frames, "temporal_pairs": temporal_pairs, "temporal_keyframes": temporal_keyframes,
+            "frames": export_frames, "temporal_pairs": temporal_pairs, "temporal_keyframes": temporal_keyframes,
+            "evaluation": evaluation, "reference_frames": frames, "source_capture_frames": capture_frames,
             "source_resolution": [width, height], "fps": fps, "logical_fps_not_performance": True,
             "display_transform": "Reinhard + sRGB", "exposure_ev": exposure_ev, "rois": rois,
             "scales": settings, "metric_definitions": METRIC_DEFINITIONS,
@@ -414,6 +464,9 @@ def export_condition(output, off_dir, on_dir, references_mapping, *, references_
             "video_resize": "Presentation only; native HDR source and native PNG exports retained",
             "config_alignment": alignment, "inputs": provenance, "frame_metrics": rows,
             "videos": [f"videos/{name}.mp4" for name in ("comparison", "smape", "reference")] if write_videos else []}
+        manifest.update(reference_metadata)
+        if reference_metadata:
+            (stage / "reference-caption.txt").write_text(reference_metadata["reference_caption"] + "\n", encoding="utf-8")
         (stage / "manifest.json").write_text(json.dumps(manifest, indent=2, allow_nan=False) + "\n", encoding="utf-8")
         stage.rename(output)
         return manifest

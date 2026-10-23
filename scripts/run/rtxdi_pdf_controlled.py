@@ -21,9 +21,15 @@ import numpy as np
 from rtxdi_common import ROOT, RENDERER, sha
 from experiment.artifacts import save_json
 from experiment.controlled_suite import build_config, completed_run, conditions
-from experiment.controlled_reference_run import REFERENCE_EXE, ReferenceManager
+from experiment.controlled_reference_run import (REFERENCE_EXE, ReferenceManager, ReferencePrecisionError,
+                                                reference_is_ready, validate_scene_policies)
 from experiment.controlled_outputs import generate_versioned
+from experiment.controlled_outputs import RECEIPT_NAME, _canonical, _matches
 from experiment.controlled_budget import BudgetExceeded, ExperimentBudget
+from experiment.controlled_launch import validate_launch_plan, claim_launch, load_scene_reference_policies
+from experiment.controlled_evaluation import (selection_spec, select_reference_captures,
+                                              target_inventory, quality_captures,
+                                              reference_execution_order, validate_reference_priority_scenes)
 from experiment.controlled_temporal import assess_static_reference_differences, check_temporal_references
 from experiment.error_metrics import luminance, trmae_map
 from experiment.images import preview_rgb, read_pfm
@@ -63,6 +69,87 @@ def validate_technical_gate(receipt, build, matrix_hash):
             or receipt.get("matrix_sha256") != matrix_hash
             or receipt.get("references_accepted") is not False):
         raise ValueError("Method renders require a passed technical pilot for this build and matrix")
+
+
+def validate_retained_raw_product(output, report):
+    receipt = json.loads((output / RECEIPT_NAME).read_text())
+    identity = receipt["identity"]
+    normalized_report = json.loads(json.dumps([report], default=str))
+    if _canonical(identity["reports"])[1] != _canonical(normalized_report)[1]:
+        raise ValueError("Retained raw product points to different method runs")
+    if any(not Path(path).is_file() or sha(Path(path)) != digest for path, digest in identity["inputs"].items()):
+        raise ValueError("Retained raw product method inputs or timings changed")
+    if not _matches(output, receipt["identity_sha256"], _canonical(identity)[1]):
+        raise ValueError(f"Retained raw product failed validation: {output}")
+
+
+
+def load_retained_condition_report(output, condition, raw_report, *, root):
+    """Read a completed historical report while validating its exact saved evidence."""
+    root, output = Path(root).resolve(), Path(output).resolve()
+    def resolve(value):
+        path = Path(value)
+        path = (path if path.is_absolute() else root / path).resolve()
+        if not path.is_relative_to(root):
+            raise ValueError("Retained report input escapes the experiment suite")
+        return path
+    try:
+        if not output.is_relative_to(root / "analysis"):
+            raise ValueError("Retained analysis output escapes the experiment suite")
+        receipt = json.loads((output / RECEIPT_NAME).read_text(encoding="utf-8"))
+        identity = receipt["identity"]
+        _, canonical = _canonical(identity)
+        digest = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+        if not _matches(output, digest, canonical):
+            raise ValueError("Retained completed output or its receipt was modified")
+        reports = identity["reports"]
+        if not isinstance(reports, list) or len(reports) != 1 or not isinstance(reports[0], dict):
+            raise ValueError("Retained condition requires exactly one report")
+        report = copy.deepcopy(reports[0])
+        if (report.get("id") != condition["id"] or report.get("scenario") != condition["scenario"]
+                or report.get("rois", []) != condition["rois"] or report.get("reference_policy") is not None):
+            raise ValueError("Retained condition identity, scenario or ROI metadata changed")
+        runs = report["runs"]
+        if (not isinstance(runs, list) or len(runs) != 3
+                or any(type(run.get("seed")) is not int for run in runs)
+                or sorted(run["seed"] for run in runs) != [1, 2, 3]):
+            raise ValueError("Retained condition requires exactly method seeds 1, 2, 3")
+        for run in runs:
+            for name in ("off_dir", "on_dir"):
+                run[name] = resolve(run[name])
+        expected = {run["seed"]: {name: resolve(run[name]) for name in ("off_dir", "on_dir")}
+                    for run in raw_report["runs"]}
+        if {run["seed"]: {name: run[name] for name in ("off_dir", "on_dir")} for run in runs} != expected:
+            raise ValueError("Retained condition refers to different completed method runs")
+        references = {}
+        for frame, path in report["references"].items():
+            if not str(frame).isdecimal() or int(frame) < 1 or int(frame) in references:
+                raise ValueError("Retained report has invalid reference frame keys")
+            references[int(frame)] = resolve(path)
+        if not references:
+            raise ValueError("Retained report has no reference images")
+        report["references"] = references
+        inputs = identity["inputs"]
+        if not isinstance(inputs, dict) or not inputs:
+            raise ValueError("Retained report input inventory is missing")
+        resolved_inputs = {resolve(path): digest for path, digest in inputs.items()}
+        if any(not path.is_file() or sha(path) != digest for path, digest in resolved_inputs.items()):
+            raise ValueError("Retained report input is missing or changed")
+        required = set(references.values())
+        required.update(run[method] / name for run in runs for method in ("off_dir", "on_dir")
+                        for name in ("manifest.json", "config.json", "captures.json", "timings.csv"))
+        if not required <= set(resolved_inputs):
+            raise ValueError("Retained report input inventory does not cover its declared sources")
+        return report
+    except (OSError, KeyError, TypeError, ValueError) as error:
+        raise ValueError(f"Invalid retained report for {condition.get('id')}: {error}") from error
+
+
+def fixed_reference_assessment(policy):
+    reason = ("User-authorized fixed-sample single-stream Bistro reference; "
+              "uncertainty not evaluated under original dual-stream standard")
+    return {"status": "not_evaluated", "passed": None, "reason": reason,
+            "policy_id": policy["policy_id"]}
 
 
 def export_raw_condition(output, off_dir, on_dir, *, exposure_ev=0., write_videos=True,
@@ -189,10 +276,14 @@ def exclusive_worker(directory):
 
 
 class ControlledExperiment:
-    def __init__(self, directory):
+    def __init__(self, directory, *, reference_window=None, validation_only=False, reference_policies=None):
+        self.reference_policies = validate_scene_policies(reference_policies)
         self.root = directory
         directory.mkdir(parents=True, exist_ok=True)
-        self.budget = ExperimentBudget(directory)
+        self.budget = ExperimentBudget(directory, authorization=reference_window)
+        self.references_only = reference_window is not None
+        if self.references_only and not validation_only:
+            self.budget.check()
         matrix_path = directory / "conditions.json"
         matrix = conditions()
         if matrix_path.exists():
@@ -214,9 +305,15 @@ class ControlledExperiment:
                           worker_source_sha256=sha(Path(__file__)), execution_budget=self.budget.record)
         self.notify(stage="starting")
         self.references = ReferenceManager(directory / "references", self.reference_build, self.notify,
-            before_segment=lambda: self.budget.timeout(21600))
+            before_segment=lambda: self.budget.timeout(21600), scene_policies=self.reference_policies)
 
     def notify(self, **updates):
+        references = getattr(self, "references", None)
+        if isinstance(references, ReferenceManager):
+            updates.update(accepted_references=references.accepted_count,
+                           precision_passed_references=references.accepted_count,
+                           ready_references=references.ready_count,
+                           fixed_budget_references=references.fixed_budget_count)
         self.state.update(updates, updated_utc=datetime.now(timezone.utc).isoformat())
         save_json(self.state_path, self.state)
         print(json.dumps(updates, ensure_ascii=False), flush=True)
@@ -236,6 +333,8 @@ class ControlledExperiment:
                 if manifest["build"] != self.build or manifest["scene"]["sha256"] != assets["sha256"]:
                     raise ValueError("Completed render uses a different build or scene assets")
                 return attempt
+        if getattr(self, "references_only", False):
+            raise ValueError(f"Completed method run required; references-only cannot render: {parent}")
         number = 0
         while (parent / f"attempt-{number}").exists():
             number += 1
@@ -360,14 +459,42 @@ class ControlledExperiment:
         return {"id": condition["id"], "scenario": condition["scenario"], "runs": runs,
                 "references": {}, "rois": condition["rois"]}
 
+    def reference_policy(self, condition):
+        scene = condition.get("scene", {}).get("scene_id")
+        return getattr(self, "reference_policies", {}).get(scene)
+
+    def preserved_reports(self, raw):
+        if not getattr(self, "reference_policies", {}).get("bistro"):
+            return {}
+        reports = {}
+        for name, condition in self.matrix.items():
+            if self.reference_policy(condition) is not None:
+                continue
+            relative = self.state.get("products", {}).get(f"analysis/{name}")
+            if not relative:
+                raise ValueError(f"Missing retained completed condition report: {name}")
+            reports[name] = load_retained_condition_report(self.root / relative, condition, raw[name], root=self.root)
+        return reports
+
     def condition_report(self, condition, raw_report, *, mode="combined", neighbors=4, area="formal"):
         runs = raw_report["runs"]
         captures = self.captures([path for run in runs for path in (run["off_dir"], run["on_dir"])])
-        references = self.references.ensure(captures, condition["rois"])
+        evaluation = selection_spec(condition["scenario"]) if getattr(self, "references_only", False) else None
+        if evaluation is not None:
+            captures = select_reference_captures(captures, condition["scenario"])
+            references = {c["key"]: self.references.paths(c["key"]) for c in captures}
+        else:
+            references = self.references.ensure(captures, condition["rois"])
         assessment = {}
-        if condition["scenario"] != "static":
+        policy = self.reference_policy(condition)
+        if policy is not None:
+            assessment = {name: fixed_reference_assessment(policy) for name in ("temporal", "differences")}
+            if condition["scenario"] == "lighting":
+                assessment["lighting_influence"] = fixed_reference_assessment(policy)
+        elif condition["scenario"] != "static":
             while True:
-                quality = check_temporal_references(captures, references, condition["rois"])
+                quality = check_temporal_references(captures, references, condition["rois"],
+                                                   **({"evaluation": evaluation} if evaluation else {}))
                 quality_path = self.root / area / condition["id"] / f"temporal-reference-{mode}-{neighbors}.json"
                 save_json(quality_path, quality)
                 if quality["passed"]:
@@ -375,7 +502,8 @@ class ControlledExperiment:
                 if not quality["refine_keys"]:
                     raise RuntimeError("Temporal reference check failed without refinable targets")
                 for key in quality["refine_keys"]:
-                    group = [c for c in captures if c["key"] == key]
+                    group = quality_captures(self.reference_quality_captures, {key}) if evaluation else [
+                        c for c in captures if c["key"] == key]
                     self.references.ensure(group, condition["rois"],
                         min_samples=self.references.index["references"][key]["samples"])
                 references = {key: self.references.paths(key) for key in references}
@@ -384,7 +512,9 @@ class ControlledExperiment:
             assessment["differences"] = assess_static_reference_differences(captures, references, condition["rois"])
         mapping = {c["frame"]["frame"]: references[c["key"]]["image"] for c in captures}
         return {"id": condition["id"], "scenario": condition["scenario"], "runs": runs,
-                "references": mapping, "rois": condition["rois"], "reference_assessment": assessment}
+                "references": mapping, "rois": condition["rois"], "reference_assessment": assessment,
+                **({"evaluation": evaluation} if evaluation else {}),
+                **({"reference_policy": policy} if policy is not None else {})}
 
     def product(self, destination, reports, generate, *, settings=None):
         """Resume derived products only when their validated inputs still match."""
@@ -419,6 +549,10 @@ class ControlledExperiment:
         settings = dict(fps=30, rois=condition["rois"],
             temporal_scale=temporal_scale, exposure_ev=condition["scene"]["preview"]["exposure_ev"],
             write_videos=condition["scenario"] != "static")
+        if "evaluation" in report:
+            settings.update(evaluation=report["evaluation"], write_videos=False)
+        if "reference_policy" in report:
+            settings.update(reference_policy=report["reference_policy"], write_videos=False)
         return self.product(destination, [report], lambda output: export_condition(output,
             report["runs"][0]["off_dir"], report["runs"][0]["on_dir"], report["references"],
             references_accepted=True, **settings), settings=settings)
@@ -431,36 +565,205 @@ class ControlledExperiment:
             report["runs"][0]["off_dir"], report["runs"][0]["on_dir"],
             check_budget=self.budget.check, **settings), settings=settings)
 
-    def execute(self, pilot_only=False):
+    def method_reports(self):
+        """One layout for new captures and strict reuse of the 78 retained runs."""
+        raw = {}
+        order = ("cornell-static", "arcade-static", "bistro-interior-static", "bistro-exterior-static",
+                 "bistro-interior-motion", "bistro-exterior-motion", "arcade-motion", "bistro-lighting")
+        for name in order:
+            raw[name] = self.condition_runs(self.matrix[name])
+        spatial = copy.deepcopy(self.matrix["bistro-interior-static"])
+        spatial["id"] += "-spatial-only"
+        spatial_raw = self.condition_runs(spatial, mode="spatial", area="ablation")
+        equal = []
+        for name in ("bistro-interior-static", "bistro-exterior-static"):
+            for neighbors in (2, 4, 8):
+                condition = copy.deepcopy(self.matrix[name])
+                if neighbors == 4:
+                    report = {**raw[name], "id": f"{name}-neighbors-4"}
+                else:
+                    condition["id"] += f"-neighbors-{neighbors}"
+                    report = self.condition_runs(condition, neighbors=neighbors, area="equal-time")
+                equal.append((condition, neighbors, report))
+        return raw, spatial, spatial_raw, equal
+
+    def sparse_inputs(self):
+        """Verify retained methods/products; never launch a method renderer."""
+        self.references_only = True
+        technical = json.loads((self.root / "pilot-technical-validation.json").read_text())
+        validate_technical_gate(technical, self.build, self.matrix_hash)
+        raw, spatial, spatial_raw, equal = self.method_reports()
+        reports = [*raw.values(), spatial_raw, *(report for _, _, report in equal)]
+        paths = {Path(run[key]) for report in reports for run in report["runs"] for key in ("off_dir", "on_dir")}
+        if len(paths) != 78:
+            raise ValueError("Sparse resume requires exactly 78 unique completed method runs")
+        for name in (*raw, spatial["id"]):
+            relative = self.state.get("products", {}).get(f"artifacts/raw/{name}")
+            if not relative:
+                raise ValueError(f"Missing retained raw product: {name}")
+            output = (self.root / relative).resolve()
+            if not output.is_relative_to((self.root / "artifacts/raw").resolve()):
+                raise ValueError("Raw product escapes its retained output directory")
+            validate_retained_raw_product(output, spatial_raw if name == spatial["id"] else raw[name])
+        captures = []
+        selected = []
+        for report in [*raw.values(), spatial_raw, *(r for _, n, r in equal if n != 4)]:
+            current = self.captures([path for run in report["runs"] for path in (run["off_dir"], run["on_dir"])])
+            for capture in current:
+                capture["condition_id"] = report["id"]
+            captures.extend(current)
+            selected.extend(select_reference_captures(current, report["scenario"]))
+        inventory = target_inventory(selected)
+        path = self.root / "reference-targets.json"
+        if path.exists() and json.loads(path.read_text()) != inventory:
+            raise ValueError("Frozen sparse reference target mapping changed")
+        save_json(path, inventory)
+        self.reference_quality_captures = quality_captures(captures, {row["key"] for row in inventory["states"]})
+        scale_path = self.root / "temporal-display-scale.json"
+        high, scale_inputs = 0., {}
+        for report in raw.values():
+            if report["scenario"] == "static":
+                continue
+            for method in ("off_dir", "on_dir"):
+                directory = report["runs"][0][method]
+                paths = [directory / f"frame-{frame:04d}.pfm.gz" for frame in (31, 32)]
+                old, current = map(read_pfm, paths)
+                # The fixed held-state pair has an exactly zero physical gradient.
+                zero = np.zeros_like(current)
+                high = max(high, float(np.percentile(trmae_map(current, old, zero, zero), 99)))
+                scale_inputs.update({str(path.relative_to(self.root)): sha(path) for path in paths})
+        calibration = {"pair": [31, 32], "percentile": 99, "reference_gradient": "known zero held state",
+                       "range": [0., max(high, 1e-6)], "inputs": scale_inputs}
+        if scale_path.exists() and json.loads(scale_path.read_text()) != calibration:
+            raise ValueError("Frozen temporal display calibration changed")
+        save_json(scale_path, calibration)
+        self.state["temporal_scale"] = calibration["range"]
+        self.preserved_condition_reports = self.preserved_reports(raw)
+        return raw, spatial, spatial_raw, equal, inventory
+
+    def execute_sparse(self, *, validate_only=False):
+        raw, spatial, spatial_raw, equal, inventory = self.sparse_inputs()
+        preserved = self.preserved_reports(raw)
+        if validate_only:
+            receipt = {"passed": True, "evaluation_scope": "sparse-v1", "method_runs": 78,
+                "raw_products": 9, "reference_states": inventory["state_count"],
+                "matrix_sha256": self.matrix_hash, "build": self.build,
+                "reference_build": self.reference_build,
+                "reference_targets_sha256": sha(self.root / "reference-targets.json"),
+                "completed_utc": datetime.now(timezone.utc).isoformat()}
+            save_json(self.root / "sparse-preparation-validation.json", receipt)
+            self.notify(status="paused", phase="sparse_preparation", stage="ready_for_scheduled_start",
+                evaluation_scope="sparse-v1", worker_pid=None, pilot_passed=False)
+            return
+        self.budget.check()
+        self.notify(evaluation_scope="sparse-v1", phase="sparse_references", stage="static_references")
+        failures, reports, emitted, rejected = {}, list(preserved.values()), set(preserved), set()
+        rois = next(iter(self.matrix.values()))["rois"]
+        conditions_to_report = [(condition, raw[condition["id"]], "combined", 4, "formal")
+                                for condition in self.matrix.values()]
+        conditions_to_report.append((spatial, spatial_raw, "spatial", 4, "ablation"))
+        conditions_to_report.extend((condition, report, "combined", n, "equal-time")
+                                    for condition, n, report in equal if n != 4)
+        selected_by_condition = {condition["id"]: select_reference_captures(self.captures([
+            path for run in raw_report["runs"] for path in (run["off_dir"], run["on_dir"])]), condition["scenario"])
+            for condition, raw_report, _, _, _ in conditions_to_report}
+        equal_reports = []
+
+        def failed(error):
+            failures[error.key] = {"samples": error.samples, "error": str(error)}
+            save_json(self.root / "reference-failures.json", failures)
+            self.notify(stage="reference_cap_reached", reference_failures=failures,
+                        accepted_references=self.references.accepted_count)
+
+        def emit_ready():
+            # Deliver static/other completed conditions before an expensive later
+            # target can consume the remaining reference-and-analysis allowance.
+            for condition, raw_report, mode, neighbors, area in conditions_to_report:
+                name = condition["id"]
+                if name in emitted | rejected:
+                    continue
+                selected = selected_by_condition[name]
+                if any(not reference_is_ready(self.references.index["references"].get(c["key"], {}),
+                                              policy=self.reference_policy(condition)) for c in selected):
+                    continue
+                self.budget.check()
+                try:
+                    while True:
+                        report = self.condition_report(condition, raw_report, mode=mode, neighbors=neighbors, area=area)
+                        if condition["scenario"] != "lighting":
+                            break
+                        if self.reference_policy(condition) is not None:
+                            influence = fixed_reference_assessment(self.reference_policy(condition))
+                            influence["reference_inputs"] = {str(report["references"][frame]): sha(report["references"][frame])
+                                                              for frame in (32, 48)}
+                            report["reference_assessment"]["lighting_influence"] = influence
+                            save_json(self.root / "sparse-lighting-influence.json", influence)
+                            break
+                        keys = {c["frame"]["frame"]: c["key"] for c in selected}
+                        light_records = [self.references.paths(keys[f]) for f in (32, 48)]
+                        influence = lighting_influence(*light_records, condition["rois"])
+                        influence["reference_inputs"] = {str(record["image"]): sha(record["image"]) for record in light_records}
+                        save_json(self.root / "sparse-lighting-influence.json", influence)
+                        if influence["passed"]:
+                            break
+                        for key in {keys[32], keys[48]}:
+                            self.references.ensure(quality_captures(self.reference_quality_captures, {key}), rois,
+                                min_samples=self.references.index["references"][key]["samples"])
+                    self.export(condition, report, self.root / "artifacts" / name)
+                    self.summary(name, [report])
+                    emitted.add(name)
+                    if area == "formal":
+                        reports.append(report)
+                        self.summary("main", reports)
+                    elif area == "equal-time":
+                        equal_reports.append(report)
+                    self.notify(completed_conditions=[report["id"] for report in reports])
+                except ReferencePrecisionError as error:
+                    failed(error)
+                    rejected.add(name)
+
+        for row in reference_execution_order(inventory["states"],
+                getattr(self, "reference_priority_scenes", ())):
+            self.budget.check()
+            if getattr(self, "reference_policies", {}).get("bistro") and row["target"]["scene_id"] != "bistro":
+                if not reference_is_ready(self.references.index["references"].get(row["key"], {})):
+                    raise ValueError("Preserved non-Bistro reference is not precision accepted")
+                self.references.paths(row["key"])
+                continue
+            try:
+                self.references.ensure(quality_captures(self.reference_quality_captures, {row["key"]}), rois)
+            except ReferencePrecisionError as error:
+                failed(error)
+            emit_ready()
+        skipped = [condition["id"] for condition, *_ in conditions_to_report if condition["id"] not in emitted]
+        if reports:
+            self.summary("main", reports)
+        for report in reports:
+            if report["id"] in ("bistro-interior-static", "bistro-exterior-static"):
+                equal_reports.append({**report, "id": report["id"] + "-neighbors-4"})
+        if len(equal_reports) == 6:
+            summary = self.summary("equal-time", equal_reports)
+            self.product(self.root / "analysis/equal-time-comparison", equal_reports,
+                lambda output: analyze_equal_time(summary, output), settings={"summary_input": str(summary)})
+        self.notify(status="sparse_results_ready" if not skipped else "sparse_partial_results",
+            phase="analysis", stage="interpret_results", skipped_conditions=skipped,
+            reference_failures=failures, completed_conditions=[report["id"] for report in reports])
+
+    def execute(self, pilot_only=False, *, references_only=False, validate_only=False):
+        if getattr(self, "reference_policies", {}) and not references_only:
+            raise ValueError("Fixed Bistro reference policy requires references-only evaluation")
+        if references_only:
+            return self.execute_sparse(validate_only=validate_only)
+        if getattr(self, "state", {}).get("evaluation_scope") == "sparse-v1":
+            raise ValueError("Sparse preparation requires --references-only and its approved reference window")
         technical = self.technical_pilot()
         validate_technical_gate(technical, self.build, self.matrix_hash)
         if pilot_only:
             self.notify(status="technical_pilot_completed", stage="awaiting_method_renders")
             return
-        raw = {}
         order = ("cornell-static", "arcade-static", "bistro-interior-static", "bistro-exterior-static",
                  "bistro-interior-motion", "bistro-exterior-motion", "arcade-motion", "bistro-lighting")
-        for name in order:
-            self.notify(phase="method_renders", stage="condition", condition=name)
-            raw[name] = self.condition_runs(self.matrix[name])
-        # One focused spatial-only ablation, and bounded three-budget curves.
-        self.notify(phase="ablation", stage="spatial_only")
-        condition = copy.deepcopy(self.matrix["bistro-interior-static"])
-        condition["id"] += "-spatial-only"
-        spatial_condition = condition
-        spatial_raw = self.condition_runs(condition, mode="spatial", area="ablation")
-        equal_raw = []
-        for name in ("bistro-interior-static", "bistro-exterior-static"):
-            for budget in (2, 4, 8):
-                condition = copy.deepcopy(self.matrix[name])
-                if budget == 4:
-                    report = raw[name]
-                    report = {**report, "id": f"{name}-neighbors-{budget}"}
-                else:
-                    condition["id"] += f"-neighbors-{budget}"
-                    self.notify(phase="equal_time", stage="budget", condition=name, neighbors=budget)
-                    report = self.condition_runs(condition, neighbors=budget, area="equal-time")
-                equal_raw.append((condition, budget, report))
+        raw, spatial_condition, spatial_raw, equal_raw = self.method_reports()
         self.notify(phase="method_renders", stage="raw_renders_completed", raw_renders_completed=True,
                     completed_method_runs=78)
         for name in order:
@@ -505,18 +808,50 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-name", default="pdf-controlled-20261018")
     parser.add_argument("--pilot-only", action="store_true", help="Validate the technical pilot without generating references")
+    parser.add_argument("--references-only", action="store_true", help="Reuse all 78 methods and run fixed sparse reference evaluation")
+    parser.add_argument("--reference-window", type=Path, help="Explicitly approved reference/analysis budget authorization")
+    parser.add_argument("--validate-only", action="store_true", help="Validate retained methods and sparse targets without rendering")
+    parser.add_argument("--launch-plan", type=Path, help="Pinned one-time scheduled launch inputs")
+    parser.add_argument("--reference-policy", type=Path, help="Explicit fixed Bistro reference policy")
     args = parser.parse_args()
+    if args.references_only != (args.reference_window is not None):
+        parser.error("--references-only requires --reference-window, and the window only authorizes references")
+    if (args.validate_only or args.launch_plan) and not args.references_only:
+        parser.error("Validation and scheduled launch require --references-only")
+    if args.reference_policy is not None and not args.references_only:
+        parser.error("A reference policy requires --references-only")
+    if args.reference_policy is not None and not args.validate_only:
+        parser.error("--reference-policy is validation-only; execution requires a pinned --launch-plan")
+    if args.pilot_only and args.references_only:
+        parser.error("References-only must reuse its completed technical validation")
+    if args.validate_only and args.launch_plan:
+        parser.error("Validate preparation separately; do not consume a scheduled launch")
     root = suite_path(args.output_name)
     with exclusive_worker(root):
+        if args.launch_plan and args.launch_plan.with_name(args.launch_plan.name + ".started.json").exists():
+            print("One-time launch was already consumed; preserving saved experiment state.", flush=True)
+            return
         worker = None
         try:
-            worker = ControlledExperiment(root)
-            worker.execute(args.pilot_only)
+            plan = validate_launch_plan(root, args.launch_plan) if args.launch_plan else None
+            priority = validate_reference_priority_scenes(
+                plan.get("reference_priority_scenes", []) if plan is not None else [])
+            policies = load_scene_reference_policies(root, plan, policy_path=args.reference_policy)
+            worker = ControlledExperiment(root, reference_window=args.reference_window,
+                                          validation_only=args.validate_only, reference_policies=policies)
+            worker.reference_priority_scenes = priority
+            if plan is not None:
+                authorization = worker.budget.record["authorization"]
+                if any(plan[key] != authorization[key] for key in ("not_before_utc", "deadline_utc")):
+                    raise ValueError("Launch plan and approved budget window differ")
+                worker.sparse_inputs()
+                claim_launch(args.launch_plan)
+            worker.execute(args.pilot_only, references_only=args.references_only, validate_only=args.validate_only)
         except BaseException as error:
             status = "failed"
             if isinstance(error, BudgetExceeded):
                 status = "budget_exhausted"
-            elif worker is not None:
+            elif worker is not None and not args.validate_only:
                 try:
                     worker.budget.check()
                 except BudgetExceeded as exhausted:

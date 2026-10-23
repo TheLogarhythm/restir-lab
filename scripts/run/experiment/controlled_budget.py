@@ -1,6 +1,7 @@
 """A persistent, fail-closed total wall-clock budget for one controlled suite."""
 from datetime import datetime, timedelta, timezone
 import json
+import hashlib
 import math
 from pathlib import Path
 
@@ -33,7 +34,7 @@ class ExperimentBudget:
     A saved policy is never reset or extended automatically.
     """
 
-    def __init__(self, directory, hours=30, now=None):
+    def __init__(self, directory, hours=30, now=None, *, authorization=None):
         hours = _positive_finite(hours, "budget hours")
         if hours > 30:
             raise ValueError("The controlled experiment total budget cannot exceed 30 hours")
@@ -79,6 +80,24 @@ class ExperimentBudget:
         except (OSError, ValueError, OverflowError) as error:
             raise ValueError(f"Invalid execution-budget policy {self.path}: {error}") from error
         self._record = policy
+        if authorization is not None:
+            try:
+                window = json.loads(Path(authorization).read_text(encoding="utf-8"))
+                if (window.get("version") != 1 or window.get("approved_by") != "user"
+                        or window.get("scope") != "sparse_references_and_analysis"
+                        or window.get("original_budget_sha256") != hashlib.sha256(self.path.read_bytes()).hexdigest()):
+                    raise ValueError("A matching explicit user authorization is required")
+                start = _utc(window.get("not_before_utc"), "approved window start")
+                end = _utc(window.get("deadline_utc"), "approved window deadline")
+                approved = _utc(window.get("approved_utc"), "approval time")
+                if not approved <= start < end:
+                    raise ValueError("Invalid approved reference window")
+                self._started, self._deadline = start, end
+                self._record = {"version": 2, "accounting": "approved_reference_window",
+                    "original_budget": policy, "authorization": window,
+                    "started_utc": start.isoformat(), "deadline_utc": end.isoformat()}
+            except (OSError, ValueError, TypeError, AttributeError) as error:
+                raise ValueError(f"Invalid reference-window authorization: {error}") from error
 
     @property
     def record(self):
@@ -86,15 +105,19 @@ class ExperimentBudget:
         return dict(self._record)
 
     def remaining_seconds(self):
-        return max(0.0, (self._deadline - _utc(self._now(), "current time")).total_seconds())
+        current = max(self._started, _utc(self._now(), "current time"))
+        return max(0.0, (self._deadline - current).total_seconds())
 
     def check(self):
+        if _utc(self._now(), "current time") < self._started:
+            raise BudgetExceeded(f"Approved reference window opens at {self._started.isoformat()}")
         if self.remaining_seconds() <= 0:
             raise BudgetExceeded(f"Controlled experiment total budget exhausted at {self._deadline.isoformat()}")
 
     def timeout(self, max_seconds):
         """Cap a subprocess timeout by the suite's remaining total allowance."""
         maximum = _positive_finite(max_seconds, "timeout")
+        self.check()
         remaining = self.remaining_seconds()
         if remaining <= 0:
             raise BudgetExceeded(f"Controlled experiment total budget exhausted at {self._deadline.isoformat()}")

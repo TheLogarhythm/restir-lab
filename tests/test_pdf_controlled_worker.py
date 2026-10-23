@@ -63,7 +63,7 @@ class ControlledWorkerTests(unittest.TestCase):
         for name in ("di-3scenes-reference", "zero-day-di-seed1", "../outside"):
             with self.subTest(name=name), self.assertRaises(ValueError):
                 worker.suite_path(name)
-        self.assertEqual(worker.suite_path("pdf-controlled-20261018"), ROOT / "runs/pdf-controlled-20261018")
+        self.assertEqual(worker.suite_path("pdf-controlled-new"), ROOT / "runs/pdf-controlled-new")
 
     def test_reference_refinement_regenerates_figures_without_overwriting_previous(self):
         worker = self.worker()

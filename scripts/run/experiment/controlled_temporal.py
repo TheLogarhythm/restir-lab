@@ -9,6 +9,7 @@ from pathlib import Path
 
 import numpy as np
 
+from .controlled_evaluation import validate_selection
 from .error_metrics import smape, trmae_map
 from .reference import ImageCache, metrics, rmae
 
@@ -189,7 +190,7 @@ def _pair_means(current, previous, masks):
     return values
 
 
-def check_temporal_references(captures, references, rois=(), ratio=.1):
+def check_temporal_references(captures, references, rois=(), ratio=.1, *, evaluation=None):
     """Return a JSON-safe precision receipt; reject incomplete/misaligned input.
 
     ``references[key]`` supplies ``image`` (accepted current mean),
@@ -197,10 +198,26 @@ def check_temporal_references(captures, references, rois=(), ratio=.1):
     half-stream ``streams``. No exposure adjustment, clipping or rescaling is
     applied. Failure requests only keys in changing adjacent reference states
     which contribute nonzero uncertainty to a failing region/phase.
+    A canonical ``evaluation`` restricts image errors to representative frames
+    and TRMAE/gradient precision to the three declared local adjacent pairs.
+    Dense 96-frame phase analysis remains the default when evaluation is absent.
     """
     if type(ratio) not in (int, float) or not np.isfinite(ratio) or not 0 < ratio < 1:
         raise ValueError("Temporal reference ratio must be finite and between zero and one")
-    groups = _groups(captures, references)
+    if evaluation is not None:
+        evaluation = validate_selection(evaluation, "motion")
+        frames = evaluation["reference_frames"]
+        phases = [(f"frame-{frame}", [frame], [[frame - 1, frame]])
+                  for frame in evaluation["spatial_frames"]]
+    else:
+        frames = range(1, 97)
+        phases = [(label, list(range(1 if first == 2 else first, last + 1)),
+                   [[frame - 1, frame] for frame in range(first, last + 1)])
+                  for label, first, last in PHASES]
+    spatial_phases = {frame: label for label, selected, _ in phases for frame in selected}
+    temporal_phases = {tuple(pair): label for label, _, pairs in phases for pair in pairs}
+    groups = _groups(captures, references, frames=frames,
+                     required_seeds=(1, 2, 3) if evaluation is not None else None)
     cache = ImageCache(max_bytes=64 * 1024**2)
     rois = tuple(rois)
     masks, shape = None, None
@@ -209,25 +226,27 @@ def check_temporal_references(captures, references, rois=(), ratio=.1):
     contributors = defaultdict(set)
     for (seed, method), group in sorted(groups.items()):
         previous = None
-        previous_key = None
+        previous_key, previous_frame = None, None
         # These accumulators contain scalar sums only, never sequence images.
         totals = defaultdict(lambda: defaultdict(lambda: defaultdict(float)))
         spatial_totals = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(float))))
         counts = defaultdict(int)
         frame_counts = defaultdict(int)
-        for frame in range(1, 97):
+        for frame in frames:
             capture = group[frame]
             current = _load_frame(capture, references, cache, shape)
             if masks is None:
                 shape = current[0].shape
                 masks = _masks(shape, rois)
-            phase = PHASES[(frame - 1) // 32][0]
-            frame_counts[phase] += 1
-            for name, metrics_by_name in _spatial_means(current, masks).items():
-                for metric, variants in metrics_by_name.items():
-                    for variant, value in variants.items():
-                        spatial_totals[name][phase][metric][variant] += value
-            if previous is not None:
+            phase = spatial_phases.get(frame)
+            if phase is not None:
+                frame_counts[phase] += 1
+                for name, metrics_by_name in _spatial_means(current, masks).items():
+                    for metric, variants in metrics_by_name.items():
+                        for variant, value in variants.items():
+                            spatial_totals[name][phase][metric][variant] += value
+            phase = temporal_phases.get((previous_frame, frame))
+            if phase is not None:
                 values = _pair_means(current, previous, masks)
                 counts[phase] += 1
                 for name, row in values.items():
@@ -238,12 +257,12 @@ def check_temporal_references(captures, references, rois=(), ratio=.1):
                         or any(row[variant] != row["current"] for variant in VARIANTS[1:]))
                     if previous_key != capture["key"] and uncertain:
                         contributors[name, phase].update((previous_key, capture["key"]))
-            previous, previous_key = current, capture["key"]
+            previous, previous_key, previous_frame = current, capture["key"], frame
         for name in masks:
-            for phase, first, last in PHASES:
-                if counts[phase] != last - first + 1:
+            for phase, selected, pairs in phases:
+                if counts[phase] != len(pairs):
                     raise ValueError("Incomplete temporal phase")
-                if frame_counts[phase] != 32:
+                if frame_counts[phase] != len(selected):
                     raise ValueError("Incomplete spatial phase")
                 seed_rows[name, phase][str(method)][str(seed)] = {
                     metric: value / counts[phase] for metric, value in totals[name][phase].items()}
@@ -256,7 +275,7 @@ def check_temporal_references(captures, references, rois=(), ratio=.1):
     regions, refine_keys = {}, set()
     for name in masks:
         regions[name] = {}
-        for phase, first, last in PHASES:
+        for phase, selected, pairs in phases:
             methods = {}
             for method, per_seed in seed_rows[name, phase].items():
                 means = {metric: float(np.mean([row[metric] for row in per_seed.values()]))
@@ -277,13 +296,19 @@ def check_temporal_references(captures, references, rois=(), ratio=.1):
                     spatial_methods[method] = {**means, "per_seed": dict(per_seed)}
                 spatial_metrics[metric] = {"methods": spatial_methods,
                     "paired_difference": _paired_difference(spatial_methods)}
-            regions[name][phase] = {"pair_count": last - first + 1,
-                "frame_count": 32, "metrics": spatial_metrics,
+            regions[name][phase] = {"pair_count": len(pairs),
+                "frame_count": len(selected), "metrics": spatial_metrics,
                 "seed_count": len(next(iter(methods.values()))["per_seed"]), "methods": methods,
                 "paired_difference": _paired_difference(methods),
                 "reference_gradient_noise": noise, "checkpoint_gradient_change": change,
                 "method_metric_change": metric_change, "threshold": threshold, "passed": passed}
+            if evaluation is not None:
+                regions[name][phase]["temporal_pair"] = pairs[0]
+                regions[name][phase]["spatial_frame"] = selected[0]
             if not passed:
                 refine_keys.update(contributors[name, phase])
-    return {"passed": all(row["passed"] for phases in regions.values() for row in phases.values()),
-            "regions": regions, "refine_keys": sorted(refine_keys)}
+    result = {"passed": all(row["passed"] for rows in regions.values() for row in rows.values()),
+              "regions": regions, "refine_keys": sorted(refine_keys)}
+    if evaluation is not None:
+        result["evaluation"] = evaluation
+    return result

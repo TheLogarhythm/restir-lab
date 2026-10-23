@@ -1,6 +1,7 @@
 """The controlled suite has one persistent total wall-clock allowance."""
 from datetime import datetime, timedelta, timezone
 import json
+import hashlib
 from pathlib import Path
 import sys
 import tempfile
@@ -108,6 +109,42 @@ class ControlledBudgetTests(unittest.TestCase):
         for hours in (31, 0, -1, True, float("inf"), float("nan")):
             with self.subTest(hours=hours), self.assertRaises(ValueError):
                 self.budget(hours=hours)
+
+    def window(self):
+        original = self.budget().record
+        path = self.directory / "reference-window.json"
+        path.write_text(json.dumps({"version": 1, "scope": "sparse_references_and_analysis",
+            "approved_by": "user", "approved_utc": "2026-10-18T16:15:00Z",
+            "original_budget_sha256": hashlib.sha256((self.directory / "execution-budget.json").read_bytes()).hexdigest(),
+            "not_before_utc": "2026-10-20T01:00:00Z", "deadline_utc": "2026-10-20T16:00:00Z"}))
+        return path, original
+
+    def test_explicit_reference_window_keeps_original_budget_and_blocks_early_start(self):
+        path, original = self.window()
+        window = self.budget(authorization=path)
+        with self.assertRaises(BudgetExceeded):
+            window.check()
+        with self.assertRaises(BudgetExceeded):
+            window.timeout(60)
+        self.assertEqual(json.loads((self.directory / "execution-budget.json").read_text()), original)
+        self.current = datetime(2026, 10, 20, 1, tzinfo=timezone.utc)
+        resumed = self.budget(authorization=path)
+        self.assertEqual(resumed.timeout(100000), 15 * 3600)
+        self.current += timedelta(hours=14)
+        self.assertEqual(self.budget(authorization=path).timeout(100000), 3600)
+        self.current += timedelta(hours=1)
+        with self.assertRaises(BudgetExceeded):
+            self.budget(authorization=path).check()
+
+    def test_reference_window_rejects_missing_approval_or_changed_original_budget(self):
+        path, _ = self.window()
+        valid = json.loads(path.read_text())
+        for changes in ({"approved_by": "automatic"}, {"scope": "all_renders"},
+                        {"original_budget_sha256": "different"},
+                        {"deadline_utc": "2026-10-20T00:00:00Z"}):
+            path.write_text(json.dumps({**valid, **changes}))
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                self.budget(authorization=path)
 
 
 if __name__ == "__main__":

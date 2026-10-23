@@ -8,6 +8,8 @@ import shutil
 from rtxdi_common import RENDERER, sha
 from .artifacts import save_json
 from .controlled_reference import ControlledAssessment
+from .bistro_fixed_reference import (POLICY_ID, FIXED_SEED, FIXED_SAMPLES, ensure_fixed_bistro,
+                                    fixed_record_paths, validate_bistro_policy)
 from .reference import (CONVERGENCE_METRIC, REFERENCE_SCHEMA_VERSION, ImageCache,
                         pfm_path, reference_config, validate_lighting)
 from .reference_runner import BUILD_FIELDS, checkpoint_image, run_pose, validate_checkpoint
@@ -20,6 +22,51 @@ REFERENCE_SEEDS = (1001, 2001)
 BATCH_SAMPLES = 64
 CLASS_COUNTS = {"local": 64, "environment": 8, "infinite": 4}
 CHECKPOINTS = tuple(128 * 2**i for i in range(14))
+
+
+
+def validate_scene_policies(value):
+    if value is None:
+        return {}
+    if not isinstance(value, dict) or set(value) - {"bistro"}:
+        raise ValueError("Only the explicitly selected Bistro scene policy is supported")
+    if "bistro" in value:
+        validate_bistro_policy(value["bistro"])
+    return json.loads(json.dumps(value, allow_nan=False))
+
+
+def reference_is_ready(record, *, policy=None):
+    """Completion under the fixed policy never constitutes a precision pass."""
+    if not isinstance(record, dict):
+        return False
+    if policy is not None:
+        try:
+            validate_bistro_policy(policy)
+        except ValueError:
+            return False
+        if record.get("reference_policy") != policy:
+            return False
+    if "policy_id" not in record and "reference_policy" not in record:
+        return record.get("converged") is True
+    try:
+        validate_bistro_policy(record.get("reference_policy"))
+    except ValueError:
+        return False
+    return (record.get("policy_id") == POLICY_ID
+            and isinstance(record.get("target"), dict) and record["target"].get("scene_id") == "bistro"
+            and type(record.get("seeds")) is list and record["seeds"] == [FIXED_SEED]
+            and type(record["seeds"][0]) is int
+            and type(record.get("samples")) is int and record["samples"] == FIXED_SAMPLES
+            and record.get("ready") is True and record.get("converged") is None
+            and record.get("precision_verified") is False)
+
+
+class ReferencePrecisionError(RuntimeError):
+    """A preserved target exhausted the fixed cap without passing precision."""
+
+    def __init__(self, key, samples):
+        self.key, self.samples = key, samples
+        super().__init__(f"Reference precision not reached at {samples} samples: {key}")
 
 
 def checkpoint_schedule(values):
@@ -36,7 +83,8 @@ def checkpoint_schedule(values):
 
 class ReferenceManager:
     def __init__(self, directory, build, notify, *, timeout=21600, checkpoints=None,
-                 before_segment=None):
+                 before_segment=None, scene_policies=None):
+        self.scene_policies = validate_scene_policies(scene_policies)
         self.directory = Path(directory)
         self.build, self.notify, self.timeout = build, notify, timeout
         self.before_segment = before_segment
@@ -58,13 +106,52 @@ class ReferenceManager:
                 raise ValueError("Reference checkpoint schedule changed; explicit user approval required")
             if any(old["build"].get(k) != build[k] for k in BUILD_FIELDS):
                 raise ValueError("Reference executable or shaders changed")
+            old_policies = validate_scene_policies(old.get("scene_policies"))
+            has_fixed = any("policy_id" in record or "reference_policy" in record
+                            for record in old.get("references", {}).values())
+            if (old_policies or has_fixed) and not self.scene_policies:
+                raise ValueError("Saved fixed Bistro reference policy must be explicitly enabled on resume")
+            if old_policies and old_policies != self.scene_policies:
+                raise ValueError("Saved scene reference policy changed")
             self.index = old
+        if self.scene_policies:
+            self.index["scene_policies"] = self.scene_policies
         self.index.update(sample_count_unit=PROGRESS_UNIT, default_batch_counts=dict(CLASS_COUNTS))
         self.index["checkpoints"] = list(self.checkpoints)
         save_json(self.index_path, self.index)
 
+    @property
+    def accepted_count(self):
+        """Saved cap failures are resumable evidence, never accepted targets."""
+        return sum(record.get("converged") is True and "policy_id" not in record
+                   and "reference_policy" not in record for record in self.index["references"].values())
+
+    @property
+    def ready_count(self):
+        policies = getattr(self, "scene_policies", {})
+        return sum(reference_is_ready(record, policy=policies.get(record.get("target", {}).get("scene_id")))
+                   for record in self.index["references"].values())
+
+    @property
+    def fixed_budget_count(self):
+        return sum(reference_is_ready(record) and record.get("policy_id") == POLICY_ID
+                   for record in self.index["references"].values())
+
     def ensure(self, captures, rois=(), *, min_samples=0):
         """Reassess saved checkpoints against every supplied method before reuse."""
+        captures = list(captures)
+        fixed_paths = {}
+        if getattr(self, "scene_policies", {}).get("bistro"):
+            fixed = [capture for capture in captures if capture.get("config", {}).get("scene_id") == "bistro"
+                     or capture.get("target", {}).get("scene_id") == "bistro"]
+            if fixed and min_samples != 0:
+                raise ValueError("Fixed Bistro references cannot be refined beyond the fixed policy")
+            if fixed:
+                fixed_paths = ensure_fixed_bistro(self, fixed)
+                fixed_ids = {id(capture) for capture in fixed}
+                captures = [capture for capture in captures if id(capture) not in fixed_ids]
+        if not captures:
+            return fixed_paths
         validate_lighting(captures, self.build)
         groups = defaultdict(list)
         for capture in captures:
@@ -153,13 +240,22 @@ class ReferenceManager:
             self.index["references"][key] = record
             save_json(self.index_path, self.index)
             if not result["converged"]:
-                raise RuntimeError(f"Reference precision not reached at {samples} samples: {key}")
+                raise ReferencePrecisionError(key, samples)
             self.notify(stage="reference_accepted", target=key, samples=samples,
-                        accepted_references=len(self.index["references"]))
-        return {key: self.paths(key) for key in groups}
+                        accepted_references=self.accepted_count)
+        return {**fixed_paths, **{key: self.paths(key) for key in groups}}
 
     def paths(self, key):
         record = self.index["references"][key]
+        policy = getattr(self, "scene_policies", {}).get(record.get("target", {}).get("scene_id"))
+        if policy is not None and not reference_is_ready(record, policy=policy):
+            raise ValueError("Reference is not ready under the enabled fixed Bistro policy")
+        if "policy_id" in record or "reference_policy" in record:
+            if not getattr(self, "scene_policies", {}).get("bistro"):
+                raise ValueError("Fixed Bistro reference paths require its explicitly enabled scene policy")
+            if not reference_is_ready(record):
+                raise ValueError("Fixed Bistro reference has not completed its authorized budget")
+            return fixed_record_paths(self.directory, record)
         if not record["converged"]:
             raise ValueError("Reference has not passed precision checks")
         result = {name: self.directory / record[name] for name in ("image", "convergence", "previous_image")}

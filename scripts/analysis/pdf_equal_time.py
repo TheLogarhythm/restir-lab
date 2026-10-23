@@ -10,6 +10,8 @@ import shutil
 from statistics import mean, stdev
 import tempfile
 
+from .pdf_artifacts import _reference_policy_metadata
+
 
 METHODS = ("pdf-off", "pdf-on")
 METRICS = ("smape", "rmae", "nrmse")
@@ -86,6 +88,10 @@ def _reference_values(point, metric, conditions):
 
 
 def _assess_reference(curves, target, metric, conditions, delta):
+    if any(conditions[point["condition"]].get("reference_policy")
+           for curve in curves.values() for point in curve):
+        return {"reference_status": "not_evaluated", "direction": "not_evaluated",
+                "reference_variants": None, "reference_max_change": None}
     variants = defaultdict(dict)
     for key, curve in curves.items():
         assessed = []
@@ -114,6 +120,22 @@ def _assess_reference(curves, target, metric, conditions, delta):
 
 def _view(view, points, conditions):
     measured = [point for key, point in sorted(points.items()) if key[0] == view]
+    source_conditions = [conditions[name] for name in sorted({point["condition"] for point in measured})]
+    policies = [condition.get("reference_policy") for condition in source_conditions]
+    if any(policy is not None for policy in policies):
+        if any(policy is None or policy != policies[0] for policy in policies):
+            raise ValueError(f"Equal-time reference policies differ across neighbor budgets for {view}")
+        # Canonical policy validation also rejects subtly altered fixed budgets.
+        for policy in policies:
+            _reference_policy_metadata(policy)
+        if any("inputs" in condition for condition in source_conditions):
+            try:
+                hashes = [condition["inputs"]["references"]["128"]["sha256"] for condition in source_conditions]
+            except (KeyError, TypeError) as error:
+                raise ValueError(f"Missing frame-128 reference provenance for {view}") from error
+            if (any(not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value) for value in hashes)
+                    or len(set(hashes)) != 1):
+                raise ValueError(f"Frame-128 reference hashes differ across neighbor budgets for {view}")
     curves = {}
     for seed in (1, 2, 3):
         for method in METHODS:
@@ -205,7 +227,7 @@ def _plot(path, views):
     plt.close(figure)
 
 
-def _markdown(views):
+def _markdown(views, reference_policies=None):
     lines = ["# Bounded equal-time comparison", "",
              "Targets are midpoints of the measured GPU-time range shared by all six seed/method curves in each view. "
              "Values at each target are piecewise-linear interpolated estimates, rather than measured exact-time configurations. "
@@ -221,6 +243,8 @@ def _markdown(views):
             def estimate(values):
                 return f"{values['mean']:.5g} ± {values['sd']:.3g}"
             interpretation = paired["direction"]
+            if paired["reference_status"] == "not_evaluated":
+                interpretation = "NOT EVALUATED (fixed reference policy)"
             if paired["reference_status"] == "unassessed":
                 interpretation += " (unassessed)"
             lines.append(f"| {view['view']} | {view['target_gpu_ms']:.5g} | {metric.upper()} | "
@@ -229,8 +253,12 @@ def _markdown(views):
     lines += ["", "![Measured budget points and shared interpolation ranges](frontier.png)", "",
               "Points are individual seeds; error bars are sample SD across three seeds, and labels give neighbor budgets. "
               "The CSV tables retain every measured point, each interpolation bracket/weight, and its closest achieved configuration/time. "
-              "Reference directions use matching per-seed current, half-stream and previous-checkpoint values interpolated at the same target; "
+              "Reference directions, where assessed, use matching per-seed current, half-stream and previous-checkpoint values interpolated at the same target; "
               "a direction is resolved only when the paired mean exceeds its largest reference-induced change.", ""]
+    if reference_policies:
+        lines += ["Fixed-reference policy comparisons mark sensitivity NOT EVALUATED.", ""]
+    for name, policy in (reference_policies or {}).items():
+        lines += [f"{name}: {_reference_policy_metadata(policy)['reference_caption']}", ""]
     return "\n".join(lines)
 
 
@@ -262,6 +290,11 @@ def analyze_equal_time(summary_directory, output_directory):
     conditions = {condition["id"]: condition for condition in analysis["conditions"]}
     if len(conditions) != len(analysis["conditions"]) or any(point["condition"] not in conditions for point in points.values()):
         raise ValueError("Missing or duplicate condition metadata")
+    reference_policies = {}
+    for name, condition in conditions.items():
+        metadata = _reference_policy_metadata(condition.get("reference_policy"))
+        if metadata and CONDITION.fullmatch(name):
+            reference_policies[name] = metadata["reference_policy"]
     views = [_view(view, points, conditions) for view in VIEWS]
     result = {"schema_version": 1, "estimate_kind": "piecewise-linear interpolated, within measured overlap only",
               "seeds": [1, 2, 3], "neighbors": list(BUDGETS), "difference": "PDF on minus off",
@@ -272,6 +305,11 @@ def analyze_equal_time(summary_directory, output_directory):
                          for path in (analysis_path, csv_path)},
                          "reference_assessments": {name: condition.get("reference_assessment") for name, condition in conditions.items()
                                                    if CONDITION.fullmatch(name)}}}
+    if reference_policies:
+        selected_names = {point["condition"] for point in points.values()}
+        result.update(reference_precision_verified=False if selected_names <= set(reference_policies) else None,
+                      reference_precision_scope="Per-condition policy and assessment; fixed-policy uncertainty is NOT EVALUATED")
+        result["source"]["reference_policies"] = reference_policies
     measured = [point for view in views for point in view["measured_points"]]
     estimates = [row for view in views for row in view["estimates"]]
     paired = [{"view": view["view"], "target_gpu_ms": view["target_gpu_ms"], "metric": metric,
@@ -286,7 +324,7 @@ def analyze_equal_time(summary_directory, output_directory):
         _csv(stage / "paired-differences.csv", paired, list(paired[0]) if paired else
              ["view", "target_gpu_ms", "metric", "mean", "sd", "reference_status", "direction", "reference_max_change"])
         (stage / "analysis.json").write_text(json.dumps(result, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-        (stage / "summary.md").write_text(_markdown(views), encoding="utf-8")
+        (stage / "summary.md").write_text(_markdown(views, reference_policies), encoding="utf-8")
         _plot(stage / "frontier.png", views)
         stage.rename(output)
     finally:

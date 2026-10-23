@@ -9,7 +9,9 @@ import tempfile
 
 import numpy as np
 
-from .pdf_artifacts import METHODS, METRIC_DEFINITIONS, _captures, _config_alignment, _hash, _phase, _validate_rois
+from .pdf_artifacts import (METHODS, METRIC_DEFINITIONS, _captures, _config_alignment, _hash,
+                            _phase, _reference_policy_metadata, _validate_rois)
+from experiment.controlled_evaluation import validate_selection
 from experiment.error_metrics import smape_map, trmae_map
 from experiment.images import read_pfm
 from experiment.reference import metrics as spatial_metrics
@@ -56,6 +58,7 @@ def _prepare(condition):
     scenario = condition["scenario"]
     if not isinstance(condition_id, str) or not condition_id or scenario not in ("static", "motion", "lighting"):
         raise ValueError("Each condition requires a nonempty id and static/motion/lighting scenario")
+    reference_metadata = _reference_policy_metadata(condition.get("reference_policy"))
     assessment = condition.get("reference_assessment")
     if assessment is not None and not isinstance(assessment, dict):
         raise ValueError("reference_assessment must be a JSON receipt object")
@@ -66,7 +69,14 @@ def _prepare(condition):
     refs = condition["references"]
     if any(type(frame) is not int or frame < 1 for frame in refs):
         raise ValueError("Reference frames must be positive integer keys")
-    if scenario == "static":
+    evaluation = condition.get("evaluation")
+    if evaluation is not None:
+        evaluation = validate_selection(evaluation, scenario)
+        frames = evaluation["reference_frames"]
+        count = 128 if scenario == "static" else 96
+        if sorted(refs) != frames:
+            raise ValueError("Sparse summaries require exactly the declared reference frames")
+    elif scenario == "static":
         if 128 not in refs:
             raise ValueError("Static summaries require reference frame 128")
         frames, count = [128], 128
@@ -100,7 +110,8 @@ def _prepare(condition):
         for method, key in zip(METHODS, ("off_dir", "on_dir")):
             directory = Path(run[key]).resolve()
             captures = _captures(directory)
-            if set(captures) != set(refs):
+            if ((evaluation is None and set(captures) != set(refs))
+                    or (evaluation is not None and not set(frames) <= set(captures))):
                 raise ValueError(f"Capture/reference frame alignment mismatch: {directory}")
             sources[(seed, method)] = captures
             timing[(seed, method)] = _timings(directory, count)
@@ -111,12 +122,16 @@ def _prepare(condition):
         raise ValueError("Scene/estimator controls differ between independent seeds")
     return dict(id=condition_id, scenario=scenario, frames=frames, references=reference_paths,
                 shape=shape, regions=regions, sources=sources, timing=timing,
-                provenance=provenance, alignment=alignment, rois=rois, reference_assessment=assessment)
+                provenance=provenance, alignment=alignment, rois=rois, reference_assessment=assessment,
+                evaluation=evaluation, reference_metadata=reference_metadata)
 
 
 def _measure(condition):
     """Reference is decoded once per frame; previous images are bounded to six runs."""
-    rows, previous_images, previous_ref = [], {}, None
+    rows, previous_images, previous_ref, previous_frame = [], {}, None, None
+    evaluation = condition["evaluation"]
+    spatial_frames = set(evaluation["spatial_frames"]) if evaluation is not None else set(condition["frames"])
+    temporal_pairs = {tuple(pair) for pair in evaluation["temporal_pairs"]} if evaluation is not None else None
     for frame in condition["frames"]:
         reference = read_pfm(condition["references"][frame])
         if reference.shape != condition["shape"]:
@@ -127,19 +142,23 @@ def _measure(condition):
             if image.shape != condition["shape"]:
                 raise ValueError("Method/reference dimensions differ")
             current_images[(seed, method)] = image
+            if frame not in spatial_frames:
+                continue
             for name, region in condition["regions"].items():
                 spatial = spatial_metrics(image[region], reference[region])
                 temporal = None
-                if previous_ref is not None and condition["scenario"] != "static":
+                if (previous_ref is not None and condition["scenario"] != "static"
+                        and (temporal_pairs is None or (previous_frame, frame) in temporal_pairs)):
                     temporal = float(np.mean(trmae_map(image[region], previous_images[(seed, method)][region],
                         reference[region], previous_ref[region])))
                 rows.append({"condition": condition["id"], "scenario": condition["scenario"],
                     "seed": seed, "method": method, "frame": frame,
                     "previous_frame": frame - 1 if temporal is not None else None,
-                    "phase": "static-final" if condition["scenario"] == "static" else _phase(frame),
+                    "phase": ("static-final" if condition["scenario"] == "static" else
+                              f"frame-{frame}" if evaluation is not None else _phase(frame)),
                     "region": name, "smape": float(np.mean(smape_map(image[region], reference[region]))),
                     "rmae": spatial["rmae"], "nrmse": spatial["nrmse"], "trmae": temporal})
-        previous_ref, previous_images = reference, current_images
+        previous_ref, previous_images, previous_frame = reference, current_images, frame
     return rows
 
 
@@ -157,11 +176,18 @@ def _seed_metrics(frame_rows, prepared):
         result["frame_count"] = len(rows)
         result["temporal_pair_count"] = sum(row["trmae"] is not None for row in rows)
         condition = conditions[result["condition"]]
-        timed_frames = list(range(41, 129)) if result["scenario"] == "static" else [row["frame"] for row in rows]
+        if result["scenario"] == "static":
+            timed_frames = list(range(41, 129))
+        elif condition["evaluation"] is not None:
+            first = 1 + 32 * ((rows[0]["frame"] - 1) // 32)
+            timed_frames = list(range(first, first + 32))
+        else:
+            timed_frames = [row["frame"] for row in rows]
         times = condition["timing"][(result["seed"], result["method"])]
         for metric in COSTS:
             result[metric] = float(np.mean([times[frame][metric] for frame in timed_frames]))
         result["timing_frame_count"] = len(timed_frames)
+        result["timing_first_frame"], result["timing_last_frame"] = timed_frames[0], timed_frames[-1]
         results.append(result)
     return results
 
@@ -218,9 +244,9 @@ def _assessment_pair(assessment, region, phase, metric):
     if phase == "static-final" and metric != "trmae":
         source = assessment.get("differences", assessment)
         return _nested(source, "regions", region, "static", "metrics", metric, "paired_difference")
-    if phase in REFERENCE_PHASES:
+    if phase in REFERENCE_PHASES or phase.startswith("frame-"):
         source = assessment.get("temporal", assessment)
-        phase_receipt = _nested(source, "regions", region, REFERENCE_PHASES[phase])
+        phase_receipt = _nested(source, "regions", region, REFERENCE_PHASES.get(phase, phase))
         return (_nested(phase_receipt, "paired_difference") if metric == "trmae" else
                 _nested(phase_receipt, "metrics", metric, "paired_difference"))
     return None
@@ -259,11 +285,15 @@ def _reference_direction(delta, receipt):
 
 
 def _annotate_reference_directions(differences, prepared):
-    assessments = {condition["id"]: condition["reference_assessment"] for condition in prepared}
+    conditions = {condition["id"]: condition for condition in prepared}
     for row in differences:
         for metric in ERRORS:
-            receipt = _assessment_pair(assessments[row["condition"]], row["region"], row["phase"], metric)
-            status, direction, change = _reference_direction(row[f"{metric}_mean"], receipt)
+            condition = conditions[row["condition"]]
+            if condition["reference_metadata"] and row[f"{metric}_mean"] is not None:
+                status, direction, change = "not_evaluated", "not_evaluated", None
+            else:
+                receipt = _assessment_pair(condition["reference_assessment"], row["region"], row["phase"], metric)
+                status, direction, change = _reference_direction(row[f"{metric}_mean"], receipt)
             row[f"{metric}_reference_status"] = status
             row[f"{metric}_direction"] = direction
             row[f"{metric}_reference_max_change"] = change
@@ -275,6 +305,8 @@ def _direction_label(difference, metric):
         return "improvement resolved" if difference[f"{metric}_direction"] == "improves" else "worsening resolved"
     if status == "equal":
         return "equal in assessed references"
+    if status == "not_evaluated":
+        return "NOT EVALUATED (fixed reference policy)"
     if status == "not-applicable":
         return "n/a"
     reasons = {"unassessed": " (unassessed)", "mismatch": " (receipt mismatch)",
@@ -295,14 +327,27 @@ def _number(value):
     return "n/a" if value is None else f"{value:.4g}"
 
 
-def _markdown(summaries, differences):
+def _markdown(summaries, differences, prepared):
     lookup = {tuple(row[key] for key in (*GROUP, "method")): row for row in summaries}
+    sparse = any(condition["evaluation"] is not None and condition["scenario"] != "static" for condition in prepared)
+    temporal_scope = (
+        "Dynamic errors use representative frames 32, 48 and 96 separately. TRMAE is local to pairs "
+        "31→32, 47→48 and 95→96, respectively; it is not a video-average metric. "
+        "GPU costs independently average every timing in the corresponding full phases 1–32, 33–64 and 65–96. "
+        if sparse else
+        "Temporal phases use frames 1–32, 33–64 and 65–96. TRMAE pairs belong to their later frame "
+        "(31/32/32 pairs); motion includes 32→33 and recovery includes 64→65. ")
+    fixed_policy = any(condition["reference_metadata"] for condition in prepared)
+    sensitivity_note = ("A resolved direction requires its paired difference to exceed the change measured "
+                        "with independent half-stream and previous-checkpoint references.")
+    if fixed_policy:
+        sensitivity_note = ("Where reference sensitivity is assessed, " + sensitivity_note[0].lower() + sensitivity_note[1:] +
+                            " Fixed-reference policy rows explicitly mark sensitivity NOT EVALUATED.")
     lines = ["# PDF controlled comparison", "",
         "Each value is a mean across independent seeds 1/2/3; SD is the sample standard deviation of the three seed means. "
         "Frames/pixels are averaged within each phase and seed first. Paired differences are PDF on minus PDF off. "
-        "A resolved direction requires its paired difference to exceed the change measured with independent half-stream and previous-checkpoint references.", "",
-        "Static image errors use frame 128; static GPU cost averages frames 41–128. Temporal phases use frames 1–32, 33–64 and 65–96. "
-        "TRMAE pairs belong to their later frame (31/32/32 pairs); motion includes 32→33 and recovery includes 64→65. "
+        + sensitivity_note, "",
+        "Static image errors use frame 128; static GPU cost averages frames 41–128. " + temporal_scope +
         "Total gpu_ms is the recorded total including all instrumented passes; initial/spatial costs are separate diagnostics. "
         "Logical 30 FPS is the playback interval, not a performance claim.", "",
         "| Condition | Scenario / phase | SMAPE off → on (%) | Paired Δ SMAPE (pp, mean ± SD) | SMAPE direction | TRMAE off → on | TRMAE direction | GPU off → on (ms) | Paired GPU change (%) |",
@@ -322,8 +367,11 @@ def _markdown(summaries, differences):
             f"{_number(difference['gpu_ms_relative_percent_mean'])} |")
     lines += ["", "Full-image conclusions remain separate by condition/scenario. Identical preselected ROI diagnostics, "
         "RMAE, NRMSE, per-method SDs, paired seed variability and initial/spatial cost appear in the CSV tables. "
-        "Reference half-stream/checkpoint/gradient acceptance is supplied by the caller and is recorded explicitly; "
-        "this module does not infer acceptance from an image or its filename.", ""]
+        "Reference acceptance or fixed-sample authorization is supplied by the caller and recorded per condition; "
+        "this module does not infer precision verification from acceptance, an image, or its filename.", ""]
+    for condition in prepared:
+        if condition["reference_metadata"]:
+            lines += [f"{condition['id']}: {condition['reference_metadata']['reference_caption']}", ""]
     return "\n".join(lines)
 
 
@@ -334,9 +382,13 @@ def summarize_suite(output, condition_reports, *, references_accepted):
     seed 1/2/3 with off_dir/on_dir), references (integer frame -> PFM path), and
     optional preselected rois/expected_resolution (default 1920x1080), plus an
     optional reference_assessment receipt for interpreting paired differences.
+    A canonical ``evaluation`` selects sparse representative image errors and
+    local adjacent-pair TRMAE; full phase GPU timings remain the cost source.
     Without that matching assessment, error directions remain unresolved. Root-level
     reference half-stream/checkpoint and gradient validation must precede this
-    explicit acceptance flag. A fresh output directory is required.
+    explicit acceptance flag unless a canonical user-authorized reference_policy
+    is supplied. Such policy rows mark reference uncertainty not_evaluated and
+    never infer precision verification from authorization. A fresh output directory is required.
     """
     if references_accepted is not True:
         raise ValueError("References must be explicitly accepted before summarizing")
@@ -354,19 +406,28 @@ def summarize_suite(output, condition_reports, *, references_accepted):
     _annotate_reference_directions(differences, prepared)
     result = {"schema_version": 1, "references_accepted": True, "seeds": [1, 2, 3],
         "metric_definitions": METRIC_DEFINITIONS,
-        "aggregation": "Average frames/pairs within each seed and phase, then mean/sample SD across independent seeds",
+        "aggregation": ("Sparse quality rows describe one representative frame and its local adjacent pair per seed; "
+                        "GPU costs average the full corresponding timing phase. Then mean/sample SD across independent seeds. "
+                        "Dense quality rows average their declared frames/pairs within each seed and phase."),
         "difference": "PDF on minus PDF off; relative changes computed within each seed before aggregation",
         "conditions": [{"id": condition["id"], "scenario": condition["scenario"], "rois": condition["rois"],
                         "config_alignment": condition["alignment"], "inputs": condition["provenance"],
-                        "reference_assessment": condition["reference_assessment"]} for condition in prepared],
+                        "reference_assessment": condition["reference_assessment"],
+                        "evaluation": condition["evaluation"], **condition["reference_metadata"]} for condition in prepared],
         "frame_metrics": frame_rows, "seed_metrics": seed_rows, "summaries": summaries, "paired_differences": differences}
+    policies = {condition["id"]: condition["reference_metadata"]["reference_policy"]
+                for condition in prepared if condition["reference_metadata"]}
+    if policies:
+        result.update(reference_policies=policies,
+                      reference_precision_verified=False if len(policies) == len(prepared) else None,
+                      reference_precision_scope="Per-condition policy and assessment; fixed-policy uncertainty is NOT EVALUATED")
     output.parent.mkdir(parents=True, exist_ok=True)
     stage = Path(tempfile.mkdtemp(prefix=f".{output.name}-", dir=output.parent))
     try:
         for name, rows in (("frame-metrics", frame_rows), ("seed-metrics", seed_rows), ("summary", summaries),
                            ("paired-seed-differences", paired), ("paired-differences", differences)):
             _csv(stage / f"{name}.csv", rows)
-        (stage / "summary.md").write_text(_markdown(summaries, differences), encoding="utf-8")
+        (stage / "summary.md").write_text(_markdown(summaries, differences, prepared), encoding="utf-8")
         (stage / "analysis.json").write_text(json.dumps(result, indent=2, allow_nan=False) + "\n", encoding="utf-8")
         stage.rename(output)
     finally:
