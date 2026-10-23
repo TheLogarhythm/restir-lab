@@ -2,7 +2,7 @@
 
 **Draft.** The [scope](scope.md) proposes ReSTIR DI, PDF Similarity, and CGNS on one primary backend. Weeks below are planning estimates.
 
-The [proposal](../writing/course/proposal/main.tex) and [DI baseline](../results/summaries/di-baseline/README.md) are ready. The baseline covers Cornell Box, Arcade and Bistro: four reuse modes, static/motion/reset sequences, linear HDR, GPU timings and checked conventional references. It is a single-seed, fixed-parameter evaluation. Zero-Day remains optional pending material/light validation.
+The [proposal](../writing/course/proposal/main.tex) and [three-scene DI baseline](../results/summaries/di-baseline/README.md) are complete. Baseline images, statistics and run records are archived for reporting.
 
 ## Next: PDF Similarity
 

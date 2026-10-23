@@ -6,8 +6,10 @@ presentation code: one endpoint error/cost table, consolidated error trajectorie
 a linked image comparison and explicit reference precision limits.
 
 ```powershell
-python scripts/analysis/di_reuse.py --baseline runs/di-3scenes-seed1 --references runs/di-3scenes-reference --output runs/di-3scenes-analysis
+python scripts/analysis/di_reuse.py --baseline runs/di --references runs/di-reference --output runs/di-analysis
 ```
+
+The command requires complete HDR runs and references. The [historical DI baseline](../../results/summaries/di-baseline/README.md) retains PNGs and CSVs for reporting; pixel-error recalculation requires new renders.
 
 For PDF on/off, pass both suite directories after `--baseline` and an explicit
 `--output`. Use the same PDF-enabled build for both runs. CSVs, plots and timings

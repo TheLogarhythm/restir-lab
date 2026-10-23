@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-23",
+  "status": "reporting_archive",
+  "archive": "runs/di-baseline-archive",
+  "inventory": "runs/di-baseline-archive/inventory.json",
+  "method_pngs": 216,
+  "final_reference_pngs": 12,
+  "method_runs": 36,
+  "full_image_metric_rows": 216,
+  "quadrant_metric_rows": 864,
+  "linear_hdr_retained": false,
+  "pixel_error_recalculation": "requires_new_renders",
+  "reference_records": "runs/di-baseline-archive/records/references/generation-records.zip",
+  "original_provenance_unchanged": true
+}

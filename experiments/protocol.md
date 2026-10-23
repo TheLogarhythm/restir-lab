@@ -12,7 +12,7 @@ For sequences, record trajectory, frame time, history initialization/reset polic
 
 ## Images and references
 
-Retain scene-linear floating-point radiance before denoising and tone mapping. Generate high-sample reference images or sequences for the same transport target, preferably using a checked conventional estimator. Record reference settings and convergence checks. Do not use a different renderer's image as ground truth without validating transport and material equivalence.
+Retain scene-linear floating-point radiance before denoising and tone mapping. Retired experiments may be compacted with explicit user approval: retain display images, statistics, settings and a hash inventory, and record that pixel-error recalculation requires new renders. Generate high-sample reference images or sequences for the same transport target, preferably using a checked conventional estimator. Record reference settings and convergence checks. Do not use a different renderer's image as ground truth without validating transport and material equivalence.
 
 ## Performance and quality
 

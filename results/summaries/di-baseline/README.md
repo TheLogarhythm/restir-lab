@@ -51,7 +51,7 @@ The motion test uses constant-velocity camera translation with fixed orientation
 - bistro: 4 reference view(s), 262144 samples/light class/stream; acceptance ratio 0.3.
 - cornell-box: 4 reference view(s), 2048 samples/light class/stream; acceptance ratio 0.1.
 
-References average two independent conventional sampling streams. Half-stream disagreement and checkpoint change must both remain below the recorded fraction of the best baseline RMAE for two successive checkpoints. All selected references pass the current recheck. This empirical criterion does not detect shared bias; larger acceptance ratios permit more reference uncertainty.
+References average two independent conventional sampling streams. Half-stream disagreement and checkpoint change must both remain below the recorded fraction of the best baseline RMAE for two successive checkpoints. All selected references passed the recorded recheck. This empirical criterion does not detect shared bias; larger acceptance ratios permit more reference uncertainty.
 
 Single baseline seed: these are observed outcomes, without repeat-to-repeat uncertainty estimates. The reference shares RTXDI materials and approximate glass composition. This evaluation establishes neither physical ground truth nor reproduction of the original paper's performance.
 
@@ -59,12 +59,13 @@ Single baseline seed: these are observed outcomes, without repeat-to-repeat unce
 
 ## Reproducibility and sources
 
-Snapshot of 216 captures from `runs/di-3scenes-seed1`, evaluated against
-`runs/di-3scenes-reference`. Raw HDR and logs remain local. The provenance records
-original run IDs, dirty build state, settings, reference checks and content hashes;
-the recorded project commit alone does not identify the rendered build.
-See the [analysis command](../../../scripts/analysis/README.md) to regenerate locally.
-Only full-image metrics are retained here; single-seed aggregates are redundant.
+Local archive `runs/di-baseline-archive/`: 216 experiment PNGs,
+12 final reference PNGs, original settings, logs and per-frame timings.
+[Quadrant metrics](metrics-quadrants.csv) supplement the full-image table.
+HDR and intermediate reference previews were removed on 2026-10-23; recalculating
+pixel errors requires new renders. [Availability](artifact-availability.json) maps
+the archive; original provenance and run IDs are preserved.
+These historical quality scores predate the reference geometric-normal correction.
 
 Rendered views use Cornell Box and Arcade from RTXDI Assets (MIT), and Amazon
 Lumberyard Bistro from NVIDIA ORCA (CC BY 4.0). Images were rendered and adjusted
