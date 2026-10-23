@@ -9,8 +9,8 @@ import unittest
 from unittest.mock import Mock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/run"))
-from test_controlled_sparse_selection import captures_for
-from test_pdf_sparse_resume import worker_module
+from fixtures.controlled import captures_for
+from fixtures.modules import worker_module
 from experiment.controlled_suite import conditions
 from experiment import controlled_evaluation as evaluation
 
@@ -48,7 +48,7 @@ class ReferencePriorityTests(unittest.TestCase):
                 self.order([], priority)
 
     def test_cli_passes_valid_priority_to_worker_before_claim(self):
-        worker = worker_module()
+        worker = worker_module("rtxdi_pdf_controlled.py")
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             instance = Mock()
@@ -63,7 +63,7 @@ class ReferencePriorityTests(unittest.TestCase):
             self.assertEqual(seen, [("arcade",)])
 
     def test_invalid_launch_priority_rejected_before_worker_or_claim(self):
-        worker = worker_module()
+        worker = worker_module("rtxdi_pdf_controlled.py")
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             with patch.object(sys, "argv", ["worker", "--references-only", "--reference-window", "window.json", "--launch-plan", str(root / "plan.json")]), patch.object(worker, "suite_path", return_value=root), patch.object(worker, "exclusive_worker", return_value=nullcontext()), patch.object(worker, "validate_launch_plan", return_value={"reference_priority_scenes": ["arcade", "arcade"], "not_before_utc": "start", "deadline_utc": "end"}), patch.object(worker, "ControlledExperiment", side_effect=AssertionError("Invalid priority reached worker construction")) as constructor, patch.object(worker, "claim_launch") as claim, self.assertRaises(ValueError):

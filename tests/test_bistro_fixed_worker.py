@@ -1,7 +1,6 @@
 """Fixed Bistro routing preserves legacy references and completed reports."""
 import copy
 from contextlib import nullcontext
-import importlib.util
 import json
 from pathlib import Path
 import sys
@@ -19,11 +18,7 @@ from experiment.controlled_outputs import generate_versioned
 BUILD = {"renderer_commit": "renderer", "executable_sha256": "exe", "shader_sha256": {}, "integration_sha256": {}}
 
 
-def worker_module():
-    spec = importlib.util.spec_from_file_location("bistro_worker", ROOT / "scripts/run/rtxdi_pdf_controlled.py")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+from fixtures.modules import worker_module
 
 
 def fixed_record():
@@ -303,7 +298,7 @@ class BistroFixedWorkerTests(unittest.TestCase):
                 self.assertEqual(path.read_bytes(), before)
 
     def test_explicit_policy_execution_requires_validation_or_pinned_launch(self):
-        worker = worker_module()
+        worker = worker_module("rtxdi_pdf_controlled.py")
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             instance = Mock()
@@ -318,7 +313,7 @@ class BistroFixedWorkerTests(unittest.TestCase):
             constructor.assert_not_called()
 
     def test_main_loads_policy_before_constructor_and_consumed_claim_skips_loader(self):
-        worker = worker_module()
+        worker = worker_module("rtxdi_pdf_controlled.py")
         self.assertTrue(hasattr(worker, "load_scene_reference_policies"), "main must validate the policy before state writes")
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

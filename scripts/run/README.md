@@ -55,7 +55,20 @@ For Emerald Square, Sun Temple and Veach Ajar, see the concise
 `rtxdi_pdf_viewer.py --denoise` enables the existing NRD/TAA display;
 `--indirect RESTIRPT` is useful for Veach Ajar's indirect lighting.
 
-## Script maintenance
+## Controlled campaign maintenance
+
+[rtxdi_pdf_controlled.py](rtxdi_pdf_controlled.py) parses arguments, owns the process lock,
+and checks launch authorization. Execution lives in
+[controlled_runner.py](experiment/controlled_runner.py); pilot gates and retained evidence
+validation live in `controlled_validation.py` and `controlled_reports.py`.
+Reference-free images/videos are exported by [pdf_visuals.py](../analysis/pdf_visuals.py).
+
+The camera overrides, scenario schedules, ROIs and method execution order are declared in
+[pdf-controlled.json](../../experiments/configs/pdf-controlled.json). The current campaign
+still resolves eight main conditions and 78 method runs. Each suite freezes both its resolved
+`conditions.json` and `execution.json`; mismatches reject a resume. Editing this configuration
+does not authorize a new experiment budget or change the reference acceptance policy.
+Historical reports and archived evidence retain their original hashes and paths.
 
 All variant builders use `rtxdi_build.prepare_variant` and `build_variant`. They check inputs,
 back up official files, compile temporary integrations, restore and verify the official files,

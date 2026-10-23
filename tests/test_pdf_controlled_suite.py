@@ -20,6 +20,25 @@ class ControlledSuiteTests(unittest.TestCase):
         from experiment import controlled_suite
         return controlled_suite
 
+    def test_campaign_rejects_ambiguous_condition_ids_and_execution_order(self):
+        suite = self.suite()
+        campaign = suite.load_campaign()
+        for fault in ("duplicate-id", "missing-execution", "duplicate-execution", "unknown-view"):
+            with self.subTest(fault=fault), tempfile.TemporaryDirectory() as folder:
+                changed = copy.deepcopy(campaign)
+                if fault == "duplicate-id":
+                    changed["conditions"][1]["id"] = changed["conditions"][0]["id"]
+                elif fault == "missing-execution":
+                    changed["execution"]["order"].pop()
+                elif fault == "duplicate-execution":
+                    changed["execution"]["order"][1] = changed["execution"]["order"][0]
+                else:
+                    changed["conditions"][0]["view"] = "missing-view"
+                path = Path(folder) / "campaign.json"
+                path.write_text(json.dumps(changed), encoding="utf-8")
+                with self.assertRaises(ValueError):
+                    suite.load_campaign(path)
+
     def test_matrix_resolves_eight_conditions_with_matched_off_on_controls(self):
         suite = self.suite()
         conditions = suite.conditions()

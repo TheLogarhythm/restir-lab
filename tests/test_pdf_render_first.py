@@ -1,5 +1,4 @@
 """Keep method captures available when deferred references exhaust their budget."""
-import importlib.util
 import json
 from pathlib import Path
 import sys
@@ -16,11 +15,7 @@ from experiment.images import preview_rgb, write_pfm
 from experiment.controlled_budget import BudgetExceeded, ExperimentBudget
 
 
-def load_worker():
-    spec = importlib.util.spec_from_file_location("render_first_worker", ROOT / "scripts/run/rtxdi_pdf_controlled.py")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+from fixtures.modules import worker_module as load_worker
 
 
 class RenderFirstTests(unittest.TestCase):

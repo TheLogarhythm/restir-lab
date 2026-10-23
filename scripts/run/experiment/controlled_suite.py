@@ -4,69 +4,93 @@ import json
 import math
 from pathlib import Path
 
-from rtxdi_common import sha
+from rtxdi_common import ROOT, sha
 from .config import load_definition, make_config
 from .scenes import load_scene
 
 
-PINK_MATERIAL = "LMBR_000019a_Paris_StringLights_01_Pink_Color"
+CAMPAIGN_PATH = ROOT / "experiments/configs/pdf-controlled.json"
 
 
-def conditions():
-    """Return independent, editable pilot conditions before the suite is frozen."""
-    scenes = {name: load_scene(name) for name in ("cornell-box", "arcade", "bistro")}
-    interior = copy.deepcopy(scenes["bistro"])
-    exterior = copy.deepcopy(interior)
-    exterior["camera"].update(position=[-20., 1.8, 12.], direction=[1., 0., 0.],
-                              up=[0., 1., 0.], vertical_fov=60.)
-    exterior["motion"]["end_position"] = [-19., 1.8, 12.5]
-    for scene in (interior, exterior):
-        x, y, z = scene["camera"]["direction"]
-        angle = math.radians(10)
-        scene["motion"].update(end_direction=[math.cos(angle)*x + math.sin(angle)*z,
-                                               y, -math.sin(angle)*x + math.cos(angle)*z],
-                                end_up=copy.deepcopy(scene["camera"]["up"]))
+def load_campaign(path=CAMPAIGN_PATH):
+    """Read the declared campaign; reject ambiguous scheduling before any writes."""
+    try:
+        campaign = json.loads(Path(path).read_text(encoding="utf-8"))
+        if type(campaign["schema_version"]) is not int or campaign["schema_version"] != 1:
+            raise ValueError("Unsupported campaign schema")
+        ids = [row["id"] for row in campaign["conditions"]]
+        execution = campaign["execution"]
+        if (not ids or len(set(ids)) != len(ids)
+                or len(execution["order"]) != len(ids) or set(execution["order"]) != set(ids)):
+            raise ValueError("Campaign condition IDs and execution order must match exactly once")
+        for row in campaign["conditions"]:
+            if row["view"] not in campaign["views"] or row["scenario"] not in campaign["scenarios"]:
+                raise ValueError("Campaign condition refers to an unknown view or scenario")
+        if execution["seeds"] != [1, 2, 3] or any(type(seed) is not int for seed in execution["seeds"]):
+            raise ValueError("Controlled comparisons require method seeds 1, 2, 3")
+        budgets = execution["equal_time_neighbors"]
+        primary = execution["primary_neighbors"]
+        if (not budgets or any(type(n) is not int or not 1 <= n <= 32 for n in budgets)
+                or len(set(budgets)) != len(budgets) or type(primary) is not int or primary not in budgets
+                or primary != campaign["definition_overrides"]["spatial_neighbors"]):
+            raise ValueError("Invalid primary or equal-time sampling budgets")
+        equal = execution["equal_time_conditions"]
+        if (execution["spatial_ablation"] not in ids or len(set(equal)) != len(equal)
+                or not set(equal) <= set(ids)):
+            raise ValueError("Unknown or repeated ablation/equal-time conditions")
+        return campaign
+    except (KeyError, TypeError) as error:
+        raise ValueError(f"Invalid controlled campaign: {path}") from error
+
+
+def method_run_count(execution):
+    groups = (len(execution["order"]) + 1
+              + len(execution["equal_time_conditions"]) * (len(execution["equal_time_neighbors"]) - 1))
+    return groups * len(execution["seeds"]) * 2
+
+
+def conditions(campaign=None):
+    """Resolve independent conditions from the declared camera and sampling matrix."""
+    campaign = load_campaign() if campaign is None else campaign
+    scenes = {}
+    for name, view in campaign["views"].items():
+        scene = load_scene(view["scene"])
+        scene["camera"].update(copy.deepcopy(view.get("camera", {})))
+        scene["motion"].update(copy.deepcopy(view.get("motion", {})))
+        if "motion_yaw_degrees" in view:
+            x, y, z = scene["camera"]["direction"]
+            angle = math.radians(view["motion_yaw_degrees"])
+            scene["motion"].update(end_direction=[math.cos(angle)*x + math.sin(angle)*z,
+                                                  y, -math.sin(angle)*x + math.cos(angle)*z],
+                                   end_up=copy.deepcopy(scene["camera"]["up"]))
+        scenes[name] = scene
     base = load_definition()
-    base.update(resolution=[1920, 1080], pdf_similarity=False, pdf_history_mode=0,
-                initial_local_sampling_mode="POWER_RIS", initial_local_candidates=24,
-                initial_environment_candidates=8, initial_infinite_candidates=1,
-                initial_brdf_candidates=0, max_history_length=20, spatial_neighbors=4,
-                spatial_radius=32, reset_frame=65, motion={"start_frame": 32, "end_frame": 64})
-    matrix = [
-        ("cornell-static", scenes["cornell-box"], "static"),
-        ("arcade-static", scenes["arcade"], "static"),
-        ("bistro-interior-static", interior, "static"),
-        ("bistro-exterior-static", exterior, "static"),
-        ("arcade-motion", scenes["arcade"], "motion"),
-        ("bistro-interior-motion", interior, "motion"),
-        ("bistro-exterior-motion", exterior, "motion"),
-        ("bistro-lighting", exterior, "lighting"),
-    ]
+    base.update(copy.deepcopy(campaign["definition_overrides"]))
     result = []
-    for name, scene, scenario in matrix:
+    for row in campaign["conditions"]:
+        scenario = row["scenario"]
+        settings = campaign["scenarios"][scenario]
         definition = copy.deepcopy(base)
-        definition["frames"] = 128 if scenario == "static" else 96
-        captures = [1, 20, 40, 128] if scenario == "static" else list(range(1, 97))
+        definition["frames"] = settings["frames"]
+        captures = list(range(1, settings["frames"] + 1)) if settings["captures"] == "all" else settings["captures"]
         definition["captures"] = {key: list(captures) for key in ("static", "motion", "reset")}
-        if scenario != "static":
-            definition["logical_fps"] = 30
-        if scenario == "lighting":
-            definition["lighting"] = {"material": PINK_MATERIAL, "start_frame": 32,
-                                      "end_frame": 64, "peak_multiplier": 2.}
+        if "logical_fps" in settings:
+            definition["logical_fps"] = settings["logical_fps"]
+        if "lighting" in settings:
+            definition["lighting"] = copy.deepcopy(settings["lighting"])
             definition["captures"]["lighting"] = list(captures)
-        result.append({"id": name, "scene": copy.deepcopy(scene), "definition": definition,
-                       "scenario": scenario,
-                       "rois": [{"name": "region-1", "x": 700, "y": 450, "width": 256, "height": 256},
-                                {"name": "region-2", "x": 1100, "y": 500, "width": 256, "height": 256}]})
+        result.append({"id": row["id"], "scene": copy.deepcopy(scenes[row["view"]]),
+                       "definition": definition, "scenario": scenario, "rois": copy.deepcopy(campaign["rois"])})
     return result
 
 
-def build_config(condition, seed, pdf_enabled, mode="combined", neighbors=4):
+def build_config(condition, seed, pdf_enabled, mode="combined", neighbors=None):
     """Resolve one method/seed without changing its frozen condition."""
     definition = copy.deepcopy(condition["definition"])
+    neighbors = definition["spatial_neighbors"] if neighbors is None else neighbors
     definition.update(pdf_similarity=pdf_enabled, pdf_history_mode=0, spatial_neighbors=neighbors)
     config = make_config(condition["scene"], definition, mode, condition["scenario"], seed,
-                         resolution=(1920, 1080))
+                         resolution=tuple(definition["resolution"]))
     if config["scenario"] == "motion":
         for frame in config["frames"]:
             if frame["frame"] <= definition["motion"]["start_frame"]:

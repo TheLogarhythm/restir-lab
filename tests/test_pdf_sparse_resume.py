@@ -1,5 +1,4 @@
 """Sparse restarts must consume existing captures and fail closed."""
-import importlib.util
 import json
 from pathlib import Path
 import sys
@@ -11,11 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts/run"))
 
 
-def worker_module():
-    spec = importlib.util.spec_from_file_location("sparse_worker", ROOT / "scripts/run/rtxdi_pdf_controlled.py")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+from fixtures.modules import worker_module
 
 
 class SparseResumeTests(unittest.TestCase):
@@ -86,7 +81,7 @@ class SparseResumeTests(unittest.TestCase):
 
     def test_duplicate_one_shot_returns_before_worker_mutates_state(self):
         from contextlib import nullcontext
-        worker = worker_module()
+        worker = worker_module("rtxdi_pdf_controlled.py")
         with tempfile.TemporaryDirectory() as folder:
             directory = Path(folder)
             plan = directory / "launch.json"
@@ -99,7 +94,7 @@ class SparseResumeTests(unittest.TestCase):
             constructor.assert_not_called()
 
     def test_raw_product_reuse_matches_current_runs_and_original_timings(self):
-        worker = worker_module()
+        worker = worker_module("experiment/controlled_reports.py")
         with tempfile.TemporaryDirectory() as folder:
             output = Path(folder)
             timing = output / "timings.csv"

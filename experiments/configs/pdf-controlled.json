@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "definition_overrides": {
+    "resolution": [
+      1920,
+      1080
+    ],
+    "pdf_similarity": false,
+    "pdf_history_mode": 0,
+    "initial_local_sampling_mode": "POWER_RIS",
+    "initial_local_candidates": 24,
+    "initial_environment_candidates": 8,
+    "initial_infinite_candidates": 1,
+    "initial_brdf_candidates": 0,
+    "max_history_length": 20,
+    "spatial_neighbors": 4,
+    "spatial_radius": 32,
+    "reset_frame": 65,
+    "motion": {
+      "start_frame": 32,
+      "end_frame": 64
+    }
+  },
+  "views": {
+    "cornell": {
+      "scene": "cornell-box"
+    },
+    "arcade": {
+      "scene": "arcade"
+    },
+    "bistro-interior": {
+      "scene": "bistro",
+      "motion_yaw_degrees": 10
+    },
+    "bistro-exterior": {
+      "scene": "bistro",
+      "camera": {
+        "position": [
+          -20.0,
+          1.8,
+          12.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "vertical_fov": 60.0
+      },
+      "motion": {
+        "end_position": [
+          -19.0,
+          1.8,
+          12.5
+        ]
+      },
+      "motion_yaw_degrees": 10
+    }
+  },
+  "scenarios": {
+    "static": {
+      "frames": 128,
+      "captures": [
+        1,
+        20,
+        40,
+        128
+      ]
+    },
+    "motion": {
+      "frames": 96,
+      "captures": "all",
+      "logical_fps": 30
+    },
+    "lighting": {
+      "frames": 96,
+      "captures": "all",
+      "logical_fps": 30,
+      "lighting": {
+        "material": "LMBR_000019a_Paris_StringLights_01_Pink_Color",
+        "start_frame": 32,
+        "end_frame": 64,
+        "peak_multiplier": 2.0
+      }
+    }
+  },
+  "conditions": [
+    {
+      "id": "cornell-static",
+      "view": "cornell",
+      "scenario": "static"
+    },
+    {
+      "id": "arcade-static",
+      "view": "arcade",
+      "scenario": "static"
+    },
+    {
+      "id": "bistro-interior-static",
+      "view": "bistro-interior",
+      "scenario": "static"
+    },
+    {
+      "id": "bistro-exterior-static",
+      "view": "bistro-exterior",
+      "scenario": "static"
+    },
+    {
+      "id": "arcade-motion",
+      "view": "arcade",
+      "scenario": "motion"
+    },
+    {
+      "id": "bistro-interior-motion",
+      "view": "bistro-interior",
+      "scenario": "motion"
+    },
+    {
+      "id": "bistro-exterior-motion",
+      "view": "bistro-exterior",
+      "scenario": "motion"
+    },
+    {
+      "id": "bistro-lighting",
+      "view": "bistro-exterior",
+      "scenario": "lighting"
+    }
+  ],
+  "rois": [
+    {
+      "name": "region-1",
+      "x": 700,
+      "y": 450,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "region-2",
+      "x": 1100,
+      "y": 500,
+      "width": 256,
+      "height": 256
+    }
+  ],
+  "execution": {
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "order": [
+      "cornell-static",
+      "arcade-static",
+      "bistro-interior-static",
+      "bistro-exterior-static",
+      "bistro-interior-motion",
+      "bistro-exterior-motion",
+      "arcade-motion",
+      "bistro-lighting"
+    ],
+    "spatial_ablation": "bistro-interior-static",
+    "equal_time_conditions": [
+      "bistro-interior-static",
+      "bistro-exterior-static"
+    ],
+    "equal_time_neighbors": [
+      2,
+      4,
+      8
+    ],
+    "primary_neighbors": 4
+  }
+}

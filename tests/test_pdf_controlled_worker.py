@@ -1,22 +1,41 @@
 """Protect the pilot gate and the five retained experiment directories."""
-import importlib.util
+from fixtures.modules import worker_module
 import json
 from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts/run"))
 
 
 class ControlledWorkerTests(unittest.TestCase):
-    def worker(self):
-        spec = importlib.util.spec_from_file_location("pdf_worker", ROOT / "scripts/run/rtxdi_pdf_controlled.py")
-        self.assertTrue(spec.origin and Path(spec.origin).is_file(), "Controlled worker is missing")
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        return module
+    worker = staticmethod(worker_module)
+
+    def test_resume_rejects_changed_execution_order_before_build_or_state_update(self):
+        worker = self.worker()
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            original_state = b'{"note":"existing state"}'
+            (root / "state.json").write_bytes(original_state)
+            with patch.object(worker, "ExperimentBudget", return_value=Mock(record={})), \
+                 patch.object(worker, "preflight", return_value={}) as preflight, \
+                 patch.object(worker, "ReferenceManager"), \
+                 patch.object(worker.ControlledExperiment, "notify"):
+                first = worker.ControlledExperiment(root)
+                saved = json.loads((root / "execution.json").read_text())
+                self.assertEqual(saved, first.execution_settings())
+                changed = worker.load_campaign()
+                changed["execution"]["order"].reverse()
+                preflight.reset_mock()
+                with patch.object(worker, "load_campaign", return_value=changed), \
+                     self.assertRaisesRegex(ValueError, "execution schedule changed"):
+                    worker.ControlledExperiment(root)
+                preflight.assert_not_called()
+            self.assertEqual((root / "state.json").read_bytes(), original_state)
+            self.assertEqual(json.loads((root / "execution.json").read_text()), saved)
 
     def test_formal_gate_rejects_missing_failed_or_different_build_pilot(self):
         worker = self.worker()
@@ -59,7 +78,7 @@ class ControlledWorkerTests(unittest.TestCase):
         worker.validate_pilot_gate(receipt, build, "matrix", current)
 
     def test_output_cannot_target_retained_runs_or_escape_runs(self):
-        worker = self.worker()
+        worker = worker_module("rtxdi_pdf_controlled.py")
         for name in ("di-3scenes-reference", "zero-day-di-seed1", "../outside"):
             with self.subTest(name=name), self.assertRaises(ValueError):
                 worker.suite_path(name)
