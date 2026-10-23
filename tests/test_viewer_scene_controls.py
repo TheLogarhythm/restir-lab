@@ -18,3 +18,13 @@ class ViewerSceneControlTests(unittest.TestCase):
         config = viewer_config(load_scene("cornell-box"), "combined", [640, 360])
         self.assertEqual(config["arguments"]["lighting.indirectMode"], "NONE")
         self.assertEqual(config["arguments"]["denoiser.mode"], "OFF")
+
+    def test_viewer_is_windowed_and_does_not_capture_experiment_frames(self):
+        for enabled in (True, False):
+            config = viewer_config(load_scene("cornell-box"), "combined", [640, 360], enabled)
+            self.assertTrue(config["interactive"])
+            self.assertEqual(config["viewer_frames"], 0)
+            self.assertEqual(config["arguments"]["device.headless"], 0)
+            self.assertEqual(config["definition"]["pdf_similarity"], enabled)
+            self.assertEqual(len(config["frames"]), 1)
+            self.assertFalse(config["frames"][0]["capture"])

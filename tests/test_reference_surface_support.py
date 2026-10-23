@@ -1,42 +1,22 @@
 """Execute the production reference sample integrand on CPU surface fixtures."""
 from pathlib import Path
-import os
-import re
-import shutil
 import subprocess
 import tempfile
 import unittest
+from fixtures.cpp import compiler_environment, compile_cpp, shader_function as extract_shader_function
 
 ROOT = Path(__file__).resolve().parents[1]
 SHADERS = ROOT / "renderers/rtxdi/Samples/FullSample/Shaders"
 
 
 def shader_function(path, return_type, name):
-    source = path.read_text(encoding="utf-8")
-    matches = list(re.finditer(r"\b" + return_type + r"\s+" + name + r"\s*\(", source))
-    if len(matches) != 1:
-        raise AssertionError(f"Expected one production {name} function in {path}")
-    start = matches[0].start()
-    opening = source.index("{", matches[0].end())
-    depth, end = 1, opening + 1
-    while depth:
-        depth += (source[end] == "{") - (source[end] == "}")
-        end += 1
-    return re.sub(r"\binout\s+(\w+)\s+(\w+)", r"\1& \2", source[start:end])
+    return extract_shader_function(path.read_text(encoding="utf-8"), name, return_type)
 
 
 class ReferenceSurfaceSupportTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        compiler = shutil.which("cl")
-        if compiler is None:
-            raise unittest.SkipTest("MSVC is required for the production shader integrand check")
-        environment = os.environ.copy()
-        if not environment.get("INCLUDE"):
-            vcvars = Path(compiler).parents[6] / "Auxiliary/Build/vcvars64.bat"
-            settings = subprocess.check_output(f'cmd /d /s /c ""{vcvars}" >nul && set"', text=True)
-            environment.update(line.split("=", 1) for line in settings.splitlines()
-                               if "=" in line and not line.startswith("="))
+        toolchain = compiler_environment()
         cls.folder = tempfile.TemporaryDirectory()
         cls.addClassCleanup(cls.folder.cleanup)
         directory = Path(cls.folder.name)
@@ -49,13 +29,9 @@ class ReferenceSurfaceSupportTests(unittest.TestCase):
         functions.append(shader_function(ROOT / "scripts/run/rtxdi_experiments/ReferenceSamples.hlsl",
                                          "void", "AddSample"))
         (directory / "reference_under_test.h").write_text("\n\n".join(functions), encoding="utf-8")
-        cls.executable = directory / "reference_math.exe"
-        result = subprocess.run([compiler, "/nologo", "/EHsc", "/std:c++17",
-            str(ROOT / "tests/reference_surface_support.cpp"), "/I" + str(directory),
-            "/Fe:" + str(cls.executable), "/Fo:" + str(directory / "reference_math.obj")],
-            cwd=directory, capture_output=True, text=True, env=environment)
-        if result.returncode:
-            raise AssertionError(result.stdout + result.stderr)
+        cls.executable = compile_cpp(ROOT / "tests/reference_surface_support.cpp", directory,
+                                     includes=(directory,), toolchain=toolchain)
+
 
     def check_fixture(self, fixture):
         result = subprocess.run([str(self.executable), fixture], capture_output=True, text=True)

@@ -178,13 +178,12 @@ class BistroFixedAnalysisTests(unittest.TestCase):
                 self.assertFalse((root / "summary").exists())
 
     def test_equal_time_rejects_mixed_reference_policies_and_changed_fixed_reference_hashes(self):
-        from test_pdf_equal_time import EqualTimeTests
+        from fixtures.equal_time import equal_time_fixture, write_equal_time_fixture
         for fault in ("mixed-policy", "changed-reference", "missing-reference-hash"):
             with self.subTest(fault=fault), tempfile.TemporaryDirectory() as folder:
                 root = Path(folder)
                 source = root / "source"
-                fixture = EqualTimeTests()
-                analysis = fixture.fixture(source)
+                analysis = equal_time_fixture(source)
                 for condition in analysis["conditions"]:
                     if fault != "mixed-policy" or condition["id"].endswith("-2"):
                         condition["reference_policy"] = copy.deepcopy(POLICY)
@@ -196,7 +195,7 @@ class BistroFixedAnalysisTests(unittest.TestCase):
                         condition["inputs"] = {"references": refs}
                         if fault == "missing-reference-hash" and condition["id"] == "bistro-interior-static-neighbors-8":
                             refs["128"].pop("sha256")
-                fixture.write(source, analysis)
+                write_equal_time_fixture(source, analysis)
                 with self.assertRaisesRegex(ValueError, "policy|policies|reference|Reference"):
                     analyze_equal_time(source, root / "equal-time")
                 self.assertFalse((root / "equal-time").exists())

@@ -9,3 +9,33 @@ For camera sensor-fit and pixel-aspect checks, use the same command with `tests/
 
 Use ignored `tmp/` for disposable fixtures and logs; it can be removed at any time.
 Set `TEMP` and `TMP` to its absolute path when running these checks to keep temporary files there.
+
+## Test groups
+
+The ordinary `python -B -m unittest discover -s tests -v` command still discovers every unittest.
+For a dependency-specific run, use:
+
+```powershell
+python -B scripts/check_tests.py --suite cpu
+python -B scripts/check_tests.py --suite native
+python -B scripts/check_tests.py --suite media
+python -B scripts/check_tests.py --suite windows
+```
+
+The CPU group runs on every push and pull request; it needs the Python packages in
+[scripts/run/requirements.txt](../scripts/run/requirements.txt), without downloaded scenes,
+Blender, MSVC, FFmpeg or a GPU. Native checks compile production shader functions with MSVC
+and need the pinned RTXDI/Donut sources. Media checks encode, probe and decode an actual
+video with FFmpeg/ffprobe. Windows checks run the PowerShell supervisor with CPU stand-ins
+and need an idle renderer/worker. An explicitly selected integration group fails when its
+required checks are skipped. Discovery/import errors fail every group before filtering,
+including `--list`. `--list` prints its test IDs; `--suite all` runs all groups.
+
+The manually dispatched [integration workflow](../.github/workflows/integration.yml) keeps
+native, Windows, media and Blender dependencies separate from the portable job.
+The two Blender commands above remain the local integration entry points.
+
+Shared fixtures live in `tests/fixtures/`: isolated worker imports, controlled capture records,
+equal-time data and the MSVC/shader extraction harness. Assertions stay in their respective
+test modules. Gallery tests are now part of normal discovery in `test_gallery_catalog.py`.
+The six C++ fixture sources are retained; each checks a different mathematical or runtime contract.

@@ -4,12 +4,10 @@ import sys
 import unittest
 import subprocess
 import tempfile
-import shutil
-import os
 import json
-import re
 import ast
 from unittest import mock
+from fixtures.cpp import compiler_environment, compile_cpp, shader_function
 
 ROOT = Path(__file__).resolve().parents[1]
 PAYLOAD = ROOT / "scripts/run/rtxdi_experiments"
@@ -19,16 +17,6 @@ from experiment.scenes import load_scene
 
 
 class PdfSimilarityConfigTests(unittest.TestCase):
-    def test_viewer_is_windowed_and_does_not_capture_experiment_frames(self):
-        from rtxdi_pdf_viewer import viewer_config
-        for enabled in (True, False):
-            config = viewer_config(load_scene("cornell-box"), "combined", [640, 360], enabled)
-            self.assertTrue(config["interactive"])
-            self.assertEqual(config["viewer_frames"], 0)
-            self.assertEqual(config["arguments"]["device.headless"], 0)
-            self.assertEqual(config["definition"]["pdf_similarity"], enabled)
-            self.assertEqual(len(config["frames"]), 1)
-            self.assertFalse(config["frames"][0]["capture"])
 
     def test_invalid_switch_rejected_before_rendering(self):
         scene = load_scene("cornell-box")
@@ -157,20 +145,11 @@ class PdfSimilarityMathTests(unittest.TestCase):
     def test_spatial_resampling_uses_fractional_m_in_both_loops(self):
         import rtxdi_pdf
         source = ROOT / "renderers/rtxdi/Libraries/Rtxdi/Include/Rtxdi/DI"
-        def function(text, name):
-            match = re.search(r"(?:bool|void|RTXDI_DIReservoir) " + name + r"\(", text)
-            self.assertIsNotNone(match, name)
-            start = text.index("{", match.start())
-            depth, end = 1, start + 1
-            while depth:
-                depth += (text[end] == "{") - (text[end] == "}")
-                end += 1
-            return re.sub(r"inout (\w+) (\w+)", r"\1& \2", text[match.start():end])
         reservoir = (source / "Reservoir.hlsli").read_text()
         spatial = rtxdi_pdf.adapt_spatial((source / "SpatialResampling.hlsli").read_text())
-        extracted = "\n".join(function(reservoir, name) for name in (
+        extracted = "\n".join(shader_function(reservoir, name) for name in (
             "RTXDI_InternalSimpleResample", "RTXDI_CombineDIReservoirs", "RTXDI_FinalizeResampling"))
-        extracted += "\n" + function(spatial, "RTXDI_DISpatialResampling")
+        extracted += "\n" + shader_function(spatial, "RTXDI_DISpatialResampling")
         self.compile_and_run("pdf_spatial_resampling.cpp", extracted)
 
     def test_generated_renderer_history_config_uses_strict_json_modes(self):
@@ -191,25 +170,15 @@ class PdfSimilarityMathTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.compiler = shutil.which("cl")
-        if cls.compiler is None:
-            raise unittest.SkipTest("MSVC is required for the shared shader-math check")
-        cls.environment = os.environ.copy()
-        if not cls.environment.get("INCLUDE"):
-            vcvars = Path(cls.compiler).parents[6] / "Auxiliary/Build/vcvars64.bat"
-            settings = subprocess.check_output(f'cmd /d /s /c ""{vcvars}" >nul && set"', text=True)
-            cls.environment.update(line.split("=", 1) for line in settings.splitlines() if "=" in line and not line.startswith("="))
+        cls.toolchain = compiler_environment()
 
     def compile_and_run(self, source, generated_header=None, header_name="spatial_under_test.h", extra_include=PAYLOAD):
         with tempfile.TemporaryDirectory() as directory:
             if generated_header is not None:
                 (Path(directory) / header_name).write_text(generated_header)
-            result = subprocess.run([self.compiler, "/nologo", "/EHsc", "/std:c++17",
-                str(ROOT / "tests" / source), "/I" + str(PAYLOAD), "/I" + directory, "/I" + str(extra_include),
-                "/Fe:" + str(Path(directory) / "math.exe"),
-                "/Fo:" + str(Path(directory) / "math.obj")], cwd=directory, capture_output=True, text=True, env=self.environment)
-            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-            result = subprocess.run([str(Path(directory) / "math.exe")], capture_output=True, text=True)
+            executable = compile_cpp(ROOT / "tests" / source, directory,
+                includes=(PAYLOAD, directory, extra_include), toolchain=self.toolchain)
+            result = subprocess.run([str(executable)], capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
 

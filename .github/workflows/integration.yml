@@ -1,0 +1,53 @@
+name: Optional integration checks
+on:
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: Integration dependency to exercise
+        required: true
+        type: choice
+        default: native
+        options: [native, windows, media, blender]
+permissions:
+  contents: read
+jobs:
+  integration:
+    runs-on: ${{ (inputs.suite == 'native' || inputs.suite == 'windows') && 'windows-latest' || 'ubuntu-latest' }}
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      MPLBACKEND: Agg
+      GIT_LFS_SKIP_SMUDGE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install analysis dependencies
+        run: python -m pip install -r scripts/run/requirements.txt
+      - name: Fetch pinned shader sources without scene assets
+        if: inputs.suite == 'native'
+        run: |
+          git submodule update --init renderers/rtxdi
+          git -C renderers/rtxdi submodule update --init External/donut Libraries/Rtxdi
+      - name: Locate the installed MSVC compiler
+        if: inputs.suite == 'native'
+        shell: pwsh
+        run: |
+          $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio/Installer/vswhere.exe'
+          $compiler = & $vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -find 'VC/Tools/MSVC/*/bin/Hostx64/x64/cl.exe' | Select-Object -First 1
+          if (-not $compiler) { throw 'MSVC compiler not found' }
+          Split-Path $compiler | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      - name: Install FFmpeg
+        if: inputs.suite == 'media'
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Run selected integration group
+        if: inputs.suite != 'blender'
+        run: python -B scripts/check_tests.py --suite ${{ inputs.suite }}
+      - name: Install Blender
+        if: inputs.suite == 'blender'
+        run: sudo apt-get update && sudo apt-get install -y blender
+      - name: Run Blender conversion fixtures
+        if: inputs.suite == 'blender'
+        run: |
+          blender --background --factory-startup --disable-autoexec --python-exit-code 1 --python tests/blender_classroom.py
+          blender --background --factory-startup --disable-autoexec --python-exit-code 1 --python tests/blender_camera.py
