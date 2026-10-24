@@ -47,7 +47,7 @@ Acceptance (2026-10-21): all three ran in interactive mode at 1280x720 and exite
 normally after renderer-owned framebuffer captures. NRD/TAA previews were inspected;
 Veach Ajar passed ReSTIR PT, Sun Temple retained its source directional light and
 rendered with transparent geometry disabled, and Cornell Box passed a regression check.
-Local images/logs: `build/scene-viewer-acceptance/review-20261021/`.
+Local validation configs/logs: `build/scene-viewer-acceptance/review-20261021/`. Regenerable framebuffer images were removed during build cleanup on 2026-10-23; resolved settings and logs remain.
 Keyboard/mouse interaction was not automatically verified.
 
 ## Free source; RTXDI conversion/import needed

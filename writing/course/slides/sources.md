@@ -14,7 +14,7 @@ The Cornell Box and Arcade previews use unmodified RTXDI `v3.1.0` (`a6efab966b7c
 
 The two previews retain the [RTXDI Assets MIT notice](assets/RTXDI-ASSETS-LICENSE.txt).
 
-External-figure license: [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/). Attribution does not imply endorsement. The CGNS paper identifies this license on its first page; the Bistro source page lists the same license. Retrieved 2026-09-19. Full downloaded papers and intermediate renders remain in ignored `build/pitch-sources/`.
+External-figure license: [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/). Attribution does not imply endorsement. The CGNS paper identifies this license on its first page; the Bistro source page lists the same license. Retrieved 2026-09-19. The local ReSTIR DI, PDF Similarity and CGNS papers are retained in the local paper library at `assets/papers/`. Duplicate source images and regenerable page-render caches under `build/pitch-sources/` were removed during cleanup on 2026-10-23; final slide assets remain under `writing/course/slides/assets/`.
 
 ## Research and project content
 
