@@ -1,0 +1,220 @@
+{
+  "files": {
+    "analysis.json": {
+      "bytes": 95852,
+      "sha256": "b3bf30d3086d4f5f8b8f1d2a506731fa95f301c60d29a3946d2c0a0e31e666d1"
+    },
+    "frame-metrics.csv": {
+      "bytes": 7369,
+      "sha256": "38fdc4c9745f499f4ed6dc4237a50a7b3a6297c5d252497e67741f4c14baec29"
+    },
+    "paired-differences.csv": {
+      "bytes": 6007,
+      "sha256": "86cf57093fedff5efd95168aa7e97bbcb023abcb9a1a12ad80f595679ac3fe15"
+    },
+    "paired-seed-differences.csv": {
+      "bytes": 7169,
+      "sha256": "3084c77ba06bdf932bec61915bd18fafbfdcdc53eda68e607cedaae237af283c"
+    },
+    "seed-metrics.csv": {
+      "bytes": 10417,
+      "sha256": "d645e2e5e0c6d67775de2ed152a9cfc49440e8fcba1f269599852c3bde7a99a8"
+    },
+    "summary.csv": {
+      "bytes": 5980,
+      "sha256": "ca3958274f824161813c553467b160642e292e08e98c1bee603901ac2d442d1e"
+    },
+    "summary.md": {
+      "bytes": 2564,
+      "sha256": "aa2cba1e3660a4388899e0fd56e456c9e95631509dfd288766011fb7ede7c9fc"
+    }
+  },
+  "identity": {
+    "inputs": {
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\captures.json": "bf1c02de3dc9d58f6329786a6b1450f5e4f0a4e772521b2c1d33e5ba4a76c54e",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\config.json": "2f8c24fe5754a659a9e0a926d911f44ce1e951b79c96a70a865332adb6d3dc8f",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\manifest.json": "b54d2661406c49e49ac3dba6c08a2136385667aa4838c932ed18bcb60087be3c",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\timings.csv": "8c5afc3ef63e86e89138cdc9c5756c83ceccb11272228c8067e81c62b29c2079",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\captures.json": "08387646c11c7e4b32caea2b26551c7a04427f87c2a6a0579691d79b64147a2a",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\config.json": "ba8bc22657e420dc4b28e42d622f509ca0ba4515ca1b4a4f00093a7528bf96d4",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\manifest.json": "6eefd20f3c2ec92222216f59c098dfa25b9871983609610c4f8e691c27ae42d0",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\timings.csv": "08ae665949812b66d1a8d067da54a3d542e348a03bbbbebc014ce59c74fbb2e6",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\captures.json": "4d060e00c05a6438ded6c05b926bada3d8add942a70aa003decbb3253508807a",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\config.json": "c6464ef4fa996f68f316d1600601f33f49a63b9a976d7ba8ad52b362f52d37c7",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\manifest.json": "e6508566f9e4512dfabd3d8b62852aabaf5e7c5d8003823cb8a38aaf43a6c685",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\timings.csv": "cc14c05aec48c895f867f7681b968858b740cc81cb651f5483171f18af874473",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\captures.json": "d7ed7c44251e5a3e94d9e368ab00f00976e1ffa8ddefe3f77426cbb7078c9bcb",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\config.json": "e15fe607b9aca4facc037bec3ee2b8fc96dd6e03d5724e9afaadd2656a125c0d",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\manifest.json": "0dfa798ff308cb33789c365131bfea93a2b535660b12f1b0ee0eb96b754e343a",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\timings.csv": "673bd3db2d575e848a11f4362665a662f9672bb703f1f0561f6109e22bdf1247",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\captures.json": "196ba37370f1d0868825ffb9c2b100365a168a2bd3f29343ba9cc391419ace3a",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\config.json": "18cebddd7a07b5ba8df0140329be4d69fcb83b8c0ee3f2bd250d5667a7e57f27",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\manifest.json": "64d265ab6a070bbef419ab04565934cfe89a22d07337d52cae8edb9a66b53403",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\timings.csv": "8ad7afb25892933beba7c6072f02a9850b0225072f787192bbf8852c526754a6",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\captures.json": "82c681c37436e131418e1b0f83aa73c265dfdd0367c2a218d9077814eafa024e",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\config.json": "7dd29b1bff13ba4b6a8b52755117fb77508e5810a5f2feceb9ed16fdac1c266d",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\manifest.json": "d59bb2daab9f8336ffa19447178f9a6d45fbdb49b0bdc6e7f2ad6ed13f2331c5",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\timings.csv": "fe9e411df91bda85802598249cf45ec5190bb1762c3bdf1422c6a18f58aa1b87",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\0f97cfbccd0c3a3599db38a2\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz": "aa8be8c52b8f7d64e8a72cdb89cdddb3037ffafd5e8471f3819ce0f8888493c5",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\5337d630a750977f8c98d56d\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz": "aa9226686f78bf9577fdf8fb58a7a992c9a4066aec7b8dab29d652a69b5e6bc5",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\80f1b0ac449f0519e9a20db4\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz": "15df95ad06d23766bb308524c9cee6790b693f9c38acddd4b8ce6fea03d18a7f"
+    },
+    "reports": [
+      {
+        "evaluation": {
+          "reference_frames": [
+            31,
+            32,
+            47,
+            48,
+            95,
+            96
+          ],
+          "schema_version": 1,
+          "spatial_frames": [
+            32,
+            48,
+            96
+          ],
+          "support_frames": [
+            31,
+            47,
+            95
+          ],
+          "temporal_pairs": [
+            [
+              31,
+              32
+            ],
+            [
+              47,
+              48
+            ],
+            [
+              95,
+              96
+            ]
+          ]
+        },
+        "id": "bistro-lighting",
+        "reference_assessment": {
+          "differences": {
+            "passed": null,
+            "policy_id": "user_fixed_single_stream_262144_v1",
+            "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+            "status": "not_evaluated"
+          },
+          "lighting_influence": {
+            "passed": null,
+            "policy_id": "user_fixed_single_stream_262144_v1",
+            "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+            "reference_inputs": {
+              "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\0f97cfbccd0c3a3599db38a2\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz": "aa8be8c52b8f7d64e8a72cdb89cdddb3037ffafd5e8471f3819ce0f8888493c5",
+              "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\5337d630a750977f8c98d56d\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz": "aa9226686f78bf9577fdf8fb58a7a992c9a4066aec7b8dab29d652a69b5e6bc5"
+            },
+            "status": "not_evaluated"
+          },
+          "temporal": {
+            "passed": null,
+            "policy_id": "user_fixed_single_stream_262144_v1",
+            "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+            "status": "not_evaluated"
+          }
+        },
+        "reference_policy": {
+          "batch_counts": {
+            "environment": 8,
+            "infinite": 4,
+            "local": 64
+          },
+          "label": "User-specified fixed-sample single-stream reference",
+          "local_samples_per_stream": 262144,
+          "policy_id": "user_fixed_single_stream_262144_v1",
+          "precision_checks": "not_evaluated",
+          "resolution": [
+            1920,
+            1080
+          ],
+          "scene_id": "bistro",
+          "seeds": [
+            1001
+          ]
+        },
+        "references": {
+          "31": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\0f97cfbccd0c3a3599db38a2\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz",
+          "32": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\0f97cfbccd0c3a3599db38a2\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz",
+          "47": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\80f1b0ac449f0519e9a20db4\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz",
+          "48": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\5337d630a750977f8c98d56d\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz",
+          "95": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\0f97cfbccd0c3a3599db38a2\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz",
+          "96": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\0f97cfbccd0c3a3599db38a2\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz"
+        },
+        "rois": [
+          {
+            "height": 256,
+            "name": "region-1",
+            "width": 256,
+            "x": 700,
+            "y": 450
+          },
+          {
+            "height": 256,
+            "name": "region-2",
+            "width": 256,
+            "x": 1100,
+            "y": 500
+          }
+        ],
+        "runs": [
+          {
+            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-1\\off\\attempt-0",
+            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-1\\on\\attempt-0",
+            "seed": 1
+          },
+          {
+            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-2\\off\\attempt-0",
+            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-2\\on\\attempt-0",
+            "seed": 2
+          },
+          {
+            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-3\\off\\attempt-0",
+            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-3\\on\\attempt-0",
+            "seed": 3
+          }
+        ],
+        "scenario": "lighting"
+      }
+    ],
+    "settings": null,
+    "sources": {
+      "scripts/analysis/pdf_artifacts.py": "18edc59de2c42f3bff6c6c33d0b0eff24d8254ed6c4dd6d6f37a003f4b26d47e",
+      "scripts/analysis/pdf_equal_time.py": "35ecb11c1e5f0196873d0479b311dcd694be2545829b17b425d5e3bb59d956b7",
+      "scripts/analysis/pdf_summary.py": "1028c85c3794432161f8dac884b4803af7f3c939589f405e4ad077e707d56713",
+      "scripts/run/experiment/__init__.py": "8aea3cceef32a2481e8acecbd57eecf71a736fd418662233e05127ecf74b3144",
+      "scripts/run/experiment/artifacts.py": "9407fbd9a8ec9a6940aa4d75f85eb93f119b689b614a5882999c9cc86242c034",
+      "scripts/run/experiment/bistro_fixed_reference.py": "bad33904836d4eaca46b4911ea3bacc3caf5c7095dceada63a0c176f440312a8",
+      "scripts/run/experiment/bistro_reference_cleanup.py": "4cccd3b19ab53d1770a6eecd74fecd382794dcb1ecdbd1c6b8bb409f7b0eb841",
+      "scripts/run/experiment/config.py": "2a04f934bd30a9d098290dd434d3f138076ee76645e7065df9871624b546fe27",
+      "scripts/run/experiment/controlled_budget.py": "d0212c6137c53d444f5937609b5c45c85cddfcd55412e18bdb1a35d4c4336577",
+      "scripts/run/experiment/controlled_cleanup.py": "b429bff73a531c4bca4392990db921cd42532f1a7dbd536a86f58f84ab23b72d",
+      "scripts/run/experiment/controlled_evaluation.py": "3ba129e56494df20373257c1ce97e6823473fa63f0c49087041b1cefe12121bf",
+      "scripts/run/experiment/controlled_launch.py": "310b6712b3cfd0bb09c805e06fcebcad70ae0bd11cb513a5de9ac34e1319a5ef",
+      "scripts/run/experiment/controlled_outputs.py": "afa6a4f4bb577706c7573985e81d60bb1f72438d18ab43144b5d808e83ac3267",
+      "scripts/run/experiment/controlled_reference.py": "232e1ba974c5acf962d883ca51b48b7fe24f594562e3011619227ce5c9f0a7a1",
+      "scripts/run/experiment/controlled_reference_run.py": "c633f551fc5ed2a9915218412e0d8cd078d51b262f4d6ea2a3d3b9d958132acc",
+      "scripts/run/experiment/controlled_suite.py": "1287cf6983a14438c1d66ce4ced04e11639a183159a5b83e51fbf37288920c17",
+      "scripts/run/experiment/controlled_temporal.py": "1d122ec80e34f031b1a968cedc44b561b21cd7129bafa797e9acab2a484e041b",
+      "scripts/run/experiment/error_metrics.py": "73f960a32b1feec62401c1064d9ee41e0f3bc8d6dca3cafc8f3154113722f36f",
+      "scripts/run/experiment/images.py": "a1546a3c655a12966d768cd5d16ea11f417dbd76dcb0c0b789b448b24927ddb3",
+      "scripts/run/experiment/reference.py": "25db4defb1bd67fa79f90f6b942a527e0ad878fda4b9e8c69a9cb0e90330a698",
+      "scripts/run/experiment/reference_allocation.py": "b3cc22f2a88584eb26945f1e666de8cf5115aba060dafae17d529847b124d0ec",
+      "scripts/run/experiment/reference_diagnostics.py": "aaa65a4350b8d7d8b672f3a9e511fc473c8368a2207dbc9e1f790188cf2a10e2",
+      "scripts/run/experiment/reference_runner.py": "807566cf5e92704e883ad8c1e1cac1025c5567ee999e7c30a2010fb27e44a31d",
+      "scripts/run/experiment/runner.py": "cc6bb362e2e842cdf0a0c322043a9c014d7b136afb638122052eb00b06f7c15c",
+      "scripts/run/experiment/scenes.py": "6e7057c86b0884030d1043dee6f675547c964ffa4cad1bdf78cb1f5100f4d850",
+      "scripts/run/rtxdi_pdf_controlled.py": "8e36a041b8ae4864ce8b5e1024a768c93d2d0a6fc93b2e224ba2d0d32e6a4ca3"
+    }
+  },
+  "identity_sha256": "5f12e4797e7b9cea13881edd43148573fd85dbf9b09d62b729cf31951a6082d9",
+  "schema_version": 2,
+  "status": "completed"
+}

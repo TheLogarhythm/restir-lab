@@ -1,20 +1,18 @@
 # Roadmap
 
+**Archive update — 2026-10-23:** PDF results remain complete within the approved sparse scope. Current data live in `runs/pdf-similarity-archive/`: complete seed-1 PNG sequences, all three-seed CSV/timings and selected HDR. Old MP4, full temporal HDR and reference-generation media are retired. The archive inventory controls current availability; no continuation of the original campaign is planned.
+
 **Draft.** The [scope](scope.md) proposes ReSTIR DI, PDF Similarity, and CGNS on one primary backend. Weeks below are planning estimates.
 
 The [proposal](../writing/course/proposal/main.tex) and [three-scene DI baseline](../results/summaries/di-baseline/README.md) are complete. Baseline images, statistics and run records are archived for reporting.
 
-## Next: PDF Similarity
+## PDF Similarity — sparse evaluation complete
 
-The [PDF Similarity DI extension](reproductions/pdf-similarity.md) is implemented; [runtime checks and remaining validation](reproductions/pdf-similarity.md#validation) are recorded.
+The [DI extension](reproductions/pdf-similarity.md) and sparse evaluation are complete: 78 runs across three seeds, covering PDF on/off, ablations and bounded equal-time analysis. All 15 reference states are ready; five passed precision checks, while ten Bistro states use fixed-budget references with unassessed uncertainty.
 
-Direction MIS and fractional-M spatial tests are in place; analysis distinguishes PDF on/off.
+Results show selective quality improvements in static views and Bistro exterior/changing-light conditions, with added GPU cost. Interior and moving-region regressions prevent a general advantage.
 
-Follow the [controlled comparison plan](../experiments/suites/pdf-similarity.md):
-
-1. SMAPE/TRMAE, error-map/video export, deterministic camera/light controls and frozen-state reference generation are implemented. The approved order is technical pilot checks, all 78 method runs (main, ablation and equal-time) and reference-free comparison products, then matched references.
-2. Run the 1080p comparison, emphasizing Bistro interior/exterior, 30 FPS motion clips (32 static / 32 moving / 32 stopped frames) and one isolated lighting change; retain original PDF/history defaults (`pdf_history_mode=0`).
-3. Use the remainder of the fixed 30-hour total budget, including elapsed work, for references; acceptance gates quantitative error analysis and reference-based products. Keep the 1,048,576-local-sample per-stream cap and precision gates unless explicitly approved in advance. Prioritize static pairs and one referenced Bistro motion clip for Oct 25, then complete evaluation alongside CGNS.
+Use the [results summary](../results/summaries/pdf-similarity/README.md) for the progress report, then proceed to CGNS. Detailed settings remain in the [experiment plan](../experiments/suites/pdf-similarity.md).
 
 Follow the [experiment protocol](../experiments/protocol.md).
 

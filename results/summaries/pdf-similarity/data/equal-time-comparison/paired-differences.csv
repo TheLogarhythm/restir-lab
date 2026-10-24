@@ -1,0 +1,7 @@
+view,target_gpu_ms,metric,mean,sd,reference_status,direction,reference_max_change
+bistro-interior,33.488180288636364,smape,-0.9203710713844705,0.04726024097250883,not_evaluated,not_evaluated,
+bistro-interior,33.488180288636364,rmae,-0.0013438212539243304,0.004493763944986851,not_evaluated,not_evaluated,
+bistro-interior,33.488180288636364,nrmse,-0.05928581035960264,0.5100519410437635,not_evaluated,not_evaluated,
+bistro-exterior,31.062312697727272,smape,-8.812520536535914,0.02447902968432368,not_evaluated,not_evaluated,
+bistro-exterior,31.062312697727272,rmae,-0.047108977241249156,0.001623876768436279,not_evaluated,not_evaluated,
+bistro-exterior,31.062312697727272,nrmse,-0.026891071971861493,0.0018735151822187551,not_evaluated,not_evaluated,

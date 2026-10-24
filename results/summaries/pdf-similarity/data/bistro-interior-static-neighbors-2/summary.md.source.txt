@@ -1,0 +1,13 @@
+# PDF controlled comparison
+
+Each value is a mean across independent seeds 1/2/3; SD is the sample standard deviation of the three seed means. Frames/pixels are averaged within each phase and seed first. Paired differences are PDF on minus PDF off. Where reference sensitivity is assessed, a resolved direction requires its paired difference to exceed the change measured with independent half-stream and previous-checkpoint references. Fixed-reference policy rows explicitly mark sensitivity NOT EVALUATED.
+
+Static image errors use frame 128; static GPU cost averages frames 41–128. Temporal phases use frames 1–32, 33–64 and 65–96. TRMAE pairs belong to their later frame (31/32/32 pairs); motion includes 32→33 and recovery includes 64→65. Total gpu_ms is the recorded total including all instrumented passes; initial/spatial costs are separate diagnostics. Logical 30 FPS is the playback interval, not a performance claim.
+
+| Condition | Scenario / phase | SMAPE off → on (%) | Paired Δ SMAPE (pp, mean ± SD) | SMAPE direction | TRMAE off → on | TRMAE direction | GPU off → on (ms) | Paired GPU change (%) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| bistro-interior-static-neighbors-2 | static / static-final | 27.89 → 28.6 | 0.706 ± 0.01696 | NOT EVALUATED (fixed reference policy) | n/a → n/a | n/a | 26.24 → 28.48 | 8.556 |
+
+Full-image conclusions remain separate by condition/scenario. Identical preselected ROI diagnostics, RMAE, NRMSE, per-method SDs, paired seed variability and initial/spatial cost appear in the CSV tables. Reference acceptance or fixed-sample authorization is supplied by the caller and recorded per condition; this module does not infer precision verification from acceptance, an image, or its filename.
+
+bistro-interior-static-neighbors-2: User-specified fixed-sample single-stream reference; seed 1001; 262144 local samples; local/environment/infinite batches 64/8/4. Reference uncertainty: NOT EVALUATED under the original dual-stream standard.

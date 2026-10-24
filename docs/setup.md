@@ -24,7 +24,18 @@ The run saves a 1280 × 720 Cornell Box BMP and its command, configuration, and 
 
 ## Controlled PDF comparison
 
-Build both variants with `python scripts/run/build_rtxdi_pdf.py` and `python scripts/run/build_rtxdi_experiments.py --reference`. Run `python scripts/run/rtxdi_pdf_controlled.py --pilot-only` for technical checks only, or omit `--pilot-only` to resume the approved [experiment](../experiments/suites/pdf-similarity.md): all method captures and direct comparison products precede references. Quantitative error products require accepted references. Status, immutable checkpoints, figures and videos are saved under `runs/pdf-controlled-20261018/`; restarting reuses verified work and preserves the total 30-hour deadline in `execution-budget.json`. The 1M reference maximum, budget and precision may change only with prior explicit user approval.
+The completed 78-run campaign is now the local archive at `runs/pdf-similarity-archive/`. It contains all three-seed CSV/timings, full seed-1 PNG sequences, and selected HDR for static frame 128 and temporal frames 31/32/47/48/95/96. Cornell/Arcade retain five original precision acceptances; Bistro uses ten seed-1001 / 262,144-local-sample fixed references whose precision is not evaluated.
+
+Verify the archive without GPU work:
+
+```powershell
+python -B scripts/analysis/pdf_archive.py verify --decode
+python -B scripts/analysis/pdf_archive.py numerical
+```
+
+The second command recomputes sparse spatial/local-temporal metrics and checks numeric maps against the saved pre-deletion array hashes. Original metadata paths are historical; archive-inputs.json supplies current paths. The old MP4s and full reference-generation chain have been removed. Use the generated viewer at `writing/progress/comparison.html#sequences` (build instructions are in the [progress README](../writing/progress/README.md)) to play synchronized video previews and inspect the complete archived PNG sequences.
+
+The original reference window and scheduled launch are finished. The renderer runner rejects the retired output name; a new experiment needs a new campaign name and its own approved budget. Original supervision, source/configuration snapshots and audit records survive under runs/pdf-similarity-archive/audits/.
 
 ## Course documents
 

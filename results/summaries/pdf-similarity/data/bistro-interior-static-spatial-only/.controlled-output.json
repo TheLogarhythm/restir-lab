@@ -1,0 +1,179 @@
+{
+  "files": {
+    "analysis.json": {
+      "bytes": 36048,
+      "sha256": "d74a4539eb1f40248d044c16a65f8dadf40e4d47382c3244ecd31c0166581efc"
+    },
+    "frame-metrics.csv": {
+      "bytes": 2553,
+      "sha256": "f049e0327be1cb4b7889f61801932de7ae0c8f7ea29fc7f6ab34619ae072ffcc"
+    },
+    "paired-differences.csv": {
+      "bytes": 2305,
+      "sha256": "4dc3829371b1eb32be3838a8b9e65b76b92ec8056b8477b702f15ed5483f0522"
+    },
+    "paired-seed-differences.csv": {
+      "bytes": 2342,
+      "sha256": "88a09c68694fcb9f5b626fd8e9f2c46b9d24e728c2753d4098c877703db39100"
+    },
+    "seed-metrics.csv": {
+      "bytes": 3786,
+      "sha256": "fa49b8d919e78ad1f7bb8733dced70e71904c856e9d91603948d090c48aefa4f"
+    },
+    "summary.csv": {
+      "bytes": 2066,
+      "sha256": "6fbaf20164a3e604e9b811a4410a57755528acb0365b4855fda5b5ca679279e3"
+    },
+    "summary.md": {
+      "bytes": 2039,
+      "sha256": "4f00bcea1adb3ddd1582b46cf06ef686c926946c0c088289054c244a6ab15afb"
+    }
+  },
+  "identity": {
+    "inputs": {
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\off\\attempt-0\\captures.json": "03ba3cf03157333617e2fe53f77c52a5b56b404c05d2ca0d9dd10505780f029b",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\off\\attempt-0\\config.json": "08d253849f855034dbb1cca184b63a517e3ceaceda6ecea4d631caf18d5d786c",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\off\\attempt-0\\manifest.json": "d903a9bedf7a9abce11119b5c0f6ab8daa0a082ec5aad8c10870734df1f25236",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\off\\attempt-0\\timings.csv": "1b83b7b9cadb439fb4d154ec6d94617aac95d4aa1d9ed2627048ed8749127af9",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\on\\attempt-0\\captures.json": "e2947e1bc5f7112bffda9e5a1997cf4ff445255d3bbf459a64daedc174793acb",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\on\\attempt-0\\config.json": "c771af7e10d7848a6b957e72b595f6979681fc3b4f1798c21aa75bf8a016a153",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\on\\attempt-0\\manifest.json": "2d8f3eacd66120c33392bcc9a5072968cd8534beb03f7238215400ef49914d2e",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\on\\attempt-0\\timings.csv": "91e15c327df6d69d31cb8fbba743720ddb86d91b296b788fe8ae4a42cf94dd57",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\off\\attempt-0\\captures.json": "d84df5c4e22786aac131cbd439903ffebb655e0b3832d0bbdb5f769304c4fc9a",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\off\\attempt-0\\config.json": "a7c93421963a2da3a52ce9de557a3caa7d0c5ea281ff543e4ff8baec0d9a9629",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\off\\attempt-0\\manifest.json": "b1573711cd16b1b7366ba2db0e8a71aa261f94cbdf02acbf23d226b45cdc8c0c",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\off\\attempt-0\\timings.csv": "9e41e77b29a3ac3956ef42758232de55583d9d7ee2c49702e8889ca7b2d76be4",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\on\\attempt-0\\captures.json": "37df7b4386fb243a8a5d16a0b99a5435dd53c6fa4f1fa77db8aacdd0f7dab4ac",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\on\\attempt-0\\config.json": "0b0fc788fba25a2f7453e1787b8c92cb8d99f8bf0147a5efe2509ebe9cc99844",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\on\\attempt-0\\manifest.json": "e4dfae58185f134fc12f855ac726dfcfc7149386d483baea2f8e65e247d7cbc3",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\on\\attempt-0\\timings.csv": "3cf76d6ed0bb79f48cec9ea18c5df591cac121c126120d674517d2369d4b117a",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\off\\attempt-0\\captures.json": "e6fb94a1c12177e4e46a90cbd87f878aede21e491dd02da53d5abbf755dc580a",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\off\\attempt-0\\config.json": "be21f6695b00a804a800d3908fda4ca7ee0149830452de243abe21fe872a6b69",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\off\\attempt-0\\manifest.json": "f48d0f55c36dca359989c7cae1b5c18cb18158eee2ddab968d3ea879b0299ec6",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\off\\attempt-0\\timings.csv": "96ed98a9ee54b326bc54ad5b894f5369c9e753285b4229e6da85108cc387e42c",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\on\\attempt-0\\captures.json": "643337bb7d4c1fd65438beaa4058d539609586a0d134c012e7c970e7fe59064a",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\on\\attempt-0\\config.json": "299a00a1c92a5ee82f158d59bef546607ef16b9543044ca4b3989d24f2353161",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\on\\attempt-0\\manifest.json": "92c507772a4217d7131d10dd03c414774d2caf8b1b7d6a303e531b641b26c76d",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\on\\attempt-0\\timings.csv": "d5e213b342a9d48bd96fba624c10d662946c07e6add5b7e9df8e0bfb265c0f40",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\3cea35b572d61b17fceacc87\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz": "7edc10e5d19f08f6dfb5e9afd5d17da80c9ce0021b0870a9483419c6b9e5f5a0"
+    },
+    "reports": [
+      {
+        "evaluation": {
+          "reference_frames": [
+            128
+          ],
+          "schema_version": 1,
+          "spatial_frames": [
+            128
+          ],
+          "support_frames": [],
+          "temporal_pairs": []
+        },
+        "id": "bistro-interior-static-spatial-only",
+        "reference_assessment": {
+          "differences": {
+            "passed": null,
+            "policy_id": "user_fixed_single_stream_262144_v1",
+            "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+            "status": "not_evaluated"
+          },
+          "temporal": {
+            "passed": null,
+            "policy_id": "user_fixed_single_stream_262144_v1",
+            "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+            "status": "not_evaluated"
+          }
+        },
+        "reference_policy": {
+          "batch_counts": {
+            "environment": 8,
+            "infinite": 4,
+            "local": 64
+          },
+          "label": "User-specified fixed-sample single-stream reference",
+          "local_samples_per_stream": 262144,
+          "policy_id": "user_fixed_single_stream_262144_v1",
+          "precision_checks": "not_evaluated",
+          "resolution": [
+            1920,
+            1080
+          ],
+          "scene_id": "bistro",
+          "seeds": [
+            1001
+          ]
+        },
+        "references": {
+          "128": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\3cea35b572d61b17fceacc87\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz"
+        },
+        "rois": [
+          {
+            "height": 256,
+            "name": "region-1",
+            "width": 256,
+            "x": 700,
+            "y": 450
+          },
+          {
+            "height": 256,
+            "name": "region-2",
+            "width": 256,
+            "x": 1100,
+            "y": 500
+          }
+        ],
+        "runs": [
+          {
+            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\off\\attempt-0",
+            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\on\\attempt-0",
+            "seed": 1
+          },
+          {
+            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\off\\attempt-0",
+            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\on\\attempt-0",
+            "seed": 2
+          },
+          {
+            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\off\\attempt-0",
+            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\on\\attempt-0",
+            "seed": 3
+          }
+        ],
+        "scenario": "static"
+      }
+    ],
+    "settings": null,
+    "sources": {
+      "scripts/analysis/pdf_artifacts.py": "18edc59de2c42f3bff6c6c33d0b0eff24d8254ed6c4dd6d6f37a003f4b26d47e",
+      "scripts/analysis/pdf_equal_time.py": "35ecb11c1e5f0196873d0479b311dcd694be2545829b17b425d5e3bb59d956b7",
+      "scripts/analysis/pdf_summary.py": "1028c85c3794432161f8dac884b4803af7f3c939589f405e4ad077e707d56713",
+      "scripts/run/experiment/__init__.py": "8aea3cceef32a2481e8acecbd57eecf71a736fd418662233e05127ecf74b3144",
+      "scripts/run/experiment/artifacts.py": "9407fbd9a8ec9a6940aa4d75f85eb93f119b689b614a5882999c9cc86242c034",
+      "scripts/run/experiment/bistro_fixed_reference.py": "bad33904836d4eaca46b4911ea3bacc3caf5c7095dceada63a0c176f440312a8",
+      "scripts/run/experiment/bistro_reference_cleanup.py": "4cccd3b19ab53d1770a6eecd74fecd382794dcb1ecdbd1c6b8bb409f7b0eb841",
+      "scripts/run/experiment/config.py": "2a04f934bd30a9d098290dd434d3f138076ee76645e7065df9871624b546fe27",
+      "scripts/run/experiment/controlled_budget.py": "d0212c6137c53d444f5937609b5c45c85cddfcd55412e18bdb1a35d4c4336577",
+      "scripts/run/experiment/controlled_cleanup.py": "b429bff73a531c4bca4392990db921cd42532f1a7dbd536a86f58f84ab23b72d",
+      "scripts/run/experiment/controlled_evaluation.py": "3ba129e56494df20373257c1ce97e6823473fa63f0c49087041b1cefe12121bf",
+      "scripts/run/experiment/controlled_launch.py": "310b6712b3cfd0bb09c805e06fcebcad70ae0bd11cb513a5de9ac34e1319a5ef",
+      "scripts/run/experiment/controlled_outputs.py": "afa6a4f4bb577706c7573985e81d60bb1f72438d18ab43144b5d808e83ac3267",
+      "scripts/run/experiment/controlled_reference.py": "232e1ba974c5acf962d883ca51b48b7fe24f594562e3011619227ce5c9f0a7a1",
+      "scripts/run/experiment/controlled_reference_run.py": "c633f551fc5ed2a9915218412e0d8cd078d51b262f4d6ea2a3d3b9d958132acc",
+      "scripts/run/experiment/controlled_suite.py": "1287cf6983a14438c1d66ce4ced04e11639a183159a5b83e51fbf37288920c17",
+      "scripts/run/experiment/controlled_temporal.py": "1d122ec80e34f031b1a968cedc44b561b21cd7129bafa797e9acab2a484e041b",
+      "scripts/run/experiment/error_metrics.py": "73f960a32b1feec62401c1064d9ee41e0f3bc8d6dca3cafc8f3154113722f36f",
+      "scripts/run/experiment/images.py": "a1546a3c655a12966d768cd5d16ea11f417dbd76dcb0c0b789b448b24927ddb3",
+      "scripts/run/experiment/reference.py": "25db4defb1bd67fa79f90f6b942a527e0ad878fda4b9e8c69a9cb0e90330a698",
+      "scripts/run/experiment/reference_allocation.py": "b3cc22f2a88584eb26945f1e666de8cf5115aba060dafae17d529847b124d0ec",
+      "scripts/run/experiment/reference_diagnostics.py": "aaa65a4350b8d7d8b672f3a9e511fc473c8368a2207dbc9e1f790188cf2a10e2",
+      "scripts/run/experiment/reference_runner.py": "807566cf5e92704e883ad8c1e1cac1025c5567ee999e7c30a2010fb27e44a31d",
+      "scripts/run/experiment/runner.py": "cc6bb362e2e842cdf0a0c322043a9c014d7b136afb638122052eb00b06f7c15c",
+      "scripts/run/experiment/scenes.py": "6e7057c86b0884030d1043dee6f675547c964ffa4cad1bdf78cb1f5100f4d850",
+      "scripts/run/rtxdi_pdf_controlled.py": "8e36a041b8ae4864ce8b5e1024a768c93d2d0a6fc93b2e224ba2d0d32e6a4ca3"
+    }
+  },
+  "identity_sha256": "1864b16377191229f7af7f1c6bb7b8cf3fe76d2f124f0ece9a596a273d4d1bf7",
+  "schema_version": 2,
+  "status": "completed"
+}

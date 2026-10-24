@@ -1,0 +1,30 @@
+# Bounded equal-time comparison
+
+Targets are midpoints of the measured GPU-time range shared by all six seed/method curves in each view. Values at each target are piecewise-linear interpolated estimates, rather than measured exact-time configurations. GPU time averages frames 41–128; errors use frame 128. Each paired difference is PDF on minus off; mean and sample SD use independent seeds 1/2/3. SMAPE is percent and its paired difference is percentage points.
+
+| View | Target (ms) | Metric | Off mean ± SD | On mean ± SD | Paired Δ mean ± SD | Reference interpretation |
+| --- | ---: | --- | ---: | ---: | ---: | --- |
+| bistro-interior | 33.488 | SMAPE | 28.86 ± 0.0922 | 27.939 ± 0.0783 | -0.92037 ± 0.0473 | NOT EVALUATED (fixed reference policy) |
+| bistro-interior | 33.488 | RMAE | 0.1626 ± 0.00991 | 0.16126 ± 0.00602 | -0.0013438 ± 0.00449 | NOT EVALUATED (fixed reference policy) |
+| bistro-interior | 33.488 | NRMSE | 0.86283 ± 0.523 | 0.80355 ± 0.179 | -0.059286 ± 0.51 | NOT EVALUATED (fixed reference policy) |
+| bistro-exterior | 31.062 | SMAPE | 42.892 ± 0.0146 | 34.079 ± 0.0307 | -8.8125 ± 0.0245 | NOT EVALUATED (fixed reference policy) |
+| bistro-exterior | 31.062 | RMAE | 0.23139 ± 0.0014 | 0.18428 ± 0.000343 | -0.047109 ± 0.00162 | NOT EVALUATED (fixed reference policy) |
+| bistro-exterior | 31.062 | NRMSE | 0.080681 ± 0.0124 | 0.05379 ± 0.0138 | -0.026891 ± 0.00187 | NOT EVALUATED (fixed reference policy) |
+
+![Measured budget points and shared interpolation ranges](frontier.png)
+
+Points are individual seeds; error bars are sample SD across three seeds, and labels give neighbor budgets. The CSV tables retain every measured point, each interpolation bracket/weight, and its closest achieved configuration/time. Reference directions, where assessed, use matching per-seed current, half-stream and previous-checkpoint values interpolated at the same target; a direction is resolved only when the paired mean exceeds its largest reference-induced change.
+
+Fixed-reference policy comparisons mark sensitivity NOT EVALUATED.
+
+bistro-interior-static-neighbors-2: User-specified fixed-sample single-stream reference; seed 1001; 262144 local samples; local/environment/infinite batches 64/8/4. Reference uncertainty: NOT EVALUATED under the original dual-stream standard.
+
+bistro-interior-static-neighbors-8: User-specified fixed-sample single-stream reference; seed 1001; 262144 local samples; local/environment/infinite batches 64/8/4. Reference uncertainty: NOT EVALUATED under the original dual-stream standard.
+
+bistro-exterior-static-neighbors-2: User-specified fixed-sample single-stream reference; seed 1001; 262144 local samples; local/environment/infinite batches 64/8/4. Reference uncertainty: NOT EVALUATED under the original dual-stream standard.
+
+bistro-exterior-static-neighbors-8: User-specified fixed-sample single-stream reference; seed 1001; 262144 local samples; local/environment/infinite batches 64/8/4. Reference uncertainty: NOT EVALUATED under the original dual-stream standard.
+
+bistro-interior-static-neighbors-4: User-specified fixed-sample single-stream reference; seed 1001; 262144 local samples; local/environment/infinite batches 64/8/4. Reference uncertainty: NOT EVALUATED under the original dual-stream standard.
+
+bistro-exterior-static-neighbors-4: User-specified fixed-sample single-stream reference; seed 1001; 262144 local samples; local/environment/infinite batches 64/8/4. Reference uncertainty: NOT EVALUATED under the original dual-stream standard.

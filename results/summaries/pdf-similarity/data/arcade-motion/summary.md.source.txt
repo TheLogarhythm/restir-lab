@@ -1,0 +1,13 @@
+# PDF controlled comparison
+
+Each value is a mean across independent seeds 1/2/3; SD is the sample standard deviation of the three seed means. Frames/pixels are averaged within each phase and seed first. Paired differences are PDF on minus PDF off. A resolved direction requires its paired difference to exceed the change measured with independent half-stream and previous-checkpoint references.
+
+Static image errors use frame 128; static GPU cost averages frames 41–128. Dynamic errors use representative frames 32, 48 and 96 separately. TRMAE is local to pairs 31→32, 47→48 and 95→96, respectively; it is not a video-average metric. GPU costs independently average every timing in the corresponding full phases 1–32, 33–64 and 65–96. Total gpu_ms is the recorded total including all instrumented passes; initial/spatial costs are separate diagnostics. Logical 30 FPS is the playback interval, not a performance claim.
+
+| Condition | Scenario / phase | SMAPE off → on (%) | Paired Δ SMAPE (pp, mean ± SD) | SMAPE direction | TRMAE off → on | TRMAE direction | GPU off → on (ms) | Paired GPU change (%) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| arcade-motion | motion / frame-32 | 17.04 → 16.21 | -0.8311 ± 0.01086 | improvement resolved | 0.7435 → 0.646 | improvement resolved | 15.09 → 17.58 | 16.56 |
+| arcade-motion | motion / frame-48 | 17.97 → 17.36 | -0.6091 ± 0.02597 | improvement resolved | 0.4839 → 0.4865 | worsening resolved | 14 → 15.91 | 13.74 |
+| arcade-motion | motion / frame-96 | 18.24 → 16.12 | -2.12 ± 0.03352 | improvement resolved | 0.6464 → 0.5352 | improvement resolved | 14.01 → 15.85 | 13.25 |
+
+Full-image conclusions remain separate by condition/scenario. Identical preselected ROI diagnostics, RMAE, NRMSE, per-method SDs, paired seed variability and initial/spatial cost appear in the CSV tables. Reference half-stream/checkpoint/gradient acceptance is supplied by the caller and is recorded explicitly; this module does not infer acceptance from an image or its filename.

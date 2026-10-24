@@ -1,5 +1,7 @@
 # Experiment protocol
 
+The PDF campaign completed on 2026-10-19 was explicitly compacted on 2026-10-23 under the retired-experiment exception below. Its local archive at `runs/pdf-similarity-archive/` retains selected linear HDR sufficient for reported sparse metrics, complete video-source PNG and all measurements/settings. Full temporal HDR and reference-generation/resume media are not retained. This exception does not relax raw-data requirements for new experiments.
+
 ## Before comparison
 
 State the target claim and implementation origin (author code, port, or independent). Pin code, dependencies, and scenes. Match the integrand: direct-only and full indirect illumination need different references. Validate geometry, cameras, BSDFs, lights, units, animation, bounce limits, and color handling across backends.

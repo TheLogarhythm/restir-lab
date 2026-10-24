@@ -1,0 +1,767 @@
+{
+  "kind": "unchanged_current_statistics_copied_from_archived_state_products",
+  "entries": [
+    {
+      "destination": "data/cornell-static/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/cornell-static-80ee109bf782/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/cornell-static-80ee109bf782/.controlled-output.json",
+      "sha256": "23a41e434054440a975ad8846a13da54ccb08e38994d11e1d8f90b20179f6fa0"
+    },
+    {
+      "destination": "data/cornell-static/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/cornell-static-80ee109bf782/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/cornell-static-80ee109bf782/analysis.json",
+      "sha256": "d97d71625730b09f0e78a22f683933683e96cb507958ad3665bf283a78dd913b"
+    },
+    {
+      "destination": "data/cornell-static/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/cornell-static-80ee109bf782/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/cornell-static-80ee109bf782/frame-metrics.csv",
+      "sha256": "87f949372f7e6e3848279cf1c37600b0316653c46161579aaac5ebf1d2b5936a"
+    },
+    {
+      "destination": "data/cornell-static/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/cornell-static-80ee109bf782/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/cornell-static-80ee109bf782/paired-differences.csv",
+      "sha256": "058398d18d207e32eeb59724007f864d29f890dcf302eead258c0ea17536d5df"
+    },
+    {
+      "destination": "data/cornell-static/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/cornell-static-80ee109bf782/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/cornell-static-80ee109bf782/paired-seed-differences.csv",
+      "sha256": "40cbb852a8b0b5601947111cfc92761868d469057107739f0249fd8b9673e321"
+    },
+    {
+      "destination": "data/cornell-static/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/cornell-static-80ee109bf782/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/cornell-static-80ee109bf782/seed-metrics.csv",
+      "sha256": "989151026421bdb2d968372f816270528ed27462c3a6a46d9673423e22b36954"
+    },
+    {
+      "destination": "data/cornell-static/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/cornell-static-80ee109bf782/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/cornell-static-80ee109bf782/summary.csv",
+      "sha256": "f7378b52a1423d31c41ab9523a289a32088989dbba9b9a254df0fa636bc4ef5a"
+    },
+    {
+      "destination": "data/cornell-static/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/cornell-static-80ee109bf782/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/cornell-static-80ee109bf782/summary.md",
+      "sha256": "f78a321af75891f7c335889d4b747fc9bdc78aaa13b7c6e2c92ec60f2d771283"
+    },
+    {
+      "destination": "data/main/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/main-14f9c50d91f0/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/main-14f9c50d91f0/.controlled-output.json",
+      "sha256": "719154818caf3e361a6c843c23b19e3bd8aad41eb8cdcf03018d07270fc385c5"
+    },
+    {
+      "destination": "data/main/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/main-14f9c50d91f0/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/main-14f9c50d91f0/analysis.json",
+      "sha256": "e780f24f8ee820d849efa09a919f112f00a28805a21531f710cb28767f9f8667"
+    },
+    {
+      "destination": "data/main/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/main-14f9c50d91f0/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/main-14f9c50d91f0/frame-metrics.csv",
+      "sha256": "48bb8b4c7001d2b6419e14a62c7345a9b01dd00152015d070d6e322890feb6c7"
+    },
+    {
+      "destination": "data/main/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/main-14f9c50d91f0/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/main-14f9c50d91f0/paired-differences.csv",
+      "sha256": "e6051b93762035dc6cdf41d75bb1cb004b57080b9d23a400a7339f5293d36a55"
+    },
+    {
+      "destination": "data/main/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/main-14f9c50d91f0/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/main-14f9c50d91f0/paired-seed-differences.csv",
+      "sha256": "34bc99a1c4751c5fef77cd0fcaa4cea63faf0ef8a6a87033672f0e270556f62b"
+    },
+    {
+      "destination": "data/main/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/main-14f9c50d91f0/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/main-14f9c50d91f0/seed-metrics.csv",
+      "sha256": "5a862b4a6cb5cc2f0b33d440895229b388b0ceec1c85e5672f452215b76b174e"
+    },
+    {
+      "destination": "data/main/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/main-14f9c50d91f0/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/main-14f9c50d91f0/summary.csv",
+      "sha256": "ea6b291f57529324aaec273c217ff258fc7f64d182ef49f538db446711dfea86"
+    },
+    {
+      "destination": "data/main/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/main-14f9c50d91f0/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/main-14f9c50d91f0/summary.md",
+      "sha256": "cade4280aec2ee352e2236588c95b37535856db32048b30fcf2f5021dd2fd41a"
+    },
+    {
+      "destination": "data/arcade-static/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-static-1a701b3c0676/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-static-1a701b3c0676/.controlled-output.json",
+      "sha256": "bb89eb4834fd4d349df090e7d38ca9f1ba50970f61e7d1281ad5b1b3133efcd8"
+    },
+    {
+      "destination": "data/arcade-static/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-static-1a701b3c0676/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-static-1a701b3c0676/analysis.json",
+      "sha256": "70aadd04989ad279a7671e99ad42f6ec1f8f9b73b1c3592cf6d6d9f2c2537c7b"
+    },
+    {
+      "destination": "data/arcade-static/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-static-1a701b3c0676/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-static-1a701b3c0676/frame-metrics.csv",
+      "sha256": "292b513c5c70e29a2ac380c3c7e51ea1cefcd0abfab5f5dd30b7cf3b7db90afb"
+    },
+    {
+      "destination": "data/arcade-static/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-static-1a701b3c0676/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-static-1a701b3c0676/paired-differences.csv",
+      "sha256": "0e4dba8b4dd41bb54686f5125e6da69f595978d0871a5edee29c32ca89c1a52d"
+    },
+    {
+      "destination": "data/arcade-static/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-static-1a701b3c0676/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-static-1a701b3c0676/paired-seed-differences.csv",
+      "sha256": "cc118609a27c5695686474163a8ff9687e1a10a1edcb669e59c73a33a25e1fae"
+    },
+    {
+      "destination": "data/arcade-static/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-static-1a701b3c0676/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-static-1a701b3c0676/seed-metrics.csv",
+      "sha256": "c06643a24674437130af284b8348cffecac53d8b990a59063d0a92278f3f4af4"
+    },
+    {
+      "destination": "data/arcade-static/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-static-1a701b3c0676/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-static-1a701b3c0676/summary.csv",
+      "sha256": "0bac5bd9bc0f683c0db2943daac87c63612c5f2baf8245b4a580c6ca3b59787d"
+    },
+    {
+      "destination": "data/arcade-static/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-static-1a701b3c0676/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-static-1a701b3c0676/summary.md",
+      "sha256": "d140fa66c0cec73201e9db16e64abd75b46d358dabda05753a1a9b05717c209d"
+    },
+    {
+      "destination": "data/arcade-motion/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-motion/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-motion/.controlled-output.json",
+      "sha256": "9e911710b7a1160c977ef347c1b5f399fd471b93ac5f34e299bb4b1f70c40b34"
+    },
+    {
+      "destination": "data/arcade-motion/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-motion/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-motion/analysis.json",
+      "sha256": "38379c4890c537bd8077a8feccd44e9ff1a1d35a25bf55c9de2330c3443d9073"
+    },
+    {
+      "destination": "data/arcade-motion/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-motion/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-motion/frame-metrics.csv",
+      "sha256": "aa345eefba2fbeeef44bb229472c0b13c86708d5cb9a6f3c5b25215898ee4a5f"
+    },
+    {
+      "destination": "data/arcade-motion/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-motion/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-motion/paired-differences.csv",
+      "sha256": "cd3dce797184075fdd7316647b510196dec56ba5f97b2bf4f56c831e4019b08e"
+    },
+    {
+      "destination": "data/arcade-motion/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-motion/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-motion/paired-seed-differences.csv",
+      "sha256": "df2777b706dfe7ce8f82a4e30c922e56a6a0129f556151c8edf459bd5d3426bd"
+    },
+    {
+      "destination": "data/arcade-motion/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-motion/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-motion/seed-metrics.csv",
+      "sha256": "386e93d7ac940450e3858856a4e1af10124b39b3daad879aacd8019d402f328d"
+    },
+    {
+      "destination": "data/arcade-motion/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-motion/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-motion/summary.csv",
+      "sha256": "9aa06af227f7a4c152e1bc3a1f01cd1cd7956b22748370e03149aff66e867009"
+    },
+    {
+      "destination": "data/arcade-motion/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/arcade-motion/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-motion/summary.md",
+      "sha256": "d8e602097c51b325d0ecacbb337f1fe5143810cbe78b6bdf05a1eae795772113"
+    },
+    {
+      "destination": "data/bistro-interior-static/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static/.controlled-output.json",
+      "sha256": "4029444e8f5154ea85d6b56a342638a5e9440d0f9d4c4dfcc78e68a43d097030"
+    },
+    {
+      "destination": "data/bistro-interior-static/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static/analysis.json",
+      "sha256": "b6b8191f18244f998acfd72129d8733359d3a7b9dc774191bf5b497693cdc97a"
+    },
+    {
+      "destination": "data/bistro-interior-static/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static/frame-metrics.csv",
+      "sha256": "01dd898959bdcaa0314380da4a159d455d4dea6d85be534942f4c66ceaa03e8f"
+    },
+    {
+      "destination": "data/bistro-interior-static/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static/paired-differences.csv",
+      "sha256": "fd8b77906f54e0c3648fec50d248bf68e5858afb5f65f41c7efe0b0047b0b850"
+    },
+    {
+      "destination": "data/bistro-interior-static/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static/paired-seed-differences.csv",
+      "sha256": "5ca5b0dbab58a24319b67aca5e3bd41e4b7066c5fd982c07ed0aa74b390cebb8"
+    },
+    {
+      "destination": "data/bistro-interior-static/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static/seed-metrics.csv",
+      "sha256": "c8a4d1385017006f5edcd89a12359cfd074872b970cfe0625b822aee8099d55f"
+    },
+    {
+      "destination": "data/bistro-interior-static/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static/summary.csv",
+      "sha256": "abb2492254a73a97b320664e576487ecb4c1f001b05b693fa46c8d894008d154"
+    },
+    {
+      "destination": "data/bistro-interior-static/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static/summary.md",
+      "sha256": "080a68e33fa7d78f49a2fd58a48112a29f95c1a1216a53bb4d2db43af4eef46c"
+    },
+    {
+      "destination": "data/bistro-interior-static-spatial-only/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-spatial-only/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-spatial-only/.controlled-output.json",
+      "sha256": "9e93e194275ccd02fa3d36e14a938192d2e3b596978b82794200ec8d168be41b"
+    },
+    {
+      "destination": "data/bistro-interior-static-spatial-only/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-spatial-only/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-spatial-only/analysis.json",
+      "sha256": "d74a4539eb1f40248d044c16a65f8dadf40e4d47382c3244ecd31c0166581efc"
+    },
+    {
+      "destination": "data/bistro-interior-static-spatial-only/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-spatial-only/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-spatial-only/frame-metrics.csv",
+      "sha256": "f049e0327be1cb4b7889f61801932de7ae0c8f7ea29fc7f6ab34619ae072ffcc"
+    },
+    {
+      "destination": "data/bistro-interior-static-spatial-only/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-spatial-only/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-spatial-only/paired-differences.csv",
+      "sha256": "4dc3829371b1eb32be3838a8b9e65b76b92ec8056b8477b702f15ed5483f0522"
+    },
+    {
+      "destination": "data/bistro-interior-static-spatial-only/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-spatial-only/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-spatial-only/paired-seed-differences.csv",
+      "sha256": "88a09c68694fcb9f5b626fd8e9f2c46b9d24e728c2753d4098c877703db39100"
+    },
+    {
+      "destination": "data/bistro-interior-static-spatial-only/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-spatial-only/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-spatial-only/seed-metrics.csv",
+      "sha256": "fa49b8d919e78ad1f7bb8733dced70e71904c856e9d91603948d090c48aefa4f"
+    },
+    {
+      "destination": "data/bistro-interior-static-spatial-only/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-spatial-only/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-spatial-only/summary.csv",
+      "sha256": "6fbaf20164a3e604e9b811a4410a57755528acb0365b4855fda5b5ca679279e3"
+    },
+    {
+      "destination": "data/bistro-interior-static-spatial-only/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-spatial-only/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-spatial-only/summary.md",
+      "sha256": "4f00bcea1adb3ddd1582b46cf06ef686c926946c0c088289054c244a6ab15afb"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-2/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-2/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-2/.controlled-output.json",
+      "sha256": "ea05ccfa2fca5cd749e5b04f4cb7fe5e38410af058fd0cf17d3d5900c0143efd"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-2/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-2/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-2/analysis.json",
+      "sha256": "f5603eb0532ede21be1e35415a6842f2bf7487463ade1f1c833208ca631dca26"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-2/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-2/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-2/frame-metrics.csv",
+      "sha256": "04b38272278d468410cafa04e0e41d2a722233730aa9d2692847982bf21f285e"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-2/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-2/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-2/paired-differences.csv",
+      "sha256": "d2b57c648dae945e97cdf3e42d59a4b693814181c8f8a94c2a58106b022f8711"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-2/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-2/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-2/paired-seed-differences.csv",
+      "sha256": "b5176ce62e3dd55f14bafcaa87bd2e0b6993a9a88c2e51dbf93e8888282eee1b"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-2/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-2/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-2/seed-metrics.csv",
+      "sha256": "54aac7bb65bd05aa7801521033185ba8c77b1e6360aaf8d280af6515f9a54e91"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-2/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-2/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-2/summary.csv",
+      "sha256": "5fff58c60271ee8ebc25f737a437138c9a5f11947efecac4e0e37c992373ed98"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-2/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-2/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-2/summary.md",
+      "sha256": "5d540d883b972956b8f21eb975ecab2ba8595f6bc0f2870f70b3689e79ad1ddf"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-8/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-8/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-8/.controlled-output.json",
+      "sha256": "882e30640162839bff2b7b352f9e0dd856021a7681fe74b69d27d1272e9c32bd"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-8/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-8/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-8/analysis.json",
+      "sha256": "3ad39f1333e68deb7c583b7a09ea67dce2983ac3344a7a61d7c6f9455dcbc279"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-8/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-8/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-8/frame-metrics.csv",
+      "sha256": "39b7780f3711bf43a142d8056bd1e58fdf7d8728125fed9f8dcfbe91d3b9825f"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-8/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-8/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-8/paired-differences.csv",
+      "sha256": "d500ea5881d6e971c63147f786343e82a4fddc6bb0581a513ac6b72a857a8f4e"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-8/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-8/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-8/paired-seed-differences.csv",
+      "sha256": "1a8f6488134528fc34f0b655d515181cef368791ddd69d8a59fc2b86b3d6828d"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-8/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-8/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-8/seed-metrics.csv",
+      "sha256": "68374ee21837df48990e82847d8e9ae250371ce19886eb2e5335373c0e6845b0"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-8/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-8/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-8/summary.csv",
+      "sha256": "f8303985260a9ddfa5eed12afce570dc631e318241936c8efcb39c89d09a6df8"
+    },
+    {
+      "destination": "data/bistro-interior-static-neighbors-8/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-8/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-8/summary.md",
+      "sha256": "9053794956785827f58596f1578beba002637913177ce98d60bd2e6a960381ca"
+    },
+    {
+      "destination": "data/bistro-exterior-static/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static/.controlled-output.json",
+      "sha256": "2f80fc69e1c7088d13681d864158f2ef37cf146b898da85c6fb25b88e6aed86a"
+    },
+    {
+      "destination": "data/bistro-exterior-static/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static/analysis.json",
+      "sha256": "8a357481a5967eeca385710f296c710113aa299e8aa72aa323ce5f1a88659b12"
+    },
+    {
+      "destination": "data/bistro-exterior-static/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static/frame-metrics.csv",
+      "sha256": "6c131c627752b79e8c9bd28edeb42bc1751e7d34a5b52aaba1a18912175ce4ed"
+    },
+    {
+      "destination": "data/bistro-exterior-static/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static/paired-differences.csv",
+      "sha256": "51bf5252544ecc09bd7a251029e20a886cfc5e43752aef5a623fd8c1ceef2c44"
+    },
+    {
+      "destination": "data/bistro-exterior-static/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static/paired-seed-differences.csv",
+      "sha256": "78bd2537479c84be51bb7a6bb0d13689b9b5337e840b150246656f14be0a5503"
+    },
+    {
+      "destination": "data/bistro-exterior-static/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static/seed-metrics.csv",
+      "sha256": "59c803295172e20a2a2b8dc5d9cd0285b3dfa593109baa9af8b864e8d3d926f1"
+    },
+    {
+      "destination": "data/bistro-exterior-static/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static/summary.csv",
+      "sha256": "7c20f798f909f58ba8fea0cfda5b0101de14d5d6b7ee522f58e8bd84dd71422e"
+    },
+    {
+      "destination": "data/bistro-exterior-static/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static/summary.md",
+      "sha256": "c3ff73869b251dca71cce9bd46424f4ea2050c47a6f7938f66fcb7ecb9076f56"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-2/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-2/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-2/.controlled-output.json",
+      "sha256": "6447230d42c5556be2c60822bcba7624ddf7960c5b2f79251b3aa9f0d9589610"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-2/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-2/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-2/analysis.json",
+      "sha256": "df42a131a1803bd8058cf2f8fdfc4016863fec7857ab9ce618b4b905bafebd0f"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-2/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-2/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-2/frame-metrics.csv",
+      "sha256": "8490868b87466c3e2b686e5b14f65f7f7ba09df4748c8b6690dd92ed23e3ee8d"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-2/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-2/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-2/paired-differences.csv",
+      "sha256": "12f33270950a2efc1690ca43c5cb4ace9f620b262401d3f7646ab58730d0ac06"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-2/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-2/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-2/paired-seed-differences.csv",
+      "sha256": "76507e7c96eae759edb975cf07d0268238b9357a6ef51a366bfb0ea24ffec9f5"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-2/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-2/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-2/seed-metrics.csv",
+      "sha256": "0a11039675c67b5d2fefbd98c8324189daf6409c1cea5956e1e4685b9f094b05"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-2/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-2/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-2/summary.csv",
+      "sha256": "490fafaf752a0a4cfdf11888473c1af067b36efc85d93b3cb2408e1df7ada45c"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-2/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-2/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-2/summary.md",
+      "sha256": "1171c577619225a5c3dd7a5cab128eed1f25f7d4876b7c70c96ea41abc52608f"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-8/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-8/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-8/.controlled-output.json",
+      "sha256": "3c4a96fa60bbce83be02260fb44542f97a7cd653ce1e54fee65fc2c5e40670ed"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-8/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-8/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-8/analysis.json",
+      "sha256": "ecdaff0d1cd74be1293a43f761a8cb2229b9fd437313df17f00503390d62cbb4"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-8/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-8/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-8/frame-metrics.csv",
+      "sha256": "4149c15150662f42d6afbd17cd1eb4205e480cfad8a963d4c0b9f73b6bc9ab20"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-8/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-8/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-8/paired-differences.csv",
+      "sha256": "1741d125e3adf93a85bc87b1d1b1cc39021078b3656c791a5c9593bdb0820bde"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-8/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-8/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-8/paired-seed-differences.csv",
+      "sha256": "7cd34f28b3feead1fe192d5116b081df499cceca94001079d3d517fbd4747123"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-8/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-8/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-8/seed-metrics.csv",
+      "sha256": "026afff00bf0faf0484582687b04137a8adf4f5e8914df7770d67592cbfd5e92"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-8/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-8/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-8/summary.csv",
+      "sha256": "63d30350e433b2c7f01a9336c0baa99898ee03750add7d469a019ae2147a6f30"
+    },
+    {
+      "destination": "data/bistro-exterior-static-neighbors-8/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-8/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-8/summary.md",
+      "sha256": "166eb030cef41215d990e4008fa55ddf6658cfd0d6479058be49bea74c629710"
+    },
+    {
+      "destination": "data/bistro-lighting/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-lighting/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-lighting/.controlled-output.json",
+      "sha256": "9668834420f898cd8bf83219ecc44c22ef09979e33ba991168d05a868020ef4c"
+    },
+    {
+      "destination": "data/bistro-lighting/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-lighting/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-lighting/analysis.json",
+      "sha256": "b3bf30d3086d4f5f8b8f1d2a506731fa95f301c60d29a3946d2c0a0e31e666d1"
+    },
+    {
+      "destination": "data/bistro-lighting/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-lighting/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-lighting/frame-metrics.csv",
+      "sha256": "38fdc4c9745f499f4ed6dc4237a50a7b3a6297c5d252497e67741f4c14baec29"
+    },
+    {
+      "destination": "data/bistro-lighting/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-lighting/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-lighting/paired-differences.csv",
+      "sha256": "86cf57093fedff5efd95168aa7e97bbcb023abcb9a1a12ad80f595679ac3fe15"
+    },
+    {
+      "destination": "data/bistro-lighting/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-lighting/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-lighting/paired-seed-differences.csv",
+      "sha256": "3084c77ba06bdf932bec61915bd18fafbfdcdc53eda68e607cedaae237af283c"
+    },
+    {
+      "destination": "data/bistro-lighting/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-lighting/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-lighting/seed-metrics.csv",
+      "sha256": "d645e2e5e0c6d67775de2ed152a9cfc49440e8fcba1f269599852c3bde7a99a8"
+    },
+    {
+      "destination": "data/bistro-lighting/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-lighting/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-lighting/summary.csv",
+      "sha256": "ca3958274f824161813c553467b160642e292e08e98c1bee603901ac2d442d1e"
+    },
+    {
+      "destination": "data/bistro-lighting/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-lighting/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-lighting/summary.md",
+      "sha256": "aa2cba1e3660a4388899e0fd56e456c9e95631509dfd288766011fb7ede7c9fc"
+    },
+    {
+      "destination": "data/bistro-exterior-motion/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-motion/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-motion/.controlled-output.json",
+      "sha256": "f623455da942bc15bef2e712002b2150ac004e2f0914c163212f53fb9fc529fe"
+    },
+    {
+      "destination": "data/bistro-exterior-motion/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-motion/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-motion/analysis.json",
+      "sha256": "b7d17215bde051c9b7bf4ef7dfc82126eff72ea8155386b8189e36002054c890"
+    },
+    {
+      "destination": "data/bistro-exterior-motion/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-motion/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-motion/frame-metrics.csv",
+      "sha256": "95c7fd4ae88b138ecaf172a6c837f303172e4e603e9e235c2c01c88c52503129"
+    },
+    {
+      "destination": "data/bistro-exterior-motion/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-motion/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-motion/paired-differences.csv",
+      "sha256": "6139e9519084c30e7ca877ad5d98e95e22f2a6f84f2560cd403c5920f0595a96"
+    },
+    {
+      "destination": "data/bistro-exterior-motion/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-motion/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-motion/paired-seed-differences.csv",
+      "sha256": "d41f571d999e1b41aab9100c84afac430e8bff0b6c3fffe6cd3f092182a61e23"
+    },
+    {
+      "destination": "data/bistro-exterior-motion/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-motion/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-motion/seed-metrics.csv",
+      "sha256": "24966cb477f57b30890b8a7a8b9001d4c2bc99a9bac089aca3fff7c620e12e27"
+    },
+    {
+      "destination": "data/bistro-exterior-motion/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-motion/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-motion/summary.csv",
+      "sha256": "c5c34a93bf6ab978dae623aeeaee338a208a14061602c5363799b340a020c109"
+    },
+    {
+      "destination": "data/bistro-exterior-motion/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-motion/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-motion/summary.md",
+      "sha256": "edeedde16c2d384f48f346c4000dfa8dddefd2a1987f04ad8551624b3a84baea"
+    },
+    {
+      "destination": "data/bistro-interior-motion/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-motion/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-motion/.controlled-output.json",
+      "sha256": "473f92196195678bceabe79a7b6c4cd802ea594c24ed8e3669a00fb906d2e74c"
+    },
+    {
+      "destination": "data/bistro-interior-motion/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-motion/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-motion/analysis.json",
+      "sha256": "083681dc15ec98de28ad4139089406932fdad4a09f85988e6788f981001a5855"
+    },
+    {
+      "destination": "data/bistro-interior-motion/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-motion/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-motion/frame-metrics.csv",
+      "sha256": "5ceacfcafaff11cf533c4b5164520d4b5e9f829471def3780e9d711c9d98016a"
+    },
+    {
+      "destination": "data/bistro-interior-motion/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-motion/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-motion/paired-differences.csv",
+      "sha256": "c1a19e759f0f2c1160f74ec4642b374ff6b495fe12ec0c293efc12d2c12444f7"
+    },
+    {
+      "destination": "data/bistro-interior-motion/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-motion/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-motion/paired-seed-differences.csv",
+      "sha256": "a5c8fa8281827ad0f3de0d2b10b8392abe0d68fa32ea7232435b9e7ebad20b98"
+    },
+    {
+      "destination": "data/bistro-interior-motion/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-motion/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-motion/seed-metrics.csv",
+      "sha256": "34e0c4d87618c029095e6ff4c8b9f853d52ca9fc3433bac4f7644953e3e45071"
+    },
+    {
+      "destination": "data/bistro-interior-motion/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-motion/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-motion/summary.csv",
+      "sha256": "69546cb1dee42b934f97b49fd0189a97b06813ad49369abe9db8682a2de6df70"
+    },
+    {
+      "destination": "data/bistro-interior-motion/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-motion/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-motion/summary.md",
+      "sha256": "96468d5d7d0f8bc1f180e3181619c8b510ce8d1abb92f00d5c04072decf3a435"
+    },
+    {
+      "destination": "data/equal-time/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time/.controlled-output.json",
+      "sha256": "a7de8b96b85f3e840088528f20c66b1f2a26b149462f670045b9ec02416ce0ae"
+    },
+    {
+      "destination": "data/equal-time/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time/analysis.json",
+      "sha256": "5693c15023d4e7a44927d99e8e9527762e894f85f306504fc6130d3471123a32"
+    },
+    {
+      "destination": "data/equal-time/frame-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time/frame-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time/frame-metrics.csv",
+      "sha256": "c0b9808cae711837cf22380aa62986a87c3fe129fcba671ef1784313bfb5d49b"
+    },
+    {
+      "destination": "data/equal-time/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time/paired-differences.csv",
+      "sha256": "3704eb79be67c2a8e88db9d629ade6ad5ba35629d748e3aafa6f7a5fb38645d4"
+    },
+    {
+      "destination": "data/equal-time/paired-seed-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time/paired-seed-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time/paired-seed-differences.csv",
+      "sha256": "0525a1e6c9ce30ddb6ddd18e429a1bf5563c08dbf1cc8e927d7b2f76fe427e35"
+    },
+    {
+      "destination": "data/equal-time/seed-metrics.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time/seed-metrics.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time/seed-metrics.csv",
+      "sha256": "8f58488970acb42450b7bd6fe0be22b9b4f26721b0d3781c4d56ea5150b97f71"
+    },
+    {
+      "destination": "data/equal-time/summary.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time/summary.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time/summary.csv",
+      "sha256": "10a062dddd632f82f008d40f287d7abe5e4d941091fc0d9ad0d4d11f412d6047"
+    },
+    {
+      "destination": "data/equal-time/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time/summary.md",
+      "sha256": "ca036241c18f55abb39f75973f747b34efb3cc0bc8dab8e67b65ec53611ad81b"
+    },
+    {
+      "destination": "data/equal-time-comparison/.controlled-output.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time-comparison/.controlled-output.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time-comparison/.controlled-output.json",
+      "sha256": "9e2185d04c8a5ea3a7f735301bfc6913904b6fb274d26a4c78df7ad332cbc787"
+    },
+    {
+      "destination": "data/equal-time-comparison/analysis.json",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time-comparison/analysis.json",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time-comparison/analysis.json",
+      "sha256": "cd9c0a39768d9dc71dd9f1765b5837258acff1e11388db832da4ddf5a1b6e784"
+    },
+    {
+      "destination": "data/equal-time-comparison/frontier.png",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time-comparison/frontier.png",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time-comparison/frontier.png",
+      "sha256": "d86e8b3586aba5279471396bdcbba6b6c975d07bb06f3f5670eed8e24b47ffb1"
+    },
+    {
+      "destination": "data/equal-time-comparison/interpolated-estimates.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time-comparison/interpolated-estimates.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time-comparison/interpolated-estimates.csv",
+      "sha256": "a378767407aa9474f3ff53073bafb7388a6f488d61f910bf44250de9c562d75f"
+    },
+    {
+      "destination": "data/equal-time-comparison/measured-points.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time-comparison/measured-points.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time-comparison/measured-points.csv",
+      "sha256": "446bab415f5fdddcb031e66e04e4ecd607c7bb71a3d6658fc728fd00b1f031f0"
+    },
+    {
+      "destination": "data/equal-time-comparison/paired-differences.csv",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time-comparison/paired-differences.csv",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time-comparison/paired-differences.csv",
+      "sha256": "48e8b0b2fad6b14fdb69817b13b80943db27a649be13ece00dfe366d12136522"
+    },
+    {
+      "destination": "data/equal-time-comparison/summary.md.source.txt",
+      "current_source": "runs/pdf-similarity-archive/analysis/equal-time-comparison/summary.md",
+      "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time-comparison/summary.md",
+      "sha256": "e189d6f74273688d9688a800acdc687bbfc21045d352f2ada4ef01f44d51cb1b"
+    }
+  ]
+}

@@ -11,3 +11,7 @@
 *.blend binary
 # Preserve supplied template bytes and original line endings.
 /writing/course/templates/*.tex -text
+
+# Preserve immutable result records covered by provenance hashes.
+/results/summaries/pdf-similarity/data/** -text
+/results/summaries/di-baseline/README.md -text

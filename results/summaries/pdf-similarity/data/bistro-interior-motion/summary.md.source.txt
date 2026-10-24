@@ -1,0 +1,15 @@
+# PDF controlled comparison
+
+Each value is a mean across independent seeds 1/2/3; SD is the sample standard deviation of the three seed means. Frames/pixels are averaged within each phase and seed first. Paired differences are PDF on minus PDF off. Where reference sensitivity is assessed, a resolved direction requires its paired difference to exceed the change measured with independent half-stream and previous-checkpoint references. Fixed-reference policy rows explicitly mark sensitivity NOT EVALUATED.
+
+Static image errors use frame 128; static GPU cost averages frames 41–128. Dynamic errors use representative frames 32, 48 and 96 separately. TRMAE is local to pairs 31→32, 47→48 and 95→96, respectively; it is not a video-average metric. GPU costs independently average every timing in the corresponding full phases 1–32, 33–64 and 65–96. Total gpu_ms is the recorded total including all instrumented passes; initial/spatial costs are separate diagnostics. Logical 30 FPS is the playback interval, not a performance claim.
+
+| Condition | Scenario / phase | SMAPE off → on (%) | Paired Δ SMAPE (pp, mean ± SD) | SMAPE direction | TRMAE off → on | TRMAE direction | GPU off → on (ms) | Paired GPU change (%) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| bistro-interior-motion | motion / frame-32 | 28.58 → 28.42 | -0.1601 ± 0.03462 | NOT EVALUATED (fixed reference policy) | 0.0763 → 0.06618 | NOT EVALUATED (fixed reference policy) | 31.89 → 31.82 | 0.1948 |
+| bistro-interior-motion | motion / frame-48 | 28.85 → 28.82 | -0.03688 ± 0.06526 | NOT EVALUATED (fixed reference policy) | 0.07662 → 0.07705 | NOT EVALUATED (fixed reference policy) | 28.89 → 31.74 | 9.836 |
+| bistro-interior-motion | motion / frame-96 | 26.87 → 26.76 | -0.1133 ± 0.06483 | NOT EVALUATED (fixed reference policy) | 0.06174 → 0.03661 | NOT EVALUATED (fixed reference policy) | 28.5 → 31.94 | 12.06 |
+
+Full-image conclusions remain separate by condition/scenario. Identical preselected ROI diagnostics, RMAE, NRMSE, per-method SDs, paired seed variability and initial/spatial cost appear in the CSV tables. Reference acceptance or fixed-sample authorization is supplied by the caller and recorded per condition; this module does not infer precision verification from acceptance, an image, or its filename.
+
+bistro-interior-motion: User-specified fixed-sample single-stream reference; seed 1001; 262144 local samples; local/environment/infinite batches 64/8/4. Reference uncertainty: NOT EVALUATED under the original dual-stream standard.

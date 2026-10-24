@@ -1,0 +1,772 @@
+{
+  "files": {
+    "analysis.json": {
+      "bytes": 61619,
+      "sha256": "d97d71625730b09f0e78a22f683933683e96cb507958ad3665bf283a78dd913b"
+    },
+    "frame-metrics.csv": {
+      "bytes": 2187,
+      "sha256": "87f949372f7e6e3848279cf1c37600b0316653c46161579aaac5ebf1d2b5936a"
+    },
+    "paired-differences.csv": {
+      "bytes": 2334,
+      "sha256": "058398d18d207e32eeb59724007f864d29f890dcf302eead258c0ea17536d5df"
+    },
+    "paired-seed-differences.csv": {
+      "bytes": 2184,
+      "sha256": "40cbb852a8b0b5601947111cfc92761868d469057107739f0249fd8b9673e321"
+    },
+    "seed-metrics.csv": {
+      "bytes": 3384,
+      "sha256": "989151026421bdb2d968372f816270528ed27462c3a6a46d9673423e22b36954"
+    },
+    "summary.csv": {
+      "bytes": 1940,
+      "sha256": "f7378b52a1423d31c41ab9523a289a32088989dbba9b9a254df0fa636bc4ef5a"
+    },
+    "summary.md": {
+      "bytes": 1619,
+      "sha256": "f78a321af75891f7c335889d4b747fc9bdc78aaa13b7c6e2c92ec60f2d771283"
+    }
+  },
+  "identity": {
+    "inputs": {
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\captures.json": "0b039a1e3b74505bf7a6097da66dc7ec48fe4a5db88a81a4af26f18adf9b832f",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\config.json": "205952eb11bb0123e5dd2e3096556b2106d34375fae1a14086f2a3bb223fd6ef",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\manifest.json": "4318fafd5f32ac0e659f983b8a4d62f11495227d5119629266109ac9cb697bac",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\timings.csv": "533b0d50c0fbee67ec8e9123be47f1baa11cb1804c6a1dc1fdca4cab3269a54c",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\captures.json": "636e0e15858175b9942506eeac8f9d38ffc88d418a01dbfa788abb885651d51a",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\config.json": "b93f39ba37ce9d211208db55e87372fb9dc061c8eedaa715d3056d14fd966bb5",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\manifest.json": "de671cad944834bb066a5c645f85f14a239fc0e2c0a0d4845ab8df4f67bb4c74",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\timings.csv": "f77098dc730da44aae8901d1adc8e0a94953b99b0458e517632edd1869ac7985",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\captures.json": "3431d488938c0f82e19e9de1cc24ece8595d87846904647096d038902b1e5548",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\config.json": "1fbb646f4ca609bc027680388aeb0c0928e9ed8ca8ac35e1a1e33da3d5ddfff3",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\manifest.json": "c7b4b48ef5c0e9a8beaef754eb586fa1bc1be9a1df4eb8990339f41fd53901d1",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\timings.csv": "9ffa1a906b943e85674abe3992d653869afcdabdfe9aa8e1015609c2d1e77d10",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\captures.json": "6b7472d20988830e268091d4bf3819859f51737ef1bfb05b5d9adffd7e11ec69",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\config.json": "bbf20b1169403c03a8e7efc4abb9720048a21aba9b7df62df1cd46f0d028b7a7",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\manifest.json": "4e0c1bd54061c06853c91e3e18fb04c31168464a601729ba3194369a766ce067",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\timings.csv": "814e97fc058d8e2dd3a22747afabff9ada8a2c37306899b0481607b2435ef81a",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\captures.json": "de2376b2be259d3d75dc24e7d2082cb7a3f4d4dfe23b19e992a80c8530492f50",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\config.json": "71bf2c2cdd859dd62a1a97cb4bcc164582471464085b7e1fa3a97249c5d72109",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\manifest.json": "b1c1568a73d3cf8bb546457277be2441eeea3eee7052639ef24779dd7225c7a7",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\timings.csv": "6f1c8c48e61e46337653414f08e2156cf5ab1335b4f2aee8ee8c54a65382772a",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\captures.json": "3551fc43e9e360aa1587b936822316f910f3987cb3c0c3396970245ba080e073",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\config.json": "95e5ea7c7a7be78e93b6d0c88c77c8060bb0e2d41e4bd5cf07e4491fb8341ac2",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\manifest.json": "1c58650ac902e46cf081afe081536b1c680c88e243d5ab0166c4ee571fe50d27",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\timings.csv": "4e26ee8613c100d8d9163eed02a75cada674b3783f7ef5504986662218313708",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\cornell-box\\ed4ae7321530079d0b517eb1\\accepted-16384-2d451e6c9021\\reference.pfm.gz": "932b1507307fdb20c56e03e16620c2971fd41816f453ba60b80ca87ac33ae9a7"
+    },
+    "reports": [
+      {
+        "evaluation": {
+          "reference_frames": [
+            128
+          ],
+          "schema_version": 1,
+          "spatial_frames": [
+            128
+          ],
+          "support_frames": [],
+          "temporal_pairs": []
+        },
+        "id": "cornell-static",
+        "reference_assessment": {
+          "differences": {
+            "passed": true,
+            "regions": {
+              "full": {
+                "static": {
+                  "metrics": {
+                    "nrmse": {
+                      "methods": {
+                        "False": {
+                          "current": 0.04067188849450201,
+                          "half_a": 0.040673632356019805,
+                          "half_b": 0.04067430800567804,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.03995833829973159,
+                              "half_a": 0.039960275380853394,
+                              "half_b": 0.039960636681901175,
+                              "previous": 0.03996046286543671
+                            },
+                            "2": {
+                              "current": 0.039975372281711885,
+                              "half_a": 0.03997641478147213,
+                              "half_b": 0.039978563408094164,
+                              "previous": 0.039977255368306
+                            },
+                            "3": {
+                              "current": 0.042081954902062575,
+                              "half_a": 0.04208420690573389,
+                              "half_b": 0.0420837239270388,
+                              "previous": 0.04208409568403047
+                            }
+                          },
+                          "previous": 0.040673937972591064
+                        },
+                        "True": {
+                          "current": 0.032087459597437896,
+                          "half_a": 0.032090327120434095,
+                          "half_b": 0.03208987090092069,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.03285886813713557,
+                              "half_a": 0.032861378286545846,
+                              "half_b": 0.03286151115053598,
+                              "previous": 0.03286164655514298
+                            },
+                            "2": {
+                              "current": 0.03165094227739515,
+                              "half_a": 0.0316541103853385,
+                              "half_b": 0.03165312440370363,
+                              "previous": 0.03165353888184196
+                            },
+                            "3": {
+                              "current": 0.03175256837778299,
+                              "half_a": 0.031755492689417936,
+                              "half_b": 0.03175497714852246,
+                              "previous": 0.03175412872742231
+                            }
+                          },
+                          "previous": 0.032089771388135756
+                        }
+                      },
+                      "paired_difference": {
+                        "current": -0.008584428897064116,
+                        "direction_resolved": true,
+                        "max_reference_change": 1.12366147840548e-06,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": -0.00858330523558571,
+                          "half_b": -0.008584437104757349,
+                          "previous": -0.008584166584455308
+                        }
+                      }
+                    },
+                    "rmae": {
+                      "methods": {
+                        "False": {
+                          "current": 0.06790353615839353,
+                          "half_a": 0.06794376913312587,
+                          "half_b": 0.0679449760365908,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.0677009871150899,
+                              "half_a": 0.06774233197395559,
+                              "half_b": 0.06774024242247616,
+                              "previous": 0.06774257046702992
+                            },
+                            "2": {
+                              "current": 0.06716274887992141,
+                              "half_a": 0.06720185482673692,
+                              "half_b": 0.0672058386267531,
+                              "previous": 0.06720449603948689
+                            },
+                            "3": {
+                              "current": 0.0688468724801693,
+                              "half_a": 0.0688871205986851,
+                              "half_b": 0.06888884706054316,
+                              "previous": 0.06888851087155241
+                            }
+                          },
+                          "previous": 0.06794519245935642
+                        },
+                        "True": {
+                          "current": 0.05692189319710513,
+                          "half_a": 0.05696531383792854,
+                          "half_b": 0.05696428824002255,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.05709644029704891,
+                              "half_a": 0.05713975941371794,
+                              "half_b": 0.057140124189050526,
+                              "previous": 0.05714030413241074
+                            },
+                            "2": {
+                              "current": 0.05679265151022227,
+                              "half_a": 0.05683685476137103,
+                              "half_b": 0.05683374350086269,
+                              "previous": 0.056835704433634324
+                            },
+                            "3": {
+                              "current": 0.05687658778404421,
+                              "half_a": 0.05691932733869666,
+                              "half_b": 0.056918997030154427,
+                              "previous": 0.05691908944962002
+                            }
+                          },
+                          "previous": 0.056965032671888356
+                        }
+                      },
+                      "paired_difference": {
+                        "current": -0.010981642961288403,
+                        "direction_resolved": true,
+                        "max_reference_change": 3.187666091072905e-06,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": -0.01097845529519733,
+                          "half_b": -0.010980687796568252,
+                          "previous": -0.01098015978746806
+                        }
+                      }
+                    },
+                    "smape": {
+                      "methods": {
+                        "False": {
+                          "current": 7.978458770109865,
+                          "half_a": 7.993738896991606,
+                          "half_b": 7.994368781788798,
+                          "per_seed": {
+                            "1": {
+                              "current": 7.968539857374039,
+                              "half_a": 7.984056468924562,
+                              "half_b": 7.983903017391863,
+                              "previous": 7.984127794861242
+                            },
+                            "2": {
+                              "current": 7.955499192282785,
+                              "half_a": 7.970742981857041,
+                              "half_b": 7.971527346676623,
+                              "previous": 7.9710373009149
+                            },
+                            "3": {
+                              "current": 8.011337260672773,
+                              "half_a": 8.026417240193213,
+                              "half_b": 8.027675981297905,
+                              "previous": 8.027090307118629
+                            }
+                          },
+                          "previous": 7.994085134298257
+                        },
+                        "True": {
+                          "current": 6.8864233429424075,
+                          "half_a": 6.902538183416252,
+                          "half_b": 6.90292298354143,
+                          "per_seed": {
+                            "1": {
+                              "current": 6.893759698353723,
+                              "half_a": 6.909936336506337,
+                              "half_b": 6.910379851177449,
+                              "previous": 6.910747380548031
+                            },
+                            "2": {
+                              "current": 6.872824435355115,
+                              "half_a": 6.888529195977484,
+                              "half_b": 6.8894244931104,
+                              "previous": 6.889211658026736
+                            },
+                            "3": {
+                              "current": 6.892685895118385,
+                              "half_a": 6.909149017764936,
+                              "half_b": 6.908964606336438,
+                              "previous": 6.909398693524221
+                            }
+                          },
+                          "previous": 6.903119244032996
+                        }
+                      },
+                      "paired_difference": {
+                        "current": -1.092035427167457,
+                        "direction_resolved": true,
+                        "max_reference_change": 0.0010695369021958001,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": -1.091200713575354,
+                          "half_b": -1.091445798247368,
+                          "previous": -1.0909658902652613
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "region-1": {
+                "static": {
+                  "metrics": {
+                    "nrmse": {
+                      "methods": {
+                        "False": {
+                          "current": 0.28263114060548244,
+                          "half_a": 0.2827762009008568,
+                          "half_b": 0.2828013065766519,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.2824369316532522,
+                              "half_a": 0.2825591781847001,
+                              "half_b": 0.282629816642766,
+                              "previous": 0.282594585025477
+                            },
+                            "2": {
+                              "current": 0.27171723281327287,
+                              "half_a": 0.27186737589195537,
+                              "half_b": 0.271896764816676,
+                              "previous": 0.27184296412898895
+                            },
+                            "3": {
+                              "current": 0.2937392573499223,
+                              "half_a": 0.2939020486259149,
+                              "half_b": 0.2938773382705137,
+                              "previous": 0.2939200288638532
+                            }
+                          },
+                          "previous": 0.2827858593394397
+                        },
+                        "True": {
+                          "current": 0.29356703878080664,
+                          "half_a": 0.2937301853917165,
+                          "half_b": 0.29370525283103527,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.29919674623127845,
+                              "half_a": 0.29936208198088937,
+                              "half_b": 0.29932575048717014,
+                              "previous": 0.2993327571830134
+                            },
+                            "2": {
+                              "current": 0.2816106772343568,
+                              "half_a": 0.28177215253819005,
+                              "half_b": 0.2817654220164664,
+                              "previous": 0.2817720604023996
+                            },
+                            "3": {
+                              "current": 0.2998936928767845,
+                              "half_a": 0.3000563216560702,
+                              "half_b": 0.3000245859894692,
+                              "previous": 0.30005793964378713
+                            }
+                          },
+                          "previous": 0.2937209190764
+                        }
+                      },
+                      "paired_difference": {
+                        "current": 0.010935898175324199,
+                        "direction_resolved": true,
+                        "max_reference_change": 3.195192094085364e-05,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": 0.010953984490859714,
+                          "half_b": 0.010903946254383345,
+                          "previous": 0.010935059736960295
+                        }
+                      }
+                    },
+                    "rmae": {
+                      "methods": {
+                        "False": {
+                          "current": 0.23868764558991173,
+                          "half_a": 0.23906487598671466,
+                          "half_b": 0.23905634900071968,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.24107695349974367,
+                              "half_a": 0.2414015048025031,
+                              "half_b": 0.24147934683670244,
+                              "previous": 0.2414315002766176
+                            },
+                            "2": {
+                              "current": 0.23234910552314966,
+                              "half_a": 0.23273807700603014,
+                              "half_b": 0.23273256648937285,
+                              "previous": 0.23273511588687215
+                            },
+                            "3": {
+                              "current": 0.24263687774684184,
+                              "half_a": 0.24305504615161072,
+                              "half_b": 0.2429571336760838,
+                              "previous": 0.24301250835130384
+                            }
+                          },
+                          "previous": 0.23905970817159786
+                        },
+                        "True": {
+                          "current": 0.24921820958316188,
+                          "half_a": 0.2495968185697178,
+                          "half_b": 0.24958524439409577,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.24887523502552159,
+                              "half_a": 0.2492533369514686,
+                              "half_b": 0.24927994020708263,
+                              "previous": 0.24922915272699514
+                            },
+                            "2": {
+                              "current": 0.24392415991565405,
+                              "half_a": 0.24433419635954293,
+                              "half_b": 0.24426544196242653,
+                              "previous": 0.24429368310241686
+                            },
+                            "3": {
+                              "current": 0.25485523380831004,
+                              "half_a": 0.25520292239814185,
+                              "half_b": 0.2552103510127781,
+                              "previous": 0.25522061013976555
+                            }
+                          },
+                          "previous": 0.2495811486563925
+                        }
+                      },
+                      "paired_difference": {
+                        "current": 0.010530563993250142,
+                        "direction_resolved": true,
+                        "max_reference_change": 9.123508455499696e-06,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": 0.010531942583003134,
+                          "half_b": 0.010528895393376092,
+                          "previous": 0.010521440484794642
+                        }
+                      }
+                    },
+                    "smape": {
+                      "methods": {
+                        "False": {
+                          "current": 14.433994435945174,
+                          "half_a": 14.494702030705612,
+                          "half_b": 14.493917009371025,
+                          "per_seed": {
+                            "1": {
+                              "current": 14.390970611086,
+                              "half_a": 14.451399160320596,
+                              "half_b": 14.45060108019091,
+                              "previous": 14.447508705099624
+                            },
+                            "2": {
+                              "current": 14.378077109134534,
+                              "half_a": 14.43629213004176,
+                              "half_b": 14.439601845185662,
+                              "previous": 14.442353820129869
+                            },
+                            "3": {
+                              "current": 14.532935587614986,
+                              "half_a": 14.596414801754486,
+                              "half_b": 14.591548102736505,
+                              "previous": 14.594105025866208
+                            }
+                          },
+                          "previous": 14.494655850365234
+                        },
+                        "True": {
+                          "current": 14.855596881794376,
+                          "half_a": 14.910965319102026,
+                          "half_b": 14.916742370075722,
+                          "per_seed": {
+                            "1": {
+                              "current": 14.779763186443846,
+                              "half_a": 14.837218474263782,
+                              "half_b": 14.841192640217995,
+                              "previous": 14.834814034332087
+                            },
+                            "2": {
+                              "current": 14.719667342519005,
+                              "half_a": 14.77932883854971,
+                              "half_b": 14.778711919723886,
+                              "previous": 14.780287356055068
+                            },
+                            "3": {
+                              "current": 15.06736011642028,
+                              "half_a": 15.116348644492586,
+                              "half_b": 15.130322550285284,
+                              "previous": 15.122026840341373
+                            }
+                          },
+                          "previous": 14.91237607690951
+                        }
+                      },
+                      "paired_difference": {
+                        "current": 0.4216024458492029,
+                        "direction_resolved": true,
+                        "max_reference_change": 0.005339157452789678,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": 0.41626328839641324,
+                          "half_b": 0.4228253607046977,
+                          "previous": 0.4177202265442759
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "region-2": {
+                "static": {
+                  "metrics": {
+                    "nrmse": {
+                      "methods": {
+                        "False": {
+                          "current": 0.5447138292554637,
+                          "half_a": 0.5447067274587428,
+                          "half_b": 0.5447381103915929,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.5394156744986632,
+                              "half_a": 0.539428549107438,
+                              "half_b": 0.5394202751509936,
+                              "previous": 0.5394280005700749
+                            },
+                            "2": {
+                              "current": 0.5322435190613045,
+                              "half_a": 0.5322159533109353,
+                              "half_b": 0.5322889883927677,
+                              "previous": 0.5322505672309223
+                            },
+                            "3": {
+                              "current": 0.5624822942064234,
+                              "half_a": 0.5624756799578554,
+                              "half_b": 0.5625050676310174,
+                              "previous": 0.5624815997333832
+                            }
+                          },
+                          "previous": 0.5447200558447934
+                        },
+                        "True": {
+                          "current": 0.3398940787604156,
+                          "half_a": 0.3399272205411905,
+                          "half_b": 0.3398961065954884,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.3915510445198685,
+                              "half_a": 0.39161128680291313,
+                              "half_b": 0.39151954067373274,
+                              "previous": 0.39155876482313784
+                            },
+                            "2": {
+                              "current": 0.29092562220356366,
+                              "half_a": 0.2909635616854351,
+                              "half_b": 0.2909295095922729,
+                              "previous": 0.29098669985917175
+                            },
+                            "3": {
+                              "current": 0.3372055695578147,
+                              "half_a": 0.33720681313522327,
+                              "half_b": 0.3372392695204597,
+                              "previous": 0.33725464597131055
+                            }
+                          },
+                          "previous": 0.33993337021787334
+                        }
+                      },
+                      "paired_difference": {
+                        "current": -0.20481975049504814,
+                        "direction_resolved": true,
+                        "max_reference_change": 4.02435774958243e-05,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": -0.2047795069175523,
+                          "half_b": -0.2048420037961045,
+                          "previous": -0.2047866856269201
+                        }
+                      }
+                    },
+                    "rmae": {
+                      "methods": {
+                        "False": {
+                          "current": 0.2554355294474407,
+                          "half_a": 0.2554988148595632,
+                          "half_b": 0.2554948410931001,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.25115609291646185,
+                              "half_a": 0.2512399618534742,
+                              "half_b": 0.25119228012588196,
+                              "previous": 0.2512273320956155
+                            },
+                            "2": {
+                              "current": 0.2558465470417811,
+                              "half_a": 0.2558972406560472,
+                              "half_b": 0.2559186649539257,
+                              "previous": 0.2558821658087187
+                            },
+                            "3": {
+                              "current": 0.25930394838407905,
+                              "half_a": 0.2593592420691684,
+                              "half_b": 0.2593735781994925,
+                              "previous": 0.2593562569758129
+                            }
+                          },
+                          "previous": 0.25548858496004906
+                        },
+                        "True": {
+                          "current": 0.17068788200051607,
+                          "half_a": 0.1707462375198768,
+                          "half_b": 0.1707646204584239,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.18031381225417129,
+                              "half_a": 0.18037552285654937,
+                              "half_b": 0.18038700507150254,
+                              "previous": 0.1803648188794321
+                            },
+                            "2": {
+                              "current": 0.16139891203741535,
+                              "half_a": 0.16145709584310242,
+                              "half_b": 0.1614762199476183,
+                              "previous": 0.1614841949451664
+                            },
+                            "3": {
+                              "current": 0.17035092170996158,
+                              "half_a": 0.17040609385997865,
+                              "half_b": 0.17043063635615088,
+                              "previous": 0.17042394088371066
+                            }
+                          },
+                          "previous": 0.17075765156943637
+                        }
+                      },
+                      "paired_difference": {
+                        "current": -0.08474764744692462,
+                        "direction_resolved": true,
+                        "max_reference_change": 1.7426812248394485e-05,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": -0.08475257733968641,
+                          "half_b": -0.08473022063467622,
+                          "previous": -0.08473093339061269
+                        }
+                      }
+                    },
+                    "smape": {
+                      "methods": {
+                        "False": {
+                          "current": 9.392847983840987,
+                          "half_a": 9.40142488370112,
+                          "half_b": 9.40154892996007,
+                          "per_seed": {
+                            "1": {
+                              "current": 9.291770305542775,
+                              "half_a": 9.3010779010631,
+                              "half_b": 9.29982275302415,
+                              "previous": 9.301240765609325
+                            },
+                            "2": {
+                              "current": 9.5052359517057,
+                              "half_a": 9.51451670921851,
+                              "half_b": 9.513760654338006,
+                              "previous": 9.513504992777845
+                            },
+                            "3": {
+                              "current": 9.381537694274485,
+                              "half_a": 9.388680040821749,
+                              "half_b": 9.391063382518054,
+                              "previous": 9.38998173615084
+                            }
+                          },
+                          "previous": 9.40157583151267
+                        },
+                        "True": {
+                          "current": 6.423048478677206,
+                          "half_a": 6.429435136444433,
+                          "half_b": 6.432147270656588,
+                          "per_seed": {
+                            "1": {
+                              "current": 6.87864943594192,
+                              "half_a": 6.8848917569440635,
+                              "half_b": 6.8875292896472295,
+                              "previous": 6.884397331115321
+                            },
+                            "2": {
+                              "current": 6.129077761697337,
+                              "half_a": 6.135139274883144,
+                              "half_b": 6.139158984388915,
+                              "previous": 6.137484453098599
+                            },
+                            "3": {
+                              "current": 6.261418238392362,
+                              "half_a": 6.268274377506092,
+                              "half_b": 6.269753537933617,
+                              "previous": 6.2697605755296175
+                            }
+                          },
+                          "previous": 6.430547453247846
+                        }
+                      },
+                      "paired_difference": {
+                        "current": -2.969799505163781,
+                        "direction_resolved": true,
+                        "max_reference_change": 0.0021902420929054145,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": -2.9719897472566865,
+                          "half_b": -2.9694016593034815,
+                          "previous": -2.9710283782648235
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "references": {
+          "128": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\cornell-box\\ed4ae7321530079d0b517eb1\\accepted-16384-2d451e6c9021\\reference.pfm.gz"
+        },
+        "rois": [
+          {
+            "height": 256,
+            "name": "region-1",
+            "width": 256,
+            "x": 700,
+            "y": 450
+          },
+          {
+            "height": 256,
+            "name": "region-2",
+            "width": 256,
+            "x": 1100,
+            "y": 500
+          }
+        ],
+        "runs": [
+          {
+            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0",
+            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0",
+            "seed": 1
+          },
+          {
+            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0",
+            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0",
+            "seed": 2
+          },
+          {
+            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0",
+            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0",
+            "seed": 3
+          }
+        ],
+        "scenario": "static"
+      }
+    ],
+    "settings": null,
+    "sources": {
+      "scripts/analysis/pdf_artifacts.py": "d6cedce025d48afe55fbb5ad58df173a1c8e516c3ad78d7a700e44a883faf374",
+      "scripts/analysis/pdf_equal_time.py": "caeda72cf10cc371ab2584b6807007648564b9ecb02c07ec0124de6c13806b10",
+      "scripts/analysis/pdf_summary.py": "eae7954d8113e10562f1cbf95a704872424ace1e158a486bd8abdee9e5a2b193",
+      "scripts/run/experiment/__init__.py": "8aea3cceef32a2481e8acecbd57eecf71a736fd418662233e05127ecf74b3144",
+      "scripts/run/experiment/artifacts.py": "9407fbd9a8ec9a6940aa4d75f85eb93f119b689b614a5882999c9cc86242c034",
+      "scripts/run/experiment/config.py": "2a04f934bd30a9d098290dd434d3f138076ee76645e7065df9871624b546fe27",
+      "scripts/run/experiment/controlled_budget.py": "d0212c6137c53d444f5937609b5c45c85cddfcd55412e18bdb1a35d4c4336577",
+      "scripts/run/experiment/controlled_cleanup.py": "b429bff73a531c4bca4392990db921cd42532f1a7dbd536a86f58f84ab23b72d",
+      "scripts/run/experiment/controlled_evaluation.py": "3ba129e56494df20373257c1ce97e6823473fa63f0c49087041b1cefe12121bf",
+      "scripts/run/experiment/controlled_launch.py": "4a5db8e9a0e4fa10ff4f1b16dce88ed98cfe71c0ac4a0b6ddd21d4f2ff1f5495",
+      "scripts/run/experiment/controlled_outputs.py": "afa6a4f4bb577706c7573985e81d60bb1f72438d18ab43144b5d808e83ac3267",
+      "scripts/run/experiment/controlled_reference.py": "232e1ba974c5acf962d883ca51b48b7fe24f594562e3011619227ce5c9f0a7a1",
+      "scripts/run/experiment/controlled_reference_run.py": "178070104c12188345c4f57265a96f2d9c5198e874546911965132b4b8a78920",
+      "scripts/run/experiment/controlled_suite.py": "1287cf6983a14438c1d66ce4ced04e11639a183159a5b83e51fbf37288920c17",
+      "scripts/run/experiment/controlled_temporal.py": "1d122ec80e34f031b1a968cedc44b561b21cd7129bafa797e9acab2a484e041b",
+      "scripts/run/experiment/error_metrics.py": "73f960a32b1feec62401c1064d9ee41e0f3bc8d6dca3cafc8f3154113722f36f",
+      "scripts/run/experiment/images.py": "a1546a3c655a12966d768cd5d16ea11f417dbd76dcb0c0b789b448b24927ddb3",
+      "scripts/run/experiment/reference.py": "25db4defb1bd67fa79f90f6b942a527e0ad878fda4b9e8c69a9cb0e90330a698",
+      "scripts/run/experiment/reference_allocation.py": "b3cc22f2a88584eb26945f1e666de8cf5115aba060dafae17d529847b124d0ec",
+      "scripts/run/experiment/reference_diagnostics.py": "aaa65a4350b8d7d8b672f3a9e511fc473c8368a2207dbc9e1f790188cf2a10e2",
+      "scripts/run/experiment/reference_runner.py": "807566cf5e92704e883ad8c1e1cac1025c5567ee999e7c30a2010fb27e44a31d",
+      "scripts/run/experiment/runner.py": "cc6bb362e2e842cdf0a0c322043a9c014d7b136afb638122052eb00b06f7c15c",
+      "scripts/run/experiment/scenes.py": "6e7057c86b0884030d1043dee6f675547c964ffa4cad1bdf78cb1f5100f4d850",
+      "scripts/run/rtxdi_pdf_controlled.py": "4f24d7fa9cc7f78962cc121e67fa368e60e1703c992f3cba5e690b053182f428"
+    }
+  },
+  "identity_sha256": "80ee109bf782416fc514a4e1e9a3554b8f4a52b1ebf9de133938296daf02d7cf",
+  "schema_version": 2,
+  "status": "completed"
+}

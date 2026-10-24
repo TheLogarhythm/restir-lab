@@ -1,0 +1,1130 @@
+{
+  "schema_version": 1,
+  "estimate_kind": "piecewise-linear interpolated, within measured overlap only",
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "neighbors": [
+    2,
+    4,
+    8
+  ],
+  "difference": "PDF on minus off",
+  "target_selection": "Midpoint of intersection of all six seed/method measured time ranges per view",
+  "aggregation": "Interpolate each seed/method, then mean/sample SD of three paired seed differences",
+  "metric_definitions": {
+    "smape": "100 * mean(abs(Y(I)-Y(R)) / (abs(Y(I))+abs(Y(R))+1e-4)); no factor two",
+    "signed_relative": "100 * (Y(I)-Y(R)) / (abs(Y(R))+1e-4); unclipped numeric values",
+    "trmae": "mean(RGB_L1((I_t-I_previous)-(R_t-R_previous)) / (RGB_L1(R_t-R_previous)+0.01)) / 3",
+    "luminance": "linear RGB weights (0.2126, 0.7152, 0.0722)",
+    "rmae": "mean(abs(I-R)) / (mean(abs(R))+1e-12), linear RGB",
+    "nrmse": "sqrt(mean((I-R)^2) / (mean(R^2)+1e-12)), linear RGB"
+  },
+  "views": [
+    {
+      "view": "bistro-interior",
+      "measured_points": [
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-2",
+          "neighbors": 2,
+          "seed": 1,
+          "method": "pdf-off",
+          "gpu_ms": 26.54362758068182,
+          "smape": 27.975081633013446,
+          "rmae": 0.16012320591033397,
+          "nrmse": 0.8995830482490177
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-2",
+          "neighbors": 2,
+          "seed": 1,
+          "method": "pdf-on",
+          "gpu_ms": 28.28533520340909,
+          "smape": 28.69512767319324,
+          "rmae": 0.16203170792163,
+          "nrmse": 0.9833615335476619
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-2",
+          "neighbors": 2,
+          "seed": 2,
+          "method": "pdf-off",
+          "gpu_ms": 26.030173060227273,
+          "smape": 27.815648112639504,
+          "rmae": 0.16211018431178684,
+          "nrmse": 0.7098015714366868
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-2",
+          "neighbors": 2,
+          "seed": 2,
+          "method": "pdf-on",
+          "gpu_ms": 28.534597888636366,
+          "smape": 28.52636358778179,
+          "rmae": 0.1690655979442286,
+          "nrmse": 0.8032910559848315
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-2",
+          "neighbors": 2,
+          "seed": 3,
+          "method": "pdf-off",
+          "gpu_ms": 26.136389825000002,
+          "smape": 27.886574681616036,
+          "rmae": 0.1501486232655358,
+          "nrmse": 0.3475942151590695
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-2",
+          "neighbors": 2,
+          "seed": 3,
+          "method": "pdf-on",
+          "gpu_ms": 28.615377442045453,
+          "smape": 28.573708818137746,
+          "rmae": 0.15752813843630012,
+          "nrmse": 0.6250415091057836
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-4",
+          "neighbors": 4,
+          "seed": 1,
+          "method": "pdf-off",
+          "gpu_ms": 29.421218970454547,
+          "smape": 28.578611997436425,
+          "rmae": 0.1548289156598399,
+          "nrmse": 0.7200493203340735
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-4",
+          "neighbors": 4,
+          "seed": 1,
+          "method": "pdf-on",
+          "gpu_ms": 32.648901836363635,
+          "smape": 28.030247458830083,
+          "rmae": 0.16059857164271463,
+          "nrmse": 0.9831370602334562
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-4",
+          "neighbors": 4,
+          "seed": 2,
+          "method": "pdf-off",
+          "gpu_ms": 29.400645777272725,
+          "smape": 28.334455577696268,
+          "rmae": 0.15952116774166633,
+          "nrmse": 0.6309137126976758
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-4",
+          "neighbors": 4,
+          "seed": 2,
+          "method": "pdf-on",
+          "gpu_ms": 32.60886089659091,
+          "smape": 27.888424765638106,
+          "rmae": 0.16756635889486488,
+          "nrmse": 0.8036167416845489
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-4",
+          "neighbors": 4,
+          "seed": 3,
+          "method": "pdf-off",
+          "gpu_ms": 29.496552720454545,
+          "smape": 28.454848794946983,
+          "rmae": 0.1513654440930051,
+          "nrmse": 0.3579706882213128
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-4",
+          "neighbors": 4,
+          "seed": 3,
+          "method": "pdf-on",
+          "gpu_ms": 32.4833976875,
+          "smape": 27.891781064044828,
+          "rmae": 0.15570093479466993,
+          "nrmse": 0.6242777215373496
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-8",
+          "neighbors": 8,
+          "seed": 1,
+          "method": "pdf-off",
+          "gpu_ms": 39.34069536931818,
+          "smape": 29.480133651855397,
+          "rmae": 0.16290697101689883,
+          "nrmse": 0.6661026286955775
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-8",
+          "neighbors": 8,
+          "seed": 1,
+          "method": "pdf-on",
+          "gpu_ms": 47.42070697840909,
+          "smape": 28.021062005261115,
+          "rmae": 0.15905008695304268,
+          "nrmse": 0.9801292700459517
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-8",
+          "neighbors": 8,
+          "seed": 2,
+          "method": "pdf-off",
+          "gpu_ms": 38.36098313522727,
+          "smape": 29.27653136142335,
+          "rmae": 0.19115922269986335,
+          "nrmse": 2.423843601202606
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-8",
+          "neighbors": 8,
+          "seed": 2,
+          "method": "pdf-on",
+          "gpu_ms": 45.30975433863637,
+          "smape": 27.91323828449733,
+          "rmae": 0.16826302864639003,
+          "nrmse": 0.8028238392484595
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-8",
+          "neighbors": 8,
+          "seed": 3,
+          "method": "pdf-off",
+          "gpu_ms": 38.36322910113636,
+          "smape": 29.37000262970577,
+          "rmae": 0.16101716895924578,
+          "nrmse": 0.5440670386138646
+        },
+        {
+          "view": "bistro-interior",
+          "condition": "bistro-interior-static-neighbors-8",
+          "neighbors": 8,
+          "seed": 3,
+          "method": "pdf-on",
+          "gpu_ms": 44.35535140113636,
+          "smape": 27.968808888460984,
+          "rmae": 0.15508235827419833,
+          "nrmse": 0.6222724765220434
+        }
+      ],
+      "curve_ranges": [
+        {
+          "seed": 1,
+          "method": "pdf-off",
+          "gpu_ms": [
+            26.54362758068182,
+            39.34069536931818
+          ]
+        },
+        {
+          "seed": 1,
+          "method": "pdf-on",
+          "gpu_ms": [
+            28.28533520340909,
+            47.42070697840909
+          ]
+        },
+        {
+          "seed": 2,
+          "method": "pdf-off",
+          "gpu_ms": [
+            26.030173060227273,
+            38.36098313522727
+          ]
+        },
+        {
+          "seed": 2,
+          "method": "pdf-on",
+          "gpu_ms": [
+            28.534597888636366,
+            45.30975433863637
+          ]
+        },
+        {
+          "seed": 3,
+          "method": "pdf-off",
+          "gpu_ms": [
+            26.136389825000002,
+            38.36322910113636
+          ]
+        },
+        {
+          "seed": 3,
+          "method": "pdf-on",
+          "gpu_ms": [
+            28.615377442045453,
+            44.35535140113636
+          ]
+        }
+      ],
+      "status": "interpolated",
+      "shared_gpu_ms": [
+        28.615377442045453,
+        38.36098313522727
+      ],
+      "target_gpu_ms": 33.488180288636364,
+      "estimates": [
+        {
+          "view": "bistro-interior",
+          "seed": 1,
+          "method": "pdf-off",
+          "estimate_kind": "piecewise-linear interpolated",
+          "target_gpu_ms": 33.488180288636364,
+          "lower_neighbors": 4,
+          "upper_neighbors": 8,
+          "lower_gpu_ms": 29.421218970454547,
+          "upper_gpu_ms": 39.34069536931818,
+          "interpolation_weight": 0.4099975799778831,
+          "closest_condition": "bistro-interior-static-neighbors-4",
+          "closest_neighbors": 4,
+          "closest_gpu_ms": 29.421218970454547,
+          "closest_distance_ms": 4.066961318181818,
+          "smape": 28.94823369404586,
+          "rmae": 0.15814089880716142,
+          "nrmse": 0.6979313073144771
+        },
+        {
+          "view": "bistro-interior",
+          "seed": 1,
+          "method": "pdf-on",
+          "estimate_kind": "piecewise-linear interpolated",
+          "target_gpu_ms": 33.488180288636364,
+          "lower_neighbors": 4,
+          "upper_neighbors": 8,
+          "lower_gpu_ms": 32.648901836363635,
+          "upper_gpu_ms": 47.42070697840909,
+          "interpolation_weight": 0.05681624176613762,
+          "closest_condition": "bistro-interior-static-neighbors-4",
+          "closest_neighbors": 4,
+          "closest_gpu_ms": 32.648901836363635,
+          "closest_distance_ms": 0.8392784522727297,
+          "smape": 28.029725575879375,
+          "rmae": 0.16051059256221506,
+          "nrmse": 0.982966168898981
+        },
+        {
+          "view": "bistro-interior",
+          "seed": 2,
+          "method": "pdf-off",
+          "estimate_kind": "piecewise-linear interpolated",
+          "target_gpu_ms": 33.488180288636364,
+          "lower_neighbors": 4,
+          "upper_neighbors": 8,
+          "lower_gpu_ms": 29.400645777272725,
+          "upper_gpu_ms": 38.36098313522727,
+          "interpolation_weight": 0.45618087222295567,
+          "closest_condition": "bistro-interior-static-neighbors-4",
+          "closest_neighbors": 4,
+          "closest_gpu_ms": 29.400645777272725,
+          "closest_distance_ms": 4.087534511363639,
+          "smape": 28.764212530417012,
+          "rmae": 0.17395384324793445,
+          "nrmse": 1.4488140330704615
+        },
+        {
+          "view": "bistro-interior",
+          "seed": 2,
+          "method": "pdf-on",
+          "estimate_kind": "piecewise-linear interpolated",
+          "target_gpu_ms": 33.488180288636364,
+          "lower_neighbors": 4,
+          "upper_neighbors": 8,
+          "lower_gpu_ms": 32.60886089659091,
+          "upper_gpu_ms": 45.30975433863637,
+          "interpolation_weight": 0.06923287688837108,
+          "closest_condition": "bistro-interior-static-neighbors-4",
+          "closest_neighbors": 4,
+          "closest_gpu_ms": 32.60886089659091,
+          "closest_distance_ms": 0.8793193920454527,
+          "smape": 27.890142676934452,
+          "rmae": 0.16761459134600407,
+          "nrmse": 0.8035618467678066
+        },
+        {
+          "view": "bistro-interior",
+          "seed": 3,
+          "method": "pdf-off",
+          "estimate_kind": "piecewise-linear interpolated",
+          "target_gpu_ms": 33.488180288636364,
+          "lower_neighbors": 4,
+          "upper_neighbors": 8,
+          "lower_gpu_ms": 29.496552720454545,
+          "upper_gpu_ms": 38.36322910113636,
+          "interpolation_weight": 0.45018306711616746,
+          "closest_condition": "bistro-interior-static-neighbors-4",
+          "closest_neighbors": 4,
+          "closest_gpu_ms": 29.496552720454545,
+          "closest_distance_ms": 3.991627568181819,
+          "smape": 28.866835555161817,
+          "rmae": 0.15571048719625072,
+          "nrmse": 0.4417481140201568
+        },
+        {
+          "view": "bistro-interior",
+          "seed": 3,
+          "method": "pdf-on",
+          "estimate_kind": "piecewise-linear interpolated",
+          "target_gpu_ms": 33.488180288636364,
+          "lower_neighbors": 4,
+          "upper_neighbors": 8,
+          "lower_gpu_ms": 32.4833976875,
+          "upper_gpu_ms": 44.35535140113636,
+          "interpolation_weight": 0.08463498303419509,
+          "closest_condition": "bistro-interior-static-neighbors-4",
+          "closest_neighbors": 4,
+          "closest_gpu_ms": 32.4833976875,
+          "closest_distance_ms": 1.0047826011363625,
+          "smape": 27.89830031265745,
+          "rmae": 0.15564858158135447,
+          "nrmse": 0.6241080076594998
+        }
+      ],
+      "paired_differences": {
+        "smape": {
+          "mean": -0.9203710713844705,
+          "sd": 0.04726024097250883,
+          "seed_differences": [
+            -0.9185081181664856,
+            -0.8740698534825597,
+            -0.9685352425043661
+          ],
+          "reference_status": "not_evaluated",
+          "direction": "not_evaluated",
+          "reference_variants": null,
+          "reference_max_change": null,
+          "method_estimates": {
+            "pdf-off": {
+              "mean": 28.85976059320823,
+              "sd": 0.09221436157569168
+            },
+            "pdf-on": {
+              "mean": 27.93938952182376,
+              "sd": 0.07833957334515954
+            }
+          }
+        },
+        "rmae": {
+          "mean": -0.0013438212539243304,
+          "sd": 0.004493763944986851,
+          "seed_differences": [
+            0.0023696937550536368,
+            -0.006339251901930382,
+            -6.190561489624602e-05
+          ],
+          "reference_status": "not_evaluated",
+          "direction": "not_evaluated",
+          "reference_variants": null,
+          "reference_max_change": null,
+          "method_estimates": {
+            "pdf-off": {
+              "mean": 0.1626017430837822,
+              "sd": 0.009906026385605964
+            },
+            "pdf-on": {
+              "mean": 0.16125792182985788,
+              "sd": 0.0060179085401515535
+            }
+          }
+        },
+        "nrmse": {
+          "mean": -0.05928581035960264,
+          "sd": 0.5100519410437635,
+          "seed_differences": [
+            0.285034861584504,
+            -0.6452521863026549,
+            0.18235989363934302
+          ],
+          "reference_status": "not_evaluated",
+          "direction": "not_evaluated",
+          "reference_variants": null,
+          "reference_max_change": null,
+          "method_estimates": {
+            "pdf-off": {
+              "mean": 0.8628311514683651,
+              "sd": 0.5233922145768326
+            },
+            "pdf-on": {
+              "mean": 0.8035453411087625,
+              "sd": 0.17942908118912318
+            }
+          }
+        }
+      }
+    },
+    {
+      "view": "bistro-exterior",
+      "measured_points": [
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-2",
+          "neighbors": 2,
+          "seed": 1,
+          "method": "pdf-off",
+          "gpu_ms": 23.721111154545454,
+          "smape": 40.61088282214158,
+          "rmae": 0.2186960641802428,
+          "nrmse": 0.07180285780019768
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-2",
+          "neighbors": 2,
+          "seed": 1,
+          "method": "pdf-on",
+          "gpu_ms": 26.589335194318178,
+          "smape": 32.67485832035601,
+          "rmae": 0.1770959667743589,
+          "nrmse": 0.07318931960370816
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-2",
+          "neighbors": 2,
+          "seed": 2,
+          "method": "pdf-off",
+          "gpu_ms": 23.760186302272725,
+          "smape": 40.60146015783614,
+          "rmae": 0.21821749033196478,
+          "nrmse": 0.06838580552733411
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-2",
+          "neighbors": 2,
+          "seed": 2,
+          "method": "pdf-on",
+          "gpu_ms": 26.45750697159091,
+          "smape": 32.728449240326945,
+          "rmae": 0.17658314766679664,
+          "nrmse": 0.05247043743437662
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-2",
+          "neighbors": 2,
+          "seed": 3,
+          "method": "pdf-off",
+          "gpu_ms": 23.813166635227276,
+          "smape": 40.59730233836649,
+          "rmae": 0.21856768813492902,
+          "nrmse": 0.05614049300414804
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-2",
+          "neighbors": 2,
+          "seed": 3,
+          "method": "pdf-on",
+          "gpu_ms": 26.664285024999995,
+          "smape": 32.71895200537401,
+          "rmae": 0.17588405308146288,
+          "nrmse": 0.04467708262824572
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-4",
+          "neighbors": 4,
+          "seed": 1,
+          "method": "pdf-off",
+          "gpu_ms": 27.618722992045456,
+          "smape": 42.243691001497766,
+          "rmae": 0.22961650713184573,
+          "nrmse": 0.08465744963175618
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-4",
+          "neighbors": 4,
+          "seed": 1,
+          "method": "pdf-on",
+          "gpu_ms": 32.42881147159091,
+          "smape": 34.478361240755646,
+          "rmae": 0.18621058969907808,
+          "nrmse": 0.06554280257026651
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-4",
+          "neighbors": 4,
+          "seed": 2,
+          "method": "pdf-off",
+          "gpu_ms": 27.650943889772726,
+          "smape": 42.221004832219265,
+          "rmae": 0.2269999913233978,
+          "nrmse": 0.06368658513774442
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-4",
+          "neighbors": 4,
+          "seed": 2,
+          "method": "pdf-on",
+          "gpu_ms": 32.38423291590909,
+          "smape": 34.45227149568354,
+          "rmae": 0.1869973187888777,
+          "nrmse": 0.054892550140468496
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-4",
+          "neighbors": 4,
+          "seed": 3,
+          "method": "pdf-off",
+          "gpu_ms": 27.58590838636364,
+          "smape": 42.259753364268065,
+          "rmae": 0.22657094310974848,
+          "nrmse": 0.051553961445045864
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-4",
+          "neighbors": 4,
+          "seed": 3,
+          "method": "pdf-on",
+          "gpu_ms": 32.267333817045454,
+          "smape": 34.49651765740191,
+          "rmae": 0.18633040513370844,
+          "nrmse": 0.038316346278885416
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-8",
+          "neighbors": 8,
+          "seed": 1,
+          "method": "pdf-off",
+          "gpu_ms": 36.01517379886363,
+          "smape": 43.832202641955554,
+          "rmae": 0.23786281561502837,
+          "nrmse": 0.10606168977161834
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-8",
+          "neighbors": 8,
+          "seed": 1,
+          "method": "pdf-on",
+          "gpu_ms": 44.74149255,
+          "smape": 36.20860278110814,
+          "rmae": 0.19762138107960472,
+          "nrmse": 0.08066648372703959
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-8",
+          "neighbors": 8,
+          "seed": 2,
+          "method": "pdf-off",
+          "gpu_ms": 35.6936727375,
+          "smape": 43.76530386661044,
+          "rmae": 0.23515604679346094,
+          "nrmse": 0.10189303084789439
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-8",
+          "neighbors": 8,
+          "seed": 2,
+          "method": "pdf-on",
+          "gpu_ms": 43.77240433863636,
+          "smape": 36.18485800757089,
+          "rmae": 0.19734256232204478,
+          "nrmse": 0.10582922420584227
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-8",
+          "neighbors": 8,
+          "seed": 3,
+          "method": "pdf-off",
+          "gpu_ms": 35.46034037045455,
+          "smape": 43.720596158973514,
+          "rmae": 0.23593483642911586,
+          "nrmse": 0.0904235318344162
+        },
+        {
+          "view": "bistro-exterior",
+          "condition": "bistro-exterior-static-neighbors-8",
+          "neighbors": 8,
+          "seed": 3,
+          "method": "pdf-on",
+          "gpu_ms": 45.02494239204545,
+          "smape": 36.19509946550093,
+          "rmae": 0.19602457357698122,
+          "nrmse": 0.041285489776839907
+        }
+      ],
+      "curve_ranges": [
+        {
+          "seed": 1,
+          "method": "pdf-off",
+          "gpu_ms": [
+            23.721111154545454,
+            36.01517379886363
+          ]
+        },
+        {
+          "seed": 1,
+          "method": "pdf-on",
+          "gpu_ms": [
+            26.589335194318178,
+            44.74149255
+          ]
+        },
+        {
+          "seed": 2,
+          "method": "pdf-off",
+          "gpu_ms": [
+            23.760186302272725,
+            35.6936727375
+          ]
+        },
+        {
+          "seed": 2,
+          "method": "pdf-on",
+          "gpu_ms": [
+            26.45750697159091,
+            43.77240433863636
+          ]
+        },
+        {
+          "seed": 3,
+          "method": "pdf-off",
+          "gpu_ms": [
+            23.813166635227276,
+            35.46034037045455
+          ]
+        },
+        {
+          "seed": 3,
+          "method": "pdf-on",
+          "gpu_ms": [
+            26.664285024999995,
+            45.02494239204545
+          ]
+        }
+      ],
+      "status": "interpolated",
+      "shared_gpu_ms": [
+        26.664285024999995,
+        35.46034037045455
+      ],
+      "target_gpu_ms": 31.062312697727272,
+      "estimates": [
+        {
+          "view": "bistro-exterior",
+          "seed": 1,
+          "method": "pdf-off",
+          "estimate_kind": "piecewise-linear interpolated",
+          "target_gpu_ms": 31.062312697727272,
+          "lower_neighbors": 4,
+          "upper_neighbors": 8,
+          "lower_gpu_ms": 27.618722992045456,
+          "upper_gpu_ms": 36.01517379886363,
+          "interpolation_weight": 0.4101244424472203,
+          "closest_condition": "bistro-exterior-static-neighbors-4",
+          "closest_neighbors": 4,
+          "closest_gpu_ms": 27.618722992045456,
+          "closest_distance_ms": 3.4435897056818163,
+          "smape": 42.895178452361435,
+          "rmae": 0.23299851980075878,
+          "nrmse": 0.09343585168512357
+        },
+        {
+          "view": "bistro-exterior",
+          "seed": 1,
+          "method": "pdf-on",
+          "estimate_kind": "piecewise-linear interpolated",
+          "target_gpu_ms": 31.062312697727272,
+          "lower_neighbors": 2,
+          "upper_neighbors": 4,
+          "lower_gpu_ms": 26.589335194318178,
+          "upper_gpu_ms": 32.42881147159091,
+          "interpolation_weight": 0.7659894982051629,
+          "closest_condition": "bistro-exterior-static-neighbors-4",
+          "closest_neighbors": 4,
+          "closest_gpu_ms": 32.42881147159091,
+          "closest_distance_ms": 1.3664987738636398,
+          "smape": 34.05632261736447,
+          "rmae": 0.18407767221479382,
+          "nrmse": 0.06733216785824496
+        },
+        {
+          "view": "bistro-exterior",
+          "seed": 2,
+          "method": "pdf-off",
+          "estimate_kind": "piecewise-linear interpolated",
+          "target_gpu_ms": 31.062312697727272,
+          "lower_neighbors": 4,
+          "upper_neighbors": 8,
+          "lower_gpu_ms": 27.650943889772726,
+          "upper_gpu_ms": 35.6936727375,
+          "interpolation_weight": 0.4241556407709225,
+          "closest_condition": "bistro-exterior-static-neighbors-4",
+          "closest_neighbors": 4,
+          "closest_gpu_ms": 27.650943889772726,
+          "closest_distance_ms": 3.4113688079545454,
+          "smape": 42.87602797869337,
+          "rmae": 0.23045942825746563,
+          "nrmse": 0.07989206459951254
+        },
+        {
+          "view": "bistro-exterior",
+          "seed": 2,
+          "method": "pdf-on",
+          "estimate_kind": "piecewise-linear interpolated",
+          "target_gpu_ms": 31.062312697727272,
+          "lower_neighbors": 2,
+          "upper_neighbors": 4,
+          "lower_gpu_ms": 26.45750697159091,
+          "upper_gpu_ms": 32.38423291590909,
+          "interpolation_weight": 0.7769560748039798,
+          "closest_condition": "bistro-exterior-static-neighbors-4",
+          "closest_neighbors": 4,
+          "closest_gpu_ms": 32.38423291590909,
+          "closest_distance_ms": 1.3219202181818162,
+          "smape": 34.06778341350855,
+          "rmae": 0.18467450118414572,
+          "nrmse": 0.05435231261523461
+        },
+        {
+          "view": "bistro-exterior",
+          "seed": 3,
+          "method": "pdf-off",
+          "estimate_kind": "piecewise-linear interpolated",
+          "target_gpu_ms": 31.062312697727272,
+          "lower_neighbors": 4,
+          "upper_neighbors": 8,
+          "lower_gpu_ms": 27.58590838636364,
+          "upper_gpu_ms": 35.46034037045455,
+          "interpolation_weight": 0.4414800100359207,
+          "closest_condition": "bistro-exterior-static-neighbors-4",
+          "closest_neighbors": 4,
+          "closest_gpu_ms": 27.58590838636364,
+          "closest_distance_ms": 3.4764043113636305,
+          "smape": 42.90468625593553,
+          "rmae": 0.23070491482635808,
+          "nrmse": 0.068714099770637
+        },
+        {
+          "view": "bistro-exterior",
+          "seed": 3,
+          "method": "pdf-on",
+          "estimate_kind": "piecewise-linear interpolated",
+          "target_gpu_ms": 31.062312697727272,
+          "lower_neighbors": 2,
+          "upper_neighbors": 4,
+          "lower_gpu_ms": 26.664285024999995,
+          "upper_gpu_ms": 32.267333817045454,
+          "interpolation_weight": 0.7849347446288657,
+          "closest_condition": "bistro-exterior-static-neighbors-4",
+          "closest_neighbors": 4,
+          "closest_gpu_ms": 32.267333817045454,
+          "closest_distance_ms": 1.2050211193181823,
+          "smape": 34.114225046509574,
+          "rmae": 0.18408375776189548,
+          "nrmse": 0.03968431966620905
+        }
+      ],
+      "paired_differences": {
+        "smape": {
+          "mean": -8.812520536535914,
+          "sd": 0.02447902968432368,
+          "seed_differences": [
+            -8.838855834996963,
+            -8.808244565184822,
+            -8.790461209425956
+          ],
+          "reference_status": "not_evaluated",
+          "direction": "not_evaluated",
+          "reference_variants": null,
+          "reference_max_change": null,
+          "method_estimates": {
+            "pdf-off": {
+              "mean": 42.89196422899678,
+              "sd": 0.014597007826966624
+            },
+            "pdf-on": {
+              "mean": 34.07944369246086,
+              "sd": 0.03066177431526498
+            }
+          }
+        },
+        "rmae": {
+          "mean": -0.047108977241249156,
+          "sd": 0.001623876768436279,
+          "seed_differences": [
+            -0.04892084758596496,
+            -0.04578492707331991,
+            -0.0466211570644626
+          ],
+          "reference_status": "not_evaluated",
+          "direction": "not_evaluated",
+          "reference_variants": null,
+          "reference_max_change": null,
+          "method_estimates": {
+            "pdf-off": {
+              "mean": 0.23138762096152748,
+              "sd": 0.0014004685703557132
+            },
+            "pdf-on": {
+              "mean": 0.18427864372027833,
+              "sd": 0.0003428361230172758
+            }
+          }
+        },
+        "nrmse": {
+          "mean": -0.026891071971861493,
+          "sd": 0.0018735151822187551,
+          "seed_differences": [
+            -0.02610368382687861,
+            -0.025539751984277922,
+            -0.02902978010442795
+          ],
+          "reference_status": "not_evaluated",
+          "direction": "not_evaluated",
+          "reference_variants": null,
+          "reference_max_change": null,
+          "method_estimates": {
+            "pdf-off": {
+              "mean": 0.08068067201842437,
+              "sd": 0.012379728618844081
+            },
+            "pdf-on": {
+              "mean": 0.05378960004656287,
+              "sd": 0.013832511033383335
+            }
+          }
+        }
+      }
+    }
+  ],
+  "source": {
+    "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\analysis\\equal-time",
+    "sha256": {
+      "analysis.json": "5693c15023d4e7a44927d99e8e9527762e894f85f306504fc6130d3471123a32",
+      "seed-metrics.csv": "8f58488970acb42450b7bd6fe0be22b9b4f26721b0d3781c4d56ea5150b97f71"
+    },
+    "reference_assessments": {
+      "bistro-interior-static-neighbors-2": {
+        "temporal": {
+          "status": "not_evaluated",
+          "passed": null,
+          "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+          "policy_id": "user_fixed_single_stream_262144_v1"
+        },
+        "differences": {
+          "status": "not_evaluated",
+          "passed": null,
+          "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+          "policy_id": "user_fixed_single_stream_262144_v1"
+        }
+      },
+      "bistro-interior-static-neighbors-8": {
+        "temporal": {
+          "status": "not_evaluated",
+          "passed": null,
+          "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+          "policy_id": "user_fixed_single_stream_262144_v1"
+        },
+        "differences": {
+          "status": "not_evaluated",
+          "passed": null,
+          "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+          "policy_id": "user_fixed_single_stream_262144_v1"
+        }
+      },
+      "bistro-exterior-static-neighbors-2": {
+        "temporal": {
+          "status": "not_evaluated",
+          "passed": null,
+          "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+          "policy_id": "user_fixed_single_stream_262144_v1"
+        },
+        "differences": {
+          "status": "not_evaluated",
+          "passed": null,
+          "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+          "policy_id": "user_fixed_single_stream_262144_v1"
+        }
+      },
+      "bistro-exterior-static-neighbors-8": {
+        "temporal": {
+          "status": "not_evaluated",
+          "passed": null,
+          "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+          "policy_id": "user_fixed_single_stream_262144_v1"
+        },
+        "differences": {
+          "status": "not_evaluated",
+          "passed": null,
+          "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+          "policy_id": "user_fixed_single_stream_262144_v1"
+        }
+      },
+      "bistro-interior-static-neighbors-4": {
+        "temporal": {
+          "status": "not_evaluated",
+          "passed": null,
+          "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+          "policy_id": "user_fixed_single_stream_262144_v1"
+        },
+        "differences": {
+          "status": "not_evaluated",
+          "passed": null,
+          "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+          "policy_id": "user_fixed_single_stream_262144_v1"
+        }
+      },
+      "bistro-exterior-static-neighbors-4": {
+        "temporal": {
+          "status": "not_evaluated",
+          "passed": null,
+          "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+          "policy_id": "user_fixed_single_stream_262144_v1"
+        },
+        "differences": {
+          "status": "not_evaluated",
+          "passed": null,
+          "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
+          "policy_id": "user_fixed_single_stream_262144_v1"
+        }
+      }
+    },
+    "reference_policies": {
+      "bistro-interior-static-neighbors-2": {
+        "policy_id": "user_fixed_single_stream_262144_v1",
+        "scene_id": "bistro",
+        "seeds": [
+          1001
+        ],
+        "local_samples_per_stream": 262144,
+        "batch_counts": {
+          "local": 64,
+          "environment": 8,
+          "infinite": 4
+        },
+        "resolution": [
+          1920,
+          1080
+        ],
+        "precision_checks": "not_evaluated",
+        "label": "User-specified fixed-sample single-stream reference"
+      },
+      "bistro-interior-static-neighbors-8": {
+        "policy_id": "user_fixed_single_stream_262144_v1",
+        "scene_id": "bistro",
+        "seeds": [
+          1001
+        ],
+        "local_samples_per_stream": 262144,
+        "batch_counts": {
+          "local": 64,
+          "environment": 8,
+          "infinite": 4
+        },
+        "resolution": [
+          1920,
+          1080
+        ],
+        "precision_checks": "not_evaluated",
+        "label": "User-specified fixed-sample single-stream reference"
+      },
+      "bistro-exterior-static-neighbors-2": {
+        "policy_id": "user_fixed_single_stream_262144_v1",
+        "scene_id": "bistro",
+        "seeds": [
+          1001
+        ],
+        "local_samples_per_stream": 262144,
+        "batch_counts": {
+          "local": 64,
+          "environment": 8,
+          "infinite": 4
+        },
+        "resolution": [
+          1920,
+          1080
+        ],
+        "precision_checks": "not_evaluated",
+        "label": "User-specified fixed-sample single-stream reference"
+      },
+      "bistro-exterior-static-neighbors-8": {
+        "policy_id": "user_fixed_single_stream_262144_v1",
+        "scene_id": "bistro",
+        "seeds": [
+          1001
+        ],
+        "local_samples_per_stream": 262144,
+        "batch_counts": {
+          "local": 64,
+          "environment": 8,
+          "infinite": 4
+        },
+        "resolution": [
+          1920,
+          1080
+        ],
+        "precision_checks": "not_evaluated",
+        "label": "User-specified fixed-sample single-stream reference"
+      },
+      "bistro-interior-static-neighbors-4": {
+        "policy_id": "user_fixed_single_stream_262144_v1",
+        "scene_id": "bistro",
+        "seeds": [
+          1001
+        ],
+        "local_samples_per_stream": 262144,
+        "batch_counts": {
+          "local": 64,
+          "environment": 8,
+          "infinite": 4
+        },
+        "resolution": [
+          1920,
+          1080
+        ],
+        "precision_checks": "not_evaluated",
+        "label": "User-specified fixed-sample single-stream reference"
+      },
+      "bistro-exterior-static-neighbors-4": {
+        "policy_id": "user_fixed_single_stream_262144_v1",
+        "scene_id": "bistro",
+        "seeds": [
+          1001
+        ],
+        "local_samples_per_stream": 262144,
+        "batch_counts": {
+          "local": 64,
+          "environment": 8,
+          "infinite": 4
+        },
+        "resolution": [
+          1920,
+          1080
+        ],
+        "precision_checks": "not_evaluated",
+        "label": "User-specified fixed-sample single-stream reference"
+      }
+    }
+  },
+  "reference_precision_verified": false,
+  "reference_precision_scope": "Per-condition policy and assessment; fixed-policy uncertainty is NOT EVALUATED"
+}

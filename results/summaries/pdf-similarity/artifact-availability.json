@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "archived_utc": "2026-10-23T15:27:33.815131+00:00",
+  "status": "archived_verified",
+  "historical_root": "runs/pdf-controlled-20261018",
+  "current_root": "runs/pdf-similarity-archive",
+  "inventory": "inventory.json",
+  "method_runs": 78,
+  "method_seeds": [
+    1,
+    2,
+    3
+  ],
+  "video_source_png": 768,
+  "method_hdr": 198,
+  "reference_hdr": 30,
+  "display_png_total": 1666,
+  "old_mp4_retained": false,
+  "numeric_npz_retained": false,
+  "capabilities": [
+    "Rebuild comparison videos from full 96-frame seed-1 PNG sequences.",
+    "Recompute selected spatial/ROI and local temporal metrics from retained HDR."
+  ],
+  "limits": [
+    "Full dynamic HDR sequences and reference generation/resume chain are retired.",
+    "Original convergence records survive; full historical convergence cannot be rerun from this archive.",
+    "Bistro reference precision remains not_evaluated."
+  ],
+  "original_records_immutable": true,
+  "verification": {
+    "integrity": "verification/integrity.json",
+    "numerical": "verification/numerical.json",
+    "pre_deletion_numerical": "verification/numerical.pre-deletion.json",
+    "source_removal": "verification/source-removal.json",
+    "report_media_removal": "verification/report-media-removal.json"
+  },
+  "updated_utc": "2026-10-23T16:03:55.179563+00:00",
+  "historical_root_deleted": true,
+  "source_removed_utc": "2026-10-23T15:59:29.6171892Z",
+  "paths_relative_to": "runs/pdf-similarity-archive"
+}

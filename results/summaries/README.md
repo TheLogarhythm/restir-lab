@@ -1,7 +1,7 @@
 # Summaries
 
 - [DI baseline](di-baseline/README.md): three scenes, one seed, fixed settings; PNGs, statistics and run records archived.
-- [PDF history controls](pdf-history-controls/README.md): integration checks and historical negative screening; mode 0 remains the default.
+- [PDF Similarity controlled comparison](pdf-similarity/README.md): three-seed comparisons, ablations and bounded equal-time analysis; reporting and sparse-HDR archive at `runs/pdf-similarity-archive/`, with complete video-source PNG and no old MP4.
 
 Historical DI quality scores predate the reference geometric-normal correction; the controlled PDF comparison regenerates matched references.
 

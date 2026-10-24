@@ -1,0 +1,772 @@
+{
+  "files": {
+    "analysis.json": {
+      "bytes": 61514,
+      "sha256": "70aadd04989ad279a7671e99ad42f6ec1f8f9b73b1c3592cf6d6d9f2c2537c7b"
+    },
+    "frame-metrics.csv": {
+      "bytes": 2156,
+      "sha256": "292b513c5c70e29a2ac380c3c7e51ea1cefcd0abfab5f5dd30b7cf3b7db90afb"
+    },
+    "paired-differences.csv": {
+      "bytes": 2320,
+      "sha256": "0e4dba8b4dd41bb54686f5125e6da69f595978d0871a5edee29c32ca89c1a52d"
+    },
+    "paired-seed-differences.csv": {
+      "bytes": 2175,
+      "sha256": "cc118609a27c5695686474163a8ff9687e1a10a1edcb669e59c73a33a25e1fae"
+    },
+    "seed-metrics.csv": {
+      "bytes": 3410,
+      "sha256": "c06643a24674437130af284b8348cffecac53d8b990a59063d0a92278f3f4af4"
+    },
+    "summary.csv": {
+      "bytes": 1935,
+      "sha256": "0bac5bd9bc0f683c0db2943daac87c63612c5f2baf8245b4a580c6ca3b59787d"
+    },
+    "summary.md": {
+      "bytes": 1618,
+      "sha256": "d140fa66c0cec73201e9db16e64abd75b46d358dabda05753a1a9b05717c209d"
+    }
+  },
+  "identity": {
+    "inputs": {
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\captures.json": "a49b8e1f6f0aa497407ffcd16ac9a72bae18354bf4e90f0a307bf4492c5e7e5b",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\config.json": "97a7630d938f46d553122586358f041a8e7b6e184b0e65fcf7a7cb8f9839599a",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\manifest.json": "e6d4897bea7073380a8055d54190895dee55ee87f7b77d8bd3e829673d7ca2d9",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\timings.csv": "573a80cbffd07989705e37391e34f3ac88e7642b0047b2b75df00151c5b49b34",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\captures.json": "d759048e3c5e5ebe3d918d8dc68cdc6841b815a05484f4b6d29b1c6d0ecca997",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\config.json": "aaa3a4d1b6166158966de5bc81af7a9abc82e2f4cd19978b4ff519094458c80f",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\manifest.json": "1bed9a2c9e8943ce22334d6b1c0ef3fa8ef0fa9a10ad78346ef966d93f1310cb",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\timings.csv": "814e637ef7fdab50b12009e868804b364d7a1a7c698c5e340c6ab924c5391dd9",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\captures.json": "e017fb27395a9716613403d3da05d1b66e80af9eaffe37810398f400d8171307",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\config.json": "5281ac70d355cac966d3dda170256e55689492899dc2d31c33b16859a250cd06",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\manifest.json": "af543f482cb707240a92958596243d50516db9e312c6ace490289fdc87b45623",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\timings.csv": "abca2957393a8bfeb0dbc516d6b4aac571ca737d141132178258ce62252c3e13",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\captures.json": "5a134ab0467fb3b5b88babd77a8015625f2d04f8e0ce5e99f975f323cacb7c2b",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\config.json": "a2ea0ecfb3806afc33ae12d837a0829409e4000e0f492e312c7c18e77319b9a1",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\manifest.json": "30e31eb1d5fbd36d72c9c01ff1953397a975fc802b0ade219001b6d4dc0afa56",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\timings.csv": "cced0a58db971683c4e8b336c42cf3c09fedde780868306048c3b41af10a367f",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\captures.json": "a6c25eb4764d4e2efa97256079e4a646bcc3094c8e7374f3c41f2c06ffae46ab",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\config.json": "8dbcde2952be238329286dde7725bac561ccbea5683d13b715d19d6868f7cf27",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\manifest.json": "658fb7599c166d48c839e76f9998d2e91ceb7ed75cd5320ec0457a7f345fede7",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\timings.csv": "33ee1e719f109c58a8acbde6df7785f1e73bd8e5f741b54f5832ac2294dd69e6",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\captures.json": "ea88f7ecdf34a8dcfb92811c4e6080580091bd2a1780187b4c4282de7aa8053b",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\config.json": "35428a872218c1951a6c1deba35804986c8462bf85d74d327e6917e6711807d4",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\manifest.json": "bacc9bb2dc4d4c52aef50a0bef37ce246bbec683dc8e6d4e079da6b089f8896b",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\timings.csv": "506af3bc0aa922a3761acf04a654d590fb8b90b24646a2457cd70dfc1ba866f4",
+      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\9e65290c8bd00f4f3904cfb7\\accepted-16384-ae2efe6eee85\\reference.pfm.gz": "2104b72fa6b11fc5b08c73b0697c30b7e0d8be0b8bbc08e88f95cff1d491d07f"
+    },
+    "reports": [
+      {
+        "evaluation": {
+          "reference_frames": [
+            128
+          ],
+          "schema_version": 1,
+          "spatial_frames": [
+            128
+          ],
+          "support_frames": [],
+          "temporal_pairs": []
+        },
+        "id": "arcade-static",
+        "reference_assessment": {
+          "differences": {
+            "passed": true,
+            "regions": {
+              "full": {
+                "static": {
+                  "metrics": {
+                    "nrmse": {
+                      "methods": {
+                        "False": {
+                          "current": 0.30125193633277164,
+                          "half_a": 0.30134840007255953,
+                          "half_b": 0.3013835732263776,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.30772702968684673,
+                              "half_a": 0.30783339076609956,
+                              "half_b": 0.30784293769444937,
+                              "previous": 0.30791573564685115
+                            },
+                            "2": {
+                              "current": 0.29557117621455703,
+                              "half_a": 0.29566067534750307,
+                              "half_b": 0.2957149552618667,
+                              "previous": 0.2957521719906076
+                            },
+                            "3": {
+                              "current": 0.30045760309691116,
+                              "half_a": 0.30055113410407597,
+                              "half_b": 0.3005928267228167,
+                              "previous": 0.3006351666212558
+                            }
+                          },
+                          "previous": 0.30143435808623814
+                        },
+                        "True": {
+                          "current": 0.27083469435923657,
+                          "half_a": 0.2709502541469652,
+                          "half_b": 0.2709779436518958,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.26884136330424657,
+                              "half_a": 0.26896976284499746,
+                              "half_b": 0.2689736674364299,
+                              "previous": 0.2690238356649603
+                            },
+                            "2": {
+                              "current": 0.2605884534586244,
+                              "half_a": 0.26070552746147124,
+                              "half_b": 0.2607415999914205,
+                              "previous": 0.26077573105598784
+                            },
+                            "3": {
+                              "current": 0.2830742663148387,
+                              "half_a": 0.2831754721344268,
+                              "half_b": 0.28321856352783703,
+                              "previous": 0.28325821306379845
+                            }
+                          },
+                          "previous": 0.2710192599282488
+                        }
+                      },
+                      "paired_difference": {
+                        "current": -0.03041724197353507,
+                        "direction_resolved": true,
+                        "max_reference_change": 1.9096047940758698e-05,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": -0.03039814592559431,
+                          "half_b": -0.030405629574481785,
+                          "previous": -0.030415098157989318
+                        }
+                      }
+                    },
+                    "rmae": {
+                      "methods": {
+                        "False": {
+                          "current": 0.22307329981634047,
+                          "half_a": 0.22362029933316938,
+                          "half_b": 0.22365402391235736,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.22363950949727476,
+                              "half_a": 0.2241960789504634,
+                              "half_b": 0.2242113142422288,
+                              "previous": 0.22419830377238406
+                            },
+                            "2": {
+                              "current": 0.2223741486673809,
+                              "half_a": 0.2229218603334321,
+                              "half_b": 0.22296248879645358,
+                              "previous": 0.22296011145323194
+                            },
+                            "3": {
+                              "current": 0.22320624128436575,
+                              "half_a": 0.22374295871561256,
+                              "half_b": 0.22378826869838975,
+                              "previous": 0.22376345685691476
+                            }
+                          },
+                          "previous": 0.22364062402751025
+                        },
+                        "True": {
+                          "current": 0.21373081940426955,
+                          "half_a": 0.21428179334125666,
+                          "half_b": 0.21430109360671779,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.2151344418131849,
+                              "half_a": 0.21569000535057486,
+                              "half_b": 0.2156934003127327,
+                              "previous": 0.2157024398315184
+                            },
+                            "2": {
+                              "current": 0.21277506622022382,
+                              "half_a": 0.2133331268138901,
+                              "half_b": 0.2133485668252853,
+                              "previous": 0.21334094516229318
+                            },
+                            "3": {
+                              "current": 0.2132829501794,
+                              "half_a": 0.21382224785930504,
+                              "half_b": 0.21386131368213535,
+                              "previous": 0.21385282012566437
+                            }
+                          },
+                          "previous": 0.21429873503982533
+                        }
+                      },
+                      "paired_difference": {
+                        "current": -0.00934248041207092,
+                        "direction_resolved": true,
+                        "max_reference_change": 1.0449893568659219e-05,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": -0.009338505991912716,
+                          "half_b": -0.009352930305639579,
+                          "previous": -0.009341888987684926
+                        }
+                      }
+                    },
+                    "smape": {
+                      "methods": {
+                        "False": {
+                          "current": 17.043464613191404,
+                          "half_a": 17.123197645815935,
+                          "half_b": 17.12442499361401,
+                          "per_seed": {
+                            "1": {
+                              "current": 17.08909211593722,
+                              "half_a": 17.16884105085657,
+                              "half_b": 17.169119347336167,
+                              "previous": 17.166685313988314
+                            },
+                            "2": {
+                              "current": 17.02447138070495,
+                              "half_a": 17.10600611410151,
+                              "half_b": 17.105272329950164,
+                              "previous": 17.106341352082797
+                            },
+                            "3": {
+                              "current": 17.01683034293204,
+                              "half_a": 17.09474577248972,
+                              "half_b": 17.0988833035557,
+                              "previous": 17.096197032002944
+                            }
+                          },
+                          "previous": 17.123074566024684
+                        },
+                        "True": {
+                          "current": 14.98911547785822,
+                          "half_a": 15.070103139166891,
+                          "half_b": 15.070661579282863,
+                          "per_seed": {
+                            "1": {
+                              "current": 15.039301954468236,
+                              "half_a": 15.121071699486686,
+                              "half_b": 15.119583925219338,
+                              "previous": 15.120908508156962
+                            },
+                            "2": {
+                              "current": 14.949184158666347,
+                              "half_a": 15.031151051188733,
+                              "half_b": 15.030520531199786,
+                              "previous": 15.030039916027633
+                            },
+                            "3": {
+                              "current": 14.978860320440074,
+                              "half_a": 15.058086666825254,
+                              "half_b": 15.061880281429465,
+                              "previous": 15.060343613263973
+                            }
+                          },
+                          "previous": 15.070430679149522
+                        }
+                      },
+                      "paired_difference": {
+                        "current": -2.054349135333183,
+                        "direction_resolved": true,
+                        "max_reference_change": 0.0017052484580215577,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": -2.0530945066490442,
+                          "half_b": -2.053763414331147,
+                          "previous": -2.0526438868751615
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "region-1": {
+                "static": {
+                  "metrics": {
+                    "nrmse": {
+                      "methods": {
+                        "False": {
+                          "current": 0.6321898196687127,
+                          "half_a": 0.6323673728863071,
+                          "half_b": 0.6320757276637622,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.6236073043258753,
+                              "half_a": 0.6240297912010286,
+                              "half_b": 0.6232493363906495,
+                              "previous": 0.6236265478843024
+                            },
+                            "2": {
+                              "current": 0.6967435669172193,
+                              "half_a": 0.6967807670503922,
+                              "half_b": 0.6967553522407264,
+                              "previous": 0.6965486447823539
+                            },
+                            "3": {
+                              "current": 0.5762185877630437,
+                              "half_a": 0.5762915604075002,
+                              "half_b": 0.5762224943599107,
+                              "previous": 0.5765165624132036
+                            }
+                          },
+                          "previous": 0.63223058502662
+                        },
+                        "True": {
+                          "current": 1.2286777339620691,
+                          "half_a": 1.2286147414276574,
+                          "half_b": 1.2287213311885175,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.8689893988143973,
+                              "half_a": 0.8686124931230457,
+                              "half_b": 0.8693850697731503,
+                              "previous": 0.8685951524568962
+                            },
+                            "2": {
+                              "current": 0.8732706262752965,
+                              "half_a": 0.8733827822724718,
+                              "half_b": 0.8731764272564098,
+                              "previous": 0.8728300570612829
+                            },
+                            "3": {
+                              "current": 1.9437731767965136,
+                              "half_a": 1.9438489488874546,
+                              "half_b": 1.943602496535992,
+                              "previous": 1.942841275729974
+                            }
+                          },
+                          "previous": 1.2280888284160512
+                        }
+                      },
+                      "paired_difference": {
+                        "current": 0.5964879142933565,
+                        "direction_resolved": true,
+                        "max_reference_change": 0.0006296709039252946,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": 0.5962473685413503,
+                          "half_b": 0.5966456035247553,
+                          "previous": 0.5958582433894312
+                        }
+                      }
+                    },
+                    "rmae": {
+                      "methods": {
+                        "False": {
+                          "current": 0.5349306934824497,
+                          "half_a": 0.535834461162425,
+                          "half_b": 0.5354586407027458,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.5234347945008501,
+                              "half_a": 0.5243397037923432,
+                              "half_b": 0.5239394949506865,
+                              "previous": 0.5241279922592318
+                            },
+                            "2": {
+                              "current": 0.555902119592272,
+                              "half_a": 0.5566512188888386,
+                              "half_b": 0.5565576278998562,
+                              "previous": 0.556686768248648
+                            },
+                            "3": {
+                              "current": 0.525455166354227,
+                              "half_a": 0.526512460806093,
+                              "half_b": 0.5258787992576948,
+                              "previous": 0.5259775497405015
+                            }
+                          },
+                          "previous": 0.5355974367494605
+                        },
+                        "True": {
+                          "current": 0.6690077226693347,
+                          "half_a": 0.669906504618026,
+                          "half_b": 0.6696127297641928,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.6669282596732831,
+                              "half_a": 0.6677683102317428,
+                              "half_b": 0.667588309401728,
+                              "previous": 0.6678440302696611
+                            },
+                            "2": {
+                              "current": 0.6714824502040188,
+                              "half_a": 0.6725113484581217,
+                              "half_b": 0.6719727722221271,
+                              "previous": 0.6721011019314472
+                            },
+                            "3": {
+                              "current": 0.668612458130702,
+                              "half_a": 0.6694398551642134,
+                              "half_b": 0.6692771076687234,
+                              "previous": 0.6691700963236349
+                            }
+                          },
+                          "previous": 0.6697050761749145
+                        }
+                      },
+                      "paired_difference": {
+                        "current": 0.13407702918688502,
+                        "direction_resolved": true,
+                        "max_reference_change": 7.705987456196883e-05,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": 0.1340720434556011,
+                          "half_b": 0.134154089061447,
+                          "previous": 0.134107639425454
+                        }
+                      }
+                    },
+                    "smape": {
+                      "methods": {
+                        "False": {
+                          "current": 29.197470138902137,
+                          "half_a": 29.28604899159326,
+                          "half_b": 29.278640270049078,
+                          "per_seed": {
+                            "1": {
+                              "current": 29.220950437482283,
+                              "half_a": 29.302465426323792,
+                              "half_b": 29.307678293276727,
+                              "previous": 29.303458379103414
+                            },
+                            "2": {
+                              "current": 29.023354918151014,
+                              "half_a": 29.11129134832273,
+                              "half_b": 29.106330061319063,
+                              "previous": 29.11366687440666
+                            },
+                            "3": {
+                              "current": 29.34810506107311,
+                              "half_a": 29.44439020013325,
+                              "half_b": 29.42191245555144,
+                              "previous": 29.42240036716694
+                            }
+                          },
+                          "previous": 29.279841873559008
+                        },
+                        "True": {
+                          "current": 26.054257036909508,
+                          "half_a": 26.164679012757528,
+                          "half_b": 26.147024416724395,
+                          "per_seed": {
+                            "1": {
+                              "current": 26.114252868933875,
+                              "half_a": 26.227013126898562,
+                              "half_b": 26.212605630667422,
+                              "previous": 26.210218983140987
+                            },
+                            "2": {
+                              "current": 26.069676222985397,
+                              "half_a": 26.175718096842118,
+                              "half_b": 26.16059628520455,
+                              "previous": 26.1722287726464
+                            },
+                            "3": {
+                              "current": 25.978842018809264,
+                              "half_a": 26.0913058145319,
+                              "half_b": 26.067871334301213,
+                              "previous": 26.070627549905044
+                            }
+                          },
+                          "previous": 26.151025101897474
+                        }
+                      },
+                      "paired_difference": {
+                        "current": -3.143213101992629,
+                        "direction_resolved": true,
+                        "max_reference_change": 0.021843123156898514,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": -3.1213699788357303,
+                          "half_b": -3.131615853324682,
+                          "previous": -3.1288167716615334
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "region-2": {
+                "static": {
+                  "metrics": {
+                    "nrmse": {
+                      "methods": {
+                        "False": {
+                          "current": 1.0235889367178026,
+                          "half_a": 1.0236873695725817,
+                          "half_b": 1.0234866084407417,
+                          "per_seed": {
+                            "1": {
+                              "current": 1.1010073506875886,
+                              "half_a": 1.1012316539555282,
+                              "half_b": 1.1007652524958207,
+                              "previous": 1.1009755805860817
+                            },
+                            "2": {
+                              "current": 0.9444801193378085,
+                              "half_a": 0.9443961367356984,
+                              "half_b": 0.9445746887981175,
+                              "previous": 0.9446118867722844
+                            },
+                            "3": {
+                              "current": 1.025279340128011,
+                              "half_a": 1.0254343180265182,
+                              "half_b": 1.0251198840282874,
+                              "previous": 1.0254513618871433
+                            }
+                          },
+                          "previous": 1.023679609748503
+                        },
+                        "True": {
+                          "current": 0.7559189964615897,
+                          "half_a": 0.7561573129566938,
+                          "half_b": 0.7557342750364405,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.8032488728811005,
+                              "half_a": 0.8038573768267481,
+                              "half_b": 0.8026822602598026,
+                              "previous": 0.8027925439366269
+                            },
+                            "2": {
+                              "current": 0.7305693212811815,
+                              "half_a": 0.7305037512427333,
+                              "half_b": 0.7306946257606977,
+                              "previous": 0.7307915927175428
+                            },
+                            "3": {
+                              "current": 0.7339387952224871,
+                              "half_a": 0.7341108108005998,
+                              "half_b": 0.7338259390888214,
+                              "previous": 0.7346980654342906
+                            }
+                          },
+                          "previous": 0.7560940673628201
+                        }
+                      },
+                      "paired_difference": {
+                        "current": -0.26766994025621293,
+                        "direction_resolved": true,
+                        "max_reference_change": 0.00013988364032502254,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": -0.2675300566158879,
+                          "half_b": -0.26775233340430116,
+                          "previous": -0.2675855423856829
+                        }
+                      }
+                    },
+                    "rmae": {
+                      "methods": {
+                        "False": {
+                          "current": 0.5360579013005266,
+                          "half_a": 0.536170474178138,
+                          "half_b": 0.5361939350082665,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.5418654782552579,
+                              "half_a": 0.5419767402970459,
+                              "half_b": 0.5419771771199947,
+                              "previous": 0.5419231786278138
+                            },
+                            "2": {
+                              "current": 0.5315185836131733,
+                              "half_a": 0.5316279037009687,
+                              "half_b": 0.5316916715279129,
+                              "previous": 0.5317834895363207
+                            },
+                            "3": {
+                              "current": 0.5347896420331483,
+                              "half_a": 0.5349067785363997,
+                              "half_b": 0.534912956376892,
+                              "previous": 0.535085416038307
+                            }
+                          },
+                          "previous": 0.5362640280674805
+                        },
+                        "True": {
+                          "current": 0.4085277459870918,
+                          "half_a": 0.40870277415322337,
+                          "half_b": 0.40872555970261754,
+                          "per_seed": {
+                            "1": {
+                              "current": 0.41136012178534337,
+                              "half_a": 0.411564304418238,
+                              "half_b": 0.41152255408139543,
+                              "previous": 0.41152401415498385
+                            },
+                            "2": {
+                              "current": 0.41596064204918154,
+                              "half_a": 0.4160434729992476,
+                              "half_b": 0.416223724599309,
+                              "previous": 0.4161684528074646
+                            },
+                            "3": {
+                              "current": 0.3982624741267504,
+                              "half_a": 0.3985005450421845,
+                              "half_b": 0.3984304004271481,
+                              "previous": 0.3984649273084404
+                            }
+                          },
+                          "previous": 0.40871913142362964
+                        }
+                      },
+                      "paired_difference": {
+                        "current": -0.12753015531343476,
+                        "direction_resolved": true,
+                        "max_reference_change": 6.24552885201135e-05,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": -0.12746770002491464,
+                          "half_b": -0.12746837530564897,
+                          "previous": -0.12754489664385088
+                        }
+                      }
+                    },
+                    "smape": {
+                      "methods": {
+                        "False": {
+                          "current": 31.01330284834336,
+                          "half_a": 31.020262426449108,
+                          "half_b": 31.0200372130292,
+                          "per_seed": {
+                            "1": {
+                              "current": 31.037201752382,
+                              "half_a": 31.03979829251182,
+                              "half_b": 31.045836395843516,
+                              "previous": 31.039227578465663
+                            },
+                            "2": {
+                              "current": 31.13520453504004,
+                              "half_a": 31.14531425315523,
+                              "half_b": 31.141503058562485,
+                              "previous": 31.147475797205438
+                            },
+                            "3": {
+                              "current": 30.867502257608052,
+                              "half_a": 30.875674733680263,
+                              "half_b": 30.872772184681608,
+                              "previous": 30.876653240145348
+                            }
+                          },
+                          "previous": 31.021118871938814
+                        },
+                        "True": {
+                          "current": 24.020594042765982,
+                          "half_a": 24.036477656671348,
+                          "half_b": 24.04426573643383,
+                          "per_seed": {
+                            "1": {
+                              "current": 24.092486021700225,
+                              "half_a": 24.10429517270098,
+                              "half_b": 24.11839186820826,
+                              "previous": 24.11163314034125
+                            },
+                            "2": {
+                              "current": 24.126207546696577,
+                              "half_a": 24.14242710596917,
+                              "half_b": 24.14998495556773,
+                              "previous": 24.139053572619318
+                            },
+                            "3": {
+                              "current": 23.843088559901155,
+                              "half_a": 23.862710691343896,
+                              "half_b": 23.8644203855255,
+                              "previous": 23.864873122733435
+                            }
+                          },
+                          "previous": 24.038519945231332
+                        }
+                      },
+                      "paired_difference": {
+                        "current": -6.992708805577379,
+                        "direction_resolved": true,
+                        "max_reference_change": 0.016937328982006505,
+                        "state": "resolved",
+                        "variants": {
+                          "half_a": -6.98378476977776,
+                          "half_b": -6.975771476595373,
+                          "previous": -6.982598926707482
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "references": {
+          "128": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\9e65290c8bd00f4f3904cfb7\\accepted-16384-ae2efe6eee85\\reference.pfm.gz"
+        },
+        "rois": [
+          {
+            "height": 256,
+            "name": "region-1",
+            "width": 256,
+            "x": 700,
+            "y": 450
+          },
+          {
+            "height": 256,
+            "name": "region-2",
+            "width": 256,
+            "x": 1100,
+            "y": 500
+          }
+        ],
+        "runs": [
+          {
+            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0",
+            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0",
+            "seed": 1
+          },
+          {
+            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0",
+            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0",
+            "seed": 2
+          },
+          {
+            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0",
+            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0",
+            "seed": 3
+          }
+        ],
+        "scenario": "static"
+      }
+    ],
+    "settings": null,
+    "sources": {
+      "scripts/analysis/pdf_artifacts.py": "d6cedce025d48afe55fbb5ad58df173a1c8e516c3ad78d7a700e44a883faf374",
+      "scripts/analysis/pdf_equal_time.py": "caeda72cf10cc371ab2584b6807007648564b9ecb02c07ec0124de6c13806b10",
+      "scripts/analysis/pdf_summary.py": "eae7954d8113e10562f1cbf95a704872424ace1e158a486bd8abdee9e5a2b193",
+      "scripts/run/experiment/__init__.py": "8aea3cceef32a2481e8acecbd57eecf71a736fd418662233e05127ecf74b3144",
+      "scripts/run/experiment/artifacts.py": "9407fbd9a8ec9a6940aa4d75f85eb93f119b689b614a5882999c9cc86242c034",
+      "scripts/run/experiment/config.py": "2a04f934bd30a9d098290dd434d3f138076ee76645e7065df9871624b546fe27",
+      "scripts/run/experiment/controlled_budget.py": "d0212c6137c53d444f5937609b5c45c85cddfcd55412e18bdb1a35d4c4336577",
+      "scripts/run/experiment/controlled_cleanup.py": "b429bff73a531c4bca4392990db921cd42532f1a7dbd536a86f58f84ab23b72d",
+      "scripts/run/experiment/controlled_evaluation.py": "3ba129e56494df20373257c1ce97e6823473fa63f0c49087041b1cefe12121bf",
+      "scripts/run/experiment/controlled_launch.py": "4a5db8e9a0e4fa10ff4f1b16dce88ed98cfe71c0ac4a0b6ddd21d4f2ff1f5495",
+      "scripts/run/experiment/controlled_outputs.py": "afa6a4f4bb577706c7573985e81d60bb1f72438d18ab43144b5d808e83ac3267",
+      "scripts/run/experiment/controlled_reference.py": "232e1ba974c5acf962d883ca51b48b7fe24f594562e3011619227ce5c9f0a7a1",
+      "scripts/run/experiment/controlled_reference_run.py": "178070104c12188345c4f57265a96f2d9c5198e874546911965132b4b8a78920",
+      "scripts/run/experiment/controlled_suite.py": "1287cf6983a14438c1d66ce4ced04e11639a183159a5b83e51fbf37288920c17",
+      "scripts/run/experiment/controlled_temporal.py": "1d122ec80e34f031b1a968cedc44b561b21cd7129bafa797e9acab2a484e041b",
+      "scripts/run/experiment/error_metrics.py": "73f960a32b1feec62401c1064d9ee41e0f3bc8d6dca3cafc8f3154113722f36f",
+      "scripts/run/experiment/images.py": "a1546a3c655a12966d768cd5d16ea11f417dbd76dcb0c0b789b448b24927ddb3",
+      "scripts/run/experiment/reference.py": "25db4defb1bd67fa79f90f6b942a527e0ad878fda4b9e8c69a9cb0e90330a698",
+      "scripts/run/experiment/reference_allocation.py": "b3cc22f2a88584eb26945f1e666de8cf5115aba060dafae17d529847b124d0ec",
+      "scripts/run/experiment/reference_diagnostics.py": "aaa65a4350b8d7d8b672f3a9e511fc473c8368a2207dbc9e1f790188cf2a10e2",
+      "scripts/run/experiment/reference_runner.py": "807566cf5e92704e883ad8c1e1cac1025c5567ee999e7c30a2010fb27e44a31d",
+      "scripts/run/experiment/runner.py": "cc6bb362e2e842cdf0a0c322043a9c014d7b136afb638122052eb00b06f7c15c",
+      "scripts/run/experiment/scenes.py": "6e7057c86b0884030d1043dee6f675547c964ffa4cad1bdf78cb1f5100f4d850",
+      "scripts/run/rtxdi_pdf_controlled.py": "4f24d7fa9cc7f78962cc121e67fa368e60e1703c992f3cba5e690b053182f428"
+    }
+  },
+  "identity_sha256": "1a701b3c06768247ce3370592e07c5c83d6a4d5f677ab4d9f285a7bdb481fe37",
+  "schema_version": 2,
+  "status": "completed"
+}
