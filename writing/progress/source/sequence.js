@@ -29,7 +29,7 @@
   }
   function position(n) {
     frame=clamp(n,1,LAST);$('video-frame').value=String(frame);
-    const phase=frame<=32?'保持':frame<=64?($('video-scene').value==='bistro-lighting'?'变光':'运动'):'停止／保持';
+    const phase=frame<=32?'Hold':frame<=64?($('video-scene').value==='bistro-lighting'?'Lighting change':'Motion'):'Stop/hold';
     $('video-position').textContent=String(frame).padStart(2,'0')+' / 96 · '+phase;
     $('png-on').href=framePath('on',frame);$('png-off').href=framePath('off',frame);
     $('frame-prev').disabled=frame===1;$('frame-next').disabled=frame===LAST;
@@ -41,7 +41,7 @@
   }
   function stop() {
     clearTimeout(seekTimer);seekTimer=0;
-    playing=false;Object.values(videos).forEach(v=>v.pause());$('video-play').textContent='播放';
+    playing=false;Object.values(videos).forEach(v=>v.pause());$('video-play').textContent='Play';
   }
   function clearQueues() {queues.off.clear();queues.on.clear();}
   function fail(error) {
@@ -69,18 +69,18 @@
       callbacks[id]=video.requestVideoFrameCallback(capture);
     };
     if(video.requestVideoFrameCallback) callbacks[id]=video.requestVideoFrameCallback(capture);
-    else fail(new Error('请使用支持同步帧回调的近期 Chrome 或 Edge。原始 PNG 检查仍可使用。'));
+    else fail(new Error('Use a recent version of Chrome or Edge with synchronized frame callback support. Original PNG inspection remains available.'));
   }
   function event(video, name, action) {
     return new Promise((resolve,reject)=>{
-      const timer=setTimeout(()=>done(new Error('视频载入超时，请检查本地媒体文件。')),12000);
-      const good=()=>done(),bad=()=>done(new Error('视频无法读取，请运行 tools/build.ps1 -Media 生成媒体。'));
+      const timer=setTimeout(()=>done(new Error('Video loading timed out. Check the local media files.')),12000);
+      const good=()=>done(),bad=()=>done(new Error('Cannot read the video. Run tools/build.ps1 -Media to build the media.'));
       function done(error){clearTimeout(timer);video.removeEventListener(name,good);video.removeEventListener('error',bad);error?reject(error):resolve();}
       video.addEventListener(name,good,{once:true});video.addEventListener('error',bad,{once:true});
       try{action();}catch(e){done(e);}
     });
   }
-  const image = src => new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>reject(new Error('原始 PNG 不可用。请保留仓库中的 runs/pdf-similarity-archive。'));im.src=src;});
+  const image = src => new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>reject(new Error('Original PNGs are unavailable. Keep runs/pdf-similarity-archive in the repository.'));im.src=src;});
   async function seek(n, useRaw=raw) {
     const token=++generation;stop();seeking=true;raw=useRaw;
     clearQueues();$('video-loading').hidden=false;$('video-error').textContent='';
@@ -96,8 +96,8 @@
       }
       if(token!==generation)return;
       pair={off:loaded[0],on:loaded[1]};position(n);render();
-      $('preview-kind').textContent=useRaw?'原始 PNG · 同一帧 · seed 1':'视频预览 · seed 1';
-      $('show-original').textContent=useRaw?'返回视频帧':'检查原始 PNG';
+      $('preview-kind').textContent=useRaw?'Original PNGs · Same frame · seed 1':'Video preview · seed 1';
+      $('show-original').textContent=useRaw?'Return to video frame':'Inspect original PNGs';
       $('video-loading').hidden=true;seeking=false;$('video-play').disabled=false;
       $('video-frame').disabled=false;$('show-original').disabled=false;
       return token;
@@ -107,7 +107,7 @@
     if(seeking)return;
     if(frame===LAST||raw) {const token=await seek(frame===LAST?1:frame,false);if(token!==generation)return;}
     if(seeking||$('video-error').textContent)return;
-    raw=false;clearQueues();playing=true;$('video-play').textContent='暂停';
+    raw=false;clearQueues();playing=true;$('video-play').textContent='Pause';
     try{await Promise.all(Object.values(videos).map(v=>v.play()));}catch(e){if(playing)fail(e);}
   }
   async function loadScene(wanted=1) {

@@ -4700,7 +4700,14 @@
       "sha256": "c65b2c4fad197c92ce39ab604f01943f51b635f5a973c8ce6224f6d0e1e8722b",
       "bytes": 9648,
       "historical_source": "runs/scene-gallery/README.md",
-      "note": "Exact selection-time README snapshot; live scene-gallery README changed during report restructuring."
+      "note": "Exact selection-time README snapshot; live scene-gallery README changed during report restructuring.",
+      "translation": {
+        "language": "en",
+        "original_snapshot": "runs/scene-gallery/records/progress-source-README-c65b2c4f.original.source.txt",
+        "sha256": "6cacd663600f0ad10a74677d1316a922ed138001c2b6681886494db3a7a8bd20",
+        "bytes": 11101,
+        "note": "The source URL now serves an English prose translation. The existing source, sha256, bytes, historical_source and note fields describe the original selection-time snapshot, preserved at original_snapshot. Commands, paths and recorded render settings are unchanged."
+      }
     },
     "scenes/gallery/classroom/scene.json": {
       "source": "runs/scene-gallery/scenes/classroom.json",

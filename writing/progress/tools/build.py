@@ -12,15 +12,15 @@ import subprocess
 ROOT=Path(__file__).resolve().parents[1]
 REPO=ROOT.parents[1]
 LABELS={
- 'cornell-static':'Cornell · 静态','arcade-static':'Arcade · 静态',
- 'bistro-interior-static':'Bistro 内景 · 静态','bistro-exterior-static':'Bistro 外景 · 静态',
- 'arcade-motion':'Arcade · 相机运动','bistro-interior-motion':'Bistro 内景 · 相机运动',
- 'bistro-exterior-motion':'Bistro 外景 · 相机运动','bistro-lighting':'Bistro · 光照变化',
- 'bistro-interior-static-spatial-only':'Bistro 内景 · 仅空间复用',
- 'bistro-interior-static-neighbors-2':'Bistro 内景 · 2 邻居',
- 'bistro-interior-static-neighbors-8':'Bistro 内景 · 8 邻居',
- 'bistro-exterior-static-neighbors-2':'Bistro 外景 · 2 邻居',
- 'bistro-exterior-static-neighbors-8':'Bistro 外景 · 8 邻居'}
+ 'cornell-static':'Cornell · Static','arcade-static':'Arcade · Static',
+ 'bistro-interior-static':'Bistro interior · Static','bistro-exterior-static':'Bistro exterior · Static',
+ 'arcade-motion':'Arcade · Camera motion','bistro-interior-motion':'Bistro interior · Camera motion',
+ 'bistro-exterior-motion':'Bistro exterior · Camera motion','bistro-lighting':'Bistro · Lighting change',
+ 'bistro-interior-static-spatial-only':'Bistro interior · Spatial only',
+ 'bistro-interior-static-neighbors-2':'Bistro interior · 2 neighbors',
+ 'bistro-interior-static-neighbors-8':'Bistro interior · 8 neighbors',
+ 'bistro-exterior-static-neighbors-2':'Bistro exterior · 2 neighbors',
+ 'bistro-exterior-static-neighbors-8':'Bistro exterior · 8 neighbors'}
 
 
 def sha(path):

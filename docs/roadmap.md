@@ -25,6 +25,6 @@ Follow the [experiment protocol](../experiments/protocol.md).
 | 5 | PDF Similarity; [project progress video](https://github.com/TheLogarhythm/restir-lab/issues/3) due Oct 25, 23:59 |
 | 6–7 | CGNS implementation and integration |
 | 8 | Demo and experiment freeze |
-| 9–10 | Evaluation, report, and teammate reproduction check |
+| 9–10 | Evaluation, report, teammate reproduction check; [project presentation](https://github.com/TheLogarhythm/restir-lab/issues/4): slides due **Nov 22, 2026, 23:59 Hong Kong time**; in-class talk ~4m30s, hard max 5m, including ~2 min demo |
 
 Track tasks on the [Project board](https://github.com/users/TheLogarhythm/projects/1/views/1), decisions in [docs/decisions](decisions/), and measured runs in [results/index.csv](../results/index.csv).

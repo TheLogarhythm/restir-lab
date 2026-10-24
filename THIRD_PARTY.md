@@ -30,6 +30,8 @@ The local renderer builds apply [emissive-strength support](scripts/run/rtxdi_em
 
 The [PDF Similarity extension](docs/reproductions/pdf-similarity.md) is an independent implementation developed with Codex from Tokuyoshi's 2023 paper. Its build-time spatial shader adaptation retains the pinned NVIDIA source notice; no author implementation was imported.
 
+The local progress presentation reproduces Figure 2 from Yusuke Tokuyoshi, *Efficient Spatial Resampling Using the PDF Similarity* (2023), [DOI: 10.1145/3585501](https://doi.org/10.1145/3585501), with attribution on slide 4. The source paper and generated figure crop are Git-ignored; [extraction provenance](writing/progress/data/paper-figure.json) records the source hash and crop. Copyright remains with the owner/author(s), with publication rights licensed to ACM; no open license is asserted for this figure.
+
 ## Additional scene imports
 
 - [Emerald Square](https://developer.nvidia.com/orca/nvidia-emerald-square): NVIDIA / Nicholas Hull, Kate Anderson and Nir Benty; CC BY-NC-SA 3.0. Uses the ORCA Dusk variant.

@@ -121,7 +121,7 @@ style: |
 
 Hi, we're Group Seven. Our project studies Reservoir-based Spatiotemporal Importance Resampling, or ReSTIR for short. This is an evaluation study focused on spatial reuse: how choosing neighboring pixels affects image quality and GPU cost.
 
-提示：全程目标 3:30。读出 ReSTIR 全称后，说明 spatial reuse 的研究范围；本页在 0:20 前结束。
+Cue: Aim for 3:30 overall. Say the full name of ReSTIR, then explain the focus on spatial reuse. Finish this slide by 0:20.
 -->
 
 ---
@@ -142,7 +142,7 @@ Hi, we're Group Seven. Our project studies Reservoir-based Spatiotemporal Import
 
 At each pixel, ReSTIR keeps a selected light sample and its weight. It reuses samples from nearby pixels and previous frames. This works well when their lighting needs are similar. Materials, surface orientations, and visibility all affect whether those samples are useful.
 
-提示：用 Cornell 图片解释哪些邻居可能有用，不展开 reservoir 的其他状态。
+Cue: Use the Cornell image to explain which neighbors may help. Leave other reservoir state details for later.
 -->
 
 ---
@@ -163,7 +163,7 @@ At each pixel, ReSTIR keeps a selected light sample and its weight. It reuses sa
 
 We use ReSTIR DI, the direct-lighting version, as our baseline. We've adapted PDF Similarity to RTXDI, the toolkit we're using. Next, we'll implement Compatibility-Guided Neighbor Selection, or CGNS. We compare methods using image error and GPU cost.
 
-提示：区分已完成的 PDF Similarity 适配和下一步的 CGNS。前三页回顾在 1:05 前结束。
+Cue: Distinguish the completed PDF Similarity adaptation from the next step, CGNS. Finish the first three recap slides by 1:05.
 -->
 
 ---
@@ -182,7 +182,7 @@ We use ReSTIR DI, the direct-lighting version, as our baseline. We've adapted PD
 
 PDF Similarity compares lighting directions. Across a shadow boundary, nearby pixels can need different light samples. Geometry checks alone cannot fully capture this difference. The method approximates each target distribution with a smooth directional lobe, then compares the lobes' directions and widths to guide reuse.
 
-提示：依次指论文图中的明暗像素和方向波瓣。几何检查不能完整表达可见性差异；不要说 ReSTIR DI 完全不考虑可见性。
+Cue: Point to the lit and shadowed pixels, then the directional lobes in the paper figure. Geometry checks cannot fully capture visibility differences. Avoid implying that ReSTIR DI ignores visibility entirely.
 -->
 
 ---
@@ -203,7 +203,7 @@ PDF Similarity compares lighting directions. Across a shadow boundary, nearby pi
 
 So far, we've integrated PDF Similarity into RTXDI. Our experiment tools replay camera and lighting changes, save HDR images and GPU timings, and compare results across three random seeds.
 
-提示：简述已经完成的集成和实验工具，不逐条读页面文字。
+Cue: Briefly describe the completed integration and experiment tools without reading each item on the slide.
 -->
 
 ---
@@ -222,7 +222,7 @@ So far, we've integrated PDF Similarity into RTXDI. Our experiment tools replay 
 
 This is the Bistro exterior sequence, with PDF Similarity on the left and the baseline on the right. Look near shadow boundaries and across large surfaces. We see less noise in parts of the image, and lower temporal error at the selected frame pairs.
 
-提示：播放 Bistro 外景对比，指阴影交界和大表面，留约 4 秒观察。只说局部观感和选定帧对的时域误差，不推广到整段视频。
+Cue: Play the Bistro exterior comparison and point to shadow boundaries and large surfaces. Allow about 4 seconds for observation. Limit the claims to local appearance and temporal error at the selected frame pairs; do not extend them to the whole sequence.
 -->
 
 ---
@@ -241,7 +241,7 @@ This is the Bistro exterior sequence, with PDF Similarity on the left and the ba
 
 In these three static views, PDF Similarity lowers SMAPE at an additional GPU cost. SMAPE compares rendered luminance with the reference, normalized by their combined brightness.
 
-提示：指一下公式，再指表格。SMAPE 越低越好；质量提升同时增加 GPU 耗时，不声称等时优势。
+Cue: Point briefly to the formula, then the table. Lower SMAPE is better. The quality improvement comes with higher GPU time; this does not establish an equal-time advantage.
 -->
 
 ---
@@ -260,7 +260,7 @@ In these three static views, PDF Similarity lowers SMAPE at an additional GPU co
 
 The indoor spatial-only test gets worse with PDF Similarity enabled. Complex surfaces and occlusion may make neighboring pixels need different samples, which a single directional lobe may not distinguish well. That's one possible explanation; we haven't isolated the cause yet.
 
-提示：明确是 spatial-only 测试。单个方向波瓣是否解释失败仍是假设，不把复杂几何或遮挡直接当成已证实原因。
+Cue: Identify this as a spatial-only test. A single directional lobe is still only a possible explanation for the failure. Complex geometry and occlusion are not confirmed causes.
 -->
 
 ---
@@ -279,7 +279,7 @@ The indoor spatial-only test gets worse with PDF Similarity enabled. Complex sur
 
 We've also configured six additional scenes with more varied geometry, materials, and lighting. They give us a broader range of settings for future experiments.
 
-提示：扫过六张场景图，说明它们用于后续实验，无需逐个念名字。
+Cue: Briefly show the six scene images and explain that they are for later experiments. There is no need to read every name.
 -->
 
 ---
@@ -300,7 +300,7 @@ We've also configured six additional scenes with more varied geometry, materials
 
 Next, we'll integrate CGNS into our codebase. We'll also vary geometry, visibility, and lighting in controlled tests to find more failure cases and identify their causes.
 
-提示：说明实现 CGNS 和设计受控测试两项工作；致谢留到下一页。
+Cue: Explain the two tasks: implementing CGNS and designing controlled tests. Save the closing thanks for the next slide.
 -->
 
 ---
@@ -315,5 +315,5 @@ Next, we'll integrate CGNS into our codebase. We'll also vary geometry, visibili
 
 That's all from Group Seven. Thank you.
 
-提示：切到 Thank you 页面，简短收尾，在 3:30 左右结束。
+Cue: Switch to the Thank you slide and close briefly. Finish around 3:30.
 -->

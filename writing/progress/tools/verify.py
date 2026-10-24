@@ -16,6 +16,20 @@ def sha(path):
     with path.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
 
 
+def check_indexed_source(key, entry):
+    translation=entry.get('translation')
+    original=REPO/(translation['original_snapshot'] if translation else entry['source'])
+    errors=[]
+    if not original.is_file() or sha(original)!=entry['sha256']:
+        errors.append('Source missing/changed: '+key)
+    if translation:
+        derived=REPO/entry['source']
+        if (not derived.is_file() or sha(derived)!=translation['sha256']
+                or derived.stat().st_size!=translation['bytes']):
+            errors.append('English derivative missing/changed: '+key)
+    return errors
+
+
 def check_composition(condition):
     import numpy as np
     streams={}
@@ -57,8 +71,8 @@ def main():
     checks['paper_figure']={'figure':figure['figure'],'page':figure['page'],'source_sha256':figure['source_sha256']}
     index=json.loads((ROOT/'data/sources.json').read_text())
     for key,entry in index['entries'].items():
-        path=REPO/entry['source']
-        if not path.is_file() or sha(path)!=entry['sha256']:errors.append('Source missing/changed: '+key)
+        errors.extend(check_indexed_source(key,entry))
+    checks['english_derivatives']=sum('translation' in entry for entry in index['entries'].values())
     for asset in index['slide_assets']:
         path=ROOT/asset['path']
         if not path.is_file() or sha(path)!=asset['sha256']:errors.append('Slide copy missing/changed: '+str(path))

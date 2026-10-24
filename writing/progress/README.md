@@ -1,57 +1,59 @@
-# PDF Similarity：实验查看与进展汇报
+# PDF Similarity: experiment viewer and progress report
 
-平时只需打开两个页面：
+Use these two pages:
 
-| 用途 | 入口 |
+| Purpose | Page |
 | --- | --- |
-| 查看视频、原图、误差图、ROI 和三种子统计 | [comparison.html](comparison.html) |
-| 播放 Marp 幻灯片并录制汇报 | [progress.html](progress.html) |
+| Videos, original images, error maps, ROIs and three-seed statistics | `comparison.html` |
+| Play the Marp slides and record the report | `progress.html` |
 
-## 视频对照
+HTML pages and videos are generated local outputs and are excluded from Git. Use the [build script](tools/build.ps1) and the instructions below to create them from the tracked sources.
 
-四组实验各保留 PDF off、PDF on、自动斜线对比三个视频。每个视频为 1920×1080、96 帧、30 FPS，共 3.2 秒，无音轨。两路画面完全重叠；左侧显示 PDF on，右侧显示 PDF off，分界线从左下斜向右上 /。独立对比视频自动从全 off 扫到全 on。
+## Video comparison
 
-在对照页中可以播放、暂停、慢放、循环、逐帧选择和全屏；直接拖动画面上的斜线，或用下方滑块调整位置。分界线把手也支持方向键、Home 和 End。页面只显示配对成功的同一帧；等待解码时保留上一对完整画面。
+Each of the four experiments has three videos: PDF off, PDF on and an automatic diagonal comparison. Each video is 1920×1080, with 96 frames at 30 FPS, lasts 3.2 seconds and has no audio. The two views are aligned exactly. PDF on appears on the left and PDF off on the right of a diagonal running from bottom left to top right (/). The separate comparison video sweeps automatically from all off to all on.
 
-视频采用 H.264 CRF 20 编码，是有损展示素材。需要观察噪声和细节时，暂停并点击“检查原始 PNG”；两侧同步读取同一帧的未改动 PNG。原图仍采用实验原有的显示变换，不能替代线性 HDR 误差分析。
+The comparison page supports playback, pause, slow motion, looping, frame selection and fullscreen. Drag the diagonal in the image or adjust the slider below it. The divider handle also supports the arrow keys, Home and End. The page displays only matched frame pairs and retains the previous complete pair while decoding.
 
-自动对比视频：[Arcade](assets/videos/arcade-motion/comparison.mp4) · [Bistro 内景](assets/videos/bistro-interior-motion/comparison.mp4) · [Bistro 外景](assets/videos/bistro-exterior-motion/comparison.mp4) · [Bistro 变光](assets/videos/bistro-lighting/comparison.mp4)。
+The H.264 CRF 20 videos are lossy presentation copies. To inspect noise and detail, pause and click "Inspect original PNGs" to load the unchanged PNGs for the same frame on both sides. These images retain the experiment's display transform and cannot replace linear HDR error analysis.
 
-## 文件放在哪里
+Automatic comparison videos: Arcade: `assets/videos/arcade-motion/comparison.mp4` · Bistro interior: `assets/videos/bistro-interior-motion/comparison.mp4` · Bistro exterior: `assets/videos/bistro-exterior-motion/comparison.mp4` · Bistro lighting change: `assets/videos/bistro-lighting/comparison.mp4`.
 
-- assets/：幻灯片选图、论文 Figure 2 摘图、一个演示封面帧，以及 12 个视频。媒体不进入 Git。
-- data/：总览 CSV、字段说明、来源与场景索引、视频生成记录、验证及整理清单。
-- [source/progress.md](source/progress.md)：唯一的幻灯片、逐页口播和排练计时源稿。
-- source/ 中的 HTML/CSS/JS：实验查看页模板和交互代码。
-- tools/：生成和验证工具。
+## File locations
 
-完整实验展示图、误差图、逐帧 PNG 和原始统计保留在 [pdf-similarity-archive](../../runs/pdf-similarity-archive/README.md)。对照页通过相对路径读取这些文件，不复制整个实验目录。新增场景的完整图库保留在 [scene-gallery](../../runs/scene-gallery/README.md)，本目录只保留汇报选图。使用完整对照页时，保持当前仓库目录关系。
+- assets/: selected slide images, the paper's Figure 2 crop, one demo poster frame and 12 videos. Media files are excluded from Git.
+- data/: overview CSVs, field definitions, source and scene indexes, video build records, verification reports and cleanup inventories.
+- [source/progress.md](source/progress.md): the single source for the slides, narration and rehearsal timings.
+- HTML/CSS/JS in source/: templates and interaction code for the experiment viewer.
+- tools/: build and verification tools.
 
-正式统计、参考政策和观察范围见 [实验报告](../../results/summaries/pdf-similarity/README.md)。图片为 seed 1，数值为 seeds 1/2/3；Cornell/Arcade 的五个参考状态保留原精度验收，Bistro 的十个参考状态精度未评估。局部时域指标只覆盖 31→32、47→48、95→96。统计值在本次整理中保持不变。
+The full experiment display images, error maps, frame PNGs and raw statistics remain in the local `runs/pdf-similarity-archive/` directory. The comparison page reads them through relative paths without copying the experiment directory. The complete gallery of additional scenes remains in the local `runs/scene-gallery/` directory; this folder contains only the selected report images. Preserve the current repository directory structure when using the full comparison page.
 
-## 修改与生成
+See the [experiment report](../../results/summaries/pdf-similarity/README.md) for the formal statistics, reference policy and scope of observations. Images use seed 1; numerical results use seeds 1/2/3. The five Cornell/Arcade reference states retain their original precision acceptance, while precision remains unevaluated for the ten Bistro reference states. Local temporal metrics cover only 31→32, 47→48 and 95→96. This cleanup preserves all statistical values.
 
-修改 Marp 源稿后，从仓库根目录运行：
+## Editing and building
+
+After editing the Marp source, run this from the repository root:
 
 ~~~powershell
 .\writing\progress\tools\build.ps1
 ~~~
 
-默认只生成两个 HTML；需要本机 Python、Node.js 和 Marp CLI 4.5.1。选图缺失时会从来源索引恢复。论文 Figure 2 缺失时，使用 Poppler 的 pdftoppm 从本地论文第 3 页重新截取；原文哈希、裁剪参数和署名见 [paper-figure.json](data/paper-figure.json)。首次生成视频或重新生成已变更的媒体，需要本机 FFmpeg：
+By default, the build produces only the two HTML files. It requires local installations of Python, Node.js and Marp CLI 4.5.1. Missing slide images are restored from the source index. If the Figure 2 crop is missing, Poppler's pdftoppm extracts it again from page 3 of the local paper. The paper hash, crop parameters and attribution are in [paper-figure.json](data/paper-figure.json). FFmpeg is required to build videos for the first time or rebuild changed media:
 
 ~~~powershell
 .\writing\progress\tools\build.ps1 -Media
 python -B writing/progress/tools/verify.py --media --write
 ~~~
 
--PreviewImages 可按需生成十一张检查图，-Notes 可导出口播备注；它们放在被 Git 忽略的 build/，可以删除。默认不生成 PDF 或 PPTX。HTML 输出和媒体同样被忽略，Git 保留源稿、模板、脚本和小型数据索引。
+-PreviewImages generates eleven preview images on request, and -Notes exports speaker notes. Both go into the ignored build/ directory and can be deleted. The default build does not produce PDF or PPTX files. HTML output and media are also ignored; Git retains the sources, templates, scripts and small data indexes.
 
-页面无需联网，可以直接用近期 Chrome 或 Edge 打开。验证脚本检查所有来源哈希、图片组合与链接、十一页幻灯片、视频帧数和同步控制逻辑。浏览器工具拒绝本次 file:// 访问，因此记录中的浏览器实机交互检查仍标为未验证。
+The pages work offline in a recent version of Chrome or Edge. The verification script checks all source hashes, image combinations and links, eleven slides, video frame counts and synchronization logic. The browser tool rejected file:// access during the recorded check, so browser interaction remains marked as unverified in that record.
 
-## 录制
+## Recording
 
-十一页稿件的排练目标为 **3:30（210 秒）**，前三页回顾共 65 秒。英文口播稿共 354 词，已按 humanizer 指引改写；每页备注给出时间段和简短操作提示。第六页预留 28 秒，包含视频播放和观察对照。第四页用 Tokuyoshi (2023) 的 Figure 2 解释 PDF Similarity：明暗像素的目标方向分布不同，用 vMF 波瓣近似后比较方向和集中程度，减少不合适的复用。第六页播放 Bistro 外景斜线对比视频，也可以打开交互对照页，慢放后停在第 48 帧拖动比较。第七页汇总三个静态场景的 off/on 图片、SMAPE 定义及质量/耗时表；第八页展示室内 spatial-only 退化，并把原因保留为待验证假设。第十页介绍 CGNS 集成和受控失败案例测试；第十一页单独致谢。演示使用保存的渲染输出；播放速度不代表 GPU 性能。口播与计时在源稿备注中统一维护，实际时长需排练。较长的来源与科学范围说明保存在 [speaker-note-sources.json](data/speaker-note-sources.json)，不混入口播提示。
+The eleven-slide draft has a rehearsal target of **3:30 (210 seconds)**, including 65 seconds of recap across the first three slides. The English narration contains 354 words and has been edited using the humanizer guidance. Each slide's notes give a time range and a short delivery cue. Slide 6 allows 28 seconds for playback and observation. Slide 4 uses Tokuyoshi's (2023) Figure 2 to explain PDF Similarity: lit and shadowed pixels have different target direction distributions, approximated by vMF lobes whose directions and concentration are compared to reduce unsuitable reuse. Slide 6 plays the Bistro exterior diagonal comparison; the interactive page also supports slow motion and dragging the divider at frame 48. Slide 7 presents off/on images for three static scenes, the SMAPE definition and a quality/cost table. Slide 8 shows an indoor spatial-only regression and keeps its explanation as an untested hypothesis. Slide 10 covers CGNS integration and controlled failure-case tests; slide 11 closes with thanks. The demo uses saved render output, so playback speed does not indicate GPU performance. Narration and timings are maintained together in the source notes; the actual duration needs rehearsal. Longer source and scientific-scope notes are kept in [speaker-note-sources.json](data/speaker-note-sources.json), separate from the delivery cues.
 
-课程要求来自 [GitHub issue 3](https://github.com/TheLogarhythm/restir-lab/issues/3)，此前核对于 2026-10-22：总时长 3:30–4:00，开头用 60–90 秒回顾项目，展示实现，说明已完成与剩余编程工作；于 2026-10-25 23:59（香港时间）向 Canvas 提交 progress.mp4。本目录没有代为录制或提交最终视频。
+The course requirements in [GitHub issue 3](https://github.com/TheLogarhythm/restir-lab/issues/3) were last checked on 2026-10-22: a total duration of 3:30 to 4:00, a 60 to 90 second opening recap, a demonstration of the implementation, and an explanation of completed and remaining programming work. Submit progress.mp4 to Canvas by 2026-10-25 23:59 (Hong Kong time). The recording at `COMP5411/progress.mp4` (outside this repository) was reviewed on 2026-10-24: it lasts 3:35.167, includes about 70 seconds of opening recap, and passes full audio/video decoding. The user confirmed successful Canvas submission on 2026-10-24. Issue 3 is closed and the project item is Done. The source rehearsal timings and 354-word script above remain draft targets, not measured timestamps from the recording.
 
-场景许可和来源保留在 [场景索引](data/scenes.json) 与 [THIRD_PARTY.md](../../THIRD_PARTY.md)。六个新增场景的 OIDN 图片用于介绍场景配置进展，不参与本轮受控 PDF 比较。
+Scene licenses and sources are retained in the [scene index](data/scenes.json) and [THIRD_PARTY.md](../../THIRD_PARTY.md). The OIDN images of the six additional scenes show scene setup progress and are outside this round of controlled PDF comparisons.
