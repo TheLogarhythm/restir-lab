@@ -19,6 +19,11 @@ from experiment.controlled_runner import ControlledExperiment
 
 
 def suite_path(name):
+    availability = ROOT / "runs/pdf-similarity-archive/artifact-availability.json"
+    if availability.is_file():
+        retired = json.loads(availability.read_text(encoding="utf-8"))
+        if name == Path(retired["historical_root"]).name:
+            raise ValueError("This campaign is archived in runs/pdf-similarity-archive; use scripts/analysis/pdf_archive.py for verification. Start new renders under a new approved campaign name.")
     if not re.fullmatch(r"pdf-controlled-[A-Za-z0-9_-]+", name):
         raise ValueError("Use a dedicated pdf-controlled-* directory under runs/")
     unresolved = ROOT / "runs" / name

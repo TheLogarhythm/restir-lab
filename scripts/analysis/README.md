@@ -22,3 +22,9 @@ are never overwritten. See [the protocol](../../experiments/suites/di-reuse.md#a
 For a versioned result, retain a report, its figures, the CSV rows it uses and
 provenance under `results/summaries/<experiment>/`. Keep raw HDR, logs and caches
 in ignored `runs/`; avoid duplicating per-seed aggregates for a single-seed report.
+
+## Archived PDF campaign
+
+The local PDF archive at `runs/pdf-similarity-archive/` retains all formal CSVs and timing rows, full video-source PNG and selected HDR. Run `python -B scripts/analysis/pdf_archive.py verify --decode` to check stored hashes, PNGs and timing coverage. Run `python -B scripts/analysis/pdf_archive.py numerical` to recompute all 13 conditions and check maps against pre-deletion verified array hashes. Neither command launches a renderer.
+
+CSV plots can be redrawn directly. Sparse pixel/ROI/local-TRMAE analysis uses archive-inputs.json and retained HDR; original receipts keep historical paths. Full-sequence HDR analysis and full reference convergence/resumption require new renders. Old MP4s and NPZ are intentionally absent. The archive script's prepare/source-gate actions belong to the completed migration, not ordinary reanalysis.
