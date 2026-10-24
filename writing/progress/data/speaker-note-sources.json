@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "purpose": "Source and scientific-scope details moved out of presenter prompts during the humanizer rewrite. These are research notes, not spoken narration.",
+  "original_path_context": "writing/progress/source/progress.md",
+  "updated_utc": "2026-10-23T23:45:30.075821+00:00",
+  "slides": [
+    {
+      "slide": 1,
+      "details_verbatim": "Sources: writing/course/proposal/main.tex; ../data/sources.json. Four unchanged full-frame reference PNGs illustrate Cornell Box, Arcade, Bistro interior and Bistro exterior. Bistro reference precision is unassessed; cover images illustrate scene coverage."
+    },
+    {
+      "slide": 2,
+      "details_verbatim": "Sources: Project proposal and pitch source; Bitterli et al. (2020), DOI 10.1145/3386569.3392481. Cornell reference from current verified campaign."
+    },
+    {
+      "slide": 3,
+      "details_verbatim": "Sources: writing/course/proposal/main.tex; docs/reproductions/pdf-similarity.md; Bitterli et al. 2020; Tokuyoshi 2023, DOI 10.1145/3585501; Junkins et al. 2026, DOI 10.1145/3820024. CGNS remains planned."
+    },
+    {
+      "slide": 4,
+      "details_verbatim": "Sources: Tokuyoshi (2023), Figure 2 and Sections 3.2–3.3, DOI 10.1145/3585501. Original figure extracted from PDF page 3; see ../data/paper-figure.json for source hash and crop. This is a conceptual overview: the paper also combines PDF similarity with existing rejection heuristics according to temporal continuity. The diagram is from the paper, not output from our renderer. Our RTXDI adaptation retains RTXDI's spatial reuse formulation."
+    },
+    {
+      "slide": 5,
+      "details_verbatim": "Sources: scripts/run/rtxdi_experiments/PdfSimilarity.hlsli (LabUpdateDirection, LabSpatialWeight); scripts/run/rtxdi_pdf.py (adapt_spatial); scripts/run/experiment/runner.py; scripts/analysis/pdf_summary.py; tests/pdf_spatial_resampling.cpp. Final PDF summary controls evaluation status."
+    },
+    {
+      "slide": 6,
+      "details_verbatim": "Recording cue: play once, then use the interactive comparison at half speed. Pause around frame 48 and drag the divider across a surface. This is saved renderer output, not a live renderer demonstration.\nSources: ../data/media.json; ../../../runs/pdf-similarity-archive/artifacts/raw/bistro-exterior-motion/frames. The encoded preview is lossy. Open the original PNG pair in the comparison page for pixel inspection."
+    },
+    {
+      "slide": 7,
+      "details_verbatim": "Sources: ../data/overview.csv, cornell-static, arcade-static and bistro-exterior-static. Images are original seed-1 frame-128 PNGs, with no cropping or display-transform changes within a pair. GPU means cover frames 41–128. Formula follows scripts/run/experiment/error_metrics.py: linear luminance Y = RGB dot (0.2126, 0.7152, 0.0722); spatial mean 100*abs(Y-R)/(abs(Y)+abs(R)+1e-4), WITHOUT an additional factor of two. N is the full-image pixel count. Cornell/Arcade keep original precision acceptance; Bistro is a fixed-sample reference with precision not evaluated. These are descriptive three-seed means at fixed settings; no general equal-time advantage established. Assets: NVIDIA RTXDI; Amazon Lumberyard / NVIDIA ORCA, CC BY 4.0."
+    },
+    {
+      "slide": 8,
+      "details_verbatim": "Scientific scope: the images show the spatial-only ablation, not every indoor configuration. Images are seed 1; SMAPE values are three-seed means. Bistro reference precision is unassessed, temporal metrics cover only 31→32, 47→48 and 95→96, and no general equal-time advantage is established. Geometry/visibility/PDF-estimation explanations are hypotheses. The configuration does not establish a shortage of emitters.\nSources: ../../../runs/pdf-similarity-archive/analysis/bistro-interior-static-spatial-only/summary.csv and paired-seed-differences.csv; ../../../results/summaries/pdf-similarity/README.md. All three spatial metrics worsen in the full image and both ROIs in each seed for this ablation. Interior measured neighbor-2 PDF-off dominates all measured PDF-on means; favorable bounded interpolation is not an optimized frontier. Bistro old precision tests not evaluated."
+    },
+    {
+      "slide": 9,
+      "details_verbatim": "Sources: runs/scene-gallery/manifest.json; ../data/scenes.json; ../data/scenes.json. All six additional scenes are included, excluding Cornell Box, Arcade and Bistro. Each slide image is an unchanged 1920×1080 processed.png export. OIDN RT/HDR/HIGH, color-only; ACES fitted + sRGB, paired with an unfiltered image from the same linear input and exposure. Native denoiser and AA off. ReSTIR DI + PT except Emerald Square, which uses BRDF indirect lighting. Default 384 frames with last 32 averaged; Emerald Square 128/32; Zero-Day 512/64 and emission ×64. These setup images are outside the formal PDF comparison. Credits: Classroom: Christophe Seux / Blender Demo Files · CC0; Emerald Square: NVIDIA / Nicholas Hull, Kate Anderson and Nir Benty · CC BY-NC-SA 3.0; San Miguel: Guillermo M. Leal Llaguno / McGuire Computer Graphics Archive; Sun Temple: Epic Games / NVIDIA ORCA · CC BY-NC-SA 4.0; Veach Ajar: Benedikt Bitterli · CC0; Zero-Day: Beeple / NVIDIA ORCA · CC BY 4.0. Full source URLs and licenses are in ../data/scenes.json."
+    },
+    {
+      "slide": 10,
+      "details_verbatim": "Sources: docs/roadmap.md; writing/course/proposal/main.tex. These are remaining project tasks, not completed results."
+    }
+  ]
+}

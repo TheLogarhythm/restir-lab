@@ -1,0 +1,203 @@
+{
+  "passed": true,
+  "checks": {
+    "paper_figure": {
+      "figure": 2,
+      "page": 3,
+      "source_sha256": "433dd3662ad9c9b2233eb2c2cc6f34a1a9e14e24df8676f8828863741cb608fa"
+    },
+    "source_hashes": 748,
+    "unchanged_slide_images": 18,
+    "comparison.html": {
+      "local_links": 134
+    },
+    "explorer_image_combinations": 351,
+    "progress.html": {
+      "local_links": 25
+    },
+    "slides": 11,
+    "controller_unit_checks": "PASS: matched decode pairs, dropped/reordered callbacks, slash geometry/endpoints, raw PNG inspection, seeking, scene changes, keyboard control.",
+    "media": [
+      {
+        "path": "assets/videos/arcade-motion/pdf-off.mp4",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "duration": "3.200000",
+        "nb_read_frames": "96"
+      },
+      {
+        "path": "assets/videos/arcade-motion/pdf-on.mp4",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "duration": "3.200000",
+        "nb_read_frames": "96"
+      },
+      {
+        "path": "assets/videos/arcade-motion/comparison.mp4",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "duration": "3.200000",
+        "nb_read_frames": "96"
+      },
+      {
+        "path": "assets/videos/bistro-interior-motion/pdf-off.mp4",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "duration": "3.200000",
+        "nb_read_frames": "96"
+      },
+      {
+        "path": "assets/videos/bistro-interior-motion/pdf-on.mp4",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "duration": "3.200000",
+        "nb_read_frames": "96"
+      },
+      {
+        "path": "assets/videos/bistro-interior-motion/comparison.mp4",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "duration": "3.200000",
+        "nb_read_frames": "96"
+      },
+      {
+        "path": "assets/videos/bistro-exterior-motion/pdf-off.mp4",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "duration": "3.200000",
+        "nb_read_frames": "96"
+      },
+      {
+        "path": "assets/videos/bistro-exterior-motion/pdf-on.mp4",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "duration": "3.200000",
+        "nb_read_frames": "96"
+      },
+      {
+        "path": "assets/videos/bistro-exterior-motion/comparison.mp4",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "duration": "3.200000",
+        "nb_read_frames": "96"
+      },
+      {
+        "path": "assets/videos/bistro-lighting/pdf-off.mp4",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "duration": "3.200000",
+        "nb_read_frames": "96"
+      },
+      {
+        "path": "assets/videos/bistro-lighting/pdf-on.mp4",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "duration": "3.200000",
+        "nb_read_frames": "96"
+      },
+      {
+        "path": "assets/videos/bistro-lighting/comparison.mp4",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "duration": "3.200000",
+        "nb_read_frames": "96"
+      }
+    ],
+    "diagonal_composition": [
+      {
+        "condition": "arcade-motion",
+        "checks": [
+          {
+            "frame": 1,
+            "mean_absolute_rgb_error": 2.2375,
+            "reversed_sides_error": 3.0186
+          },
+          {
+            "frame": 48,
+            "mean_absolute_rgb_error": 3.2147,
+            "reversed_sides_error": 5.9286
+          },
+          {
+            "frame": 96,
+            "mean_absolute_rgb_error": 3.0763,
+            "reversed_sides_error": 6.1495
+          }
+        ]
+      },
+      {
+        "condition": "bistro-interior-motion",
+        "checks": [
+          {
+            "frame": 1,
+            "mean_absolute_rgb_error": 0.585,
+            "reversed_sides_error": 1.021
+          },
+          {
+            "frame": 48,
+            "mean_absolute_rgb_error": 3.8822,
+            "reversed_sides_error": 11.0079
+          },
+          {
+            "frame": 96,
+            "mean_absolute_rgb_error": 3.7493,
+            "reversed_sides_error": 11.6788
+          }
+        ]
+      },
+      {
+        "condition": "bistro-exterior-motion",
+        "checks": [
+          {
+            "frame": 1,
+            "mean_absolute_rgb_error": 3.2168,
+            "reversed_sides_error": 4.5087
+          },
+          {
+            "frame": 48,
+            "mean_absolute_rgb_error": 5.9346,
+            "reversed_sides_error": 25.1723
+          },
+          {
+            "frame": 96,
+            "mean_absolute_rgb_error": 5.7263,
+            "reversed_sides_error": 27.5383
+          }
+        ]
+      },
+      {
+        "condition": "bistro-lighting",
+        "checks": [
+          {
+            "frame": 1,
+            "mean_absolute_rgb_error": 3.2168,
+            "reversed_sides_error": 4.5087
+          },
+          {
+            "frame": 48,
+            "mean_absolute_rgb_error": 5.9499,
+            "reversed_sides_error": 26.4289
+          },
+          {
+            "frame": 96,
+            "mean_absolute_rgb_error": 5.8252,
+            "reversed_sides_error": 26.7821
+          }
+        ]
+      }
+    ],
+    "browser_interaction": "not verified: browser tool rejected local file protocol"
+  },
+  "errors": []
+}
