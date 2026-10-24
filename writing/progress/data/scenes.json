@@ -1,0 +1,1417 @@
+{
+  "schema_version": 2,
+  "updated_date_hkt": "2026-10-23",
+  "source": "runs/scene-gallery",
+  "source_manifest_sha256": "74bf6d7dde0b45d0b21f891f9b7221751d4f0036bbec076138713dc24f88e696",
+  "purpose": "Scene integration previews; separate from the controlled PDF evaluation.",
+  "excluded_baseline_scenes": [
+    "arcade",
+    "bistro",
+    "cornell-box"
+  ],
+  "scene_count": 6,
+  "view_count": 12,
+  "selected_slide_images": 6,
+  "processing": "OIDN RT/HDR/HIGH, color-only; ACES fitted + sRGB; native denoiser and AA off.",
+  "scenes": [
+    {
+      "id": "classroom",
+      "title": "Classroom",
+      "description": "Indoor clutter",
+      "description_zh": "室内细节与遮挡",
+      "hero_view": "view-a",
+      "hero_image": "gallery/classroom/view-a/processed.png",
+      "credit": "Christophe Seux / Blender Demo Files · CC0",
+      "source_registry": {
+        "id": "classroom",
+        "source_url": "https://download.blender.org/demo/test/classroom.zip",
+        "source_revision": "Blender Classroom demo, 2019-06-13 archive",
+        "source_sha256": "0f0ecc58d45f12b2f4272a53e2d8e69135518e16e956b118f10c20d8dcfdf5e6",
+        "sha256": "2b90ae6c88b1a900c53d7485a7343d76e77a168346fd2dbfac757891111c1b57",
+        "hash_scope": "Runtime resource closure; sorted UTF-8 <sha256><two spaces><relative path><LF>",
+        "license": "CC0; Christophe Seux; Blender demo-files webpage",
+        "local_path": "assets/converted/classroom/classroom.scene.json",
+        "conversion": "Blender 5.2 via scripts/assets/convert_scene.py --profile classroom; glTF geometry/materials + native Donut source lights",
+        "modifications": [
+          "Legacy color graphs baked per shared mesh; instance-dependent variation frozen to representative",
+          "Scalar roughness; micro-bump, displacement and volumetric effects omitted",
+          "Pure glossy shaders approximated as metallic; glass approximated with alpha",
+          "Daylight portal sky color baked; backface emission mapped to one-sided geometry; camera/shadow-invisible window emitter uses zero opacity",
+          "Authored lights use radiometric units; point intensity is power / (4 pi); area radiance is power / (pi area)"
+        ],
+        "backend_configs": {
+          "rtxdi": "scenes/configs/rtxdi/classroom.json"
+        },
+        "role": "Source lamps and emissive overrides restored; approximate baked portal/PBR materials; no invented local lights; no baseline evaluation",
+        "runtime_assets": {
+          "sha256": "2b90ae6c88b1a900c53d7485a7343d76e77a168346fd2dbfac757891111c1b57",
+          "file_count": 335,
+          "hash_scope": "Runtime resource closure; sorted UTF-8 <sha256><two spaces><relative path><LF>"
+        }
+      }
+    },
+    {
+      "id": "emerald-square",
+      "title": "Emerald Square",
+      "description": "Urban lighting",
+      "description_zh": "城市广场与室外照明",
+      "hero_view": "view-b",
+      "hero_image": "gallery/emerald-square/view-b/processed.png",
+      "credit": "NVIDIA / Nicholas Hull, Kate Anderson and Nir Benty · CC BY-NC-SA 3.0",
+      "source_registry": {
+        "id": "emerald-square",
+        "source_url": "https://developer.nvidia.com/orca/nvidia-emerald-square",
+        "source_download_url": "https://developer.nvidia.com/emerald-square",
+        "source_revision": "EmeraldSquare_v4_1.zip",
+        "source_sha256": "a63d08531c8a3245b722a2407b57385b191064090487ef3fee3c4e796b41e2f6",
+        "license": "CC BY-NC-SA 3.0; NVIDIA / Nicholas Hull, Kate Anderson, Nir Benty",
+        "installation": {
+          "source_entry": "EmeraldSquare_v4_1/EmeraldSquare_Dusk.fbx",
+          "profile": "orca-scene",
+          "output_entry": "emerald-square.gltf"
+        },
+        "local_path": "assets/converted/emerald-square/emerald-square.scene.json",
+        "conversion": "scripts/assets/convert_scene.py --profile orca-scene",
+        "modifications": [
+          "ORCA Dusk variant; source HDR and emissive multiplier x5 retained",
+          "FBX material and punctual-light import follows Blender's conversion; not exact Falcor equivalence",
+          "Static source view; animation is omitted"
+        ],
+        "role": "Optional CGNS scene import; interactive rendering and renderer-owned capture verified; motion and paper equivalence unvalidated",
+        "sha256": "a6f130f9122a843ce333578dbfccbf75efa82eaa58f9746bcdc5efb147eb93c6",
+        "hash_scope": "Runtime resource closure including source HDR",
+        "backend_configs": {
+          "rtxdi": "scenes/configs/rtxdi/emerald-square.json"
+        },
+        "runtime_assets": {
+          "sha256": "a6f130f9122a843ce333578dbfccbf75efa82eaa58f9746bcdc5efb147eb93c6",
+          "file_count": 455,
+          "hash_scope": "Sorted UTF-8 <sha256><two spaces><relative path><LF>"
+        }
+      }
+    },
+    {
+      "id": "san-miguel",
+      "title": "San Miguel",
+      "description": "Foliage and detail",
+      "description_zh": "庭院植被与精细几何",
+      "hero_view": "view-a",
+      "hero_image": "gallery/san-miguel/view-a/processed.png",
+      "credit": "Guillermo M. Leal Llaguno / McGuire Computer Graphics Archive",
+      "source_registry": {
+        "id": "san-miguel",
+        "source_url": "https://casual-effects.com/g3d/data10/research/model/San_Miguel/San_Miguel.zip",
+        "source_revision": "San Miguel 2.1, McGuire 2017 low-poly OBJ",
+        "source_sha256": "85874077735808150e679b3c71d70a37a270cb8833f4911325aa1099da3f7d4a",
+        "license": "Research and educational use with attribution; bundled license.txt",
+        "local_path": "assets/converted/san-miguel/san-miguel.gltf",
+        "conversion": "scripts/assets/convert_scene.py --profile san-miguel",
+        "modifications": [
+          "Restored embedded PNG cutout alpha with threshold 0.5; no added local lights; default RTXDI sun and sky remain available"
+        ],
+        "backend_configs": {
+          "rtxdi": "scenes/configs/rtxdi/san-miguel.json"
+        },
+        "role": "Static RTXDI import; no added local lights; default sun/sky available; no baseline evaluation",
+        "runtime_assets": {
+          "sha256": "ae19e9c474e9e963e925947953dd4993b0d2860862782e837f5a61b930d1723b",
+          "file_count": 270,
+          "hash_scope": "Runtime resource closure; sorted UTF-8 <sha256><two spaces><relative path><LF>"
+        },
+        "sha256": "ae19e9c474e9e963e925947953dd4993b0d2860862782e837f5a61b930d1723b",
+        "hash_scope": "Runtime resource closure; sorted UTF-8 <sha256><two spaces><relative path><LF>"
+      }
+    },
+    {
+      "id": "sun-temple",
+      "title": "Sun Temple",
+      "description": "Architectural shadows",
+      "description_zh": "石质建筑与纵深阴影",
+      "hero_view": "view-b",
+      "hero_image": "gallery/sun-temple/view-b/processed.png",
+      "credit": "Epic Games / NVIDIA ORCA · CC BY-NC-SA 4.0",
+      "source_registry": {
+        "id": "sun-temple",
+        "source_url": "https://developer.nvidia.com/ue4-sun-temple",
+        "source_download_url": "https://developer.nvidia.com/sun-temple",
+        "source_revision": "SunTemple_v4.zip",
+        "source_sha256": "672b2ee05f5c7f3b51b56602d7ffe1cb2ce17a7df4038109dda942872aec16ac",
+        "license": "CC BY-NC-SA 4.0; Epic Games",
+        "installation": {
+          "source_entry": "SunTemple_v4/SunTemple/SunTemple.fbx",
+          "profile": "orca-scene",
+          "output_entry": "sun-temple.gltf"
+        },
+        "local_path": "assets/converted/sun-temple/sun-temple.scene.json",
+        "conversion": "scripts/assets/convert_scene.py --profile orca-scene",
+        "modifications": [
+          "Source HDR and emissive multiplier x1000 retained; 13 FBX punctual lights imported",
+          "FBX material and punctual-light import follows Blender's conversion; not exact Falcor equivalence",
+          "Static source view; animation is omitted"
+        ],
+        "role": "Optional CGNS scene import; interactive rendering and renderer-owned capture verified; motion and paper equivalence unvalidated",
+        "sha256": "3e2d567e0f015c8b9fe4da0d14a20424725b688c9f9bb70e2c4991dc018a8161",
+        "hash_scope": "Runtime resource closure, including source HDR where present",
+        "backend_configs": {
+          "rtxdi": "scenes/configs/rtxdi/sun-temple.json"
+        },
+        "runtime_assets": {
+          "sha256": "3e2d567e0f015c8b9fe4da0d14a20424725b688c9f9bb70e2c4991dc018a8161",
+          "file_count": 200,
+          "hash_scope": "Sorted UTF-8 <sha256><two spaces><relative path><LF>"
+        }
+      }
+    },
+    {
+      "id": "veach-ajar",
+      "title": "Veach Ajar",
+      "description": "Contrasting materials",
+      "description_zh": "不同材质的表面响应",
+      "hero_view": "view-b",
+      "hero_image": "gallery/veach-ajar/view-b/processed.png",
+      "credit": "Benedikt Bitterli · CC0",
+      "source_registry": {
+        "id": "veach-ajar",
+        "source_url": "https://benedikt-bitterli.me/resources/",
+        "source_download_url": "https://benedikt-bitterli.me/resources/tungsten/veach-ajar.zip",
+        "source_revision": "veach-ajar.zip",
+        "source_sha256": "448130c70cc566e61811d111c0671d7f0bfef0765a1b1186d1bd12bf93bdf5f2",
+        "license": "CC0/public domain; Benedikt Bitterli; bundled LICENSE.txt",
+        "installation": {
+          "source_entry": "veach-ajar/scene.json",
+          "profile": "tungsten",
+          "output_entry": "veach-ajar.gltf"
+        },
+        "local_path": "assets/converted/veach-ajar/veach-ajar.gltf",
+        "conversion": "scripts/assets/convert_scene.py --profile tungsten",
+        "modifications": [
+          "Tungsten conductor BRDFs mapped to metallic PBR; dielectric uses Donut thin-surface transmission",
+          "RTXDI DI does not reproduce the scene's indirect illumination, dielectric refraction or caustics",
+          "Procedural checker baked to 8 texels per cell; source image filtering and transfer curve may differ",
+          "Source camera, static transforms and quad emission retained; not the CGNS authors' scene configuration"
+        ],
+        "role": "Optional CGNS scene import; interactive rendering and renderer-owned capture verified; motion and paper equivalence unvalidated",
+        "sha256": "10f67a8de44b5cc6530952297fc68626d869bc3c89c888cc34738a5ca2964bbc",
+        "hash_scope": "Runtime resource closure, including source HDR where present",
+        "backend_configs": {
+          "rtxdi": "scenes/configs/rtxdi/veach-ajar.json"
+        },
+        "runtime_assets": {
+          "sha256": "10f67a8de44b5cc6530952297fc68626d869bc3c89c888cc34738a5ca2964bbc",
+          "file_count": 6,
+          "hash_scope": "Sorted UTF-8 <sha256><two spaces><relative path><LF>"
+        }
+      }
+    },
+    {
+      "id": "zero-day-measure-one",
+      "title": "Zero-Day",
+      "description": "Emissive machinery",
+      "description_zh": "发光机械与反射表面",
+      "hero_view": "view-b",
+      "hero_image": "gallery/zero-day-measure-one/view-b/processed.png",
+      "credit": "Beeple / NVIDIA ORCA · CC BY 4.0",
+      "source_registry": {
+        "id": "zero-day-measure-one",
+        "source_url": "https://developer.nvidia.com/orca/beeple-zero-day",
+        "source_revision": "ZeroDay_v1.zip",
+        "source_sha256": "a9d040fe9720ee88937778659205fd76bad4499431a37156aaeeba382f08d592",
+        "sha256": "1c692ee0eb6646a98142016c807e892ae4281325d1a8729020c7b1428c73f8b0",
+        "hash_scope": "SHA-256 of UTF-8 lines: <file sha256><two spaces><relative path><LF>, sorted by path over measure-one.gltf and its 399 referenced resources",
+        "license": "CC BY 4.0 (ORCA Zero-Day)",
+        "local_path": "assets/converted/zero-day/measure-one.gltf",
+        "conversion": "ORCA FBX/DDS to glTF via scripts/assets/convert_scene.py --profile orca",
+        "modifications": [
+          "ORM/normal mapping and UV transform baking; constant emissive texture without UV folded into linear color; existing non-emissive UV approximations retained",
+          "108 provably opaque BLEND materials normalized to OPAQUE; other alpha modes preserved"
+        ],
+        "backend_configs": {
+          "rtxdi": "scenes/configs/rtxdi/zero-day-measure-one.json"
+        },
+        "role": "DI reuse harness; opaque alpha classification corrected; material/light fidelity review pending",
+        "runtime_assets": {
+          "sha256": "1c692ee0eb6646a98142016c807e892ae4281325d1a8729020c7b1428c73f8b0",
+          "file_count": 400,
+          "hash_scope": "Sorted UTF-8 <sha256><two spaces><path relative to source.root><LF>; scene documents, model resources (Donut DDS preference), referenced IES"
+        }
+      }
+    }
+  ],
+  "views": [
+    {
+      "scene_id": "classroom",
+      "id": "view-a",
+      "title": "面向黑板",
+      "image": "gallery/classroom/view-a/processed.png",
+      "sha256": "8426e445897acf0c6bbbe352f75e7bf6435603c2ac93051b3f626dbd4670b7db",
+      "raw_image": "gallery/classroom/view-a/raw.png",
+      "raw_sha256": "6ef6d472c3e1ede3135daf26ace046a17525ac85620791a6ccdfb6b7338fa9fb",
+      "selected_for_slide": true,
+      "camera": {
+        "position": [
+          2.576395273208618,
+          1.094475507736206,
+          4.465750694274902
+        ],
+        "direction": [
+          -0.2520502209663391,
+          0.011198729276657104,
+          -0.9676494002342224
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "vertical_fov": 39.597755335771296
+      },
+      "record": "gallery/classroom/view-a/render-record.json",
+      "source_record": "runs/scene-gallery/classroom/view-a/render-record.json",
+      "frame_average": {
+        "first": 353,
+        "last": 384,
+        "count": 32
+      },
+      "indirect_mode": "RESTIRPT",
+      "emissive_scale": 1.0,
+      "display": {
+        "transform": "ACES fitted + sRGB",
+        "exposure_ev": 0.0,
+        "same_for_both_pngs": true
+      },
+      "postprocessing": {
+        "name": "Open Image Denoise",
+        "version_integer": 20500,
+        "device": "CUDA",
+        "filter": "RT",
+        "hdr": true,
+        "quality": "HIGH",
+        "guides": "color only",
+        "library_sha256": "e200ac479e04cf89d80b7422b524a6d05fcdcaeb9bf391a16dbc07d2c0838075"
+      },
+      "paired_linear_source_sha256": "19cae88119cec9d4adf57a13aa4805e67f1684a97b0026766402fd286982b145"
+    },
+    {
+      "scene_id": "classroom",
+      "id": "view-b",
+      "title": "面向教室后排",
+      "image": "gallery/classroom/view-b/processed.png",
+      "sha256": "29f405a3f4648862f8c684c153938f1d4001c19eae6e32960803be6a27e7f286",
+      "raw_image": "gallery/classroom/view-b/raw.png",
+      "raw_sha256": "61456a314b0e1569d717dbf108db3bf034edf10f991510da78dbdcfb3d9087e5",
+      "selected_for_slide": false,
+      "camera": {
+        "position": [
+          -0.5,
+          1.4,
+          -1.8
+        ],
+        "direction": [
+          1.4,
+          -0.3999999999999999,
+          4.2
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "vertical_fov": 62
+      },
+      "record": "gallery/classroom/view-b/render-record.json",
+      "source_record": "runs/scene-gallery/classroom/view-b/render-record.json",
+      "frame_average": {
+        "first": 353,
+        "last": 384,
+        "count": 32
+      },
+      "indirect_mode": "RESTIRPT",
+      "emissive_scale": 1.0,
+      "display": {
+        "transform": "ACES fitted + sRGB",
+        "exposure_ev": 0.5,
+        "same_for_both_pngs": true
+      },
+      "postprocessing": {
+        "name": "Open Image Denoise",
+        "version_integer": 20500,
+        "device": "CUDA",
+        "filter": "RT",
+        "hdr": true,
+        "quality": "HIGH",
+        "guides": "color only",
+        "library_sha256": "e200ac479e04cf89d80b7422b524a6d05fcdcaeb9bf391a16dbc07d2c0838075"
+      },
+      "paired_linear_source_sha256": "471daeeb9f950b95342ac52b2005ec8ddc05560cf61abb1721a7e24215a6a819"
+    },
+    {
+      "scene_id": "emerald-square",
+      "id": "view-a",
+      "title": "广场入口",
+      "image": "gallery/emerald-square/view-a/processed.png",
+      "sha256": "44780f3e574d532cf90f2efe9bf6ed7698bbc90d0110e7e0b2a82969ee444a4c",
+      "raw_image": "gallery/emerald-square/view-a/raw.png",
+      "raw_sha256": "db95ee2847ea56dd2a43cb480396ac6b692c68b7dc573a51d9f8923868bec092",
+      "selected_for_slide": false,
+      "camera": {
+        "position": [
+          -38.47235107421875,
+          1.795238971710205,
+          75.7105712890625
+        ],
+        "direction": [
+          0.12186798453330994,
+          0.004566818941384554,
+          -0.9925358891487122
+        ],
+        "up": [
+          -0.0005565584287978709,
+          0.9999896287918091,
+          0.004532777704298496
+        ],
+        "vertical_fov": 33.96661366396131
+      },
+      "record": "gallery/emerald-square/view-a/render-record.json",
+      "source_record": "runs/scene-gallery/emerald-square/view-a/render-record.json",
+      "frame_average": {
+        "first": 97,
+        "last": 128,
+        "count": 32
+      },
+      "indirect_mode": "BRDF",
+      "emissive_scale": 1.0,
+      "display": {
+        "transform": "ACES fitted + sRGB",
+        "exposure_ev": 8.25,
+        "same_for_both_pngs": true
+      },
+      "postprocessing": {
+        "name": "Open Image Denoise",
+        "version_integer": 20500,
+        "device": "CUDA",
+        "filter": "RT",
+        "hdr": true,
+        "quality": "HIGH",
+        "guides": "color only",
+        "library_sha256": "e200ac479e04cf89d80b7422b524a6d05fcdcaeb9bf391a16dbc07d2c0838075"
+      },
+      "paired_linear_source_sha256": "46151d74197b5f3a778820494f984023e7ebe7c58649bd31f9e9a356db72b7ab"
+    },
+    {
+      "scene_id": "emerald-square",
+      "id": "view-b",
+      "title": "园路与建筑",
+      "image": "gallery/emerald-square/view-b/processed.png",
+      "sha256": "f99034de756a5e9976881da10f553f3f03427cd0109055d922a0892c5207a7ff",
+      "raw_image": "gallery/emerald-square/view-b/raw.png",
+      "raw_sha256": "234b38003769c6486d1355821bce7153f4142582ce5138c8105f4e20f95f115a",
+      "selected_for_slide": true,
+      "camera": {
+        "position": [
+          -31,
+          2.1,
+          42
+        ],
+        "direction": [
+          -7,
+          0.8999999999999999,
+          -25
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "vertical_fov": 58
+      },
+      "record": "gallery/emerald-square/view-b/render-record.json",
+      "source_record": "runs/scene-gallery/emerald-square/view-b/render-record.json",
+      "frame_average": {
+        "first": 97,
+        "last": 128,
+        "count": 32
+      },
+      "indirect_mode": "BRDF",
+      "emissive_scale": 1.0,
+      "display": {
+        "transform": "ACES fitted + sRGB",
+        "exposure_ev": 8.75,
+        "same_for_both_pngs": true
+      },
+      "postprocessing": {
+        "name": "Open Image Denoise",
+        "version_integer": 20500,
+        "device": "CUDA",
+        "filter": "RT",
+        "hdr": true,
+        "quality": "HIGH",
+        "guides": "color only",
+        "library_sha256": "e200ac479e04cf89d80b7422b524a6d05fcdcaeb9bf391a16dbc07d2c0838075"
+      },
+      "paired_linear_source_sha256": "f3e3e2cf710b70eb061aef68c5502ec2c0596fd62be274315e74838f7658f5bf"
+    },
+    {
+      "scene_id": "san-miguel",
+      "id": "view-a",
+      "title": "庭院与拱廊",
+      "image": "gallery/san-miguel/view-a/processed.png",
+      "sha256": "48b40c771287fd7e83b01326c61efab5654f46809446f6b4718af72a474b24cc",
+      "raw_image": "gallery/san-miguel/view-a/raw.png",
+      "raw_sha256": "68516923d4a8933ad9c2083bb36ad41090c40524607b9cc1fb5a88e9305d1a6e",
+      "selected_for_slide": true,
+      "camera": {
+        "position": [
+          15,
+          1.8,
+          11
+        ],
+        "direction": [
+          -0.8,
+          0.1,
+          -0.6
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "vertical_fov": 60
+      },
+      "record": "gallery/san-miguel/view-a/render-record.json",
+      "source_record": "runs/scene-gallery/san-miguel/view-a/render-record.json",
+      "frame_average": {
+        "first": 353,
+        "last": 384,
+        "count": 32
+      },
+      "indirect_mode": "RESTIRPT",
+      "emissive_scale": 1.0,
+      "display": {
+        "transform": "ACES fitted + sRGB",
+        "exposure_ev": 6.25,
+        "same_for_both_pngs": true
+      },
+      "postprocessing": {
+        "name": "Open Image Denoise",
+        "version_integer": 20500,
+        "device": "CUDA",
+        "filter": "RT",
+        "hdr": true,
+        "quality": "HIGH",
+        "guides": "color only",
+        "library_sha256": "e200ac479e04cf89d80b7422b524a6d05fcdcaeb9bf391a16dbc07d2c0838075"
+      },
+      "paired_linear_source_sha256": "ca3922b2ed54b6331b4c1e6639c5cd64c9619ba76e345f7b456990c738bc12ad"
+    },
+    {
+      "scene_id": "san-miguel",
+      "id": "view-b",
+      "title": "拱廊与庭院",
+      "image": "gallery/san-miguel/view-b/processed.png",
+      "sha256": "4a0e1eba1e525ff5be9150a50cd91e6913c296baff680ff65c793fe0cca3b0ad",
+      "raw_image": "gallery/san-miguel/view-b/raw.png",
+      "raw_sha256": "8be1791c86a936188b894be6ad8ab225f4e4f454f3804ab2f0ea22e42313f1de",
+      "selected_for_slide": false,
+      "camera": {
+        "position": [
+          21,
+          1.8,
+          8
+        ],
+        "direction": [
+          -8,
+          0.4999999999999998,
+          1
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "vertical_fov": 64
+      },
+      "record": "gallery/san-miguel/view-b/render-record.json",
+      "source_record": "runs/scene-gallery/san-miguel/view-b/render-record.json",
+      "frame_average": {
+        "first": 353,
+        "last": 384,
+        "count": 32
+      },
+      "indirect_mode": "RESTIRPT",
+      "emissive_scale": 1.0,
+      "display": {
+        "transform": "ACES fitted + sRGB",
+        "exposure_ev": 5.75,
+        "same_for_both_pngs": true
+      },
+      "postprocessing": {
+        "name": "Open Image Denoise",
+        "version_integer": 20500,
+        "device": "CUDA",
+        "filter": "RT",
+        "hdr": true,
+        "quality": "HIGH",
+        "guides": "color only",
+        "library_sha256": "e200ac479e04cf89d80b7422b524a6d05fcdcaeb9bf391a16dbc07d2c0838075"
+      },
+      "paired_linear_source_sha256": "f3eceb479195dd50e49dab78b84f0218e5045c3924f70ec4f47af2d723d9e224"
+    },
+    {
+      "scene_id": "sun-temple",
+      "id": "view-a",
+      "title": "主殿入口",
+      "image": "gallery/sun-temple/view-a/processed.png",
+      "sha256": "8c0c10c5ae36bbeecd580644b48412790d601e5805465e213631c5b5a7a7ceee",
+      "raw_image": "gallery/sun-temple/view-a/raw.png",
+      "raw_sha256": "1012db0289bfc2446738a77dc7850a05140a0942b7a4dd21a42e908a5a4f48af",
+      "selected_for_slide": false,
+      "camera": {
+        "position": [
+          0.12808285653591156,
+          3.1698083877563477,
+          70.87351989746094
+        ],
+        "direction": [
+          -0.06616725772619247,
+          -0.05673898011445999,
+          -0.9961941242218018
+        ],
+        "up": [
+          -0.003760297317057848,
+          0.9983891248703003,
+          -0.05661419406533241
+        ],
+        "vertical_fov": 33.96661366396131
+      },
+      "record": "gallery/sun-temple/view-a/render-record.json",
+      "source_record": "runs/scene-gallery/sun-temple/view-a/render-record.json",
+      "frame_average": {
+        "first": 353,
+        "last": 384,
+        "count": 32
+      },
+      "indirect_mode": "RESTIRPT",
+      "emissive_scale": 1.0,
+      "display": {
+        "transform": "ACES fitted + sRGB",
+        "exposure_ev": 3.75,
+        "same_for_both_pngs": true
+      },
+      "postprocessing": {
+        "name": "Open Image Denoise",
+        "version_integer": 20500,
+        "device": "CUDA",
+        "filter": "RT",
+        "hdr": true,
+        "quality": "HIGH",
+        "guides": "color only",
+        "library_sha256": "e200ac479e04cf89d80b7422b524a6d05fcdcaeb9bf391a16dbc07d2c0838075"
+      },
+      "paired_linear_source_sha256": "9a46b9b67e94259fb7f4583538f9b52f0698c438d53baa49c8bafbfb7558a653"
+    },
+    {
+      "scene_id": "sun-temple",
+      "id": "view-b",
+      "title": "反向长廊",
+      "image": "gallery/sun-temple/view-b/processed.png",
+      "sha256": "f4c10deff66053237bc79dfd7ee4fbac32378f8102d090603cfd3bedc6e01ab4",
+      "raw_image": "gallery/sun-temple/view-b/raw.png",
+      "raw_sha256": "b6f63b7a18f01a1ad70e3aea7ca5e5e3b12f0c1ed4885b29a2812a94b8b7bb83",
+      "selected_for_slide": true,
+      "camera": {
+        "position": [
+          0.5,
+          2.2,
+          40
+        ],
+        "direction": [
+          0.0,
+          0.7999999999999998,
+          32
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "vertical_fov": 60
+      },
+      "record": "gallery/sun-temple/view-b/render-record.json",
+      "source_record": "runs/scene-gallery/sun-temple/view-b/render-record.json",
+      "frame_average": {
+        "first": 353,
+        "last": 384,
+        "count": 32
+      },
+      "indirect_mode": "RESTIRPT",
+      "emissive_scale": 1.0,
+      "display": {
+        "transform": "ACES fitted + sRGB",
+        "exposure_ev": 5.25,
+        "same_for_both_pngs": true
+      },
+      "postprocessing": {
+        "name": "Open Image Denoise",
+        "version_integer": 20500,
+        "device": "CUDA",
+        "filter": "RT",
+        "hdr": true,
+        "quality": "HIGH",
+        "guides": "color only",
+        "library_sha256": "e200ac479e04cf89d80b7422b524a6d05fcdcaeb9bf391a16dbc07d2c0838075"
+      },
+      "paired_linear_source_sha256": "92cd34aee29e5871afffb13fb7a6f9c937c28dabe4a0c772bcd53665f4d78ae7"
+    },
+    {
+      "scene_id": "veach-ajar",
+      "id": "view-a",
+      "title": "房间与门口",
+      "image": "gallery/veach-ajar/view-a/processed.png",
+      "sha256": "e013c498b8cdcf6d359db362a21f621772f79e4abf72677c0299ebececfae83e",
+      "raw_image": "gallery/veach-ajar/view-a/raw.png",
+      "raw_sha256": "077bd5b5f47bf075085948014fcfab334a47a4e9498e0c694f60665eca71f11f",
+      "selected_for_slide": false,
+      "camera": {
+        "position": [
+          4.05402,
+          1.61647,
+          -2.30652
+        ],
+        "direction": [
+          -0.9900147994416205,
+          -0.03229833330162711,
+          -0.13721339057287696
+        ],
+        "up": [
+          -0.03199251933557684,
+          0.9994782727332981,
+          -0.004434077201147619
+        ],
+        "vertical_fov": 35.98339777135764
+      },
+      "record": "gallery/veach-ajar/view-a/render-record.json",
+      "source_record": "runs/scene-gallery/veach-ajar/view-a/render-record.json",
+      "frame_average": {
+        "first": 353,
+        "last": 384,
+        "count": 32
+      },
+      "indirect_mode": "RESTIRPT",
+      "emissive_scale": 1.0,
+      "display": {
+        "transform": "ACES fitted + sRGB",
+        "exposure_ev": 0,
+        "same_for_both_pngs": true
+      },
+      "postprocessing": {
+        "name": "Open Image Denoise",
+        "version_integer": 20500,
+        "device": "CUDA",
+        "filter": "RT",
+        "hdr": true,
+        "quality": "HIGH",
+        "guides": "color only",
+        "library_sha256": "e200ac479e04cf89d80b7422b524a6d05fcdcaeb9bf391a16dbc07d2c0838075"
+      },
+      "paired_linear_source_sha256": "2e9d2e93e7e4a1efb5e0a1337ff22ad9a5c22cf65721b95881d6933aebcfc39b"
+    },
+    {
+      "scene_id": "veach-ajar",
+      "id": "view-b",
+      "title": "茶壶材质近景",
+      "image": "gallery/veach-ajar/view-b/processed.png",
+      "sha256": "e36d0432a5ffca7ede990a90ae26573dc8a8991c11c6627baf504d42a933ce8f",
+      "raw_image": "gallery/veach-ajar/view-b/raw.png",
+      "raw_sha256": "6fca8b2b57ad288274254331e70d34804bb88ce8183f33f2b9b0b9abc0ae83e3",
+      "selected_for_slide": true,
+      "camera": {
+        "position": [
+          0.4,
+          1.6,
+          -4.5
+        ],
+        "direction": [
+          -2.1,
+          -0.67,
+          1.6
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "vertical_fov": 46
+      },
+      "record": "gallery/veach-ajar/view-b/render-record.json",
+      "source_record": "runs/scene-gallery/veach-ajar/view-b/render-record.json",
+      "frame_average": {
+        "first": 353,
+        "last": 384,
+        "count": 32
+      },
+      "indirect_mode": "RESTIRPT",
+      "emissive_scale": 1.0,
+      "display": {
+        "transform": "ACES fitted + sRGB",
+        "exposure_ev": 0,
+        "same_for_both_pngs": true
+      },
+      "postprocessing": {
+        "name": "Open Image Denoise",
+        "version_integer": 20500,
+        "device": "CUDA",
+        "filter": "RT",
+        "hdr": true,
+        "quality": "HIGH",
+        "guides": "color only",
+        "library_sha256": "e200ac479e04cf89d80b7422b524a6d05fcdcaeb9bf391a16dbc07d2c0838075"
+      },
+      "paired_linear_source_sha256": "49ab748736c1d681f8449db52a003e206ebebff09e49ce9db32e3c61b0c1437c"
+    },
+    {
+      "scene_id": "zero-day-measure-one",
+      "id": "view-a",
+      "title": "机械走廊",
+      "image": "gallery/zero-day-measure-one/view-a/processed.png",
+      "sha256": "c35918e61b0c12338ae7b708c1255ca4efd5dbeca218a9882d0afef4c48e211a",
+      "raw_image": "gallery/zero-day-measure-one/view-a/raw.png",
+      "raw_sha256": "115c5e132fde425d1f2bbe68b0013f041e8d79547487de92603cd50cb19a3df5",
+      "selected_for_slide": false,
+      "camera": {
+        "position": [
+          7.67003,
+          -0.60688,
+          0.0109
+        ],
+        "direction": [
+          -0.98028,
+          0.10079,
+          -0.16997
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "vertical_fov": 60
+      },
+      "record": "gallery/zero-day-measure-one/view-a/render-record.json",
+      "source_record": "runs/scene-gallery/zero-day-measure-one/view-a/render-record.json",
+      "frame_average": {
+        "first": 449,
+        "last": 512,
+        "count": 64
+      },
+      "indirect_mode": "RESTIRPT",
+      "emissive_scale": 64.0,
+      "display": {
+        "transform": "ACES fitted + sRGB",
+        "exposure_ev": 9.25,
+        "same_for_both_pngs": true
+      },
+      "postprocessing": {
+        "name": "Open Image Denoise",
+        "version_integer": 20500,
+        "device": "CUDA",
+        "filter": "RT",
+        "hdr": true,
+        "quality": "HIGH",
+        "guides": "color only",
+        "library_sha256": "e200ac479e04cf89d80b7422b524a6d05fcdcaeb9bf391a16dbc07d2c0838075"
+      },
+      "paired_linear_source_sha256": "be0ef7b4480ac8cd8aa086c61662767e6d1501f03a26d8d4274d38bc0e11ca13"
+    },
+    {
+      "scene_id": "zero-day-measure-one",
+      "id": "view-b",
+      "title": "反向机械结构",
+      "image": "gallery/zero-day-measure-one/view-b/processed.png",
+      "sha256": "e0a96274cde973e9d3c44b61a9854d224d6dec417a1985ce0c3ea22c52bd7075",
+      "raw_image": "gallery/zero-day-measure-one/view-b/raw.png",
+      "raw_sha256": "0cde52d9400a34149f727a469dccdd798bc4ab9b7138f0e42a92d4d2c2212296",
+      "selected_for_slide": true,
+      "camera": {
+        "position": [
+          3,
+          -0.4,
+          0
+        ],
+        "direction": [
+          5,
+          0.4,
+          1
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "vertical_fov": 60
+      },
+      "record": "gallery/zero-day-measure-one/view-b/render-record.json",
+      "source_record": "runs/scene-gallery/zero-day-measure-one/view-b/render-record.json",
+      "frame_average": {
+        "first": 449,
+        "last": 512,
+        "count": 64
+      },
+      "indirect_mode": "RESTIRPT",
+      "emissive_scale": 64.0,
+      "display": {
+        "transform": "ACES fitted + sRGB",
+        "exposure_ev": 5.25,
+        "same_for_both_pngs": true
+      },
+      "postprocessing": {
+        "name": "Open Image Denoise",
+        "version_integer": 20500,
+        "device": "CUDA",
+        "filter": "RT",
+        "hdr": true,
+        "quality": "HIGH",
+        "guides": "color only",
+        "library_sha256": "e200ac479e04cf89d80b7422b524a6d05fcdcaeb9bf391a16dbc07d2c0838075"
+      },
+      "paired_linear_source_sha256": "877addf6ed809dcdd5569f49489ad41ca0a2baaee12e429fc77da8bcfdbbbffb"
+    }
+  ],
+  "reporting_layout": "Only six selected PNGs are copied into assets/scenes. Full raw/processed pairs and render records remain at their indexed scene-gallery sources.",
+  "current_slide_images": [
+    {
+      "path": "assets/scenes/classroom.png",
+      "source": "runs/scene-gallery/classroom/view-a/processed.png",
+      "url": "../../runs/scene-gallery/classroom/view-a/processed.png",
+      "sha256": "8426e445897acf0c6bbbe352f75e7bf6435603c2ac93051b3f626dbd4670b7db",
+      "bytes": 1960861
+    },
+    {
+      "path": "assets/scenes/emerald-square.png",
+      "source": "runs/scene-gallery/emerald-square/view-b/processed.png",
+      "url": "../../runs/scene-gallery/emerald-square/view-b/processed.png",
+      "sha256": "f99034de756a5e9976881da10f553f3f03427cd0109055d922a0892c5207a7ff",
+      "bytes": 3735831
+    },
+    {
+      "path": "assets/scenes/san-miguel.png",
+      "source": "runs/scene-gallery/san-miguel/view-a/processed.png",
+      "url": "../../runs/scene-gallery/san-miguel/view-a/processed.png",
+      "sha256": "48b40c771287fd7e83b01326c61efab5654f46809446f6b4718af72a474b24cc",
+      "bytes": 3641652
+    },
+    {
+      "path": "assets/scenes/sun-temple.png",
+      "source": "runs/scene-gallery/sun-temple/view-b/processed.png",
+      "url": "../../runs/scene-gallery/sun-temple/view-b/processed.png",
+      "sha256": "f4c10deff66053237bc79dfd7ee4fbac32378f8102d090603cfd3bedc6e01ab4",
+      "bytes": 2328931
+    },
+    {
+      "path": "assets/scenes/veach-ajar.png",
+      "source": "runs/scene-gallery/veach-ajar/view-b/processed.png",
+      "url": "../../runs/scene-gallery/veach-ajar/view-b/processed.png",
+      "sha256": "e36d0432a5ffca7ede990a90ae26573dc8a8991c11c6627baf504d42a933ce8f",
+      "bytes": 1571750
+    },
+    {
+      "path": "assets/scenes/zero-day-measure-one.png",
+      "source": "runs/scene-gallery/zero-day-measure-one/view-b/processed.png",
+      "url": "../../runs/scene-gallery/zero-day-measure-one/view-b/processed.png",
+      "sha256": "e0a96274cde973e9d3c44b61a9854d224d6dec417a1985ce0c3ea22c52bd7075",
+      "bytes": 1774096
+    }
+  ],
+  "historical_copies": [
+    {
+      "path": "gallery-source-manifest.json",
+      "source": "runs/scene-gallery/manifest.json",
+      "sha256": "74bf6d7dde0b45d0b21f891f9b7221751d4f0036bbec076138713dc24f88e696",
+      "bytes": 334364
+    },
+    {
+      "path": "gallery-source-gallery.json",
+      "source": "runs/scene-gallery/gallery.json",
+      "sha256": "6070191ecf2bf5511e2502adec6b68ccc8f3258eeca57e975af350c8cec01197",
+      "bytes": 2351
+    },
+    {
+      "path": "gallery-source-verification.json",
+      "source": "runs/scene-gallery/verification.json",
+      "sha256": "2ec1a6ab941f9087c3bce05b5d98c8c587a17917283465b06270474b8211a391",
+      "bytes": 1446
+    },
+    {
+      "path": "gallery-source-README.source.txt",
+      "source": "runs/scene-gallery/README.md",
+      "sha256": "c65b2c4fad197c92ce39ab604f01943f51b635f5a973c8ce6224f6d0e1e8722b",
+      "bytes": 9648
+    },
+    {
+      "path": "gallery/classroom/scene.json",
+      "source": "runs/scene-gallery/scenes/classroom.json",
+      "sha256": "56f474830a11d674ed443b0f1647100e88e3126bc1427ec8df1a66681c9dcb2d",
+      "bytes": 1068
+    },
+    {
+      "path": "gallery/classroom/view-a/raw.png",
+      "source": "runs/scene-gallery/classroom/view-a/raw.png",
+      "sha256": "6ef6d472c3e1ede3135daf26ace046a17525ac85620791a6ccdfb6b7338fa9fb",
+      "bytes": 5202504
+    },
+    {
+      "path": "gallery/classroom/view-a/processed.png",
+      "source": "runs/scene-gallery/classroom/view-a/processed.png",
+      "sha256": "8426e445897acf0c6bbbe352f75e7bf6435603c2ac93051b3f626dbd4670b7db",
+      "bytes": 1960861
+    },
+    {
+      "path": "gallery/classroom/view-a/render-record.json",
+      "source": "runs/scene-gallery/classroom/view-a/render-record.json",
+      "sha256": "e60e7368753d6da1e87c908ae53a302b7a5437afedec942c77665770e959fe8f",
+      "bytes": 191843
+    },
+    {
+      "path": "gallery/classroom/view-a/config.json",
+      "source": "runs/scene-gallery/classroom/view-a/config.json",
+      "sha256": "5dca345ec43f2da28b5b78852516a0aa01e867659a601301e4f9d54704182fe9",
+      "bytes": 163623
+    },
+    {
+      "path": "gallery/classroom/view-a/resolved.json",
+      "source": "runs/scene-gallery/classroom/view-a/resolved.json",
+      "sha256": "e1ce11e478a6130ce9a2bc7a5b5df39217e280ef824048bb396b9132d0593c80",
+      "bytes": 1932
+    },
+    {
+      "path": "gallery/classroom/view-a/timings.csv",
+      "source": "runs/scene-gallery/classroom/view-a/timings.csv",
+      "sha256": "a38e2fdc7c4d9b6620e6b295227f1e4cb38760112b104832ed569b5df58db1bc",
+      "bytes": 88306
+    },
+    {
+      "path": "gallery/classroom/view-b/raw.png",
+      "source": "runs/scene-gallery/classroom/view-b/raw.png",
+      "sha256": "61456a314b0e1569d717dbf108db3bf034edf10f991510da78dbdcfb3d9087e5",
+      "bytes": 5005302
+    },
+    {
+      "path": "gallery/classroom/view-b/processed.png",
+      "source": "runs/scene-gallery/classroom/view-b/processed.png",
+      "sha256": "29f405a3f4648862f8c684c153938f1d4001c19eae6e32960803be6a27e7f286",
+      "bytes": 1816654
+    },
+    {
+      "path": "gallery/classroom/view-b/render-record.json",
+      "source": "runs/scene-gallery/classroom/view-b/render-record.json",
+      "sha256": "b94b69008be78725d6616d5b75cc4a0b9c083286b8b0d5cc21d2135b4ed8ebbb",
+      "bytes": 163518
+    },
+    {
+      "path": "gallery/classroom/view-b/config.json",
+      "source": "runs/scene-gallery/classroom/view-b/config.json",
+      "sha256": "5da3244dce447ec0e827a26c754fbc1039eaf5b8e111bd145e49f13dcd52bd11",
+      "bytes": 135389
+    },
+    {
+      "path": "gallery/classroom/view-b/resolved.json",
+      "source": "runs/scene-gallery/classroom/view-b/resolved.json",
+      "sha256": "242454c047e0f2cbb3b5f91c1f2390725b5e06786da320e8923bedd42b92f666",
+      "bytes": 1918
+    },
+    {
+      "path": "gallery/classroom/view-b/timings.csv",
+      "source": "runs/scene-gallery/classroom/view-b/timings.csv",
+      "sha256": "bd8d3d45e66414c7fb6b6a1d468cfae0c6a992b25688ed4c7dc728123f63624b",
+      "bytes": 88245
+    },
+    {
+      "path": "gallery/emerald-square/scene.json",
+      "source": "runs/scene-gallery/scenes/emerald-square.json",
+      "sha256": "2600a7d5dd2b5d633994b760cd16bea1b8b0e07e36a5208a3354a703fc4d1430",
+      "bytes": 1417
+    },
+    {
+      "path": "gallery/emerald-square/view-a/raw.png",
+      "source": "runs/scene-gallery/emerald-square/view-a/raw.png",
+      "sha256": "db95ee2847ea56dd2a43cb480396ac6b692c68b7dc573a51d9f8923868bec092",
+      "bytes": 4993788
+    },
+    {
+      "path": "gallery/emerald-square/view-a/processed.png",
+      "source": "runs/scene-gallery/emerald-square/view-a/processed.png",
+      "sha256": "44780f3e574d532cf90f2efe9bf6ed7698bbc90d0110e7e0b2a82969ee444a4c",
+      "bytes": 3339187
+    },
+    {
+      "path": "gallery/emerald-square/view-a/render-record.json",
+      "source": "runs/scene-gallery/emerald-square/view-a/render-record.json",
+      "sha256": "2b645df9c6a92c88ab05aba1eb05f4a6efc82fc3f36af3e114583ce4aeadb5f1",
+      "bytes": 82791
+    },
+    {
+      "path": "gallery/emerald-square/view-a/config.json",
+      "source": "runs/scene-gallery/emerald-square/view-a/config.json",
+      "sha256": "af492134a8b3e277ff4e83b11b9238b9a2564041e86d2391528f1cd75f750c19",
+      "bytes": 65309
+    },
+    {
+      "path": "gallery/emerald-square/view-a/resolved.json",
+      "source": "runs/scene-gallery/emerald-square/view-a/resolved.json",
+      "sha256": "3cdd7c630ae1b0d529393d1ab058f3fdb4ccf43aac2a783f9b1b1e67dd3f7a2c",
+      "bytes": 1942
+    },
+    {
+      "path": "gallery/emerald-square/view-a/timings.csv",
+      "source": "runs/scene-gallery/emerald-square/view-a/timings.csv",
+      "sha256": "eeac5412e1d5b1bf6b645d886ba809f6637b6956954c6ca99725cf20f6003120",
+      "bytes": 25255
+    },
+    {
+      "path": "gallery/emerald-square/view-b/raw.png",
+      "source": "runs/scene-gallery/emerald-square/view-b/raw.png",
+      "sha256": "234b38003769c6486d1355821bce7153f4142582ce5138c8105f4e20f95f115a",
+      "bytes": 5142321
+    },
+    {
+      "path": "gallery/emerald-square/view-b/processed.png",
+      "source": "runs/scene-gallery/emerald-square/view-b/processed.png",
+      "sha256": "f99034de756a5e9976881da10f553f3f03427cd0109055d922a0892c5207a7ff",
+      "bytes": 3735831
+    },
+    {
+      "path": "gallery/emerald-square/view-b/render-record.json",
+      "source": "runs/scene-gallery/emerald-square/view-b/render-record.json",
+      "sha256": "9c2d031bb95faa8e25aba37bec96dce8a6e68ccfddab629c35f8220c9f353696",
+      "bytes": 65660
+    },
+    {
+      "path": "gallery/emerald-square/view-b/config.json",
+      "source": "runs/scene-gallery/emerald-square/view-b/config.json",
+      "sha256": "68c445ce69fe98fdf7502649d01641f5d4320ad2fca7f2d1f787f868cf5a3782",
+      "bytes": 48270
+    },
+    {
+      "path": "gallery/emerald-square/view-b/resolved.json",
+      "source": "runs/scene-gallery/emerald-square/view-b/resolved.json",
+      "sha256": "ee3f2337134657aa760aea7aa33fcf98df52a2dbc01db147683edad100a51fe7",
+      "bytes": 1929
+    },
+    {
+      "path": "gallery/emerald-square/view-b/timings.csv",
+      "source": "runs/scene-gallery/emerald-square/view-b/timings.csv",
+      "sha256": "9a587350ff75542c9db59ff7fa1aa3aab011a96b7b7549d21290ba293de6c7d3",
+      "bytes": 25275
+    },
+    {
+      "path": "gallery/san-miguel/scene.json",
+      "source": "runs/scene-gallery/scenes/san-miguel.json",
+      "sha256": "28697c761878a3de59a445800dc8a1861a962850c7fc04a3f4fb4e86bac7f73a",
+      "bytes": 974
+    },
+    {
+      "path": "gallery/san-miguel/view-a/raw.png",
+      "source": "runs/scene-gallery/san-miguel/view-a/raw.png",
+      "sha256": "68516923d4a8933ad9c2083bb36ad41090c40524607b9cc1fb5a88e9305d1a6e",
+      "bytes": 5414142
+    },
+    {
+      "path": "gallery/san-miguel/view-a/processed.png",
+      "source": "runs/scene-gallery/san-miguel/view-a/processed.png",
+      "sha256": "48b40c771287fd7e83b01326c61efab5654f46809446f6b4718af72a474b24cc",
+      "bytes": 3641652
+    },
+    {
+      "path": "gallery/san-miguel/view-a/render-record.json",
+      "source": "runs/scene-gallery/san-miguel/view-a/render-record.json",
+      "sha256": "317244f8e467922034bbbb9e353db7786cd7f8f26dbe5c134909e11caa9883be",
+      "bytes": 158079
+    },
+    {
+      "path": "gallery/san-miguel/view-a/config.json",
+      "source": "runs/scene-gallery/san-miguel/view-a/config.json",
+      "sha256": "c48471c2270bae6bedb32f85ac1af83942167ff68c3c449b836fb5383f8666cf",
+      "bytes": 129967
+    },
+    {
+      "path": "gallery/san-miguel/view-a/resolved.json",
+      "source": "runs/scene-gallery/san-miguel/view-a/resolved.json",
+      "sha256": "bf89e2485805570fba95bdf3a307c831862be3d096845b400f343caba81b059b",
+      "bytes": 1910
+    },
+    {
+      "path": "gallery/san-miguel/view-a/timings.csv",
+      "source": "runs/scene-gallery/san-miguel/view-a/timings.csv",
+      "sha256": "860b9a367ba35f1dabb8b428445b2b5eebda10a7fea0b3cedfac3f431cfc9653",
+      "bytes": 84123
+    },
+    {
+      "path": "gallery/san-miguel/view-b/raw.png",
+      "source": "runs/scene-gallery/san-miguel/view-b/raw.png",
+      "sha256": "8be1791c86a936188b894be6ad8ab225f4e4f454f3804ab2f0ea22e42313f1de",
+      "bytes": 5347576
+    },
+    {
+      "path": "gallery/san-miguel/view-b/processed.png",
+      "source": "runs/scene-gallery/san-miguel/view-b/processed.png",
+      "sha256": "4a0e1eba1e525ff5be9150a50cd91e6913c296baff680ff65c793fe0cca3b0ad",
+      "bytes": 3722722
+    },
+    {
+      "path": "gallery/san-miguel/view-b/render-record.json",
+      "source": "runs/scene-gallery/san-miguel/view-b/render-record.json",
+      "sha256": "0d8ab0d201eea32f732cc2367611466293a45f4abdc6d8db2ec0d3436f158718",
+      "bytes": 161561
+    },
+    {
+      "path": "gallery/san-miguel/view-b/config.json",
+      "source": "runs/scene-gallery/san-miguel/view-b/config.json",
+      "sha256": "e6e1bdbc3d4ed324da022ec7da1e02115018d4057350f096d66d09e285fb440e",
+      "bytes": 133440
+    },
+    {
+      "path": "gallery/san-miguel/view-b/resolved.json",
+      "source": "runs/scene-gallery/san-miguel/view-b/resolved.json",
+      "sha256": "36e50c0a519d7af62f06fd76cf0a9d09e3659501ba92d6a5889d8f3a32ba970e",
+      "bytes": 1910
+    },
+    {
+      "path": "gallery/san-miguel/view-b/timings.csv",
+      "source": "runs/scene-gallery/san-miguel/view-b/timings.csv",
+      "sha256": "5089564404c6ed430231483904dd04476244c31c9882abf678f6df6b2b5a6f6b",
+      "bytes": 84523
+    },
+    {
+      "path": "gallery/sun-temple/scene.json",
+      "source": "runs/scene-gallery/scenes/sun-temple.json",
+      "sha256": "701489528d76ed362236938ed3cf999f8e3aef4515e2a73acea12ad0bacdaa88",
+      "bytes": 1120
+    },
+    {
+      "path": "gallery/sun-temple/view-a/raw.png",
+      "source": "runs/scene-gallery/sun-temple/view-a/raw.png",
+      "sha256": "1012db0289bfc2446738a77dc7850a05140a0942b7a4dd21a42e908a5a4f48af",
+      "bytes": 4354583
+    },
+    {
+      "path": "gallery/sun-temple/view-a/processed.png",
+      "source": "runs/scene-gallery/sun-temple/view-a/processed.png",
+      "sha256": "8c0c10c5ae36bbeecd580644b48412790d601e5805465e213631c5b5a7a7ceee",
+      "bytes": 2237089
+    },
+    {
+      "path": "gallery/sun-temple/view-a/render-record.json",
+      "source": "runs/scene-gallery/sun-temple/view-a/render-record.json",
+      "sha256": "f59084567878f2726d5964a941a37aebd7c3016bca689047d80e3e0a0dbff6d0",
+      "bytes": 214994
+    },
+    {
+      "path": "gallery/sun-temple/view-a/config.json",
+      "source": "runs/scene-gallery/sun-temple/view-a/config.json",
+      "sha256": "be2eeb7324463ed9a8f1c1e399e6ba03cd953979c96ab33dbc5e495116922c99",
+      "bytes": 186774
+    },
+    {
+      "path": "gallery/sun-temple/view-a/resolved.json",
+      "source": "runs/scene-gallery/sun-temple/view-a/resolved.json",
+      "sha256": "d6bd2267393e253caec43973aa29166afee8a63fb4439f6d63bf51b19307d6c7",
+      "bytes": 1933
+    },
+    {
+      "path": "gallery/sun-temple/view-a/timings.csv",
+      "source": "runs/scene-gallery/sun-temple/view-a/timings.csv",
+      "sha256": "f027cb5089ec3e72b4d7edfc5bb55ef1aa3c592278c639f5ab2389c2676f8505",
+      "bytes": 87681
+    },
+    {
+      "path": "gallery/sun-temple/view-b/raw.png",
+      "source": "runs/scene-gallery/sun-temple/view-b/raw.png",
+      "sha256": "b6f63b7a18f01a1ad70e3aea7ca5e5e3b12f0c1ed4885b29a2812a94b8b7bb83",
+      "bytes": 4188756
+    },
+    {
+      "path": "gallery/sun-temple/view-b/processed.png",
+      "source": "runs/scene-gallery/sun-temple/view-b/processed.png",
+      "sha256": "f4c10deff66053237bc79dfd7ee4fbac32378f8102d090603cfd3bedc6e01ab4",
+      "bytes": 2328931
+    },
+    {
+      "path": "gallery/sun-temple/view-b/render-record.json",
+      "source": "runs/scene-gallery/sun-temple/view-b/render-record.json",
+      "sha256": "0af6ee25cb3ac4718c351682fae6c0bbc94d0b16d280026d61e53d226fca3769",
+      "bytes": 162394
+    },
+    {
+      "path": "gallery/sun-temple/view-b/config.json",
+      "source": "runs/scene-gallery/sun-temple/view-b/config.json",
+      "sha256": "721f5c39dcfc3194d83c1703e4d48334ae63c5179c397ee60c7c20038d30f8ca",
+      "bytes": 134269
+    },
+    {
+      "path": "gallery/sun-temple/view-b/resolved.json",
+      "source": "runs/scene-gallery/sun-temple/view-b/resolved.json",
+      "sha256": "0776f801920152020e5c87c1cfeb647d26cd3d72984ee18f0652df97da9a4b60",
+      "bytes": 1920
+    },
+    {
+      "path": "gallery/sun-temple/view-b/timings.csv",
+      "source": "runs/scene-gallery/sun-temple/view-b/timings.csv",
+      "sha256": "4dfed01f01c58f022a5a8dede17277aba227ec7306239e42189600776fb2bf8c",
+      "bytes": 87232
+    },
+    {
+      "path": "gallery/veach-ajar/scene.json",
+      "source": "runs/scene-gallery/scenes/veach-ajar.json",
+      "sha256": "e53f9c7553941180ce2b3126cb3b108076d0f0ce47e91512662e42e2702a2a55",
+      "bytes": 1063
+    },
+    {
+      "path": "gallery/veach-ajar/view-a/raw.png",
+      "source": "runs/scene-gallery/veach-ajar/view-a/raw.png",
+      "sha256": "077bd5b5f47bf075085948014fcfab334a47a4e9498e0c694f60665eca71f11f",
+      "bytes": 5030028
+    },
+    {
+      "path": "gallery/veach-ajar/view-a/processed.png",
+      "source": "runs/scene-gallery/veach-ajar/view-a/processed.png",
+      "sha256": "e013c498b8cdcf6d359db362a21f621772f79e4abf72677c0299ebececfae83e",
+      "bytes": 1527065
+    },
+    {
+      "path": "gallery/veach-ajar/view-a/render-record.json",
+      "source": "runs/scene-gallery/veach-ajar/view-a/render-record.json",
+      "sha256": "9491cfeccf53e4a4235a13bdf84b939a0460f8db882330c800c16570ec78afc6",
+      "bytes": 202513
+    },
+    {
+      "path": "gallery/veach-ajar/view-a/config.json",
+      "source": "runs/scene-gallery/veach-ajar/view-a/config.json",
+      "sha256": "6741a40652de245f8c1727f2e94518aecd24d0a5899939b9bc9def7a97e68b32",
+      "bytes": 174333
+    },
+    {
+      "path": "gallery/veach-ajar/view-a/resolved.json",
+      "source": "runs/scene-gallery/veach-ajar/view-a/resolved.json",
+      "sha256": "b18275bd3b53995c6bf7b92d61a3b4c8e32869c71ce4ae4f8e5fd19a84adefe3",
+      "bytes": 1919
+    },
+    {
+      "path": "gallery/veach-ajar/view-a/timings.csv",
+      "source": "runs/scene-gallery/veach-ajar/view-a/timings.csv",
+      "sha256": "ffd5a22ee2ab04ad52890060dbdbed8e8e9844e04b889b78359db4666e5c8bec",
+      "bytes": 84272
+    },
+    {
+      "path": "gallery/veach-ajar/view-b/raw.png",
+      "source": "runs/scene-gallery/veach-ajar/view-b/raw.png",
+      "sha256": "6fca8b2b57ad288274254331e70d34804bb88ce8183f33f2b9b0b9abc0ae83e3",
+      "bytes": 5019513
+    },
+    {
+      "path": "gallery/veach-ajar/view-b/processed.png",
+      "source": "runs/scene-gallery/veach-ajar/view-b/processed.png",
+      "sha256": "e36d0432a5ffca7ede990a90ae26573dc8a8991c11c6627baf504d42a933ce8f",
+      "bytes": 1571750
+    },
+    {
+      "path": "gallery/veach-ajar/view-b/render-record.json",
+      "source": "runs/scene-gallery/veach-ajar/view-b/render-record.json",
+      "sha256": "dcfa605335380b5aeaa0d966b5ed84a415e37319eb81d70888976609c54f8804",
+      "bytes": 158085
+    },
+    {
+      "path": "gallery/veach-ajar/view-b/config.json",
+      "source": "runs/scene-gallery/veach-ajar/view-b/config.json",
+      "sha256": "dbac4b8eb4999dcf25938f4ba758ab62a3cf7ec1128887804e87233eb69d27c8",
+      "bytes": 129972
+    },
+    {
+      "path": "gallery/veach-ajar/view-b/resolved.json",
+      "source": "runs/scene-gallery/veach-ajar/view-b/resolved.json",
+      "sha256": "b16f8707a22eda5e733eac6f2e8df05f91a240e2c68b1e11ddfbb86a96e3cfd1",
+      "bytes": 1910
+    },
+    {
+      "path": "gallery/veach-ajar/view-b/timings.csv",
+      "source": "runs/scene-gallery/veach-ajar/view-b/timings.csv",
+      "sha256": "69a4391845a6d24e27c58529099b4a1b29d1ae6d6363e6c4eb9065074886e19b",
+      "bytes": 84025
+    },
+    {
+      "path": "gallery/zero-day-measure-one/scene.json",
+      "source": "runs/scene-gallery/scenes/zero-day-measure-one.json",
+      "sha256": "1010abce4d1eafd9c01e5087957394a34a715c1dba1e2c3f8bd9635cc7a707da",
+      "bytes": 1304
+    },
+    {
+      "path": "gallery/zero-day-measure-one/view-a/raw.png",
+      "source": "runs/scene-gallery/zero-day-measure-one/view-a/raw.png",
+      "sha256": "115c5e132fde425d1f2bbe68b0013f041e8d79547487de92603cd50cb19a3df5",
+      "bytes": 5018988
+    },
+    {
+      "path": "gallery/zero-day-measure-one/view-a/processed.png",
+      "source": "runs/scene-gallery/zero-day-measure-one/view-a/processed.png",
+      "sha256": "c35918e61b0c12338ae7b708c1255ca4efd5dbeca218a9882d0afef4c48e211a",
+      "bytes": 2344358
+    },
+    {
+      "path": "gallery/zero-day-measure-one/view-a/render-record.json",
+      "source": "runs/scene-gallery/zero-day-measure-one/view-a/render-record.json",
+      "sha256": "5b356d471dd5b56569d92d48c553d0d5755366e51cdf19fa5832752932d6a5c1",
+      "bytes": 222563
+    },
+    {
+      "path": "gallery/zero-day-measure-one/view-a/config.json",
+      "source": "runs/scene-gallery/zero-day-measure-one/view-a/config.json",
+      "sha256": "5e64ff41a2c3a911bc3e473fa7deaaf7282f52e506b24d65e3b39af5be2f6804",
+      "bytes": 183460
+    },
+    {
+      "path": "gallery/zero-day-measure-one/view-a/resolved.json",
+      "source": "runs/scene-gallery/zero-day-measure-one/view-a/resolved.json",
+      "sha256": "fda201b5f1cb15a51ea6bfc1fbb7d5e7cfa880b7b0177c5f9d2f2ecf19ab949b",
+      "bytes": 1926
+    },
+    {
+      "path": "gallery/zero-day-measure-one/view-a/timings.csv",
+      "source": "runs/scene-gallery/zero-day-measure-one/view-a/timings.csv",
+      "sha256": "8f69a1cb0f81eec03378aba4fad7d60b4aa01e66e2c7754db672c8a18d897822",
+      "bytes": 116814
+    },
+    {
+      "path": "gallery/zero-day-measure-one/view-b/raw.png",
+      "source": "runs/scene-gallery/zero-day-measure-one/view-b/raw.png",
+      "sha256": "0cde52d9400a34149f727a469dccdd798bc4ab9b7138f0e42a92d4d2c2212296",
+      "bytes": 4563181
+    },
+    {
+      "path": "gallery/zero-day-measure-one/view-b/processed.png",
+      "source": "runs/scene-gallery/zero-day-measure-one/view-b/processed.png",
+      "sha256": "e0a96274cde973e9d3c44b61a9854d224d6dec417a1985ce0c3ea22c52bd7075",
+      "bytes": 1774096
+    },
+    {
+      "path": "gallery/zero-day-measure-one/view-b/render-record.json",
+      "source": "runs/scene-gallery/zero-day-measure-one/view-b/render-record.json",
+      "sha256": "8cfeb8123943f4e38d2883c0d515c564c6ecadf4b744f8d5ca7b81783f018997",
+      "bytes": 207592
+    },
+    {
+      "path": "gallery/zero-day-measure-one/view-b/config.json",
+      "source": "runs/scene-gallery/zero-day-measure-one/view-b/config.json",
+      "sha256": "2452fb71bdc794bd1c145704004b6f303ec8e3bda5722cf64f9e9ae133d536ea",
+      "bytes": 168531
+    },
+    {
+      "path": "gallery/zero-day-measure-one/view-b/resolved.json",
+      "source": "runs/scene-gallery/zero-day-measure-one/view-b/resolved.json",
+      "sha256": "fda201b5f1cb15a51ea6bfc1fbb7d5e7cfa880b7b0177c5f9d2f2ecf19ab949b",
+      "bytes": 1926
+    },
+    {
+      "path": "gallery/zero-day-measure-one/view-b/timings.csv",
+      "source": "runs/scene-gallery/zero-day-measure-one/view-b/timings.csv",
+      "sha256": "cc351958ceaeec9e2772e37f0aff4198dbcd364a6af5a7635d5d8333bdf3f930",
+      "bytes": 116481
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "title": "Efficient Spatial Resampling Using the PDF Similarity",
+  "author": "Yusuke Tokuyoshi",
+  "year": 2023,
+  "doi": "https://doi.org/10.1145/3585501",
+  "figure": 2,
+  "source": "assets/papers/2023-efficient-spatial-resampling-using-pdf-similarity.pdf",
+  "source_sha256": "433dd3662ad9c9b2233eb2c2cc6f34a1a9e14e24df8676f8828863741cb608fa",
+  "page": 3,
+  "dpi": 432,
+  "crop_pixels": [
+    264,
+    492,
+    2388,
+    672
+  ],
+  "path": "assets/papers/pdf-similarity-figure-2.png",
+  "processing": "Poppler pdftoppm rasterization and rectangular crop only. Both panels and their labels retained; original caption omitted and paraphrased on slide 4.",
+  "rights": "Copyright 2023 owner/author(s); publication rights licensed to ACM. Author version is marked personal use, not for redistribution. Figure excerpt retained locally for the requested educational presentation; no open license asserted. Paper and generated PNG are Git-ignored.",
+  "sha256": "594c12f2baff7e789633a2e37c7cd6deda0673e2ca30a8791421f3af664293a6",
+  "bytes": 120837
+}

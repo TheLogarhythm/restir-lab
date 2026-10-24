@@ -1,0 +1,33 @@
+<section id="sequences" class="sequence-section">
+  <div class="section-heading"><div><p class="eyebrow">SAME FRAME · TWO METHODS</p><h2>拖动斜线，对照同一处细节</h2></div><a href="progress.html#6" class="deck-link">打开汇报幻灯片 ↗</a></div>
+  <div class="sequence-controls">
+    <label>场景 <select id="video-scene"><option value="arcade-motion">Arcade · 相机运动</option><option value="bistro-interior-motion">Bistro 内景 · 相机运动</option><option value="bistro-exterior-motion">Bistro 外景 · 相机运动</option><option value="bistro-lighting">Bistro · 光照变化</option></select></label>
+    <label>速度 <select id="video-rate"><option value="1">1× · 30 FPS</option><option value="0.5">0.5× · 慢放</option><option value="0.25">0.25× · 慢放</option></select></label>
+    <label class="checkbox"><input id="video-loop" type="checkbox" checked> 循环</label>
+    <a id="download-comparison" href="assets/videos/arcade-motion/comparison.mp4" download>下载自动对比视频 ↓</a>
+  </div>
+  <div id="video-player">
+    <div id="video-stage" aria-label="PDF on 在左、PDF off 在右的同步斜线对照">
+      <canvas id="video-canvas" width="1920" height="1080"></canvas>
+      <span class="method-tag tag-on" id="tag-on">PDF ON</span><span class="method-tag tag-off" id="tag-off">PDF OFF</span>
+      <button id="divider-handle" aria-label="拖动斜线，左侧 PDF on，右侧 PDF off" title="拖动斜线；方向键可微调" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">↔</button>
+      <div id="video-loading" role="status">正在载入同步视频…</div>
+    </div>
+    <div class="transport">
+      <button id="video-play" class="primary" disabled>播放</button>
+      <button id="frame-prev" title="上一帧" aria-label="上一帧">−1</button>
+      <input id="video-frame" aria-label="共同视频帧" type="range" min="1" max="96" value="1">
+      <button id="frame-next" title="下一帧" aria-label="下一帧">+1</button>
+      <output id="video-position">01 / 96 · 保持</output>
+      <button id="video-fullscreen" title="全屏对照">全屏</button>
+    </div>
+  </div>
+  <div class="sequence-controls lower-controls">
+    <label>分界线 <input id="video-split" aria-label="斜线位置" type="range" min="0" max="100" value="50"></label>
+    <button id="show-original">检查原始 PNG</button><span id="preview-kind" class="caption">视频预览 · seed 1</span>
+    <a id="png-on" target="_blank">PDF on 原图 ↗</a><a id="png-off" target="_blank">PDF off 原图 ↗</a>
+  </div>
+  <p class="caption">96 帧，1920 × 1080。1–32 保持，33–64 运动／变光，65–96 停止／保持。两路同步，左侧 PDF on，右侧 PDF off。30 FPS 是播放速率，GPU 耗时见下方统计。</p>
+  <p id="video-error" role="alert"></p>
+  <div class="decode-surfaces" aria-hidden="true"><video id="method-off" muted playsinline preload="metadata"></video><video id="method-on" muted playsinline preload="metadata"></video></div>
+</section>

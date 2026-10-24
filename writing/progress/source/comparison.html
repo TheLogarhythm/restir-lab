@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ReSTIR 项目进展 · 实验对照</title>
+<style>__CSS__</style></head><body>
+<header><h1>PDF Similarity · 实验对照</h1><p>COMP5411 · Group 7 · 2026-10-24</p>
+<p>PDF Similarity 的收益取决于场景和区域。本页把实际渲染、误差图、三种子统计和 GPU 成本放在一起，便于选图与核对结论。</p>
+<nav><a href="#sequences">视频对照</a><a href="#compare">图片与统计</a><a href="#overview">主实验总览</a><a href="#scenes">新增场景</a><a href="#equal-time">等时比较</a><a href="#sources">数据来源</a><a href="progress.html">演示幻灯片</a></nav></header>
+<main>
+__SEQUENCE__
+<section><h2>先确认评价范围</h2>
+<p>8 个主条件，3 个独立方法种子。78 次运行包括 48 次主实验、6 次仅空间复用消融，以及 24 次新增邻居预算运行。1920×1080，主实验的其他设置保持一致。</p>
+<div class="notice"><strong>15 个参考状态采用两种政策。</strong> Cornell/Arcade 的 5 个状态通过原双流精度验收。Bistro 的 10 个状态使用 seed 1001、固定 262,144 local samples，原精度、不确定性及敏感性检查均未评估。Bistro 的数值是相对于这组固定采样参考的观察。</div>
+<p class="metric-note">PDF 实验图片为 seed 1 的固定曝光展示 PNG，未经降噪；误差指标来自线性 HDR。统计表使用方法 seeds 1/2/3，± 表示样本标准差，不是置信区间。配对差值为 PDF on 减 PDF off；负误差差值代表更低误差。30 FPS 是逻辑与播放速率，GPU 时间另外测量。</p>
+</section>
+<section id="compare"><h2>图片与对应统计</h2>
+<div class="controls"><label>条件<select id="condition"></select></label><label>评价帧<select id="frame"></select></label><label>区域<select id="region"><option value="full">全图</option><option value="region-1">ROI 1</option><option value="region-2">ROI 2</option></select></label><label>显示内容<select id="view"><option value="rendered">Reference / PDF off / PDF on</option><option value="smape">SMAPE 误差图</option><option value="signed_relative">有符号相对残差</option><option value="trmae">局部 TRMAE 图</option></select></label></div>
+<p id="selection-note" class="caption"></p><div id="images"></div><p id="source-note" class="source-note"></p><div id="metrics"></div>
+<p class="caption" id="table-note"></p><p id="csv-link"></p>
+<details><summary>查看此条件、帧和区域的种子级原始表</summary><div id="seed-table"></div></details>
+</section>
+<section id="overview"><h2>主实验全图总览</h2><p>16 个条件／评价帧条目；整个评价使用 15 个物理参考状态，含相邻帧对的支持帧。点“对照”跳到相应图片。SMAPE 单位为 %，GPU 单位为 ms，其余为无量纲。相对变化按每个 seed 配对计算，再求均值。</p><div id="overview-table"></div><p><a href="data/pdf/main/full-image-overview.csv">完整数值 CSV</a> · <a href="data/pdf/main/full-image-overview.schema.json">列定义</a> · <a href="data/pdf/main/paired-seed-differences.csv">逐种子配对差值</a></p>
+<p class="notice">相机运动中的改善并不一致。Bistro 内景的移动帧全图 SMAPE 接近中性，部分 ROI 退化。Arcade 移动对的 TRMAE 在种子间方向不同。Bistro 外景运动与变光的静止 31/32 帧图像相同，这部分不构成额外独立重复。</p></section>
+
+<section id="scenes"><h2>六个新增场景</h2><p class="caption">场景配置预览，OIDN 展示图；不参与本轮 PDF 方法比较。</p><div class="grid3">__SCENES__</div><p><a href="../../runs/scene-gallery/README.md">完整场景图库与渲染记录</a> · <a href="data/scenes.json">选图、设置和署名</a></p></section>
+<section id="equal-time"><h2>邻居预算与等时插值</h2><p>两个 Bistro 静态视角分别测试 2/4/8 邻居。在所有 seed/method 曲线共有的 GPU 时间区间中点做分段线性插值，不外推。</p>
+<a href="images/pdf/equal-time-comparison/frontier.png" target="_blank"><img class="largefigure" loading="lazy" src="images/pdf/equal-time-comparison/frontier.png" alt="Measured error and GPU cost with bounded interpolation"></a>
+<div class="notice">内景的实测 2 邻居 PDF off 均值，在三个误差指标和 GPU 成本上均优于所有实测 PDF on 点。因此不能把共同时间点上有利的插值值解释为整体成本优势。Bistro 参考精度仍未评估。</div>
+<details><summary>36 个实测预算点，保留原始数值</summary>__MEASURED__</details>
+<details><summary>插值结果、夹逼点和权重</summary>__INTERPOLATED__</details>
+<p><a href="data/pdf/equal-time-comparison/measured-points.csv">实测点 CSV</a> · <a href="data/pdf/equal-time-comparison/interpolated-estimates.csv">插值 CSV</a> · <a href="data/pdf/equal-time-comparison/paired-differences.csv">配对均值与 SD</a></p></section>
+
+<section id="sources"><h2>设置与数据来源</h2>
+<p>图片直接读取已归档的展示 PNG。数值来自完成后的三种子统计，保留原数值精度；视频是由 PNG 生成的压缩预览。</p>
+<p><a href="../../runs/pdf-similarity-archive/README.md">实验归档</a> · <a href="../../results/summaries/pdf-similarity/README.md">完整实验报告</a> · <a href="data/sources.json">来源路径与哈希</a> · <a href="data/media.json">视频生成记录</a> · <a href="../../results/summaries/di-baseline/README.md">早期 DI baseline</a></p>
+<details><summary>统计文件索引</summary><ul class="links">__CSVS__</ul></details></section><footer>在仓库内打开本页即可使用。图片链接打开原始分辨率文件。数字优先于缩放图中的视觉判断。正式视频尚待录制与提交。</footer>
+</main>
+<script id="report-data" type="application/json">__PAYLOAD__</script>
+<script>__JS__</script>
+<script>__VIDEO_JS__</script></body></html>

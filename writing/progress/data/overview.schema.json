@@ -1,0 +1,278 @@
+{
+  "schema_version": 1,
+  "table": "full-image-overview.csv",
+  "row_count": 16,
+  "operation": "Select full-region paired rows; join matching PDF off/on summary rows. Preserve source numeric strings. No new numerical aggregation.",
+  "sources": [
+    "summary.csv",
+    "paired-differences.csv"
+  ],
+  "units": {
+    "smape": "percent; paired delta in percentage points",
+    "rmae": "unitless",
+    "nrmse": "unitless",
+    "trmae": "unitless local pair diagnostic; static empty",
+    "gpu_ms": "milliseconds",
+    "initial_ms": "milliseconds",
+    "spatial_ms": "milliseconds",
+    "relative_percent": "percent of paired PDF-off value"
+  },
+  "columns": [
+    {
+      "name": "condition",
+      "definition": "Canonical main-condition ID, copied from paired-differences.csv."
+    },
+    {
+      "name": "scenario",
+      "definition": "Original scenario label, copied from paired-differences.csv."
+    },
+    {
+      "name": "phase",
+      "definition": "Original sparse phase label: static-final or frame-32/frame-48/frame-96."
+    },
+    {
+      "name": "representative_frame",
+      "definition": "128 for static-final; otherwise numeric frame suffix of phase."
+    },
+    {
+      "name": "local_temporal_pair",
+      "definition": "Empty for static; previous->current for 31->32,47->48,95->96."
+    },
+    {
+      "name": "timing_first_frame",
+      "definition": "41 for static-final; 1/33/65 for frame-32/48/96."
+    },
+    {
+      "name": "timing_last_frame",
+      "definition": "128 for static-final; 32/64/96 for frame-32/48/96."
+    },
+    {
+      "name": "region",
+      "definition": "Always full; this table excludes ROI rows."
+    },
+    {
+      "name": "independent_method_seeds",
+      "definition": "Count copied from paired-differences.csv seeds; all values are 3."
+    },
+    {
+      "name": "reference_policy",
+      "definition": "Condition-derived label; Bistro fixed sample seed1001/262144 precision not evaluated, Cornell/Arcade retained dual-stream precision accepted."
+    },
+    {
+      "name": "smape_off_mean",
+      "definition": "Copy of smape_mean from summary.csv matching method pdf-off; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "smape_off_sd",
+      "definition": "Copy of smape_sd from summary.csv matching method pdf-off; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "smape_on_mean",
+      "definition": "Copy of smape_mean from summary.csv matching method pdf-on; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "smape_on_sd",
+      "definition": "Copy of smape_sd from summary.csv matching method pdf-on; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "smape_paired_delta_mean",
+      "definition": "Copy of smape_mean from paired-differences.csv: on-minus-off paired by seed; arithmetic mean or sample SD across 3 seeds."
+    },
+    {
+      "name": "smape_paired_delta_sd",
+      "definition": "Copy of smape_sd from paired-differences.csv: on-minus-off paired by seed; arithmetic mean or sample SD across 3 seeds."
+    },
+    {
+      "name": "smape_paired_relative_percent_mean",
+      "definition": "Copy of smape_relative_percent_mean from paired-differences.csv: 100*(on-off)/off within each seed, then arithmetic mean or sample SD."
+    },
+    {
+      "name": "smape_paired_relative_percent_sd",
+      "definition": "Copy of smape_relative_percent_sd from paired-differences.csv: 100*(on-off)/off within each seed, then arithmetic mean or sample SD."
+    },
+    {
+      "name": "smape_paired_reference_status",
+      "definition": "Copy of smape_reference_status from paired-differences.csv; source reference sensitivity label, not statistical significance."
+    },
+    {
+      "name": "rmae_off_mean",
+      "definition": "Copy of rmae_mean from summary.csv matching method pdf-off; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "rmae_off_sd",
+      "definition": "Copy of rmae_sd from summary.csv matching method pdf-off; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "rmae_on_mean",
+      "definition": "Copy of rmae_mean from summary.csv matching method pdf-on; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "rmae_on_sd",
+      "definition": "Copy of rmae_sd from summary.csv matching method pdf-on; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "rmae_paired_delta_mean",
+      "definition": "Copy of rmae_mean from paired-differences.csv: on-minus-off paired by seed; arithmetic mean or sample SD across 3 seeds."
+    },
+    {
+      "name": "rmae_paired_delta_sd",
+      "definition": "Copy of rmae_sd from paired-differences.csv: on-minus-off paired by seed; arithmetic mean or sample SD across 3 seeds."
+    },
+    {
+      "name": "rmae_paired_relative_percent_mean",
+      "definition": "Copy of rmae_relative_percent_mean from paired-differences.csv: 100*(on-off)/off within each seed, then arithmetic mean or sample SD."
+    },
+    {
+      "name": "rmae_paired_relative_percent_sd",
+      "definition": "Copy of rmae_relative_percent_sd from paired-differences.csv: 100*(on-off)/off within each seed, then arithmetic mean or sample SD."
+    },
+    {
+      "name": "rmae_paired_reference_status",
+      "definition": "Copy of rmae_reference_status from paired-differences.csv; source reference sensitivity label, not statistical significance."
+    },
+    {
+      "name": "nrmse_off_mean",
+      "definition": "Copy of nrmse_mean from summary.csv matching method pdf-off; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "nrmse_off_sd",
+      "definition": "Copy of nrmse_sd from summary.csv matching method pdf-off; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "nrmse_on_mean",
+      "definition": "Copy of nrmse_mean from summary.csv matching method pdf-on; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "nrmse_on_sd",
+      "definition": "Copy of nrmse_sd from summary.csv matching method pdf-on; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "nrmse_paired_delta_mean",
+      "definition": "Copy of nrmse_mean from paired-differences.csv: on-minus-off paired by seed; arithmetic mean or sample SD across 3 seeds."
+    },
+    {
+      "name": "nrmse_paired_delta_sd",
+      "definition": "Copy of nrmse_sd from paired-differences.csv: on-minus-off paired by seed; arithmetic mean or sample SD across 3 seeds."
+    },
+    {
+      "name": "nrmse_paired_reference_status",
+      "definition": "Copy of nrmse_reference_status from paired-differences.csv; source reference sensitivity label, not statistical significance."
+    },
+    {
+      "name": "trmae_off_mean",
+      "definition": "Copy of trmae_mean from summary.csv matching method pdf-off; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "trmae_off_sd",
+      "definition": "Copy of trmae_sd from summary.csv matching method pdf-off; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "trmae_on_mean",
+      "definition": "Copy of trmae_mean from summary.csv matching method pdf-on; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "trmae_on_sd",
+      "definition": "Copy of trmae_sd from summary.csv matching method pdf-on; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "trmae_paired_delta_mean",
+      "definition": "Copy of trmae_mean from paired-differences.csv: on-minus-off paired by seed; arithmetic mean or sample SD across 3 seeds."
+    },
+    {
+      "name": "trmae_paired_delta_sd",
+      "definition": "Copy of trmae_sd from paired-differences.csv: on-minus-off paired by seed; arithmetic mean or sample SD across 3 seeds."
+    },
+    {
+      "name": "trmae_paired_relative_percent_mean",
+      "definition": "Copy of trmae_relative_percent_mean from paired-differences.csv: 100*(on-off)/off within each seed, then arithmetic mean or sample SD."
+    },
+    {
+      "name": "trmae_paired_relative_percent_sd",
+      "definition": "Copy of trmae_relative_percent_sd from paired-differences.csv: 100*(on-off)/off within each seed, then arithmetic mean or sample SD."
+    },
+    {
+      "name": "trmae_paired_reference_status",
+      "definition": "Copy of trmae_reference_status from paired-differences.csv; source reference sensitivity label, not statistical significance."
+    },
+    {
+      "name": "gpu_ms_off_mean",
+      "definition": "Copy of gpu_ms_mean from summary.csv matching method pdf-off; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "gpu_ms_off_sd",
+      "definition": "Copy of gpu_ms_sd from summary.csv matching method pdf-off; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "gpu_ms_on_mean",
+      "definition": "Copy of gpu_ms_mean from summary.csv matching method pdf-on; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "gpu_ms_on_sd",
+      "definition": "Copy of gpu_ms_sd from summary.csv matching method pdf-on; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "gpu_ms_paired_delta_mean",
+      "definition": "Copy of gpu_ms_mean from paired-differences.csv: on-minus-off paired by seed; arithmetic mean or sample SD across 3 seeds."
+    },
+    {
+      "name": "gpu_ms_paired_delta_sd",
+      "definition": "Copy of gpu_ms_sd from paired-differences.csv: on-minus-off paired by seed; arithmetic mean or sample SD across 3 seeds."
+    },
+    {
+      "name": "gpu_ms_paired_relative_percent_mean",
+      "definition": "Copy of gpu_ms_relative_percent_mean from paired-differences.csv: 100*(on-off)/off within each seed, then arithmetic mean or sample SD."
+    },
+    {
+      "name": "gpu_ms_paired_relative_percent_sd",
+      "definition": "Copy of gpu_ms_relative_percent_sd from paired-differences.csv: 100*(on-off)/off within each seed, then arithmetic mean or sample SD."
+    },
+    {
+      "name": "initial_ms_off_mean",
+      "definition": "Copy of initial_ms_mean from summary.csv matching method pdf-off; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "initial_ms_off_sd",
+      "definition": "Copy of initial_ms_sd from summary.csv matching method pdf-off; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "initial_ms_on_mean",
+      "definition": "Copy of initial_ms_mean from summary.csv matching method pdf-on; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "initial_ms_on_sd",
+      "definition": "Copy of initial_ms_sd from summary.csv matching method pdf-on; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "initial_ms_paired_delta_mean",
+      "definition": "Copy of initial_ms_mean from paired-differences.csv: on-minus-off paired by seed; arithmetic mean or sample SD across 3 seeds."
+    },
+    {
+      "name": "initial_ms_paired_delta_sd",
+      "definition": "Copy of initial_ms_sd from paired-differences.csv: on-minus-off paired by seed; arithmetic mean or sample SD across 3 seeds."
+    },
+    {
+      "name": "spatial_ms_off_mean",
+      "definition": "Copy of spatial_ms_mean from summary.csv matching method pdf-off; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "spatial_ms_off_sd",
+      "definition": "Copy of spatial_ms_sd from summary.csv matching method pdf-off; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "spatial_ms_on_mean",
+      "definition": "Copy of spatial_ms_mean from summary.csv matching method pdf-on; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "spatial_ms_on_sd",
+      "definition": "Copy of spatial_ms_sd from summary.csv matching method pdf-on; mean or sample SD across 3 independent method seeds."
+    },
+    {
+      "name": "spatial_ms_paired_delta_mean",
+      "definition": "Copy of spatial_ms_mean from paired-differences.csv: on-minus-off paired by seed; arithmetic mean or sample SD across 3 seeds."
+    },
+    {
+      "name": "spatial_ms_paired_delta_sd",
+      "definition": "Copy of spatial_ms_sd from paired-differences.csv: on-minus-off paired by seed; arithmetic mean or sample SD across 3 seeds."
+    }
+  ]
+}

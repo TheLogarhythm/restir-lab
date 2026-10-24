@@ -1,0 +1,9 @@
+/assets/
+/build/
+/comparison.html
+/progress.html
+*.mp4
+*.png
+*.pdf
+*.pptx
+__pycache__/
