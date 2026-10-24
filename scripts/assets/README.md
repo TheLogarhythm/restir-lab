@@ -14,6 +14,19 @@ python scripts/assets/extract_orca.py --archive assets/sources/zero-day/ZeroDay_
 python scripts/assets/convert_scene.py --profile orca --source assets/prepared/zero-day-measure-one/MEASURE_ONE/MEASURE_ONE.fbx --output assets/converted/zero-day/measure-one.gltf --expected-emissive-triangles 10103
 ```
 
+Extraction requires a new output directory and publishes only after all selected
+files pass ZIP CRC checks. Use `--expected-sha256` to verify the archive against its
+pinned source digest before extraction. Existing extracted files are never overwritten.
+
+For animated ORCA FBX scenes that need a static viewer pose, add `--static-frame 1`.
+The number refers to Blender's imported timeline, including the standard FBX +1 frame
+offset. This exports the evaluated geometry at that frame without animation and records the
+matching source camera in `.conversion.json`. Add `--visible-only` to honor source
+viewport visibility and renderability and exclude hidden construction meshes.
+Measure Seven requires both options. They are supported for `--profile orca`
+with an FBX source; omitting both preserves the existing animated export behavior.
+Measure Seven uses this path; see its [configuration and viewer commands](../../scenes/configs/rtxdi/README.md#zero-day-measure-seven).
+
 For similar scenes, change the paths and omit the expected count if unknown. The converter requires UV0 and supports packed DDS (R=AO, G=roughness, B=metallic) with DirectX normals. Check its `.conversion.json` and inspect materials before research comparisons.
 
 Missing emissive UVs are accepted only for proven constant static 8-bit PNG/JPEG textures: their sRGB color is folded into the linear emissive factor, preserving strength. Nonconstant textures, unsupported encodings/extensions, and invalid emission values fail explicitly. Folded materials are listed in `.conversion.json`.

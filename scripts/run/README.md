@@ -4,6 +4,12 @@
 
 Build scripts (`build_rtxdi_*.py`) compile renderer source and shaders into executable files. Rebuilding means rerunning the relevant build command, usually recompiling only affected parts; it does not regenerate experiment images.
 
+For Zero-Day Measure Seven, use the [registered static profile](../../scenes/configs/rtxdi/README.md#zero-day-measure-seven):
+
+```powershell
+python scripts/run/rtxdi_pdf_viewer.py --scene zero-day-measure-seven --off --indirect RESTIRPT --denoise
+```
+
 For a [converted scene](../assets/README.md):
 
 ```powershell

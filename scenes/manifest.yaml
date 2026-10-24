@@ -110,6 +110,32 @@
       }
     },
     {
+      "id": "zero-day-measure-seven",
+      "source_url": "https://developer.nvidia.com/orca/beeple-zero-day",
+      "source_revision": "ZeroDay_v1.zip / MEASURE_SEVEN/MEASURE_SEVEN.fbx",
+      "source_sha256": "a9d040fe9720ee88937778659205fd76bad4499431a37156aaeeba382f08d592",
+      "sha256": "5e274ddee123daef4ac415258a6e32df863558155bb2b9479f1988005cfd6035",
+      "hash_scope": "Runtime resource closure; sorted UTF-8 <sha256><two spaces><relative path><LF>",
+      "license": "CC BY 4.0 (ORCA Zero-Day)",
+      "local_path": "assets/converted/zero-day/measure-seven-viewer/measure-seven.gltf",
+      "conversion": "scripts/assets/convert_scene.py --profile orca --static-frame 1 --visible-only; original MEASURE_SEVEN.fbx",
+      "modifications": [
+        "Imported Blender frame 1 baked with its DynamicCamera (FBX animation offset +1); 1708 source-hidden or non-renderable mesh objects excluded",
+        "92 provably opaque BLEND materials normalized; 31 alpha-bearing materials retained",
+        "Packed ORM, DirectX normals and UV transforms handled by the shared ORCA converter",
+        "Procedural environment is a viewing setting; quantitative evaluation and motion paths are not validated"
+      ],
+      "backend_configs": {
+        "rtxdi": "scenes/configs/rtxdi/zero-day-measure-seven.json"
+      },
+      "role": "Optional static RTXDI import; 1280x720 interactive viewer framebuffer verified 2026-10-24; excluded from default baseline experiments",
+      "runtime_assets": {
+        "sha256": "5e274ddee123daef4ac415258a6e32df863558155bb2b9479f1988005cfd6035",
+        "file_count": 322,
+        "hash_scope": "Runtime resource closure; sorted UTF-8 <sha256><two spaces><relative path><LF>"
+      }
+    },
+    {
       "id": "san-miguel",
       "source_url": "https://casual-effects.com/g3d/data10/research/model/San_Miguel/San_Miguel.zip",
       "source_revision": "San Miguel 2.1, McGuire 2017 low-poly OBJ",

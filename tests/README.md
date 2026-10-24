@@ -6,6 +6,8 @@ Run `python -m unittest discover -s tests -v` for asset-conversion, launcher, mu
 
 Run the object-material, emitter-visibility and authored-light conversion fixture with Blender: `blender --background --factory-startup --disable-autoexec --python-exit-code 1 --python tests/blender_classroom.py`.
 For camera sensor-fit and pixel-aspect checks, use the same command with `tests/blender_camera.py`.
+For real FBX frame baking, source visibility and camera alignment, use
+`tests/blender_static_frame.py`; it also checks that default FBX exports retain animation.
 
 Use ignored `tmp/` for disposable fixtures and logs; it can be removed at any time.
 Set `TEMP` and `TMP` to its absolute path when running these checks to keep temporary files there.
@@ -33,7 +35,7 @@ including `--list`. `--list` prints its test IDs; `--suite all` runs all groups.
 
 The manually dispatched [integration workflow](../.github/workflows/integration.yml) keeps
 native, Windows, media and Blender dependencies separate from the portable job.
-The two Blender commands above remain the local integration entry points.
+The three Blender commands above remain the local integration entry points.
 
 Shared fixtures live in `tests/fixtures/`: isolated worker imports, controlled capture records,
 equal-time data and the MSVC/shader extraction harness. Assertions stay in their respective

@@ -20,13 +20,17 @@ def find_blender(explicit):
     raise FileNotFoundError("Blender not found; pass --blender PATH")
 
 
-def export_scene(source, output, profile, *, blender=None, texture_size=512):
+def export_scene(source, output, profile, *, blender=None, texture_size=512, static_frame=None, visible_only=False):
     executable = find_blender(blender)
     script = Path(__file__).with_name("blender_export.py")
     log_path = output.with_suffix(".blender.log")
     command = [str(executable), "--background", "--factory-startup", "--disable-autoexec",
                "--threads", "4", "--python-exit-code", "1", "--python", str(script),
                "--", profile, str(source), str(output), "--texture-size", str(texture_size)]
+    if static_frame is not None:
+        command.extend(["--static-frame", str(static_frame)])
+    if visible_only:
+        command.append("--visible-only")
     with log_path.open("w", encoding="utf-8") as log:
         result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT)
     if result.returncode or not output.is_file():

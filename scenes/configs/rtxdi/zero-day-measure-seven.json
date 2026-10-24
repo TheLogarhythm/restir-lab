@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "scene_id": "zero-day-measure-seven",
+  "source": {
+    "kind": "file",
+    "root": "assets/converted/zero-day/measure-seven-viewer",
+    "entry": "measure-seven.gltf"
+  },
+  "camera": {
+    "position": [
+      13.370880126953125,
+      -0.2763758897781372,
+      -0.08775649219751358
+    ],
+    "direction": [
+      -0.9899275302886963,
+      0.09631253778934479,
+      -0.10376571118831635
+    ],
+    "up": [
+      0.0981985330581665,
+      0.9950791597366333,
+      -0.013210758566856384
+    ],
+    "vertical_fov": 32.26874070025141
+  },
+  "motion": {
+    "end_position": [
+      13.370880126953125,
+      -0.2763758897781372,
+      -0.08775649219751358
+    ]
+  },
+  "lighting": {
+    "environment": "procedural",
+    "environment_intensity_ev": 0,
+    "environment_rotation_degrees": 0,
+    "emissive_scale": 1
+  },
+  "preview": {
+    "exposure_ev": 6
+  }
+}

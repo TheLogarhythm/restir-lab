@@ -51,3 +51,4 @@ jobs:
         run: |
           blender --background --factory-startup --disable-autoexec --python-exit-code 1 --python tests/blender_classroom.py
           blender --background --factory-startup --disable-autoexec --python-exit-code 1 --python tests/blender_camera.py
+          blender --background --factory-startup --disable-autoexec --python-exit-code 1 --python tests/blender_static_frame.py

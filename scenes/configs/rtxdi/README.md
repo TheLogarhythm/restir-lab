@@ -2,6 +2,7 @@
 
 Profiles: [Cornell](cornell-box.json), [Arcade](arcade.json),
 [Bistro](bistro.json), [Zero-Day Measure One](zero-day-measure-one.json),
+[Zero-Day Measure Seven](zero-day-measure-seven.json),
 [San Miguel](san-miguel.json), [Classroom](classroom.json),
 [Emerald Square](emerald-square.json), [Sun Temple](sun-temple.json), [Veach Ajar](veach-ajar.json).
 
@@ -62,3 +63,37 @@ Emerald uses ORCA Dusk with its HDR and emission x5; Sun Temple retains source H
 lamps and emission x1000. Veach Ajar uses the original static Tungsten scene with
 its emitter and no added sun/sky. These are public-source adaptations; exact CGNS
 camera/material equivalence and motion paths have not been established. They remain optional scenes.
+
+## Zero-Day Measure Seven
+
+The registered profile uses the standard MEASURE_SEVEN FBX variant from the existing
+ZeroDay_v1.zip download. The source scene and DynamicCamera are baked at Blender timeline frame 1 after
+FBX import (the importer applies its standard +1 frame offset).
+The export respects source visibility and excludes hidden construction meshes;
+the old glTF included those meshes, which occluded the starting camera.
+
+Open the existing interactive viewer from the repository root:
+
+```powershell
+python scripts/run/rtxdi_pdf_viewer.py --scene zero-day-measure-seven --off --indirect RESTIRPT --denoise --resolution 1280 720
+```
+
+`--check` validates the profile, complete resource hashes and viewer build without
+rendering. Hold the left mouse button to look around; WASD moves the camera.
+ReSTIR PT and NRD/TAA are viewing settings. The profile retains the authored camera
+FOV, uses the sample's procedural environment and an explicit emissive multiplier.
+The motion endpoint equals the start position; no benchmark trajectory is defined.
+
+For a fresh conversion, use the existing pipeline and a new output directory:
+
+```powershell
+python scripts/assets/extract_orca.py --archive assets/sources/zero-day/ZeroDay_v1.zip --folder MEASURE_SEVEN --output assets/prepared/zero-day-measure-seven --expected-sha256 a9d040fe9720ee88937778659205fd76bad4499431a37156aaeeba382f08d592
+python scripts/assets/convert_scene.py --profile orca --source assets/prepared/zero-day-measure-seven/MEASURE_SEVEN/MEASURE_SEVEN.fbx --output assets/converted/zero-day/measure-seven-viewer/measure-seven.gltf --static-frame 1 --visible-only
+```
+
+Both commands require new output directories and publish only after validation.
+Skip extraction/conversion when those outputs already exist. The conversion record
+contains the frame, visibility policy/excluded mesh count, source camera, FBX hash,
+Blender version, opacity decisions and resource hashes. A different re-export must be checked against the registered bundle
+using the resource-closure procedure above. The runtime bundle and profile live
+outside `tmp/`; disposable diagnostics can be removed without breaking the viewer.

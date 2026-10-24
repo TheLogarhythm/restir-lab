@@ -8,6 +8,19 @@ Source survey: 2026-09-23; San Miguel/Classroom import checks: 2026-10-02. Sizes
 | ------ | --------------------------------------------------------------------------- | ------ | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Bistro | [RTXDI Assets](https://github.com/NVIDIA-RTX/RTXDI-Assets/tree/main/bistro) | glTF   | ~2.27 GiB (393 LFS payloads) | Acquired; FullSample 1280×720 capture passed. [Original ORCA terms](https://developer.nvidia.com/orca/amazon-lumberyard-bistro): CC BY 4.0. |
 | Zero-Day Measure One | [ORCA](https://developer.nvidia.com/orca/beeple-zero-day) | FBX/DDS → glTF | 1.14 GB source ZIP (shared) | CC BY 4.0; RTXDI capture passed with no texture warnings; fidelity review pending. [Conversion](../scripts/assets/README.md). |
+| Zero-Day Measure Seven | [ORCA](https://developer.nvidia.com/orca/beeple-zero-day) | FBX/DDS → static glTF | same source ZIP | Interactive viewer verified at 1280×720 with ReSTIR PT + NRD/TAA. Source frame 1 and camera retained; 1,708 source-hidden meshes excluded. [Open and prepare](configs/rtxdi/README.md#zero-day-measure-seven). |
+
+Measure Seven acceptance (2026-10-24): the existing interactive build produced a
+renderer-owned 1280×720 framebuffer at frame 64 and exited normally. This is a
+scene-import check, with the sample procedural environment and emissive scale 1,
+not a quantitative comparison. Hidden construction geometry in the old all-object
+export blocked the camera. The new conversion explicitly bakes imported Blender frame 1 with
+`--visible-only`; genuine alpha-bearing materials retain their alpha modes.
+The active bundle contains 5,284,343 instantiated triangles and 10,321 emissive
+triangles; these runtime counts differ from the source README and are not claimed
+as its unique-mesh statistics. Logs and a viewing image are preserved under
+`build/measure-seven-registration-20261024/acceptance/`; temporary probes are under
+`tmp/measure-seven-20261024/`.
 
 San Miguel and Classroom are optional imports, excluded from the default baseline
 scene list. Both passed static 1280×720 previews; no baseline evaluation or motion
@@ -41,7 +54,6 @@ Keyboard/mouse interaction was not automatically verified.
 
 | Scene              | Download                                                                                                                             | Format          | Size | Note                                                                                                                   |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | --------------- | ---- | ---------------------------------------------------------------------------------------------------------------------- |
-| Zero-Day Measure Seven | [ORCA](https://developer.nvidia.com/orca/beeple-zero-day) | FBX/DDS → glTF | same source ZIP | Extracted and converted; current RTXDI capture timed out after texture loading. Source README emissive count differs by eight. |
 | Wooden Staircase   | [Bitterli ZIP](https://benedikt-bitterli.me/resources/tungsten/staircase.zip)                                                        | Tungsten        | —    | Check ZIP license; [third-party glTF](https://github.com/ErfanMo77/gltf-research-scenes) is an approximate conversion. |
 | Modern Living Room | [Bitterli ZIP](https://benedikt-bitterli.me/resources/tungsten/living-room-3.zip)                                                    | Tungsten        | —    | Check ZIP license; [third-party glTF](https://github.com/ErfanMo77/gltf-research-scenes) is an approximate conversion. |
 
