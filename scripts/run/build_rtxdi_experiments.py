@@ -19,7 +19,8 @@ FILES = ["Samples/FullSample/Source/App/SceneRenderer.cpp", "Samples/FullSample/
          "Samples/FullSample/Source/App/SceneRenderer.h", "Samples/FullSample/Source/main.cpp",
          "Samples/FullSample/Source/App/CommandLineArgs.cpp",
          "Samples/FullSample/Source/RenderPasses/PrepareLightsPass.cpp",
-         "Samples/FullSample/Source/RenderPasses/PrepareLightsPass.h"]
+         "Samples/FullSample/Source/RenderPasses/PrepareLightsPass.h",
+         "Samples/FullSample/Shaders/PrepareLights.hlsl"]
 DEST = RENDERER / "Samples/FullSample/Source/App/LabExperiment.h"
 REFERENCE_SHADER = HERE / "rtxdi_experiments/ReferenceSamples.hlsl"
 REFERENCE_FILES = ["Samples/FullSample/Source/RenderTargets.cpp",
@@ -62,6 +63,12 @@ def validate_reference_shaders(official, current):
         raise RuntimeError("Conventional reference shader did not rebuild; refusing publication")
 
 
+def validate_experiment_shaders(official, current):
+    preparation = [name for name in official if name.replace("\\", "/").endswith("/PrepareLights.bin")]
+    if not preparation or any(name not in current or current[name] == official[name] for name in preparation):
+        raise RuntimeError("Corrected light-preparation shader did not rebuild; refusing publication")
+
+
 def run(*args, cwd=ROOT):
     subprocess.run(args, cwd=cwd, check=True)
 
@@ -84,17 +91,24 @@ def main():
                    *([REFERENCE_SHADER] if args.reference else [])], ROOT),
               "compiler_cache_sha256": sha(BUILD / "CMakeCache.txt")}
     variant = BIN / ("FullSampleReference.exe" if args.reference else "FullSampleExperiments.exe")
-    record["shader_directory"] = "shaders/full-sample-reference" if args.reference else "shaders/full-sample"
+    record["shader_directory"] = "shaders/full-sample-reference" if args.reference else "shaders/full-sample-experiments"
     def adapt():
         shutil.copy2(HELPER, DEST)
         if args.reference:
             adapt_reference()
+        else:
+            replace_once(RENDERER / "Samples/FullSample/Source/App/SceneRenderer.cpp",
+                         '"shaders/full-sample"', '"' + record["shader_directory"] + '"')
+
+    def validate_shaders(official, current):
+        validate_experiment_shaders(official, current)
+        if args.reference:
+            validate_reference_shaders(official, current)
 
     build_variant(renderer=RENDERER, build=BUILD, official=official, variant=variant,
         files=files, shader_dir=shader_dir, record=record, patch=PATCH, run=run,
         emission=emission_support(RENDERER / IMPORTER), adapt=adapt, created=[DEST],
-        shader_destination=BIN / record["shader_directory"] if args.reference else None,
-        validate_shaders=validate_reference_shaders if args.reference else None)
+        shader_destination=BIN / record["shader_directory"], validate_shaders=validate_shaders)
     print(f"Built {variant}; official source, executable and shaders restored")
 
 

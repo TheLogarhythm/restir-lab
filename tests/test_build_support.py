@@ -1,7 +1,8 @@
 """Build signatures reject stale adapters; rollback attempts every resource."""
 from pathlib import Path
-from contextlib import ExitStack
+from contextlib import ExitStack, nullcontext
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -60,6 +61,45 @@ class BuildSupportTests(unittest.TestCase):
 
 
 class BuildIsolationTests(unittest.TestCase):
+    def test_shared_patch_sources_are_all_restored(self):
+        import build_rtxdi_experiments as builder
+        patched = re.findall(r"^\+\+\+ b/(.*)$", builder.PATCH.read_text(encoding="utf-8"), re.MULTILINE)
+        self.assertTrue(patched)
+        self.assertFalse(set(patched) - set(builder.FILES))
+
+    def test_experiment_build_isolates_modified_shaders(self):
+        import build_rtxdi_experiments as builder
+        with tempfile.TemporaryDirectory() as folder, ExitStack() as stack:
+            root = Path(folder)
+            source = root / "Samples/FullSample/Source/App/SceneRenderer.cpp"
+            source.parent.mkdir(parents=True)
+            source.write_text('"shaders/full-sample"')
+            for name, value in {"RENDERER": root, "BUILD": root / "build", "BIN": root / "bin",
+                                "DEST": root / "helper.h"}.items():
+                stack.enter_context(patch.object(builder, name, value))
+            for name in ("prepare_variant", "checked_submodule", "run", "integration_hashes", "sha"):
+                stack.enter_context(patch.object(builder, name))
+            stack.enter_context(patch.object(builder.subprocess, "check_output", return_value="revision"))
+            stack.enter_context(patch.object(builder, "emission_support", return_value=nullcontext()))
+            stack.enter_context(patch.object(sys, "argv", ["builder"]))
+            build = stack.enter_context(patch.object(builder, "build_variant"))
+            builder.main()
+            arguments = build.call_args.kwargs
+            destination = arguments["shader_destination"]
+            self.assertIsNotNone(destination)
+            self.assertNotEqual(destination, arguments["shader_dir"])
+            self.assertEqual(destination, builder.BIN / arguments["record"]["shader_directory"])
+            arguments["adapt"]()
+            self.assertIn('"' + arguments["record"]["shader_directory"] + '"', source.read_text())
+
+    def test_prepared_light_shader_must_rebuild_before_publication(self):
+        import build_rtxdi_experiments as builder
+        old = {"dxil\\PrepareLights.bin": "official"}
+        for current in (old, {}):
+            with self.subTest(current=current), self.assertRaisesRegex(RuntimeError, "light-preparation shader"):
+                builder.validate_experiment_shaders(old, current)
+        builder.validate_experiment_shaders(old, {next(iter(old)): "fixed"})
+
     def test_builders_reject_unrecorded_sources_before_backup(self):
         import build_rtxdi_experiments
         import build_rtxdi_external

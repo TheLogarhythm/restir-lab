@@ -359,3 +359,12 @@
          task.prevLightBufferOffset = (pOffset != m_primitiveLightBufferOffsets.end()) ? pOffset->second : -1;
  
          // record the current offset of this instance for use on the next frame
+--- a/Samples/FullSample/Shaders/PrepareLights.hlsl
++++ b/Samples/FullSample/Shaders/PrepareLights.hlsl
+@@ -87,5 +87,5 @@
+     if (!isPrimitiveLight)
+     {
+         InstanceData instance = t_InstanceData[task.instanceAndGeometryIndex >> 12];
+-        GeometryData geometry = t_GeometryData[instance.firstGeometryIndex + task.instanceAndGeometryIndex & 0xfff];
++        GeometryData geometry = t_GeometryData[instance.firstGeometryIndex + (task.instanceAndGeometryIndex & 0xfff)];
+         MaterialConstants material = t_MaterialConstants[geometry.materialIndex];

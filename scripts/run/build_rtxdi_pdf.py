@@ -38,7 +38,8 @@ def main():
     build_variant(renderer=renderer, build=base.BUILD, official=official, variant=variant,
         files=files, shader_dir=shaders, record=record, patch=base.PATCH, run=base.run,
         emission=emission_support(renderer / base.IMPORTER), adapt=adapt, created=created,
-        shader_destination=binary / record["shader_directory"])
+        shader_destination=binary / record["shader_directory"],
+        validate_shaders=base.validate_experiment_shaders)
     print(f"Built {variant}; upstream files, official executable and shaders restored")
 
 

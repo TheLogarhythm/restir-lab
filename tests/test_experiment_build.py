@@ -14,7 +14,8 @@ import build_rtxdi_pdf as pdf_builder
 import rtxdi_build as build_support
 
 SHADE = 'dxil/LightingPasses/DI/ShadeSamples.bin'
-ORIGINAL_SHADERS = {'original.bin': b'shader', SHADE: b'official shading'}
+PREPARE = 'dxil/PrepareLights.bin'
+ORIGINAL_SHADERS = {'original.bin': b'shader', SHADE: b'official shading', PREPARE: b'official preparation'}
 
 
 class BuildRecoveryTests(unittest.TestCase):
@@ -24,7 +25,7 @@ class BuildRecoveryTests(unittest.TestCase):
                 for p in directory.rglob('*') if p.is_file()}
 
     def run_build(self, root, *, fail_restore=False, fail_compile=True, reference=False,
-                  stale_reference=False, pdf_variant=False, fail_publish=False):
+                  stale_reference=False, pdf_variant=False, fail_publish=False, stale_lighting=False):
         renderer = root / "renderer"
         build = renderer / "build"
         binary = build / "bin"
@@ -34,6 +35,7 @@ class BuildRecoveryTests(unittest.TestCase):
         official = binary / "FullSample.exe"
         for path, data in ((source, b"source"), (renderer / "importer.cpp", b"importer"), (official, b"official"),
                            (shaders / "original.bin", b"shader"), (shaders / SHADE, b"official shading"),
+                           (shaders / PREPARE, b"official preparation"),
                            (build / "CMakeCache.txt", b"cache")):
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(data)
@@ -56,6 +58,8 @@ class BuildRecoveryTests(unittest.TestCase):
             if args[0] == "cmake":
                 source.write_bytes(b"modified")
                 official.write_bytes(b"variant")
+                if not stale_lighting:
+                    (shaders / PREPARE).write_bytes(b"fixed preparation")
                 if fail_compile or reference or pdf_variant:
                     (shaders / "original.bin").write_bytes(b"changed")
                     (shaders / "added.bin").write_bytes(b"extra")
@@ -74,6 +78,7 @@ class BuildRecoveryTests(unittest.TestCase):
             stack.enter_context(mock.patch.object(sys, "argv", [str(script)] + (["--reference"] if reference else [])))
             stack.enter_context(mock.patch.object(builder, "run", side_effect=command))
             stack.enter_context(mock.patch.object(builder, "adapt_reference"))
+            stack.enter_context(mock.patch.object(builder, "replace_once"))
             stack.enter_context(mock.patch.object(build_support, "require_clean_renderer"))
             stack.enter_context(mock.patch.object(builder, "checked_submodule",
                 return_value={"commit": "donut-revision", "source_sha256": {"src/engine/GltfImporter.cpp": "source-hash"}}))
@@ -91,7 +96,8 @@ class BuildRecoveryTests(unittest.TestCase):
                 stack.enter_context(mock.patch.object(pdf_builder.pdf, "SUPPORT", [helper]))
                 stack.enter_context(mock.patch.object(pdf_builder.pdf, "adapt",
                     side_effect=lambda *_: (renderer / "pdf-added.h").write_bytes(b"temporary PDF header")))
-            expected = (self.assertRaisesRegex(RuntimeError, "reference shader") if stale_reference else
+            expected = (self.assertRaisesRegex(RuntimeError, "light-preparation shader") if stale_lighting else
+                        self.assertRaisesRegex(RuntimeError, "reference shader") if stale_reference else
                         self.assertRaises((RuntimeError, OSError)) if fail_compile or fail_restore or fail_publish else nullcontext())
             with expected:
                 (pdf_builder if pdf_variant else builder).main()
@@ -152,6 +158,8 @@ class BuildRecoveryTests(unittest.TestCase):
                 self.assertEqual(record["donut"]["commit"], "donut-revision")
                 self.assertEqual(record["donut"]["source_sha256"]["src/engine/GltfImporter.cpp"], "source-hash")
                 self.assertEqual(record["shader_sha256"], builder.tree_hashes(binary / record["shader_directory"]))
+                self.assertNotEqual(binary / record["shader_directory"], shaders)
+                self.assertEqual((binary / record["shader_directory"] / PREPARE).read_bytes(), b"fixed preparation")
                 if reference:
                     self.assertEqual((binary / record["shader_directory"] / "added.bin").read_bytes(), b"extra")
                     self.assertEqual((binary / record["shader_directory"] / SHADE).read_bytes(), b"conventional shading")
@@ -187,6 +195,18 @@ class BuildRecoveryTests(unittest.TestCase):
             self.assertEqual(self.shader_bytes(shaders), ORIGINAL_SHADERS)
             self.assertFalse((binary / 'FullSampleReference.exe').exists())
             self.assertEqual(list(build.glob('experiment-build-*')), [])
+
+    def test_stale_light_preparation_refuses_each_shared_builder(self):
+        for reference, pdf_variant in ((False, False), (True, False), (False, True)):
+            with self.subTest(reference=reference, pdf=pdf_variant), tempfile.TemporaryDirectory() as folder:
+                renderer, build, binary, shaders = self.run_build(
+                    Path(folder), fail_compile=False, reference=reference, pdf_variant=pdf_variant,
+                    stale_lighting=True)
+                self.assertEqual((renderer / "source.cpp").read_bytes(), b"source")
+                self.assertEqual((binary / "FullSample.exe").read_bytes(), b"official")
+                self.assertEqual(self.shader_bytes(shaders), ORIGINAL_SHADERS)
+                self.assertFalse(list(binary.glob("*.build.json")))
+                self.assertEqual(list(build.glob("experiment-build-*")), [])
 
 
 if __name__ == "__main__":
