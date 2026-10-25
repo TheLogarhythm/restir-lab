@@ -1,6 +1,6 @@
 # ReSTIR Spatial Reuse: Implementation and Evaluation
 
-A two-person COMP5411 project to reproduce and study selected ReSTIR methods. The [ReSTIR DI baseline](results/summaries/di-baseline/README.md) evaluates Cornell Box, Arcade and Bistro using RTXDI `v3.1.0`. The [PDF Similarity extension](docs/reproductions/pdf-similarity.md) is available for DI; its evaluation and CGNS implementation are next.
+A two-person COMP5411 project to reproduce and study selected ReSTIR methods. The [ReSTIR DI baseline](results/summaries/di-baseline/README.md) evaluates Cornell Box, Arcade and Bistro using RTXDI `v3.1.0`. [PDF Similarity](docs/reproductions/pdf-similarity.md) and [CGNS](docs/reproductions/cgns.md) are available for DI. PDF's sparse evaluation is complete; CGNS has passed integration checks and awaits formal evaluation.
 
 Start with the [scope](docs/scope.md), [literature review](docs/literature/README.md), and [roadmap](docs/roadmap.md). Follow [setup](docs/setup.md) to run RTXDI, then use the [scene manifest](scenes/README.md) and [experiment protocol](experiments/protocol.md) for comparisons.
 

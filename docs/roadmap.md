@@ -12,7 +12,11 @@ The [DI extension](reproductions/pdf-similarity.md) and sparse evaluation are co
 
 Results show selective quality improvements in static views and Bistro exterior/changing-light conditions, with added GPU cost. Interior and moving-region regressions prevent a general advantage.
 
-Use the [results summary](../results/summaries/pdf-similarity/README.md) for the progress report, then proceed to CGNS. Detailed settings remain in the [experiment plan](../experiments/suites/pdf-similarity.md).
+The [results summary](../results/summaries/pdf-similarity/README.md) supports the progress report. Detailed settings remain in the [experiment plan](../experiments/suites/pdf-similarity.md).
+
+## CGNS — integration validated
+
+The [DI adaptation](reproductions/cgns.md) passes Release builds, CPU/native checks and 40 short 720p runs across all 10 configured scenes (2026-10-25), with exact off/baseline agreement. Next: define a bounded comparison of baseline, PDF Similarity and CGNS, including image error, correlation and full GPU cost, using matching corrected builds and references. Formal CGNS evaluation remains pending.
 
 Follow the [experiment protocol](../experiments/protocol.md).
 
