@@ -1,5 +1,6 @@
 """Regression coverage for comparable analysis controls."""
 import importlib
+from copy import deepcopy
 import json
 from pathlib import Path
 import sys
@@ -13,14 +14,66 @@ sys.path.insert(0, str(ROOT / "scripts/run"))
 sys.path.insert(0, str(ROOT))
 from experiment.artifacts import save_json, write_pfm
 from experiment.config import make_config, load_definition
+from experiment.reference import target, target_key
 from experiment.scenes import load_scene
 from rtxdi_common import sha
 
 
 class AnalysisValidationTests(unittest.TestCase):
+    def comparison_captures(self, seeds=(1, 2)):
+        captures = []
+        for seed in seeds:
+            for mode in ("spatial", "combined"):
+                for enabled in (False, True):
+                    definition = load_definition()
+                    definition["cgns"] = enabled
+                    config = make_config(load_scene("cornell-box"), definition, mode, "static", seed=seed)
+                    for frame in config["frames"]:
+                        if frame["capture"]:
+                            captures.append({"config": config, "manifest": {"gpu": "gpu", "build": {"shader": "same"}},
+                                             "frame": frame, "key": target_key(target(config, frame, "same-assets"))})
+        return captures
+
+    def test_complete_matching_schedules_allow_distinct_seeds_and_custom_rng_streams(self):
+        report = importlib.import_module("scripts.analysis.di_reuse")
+        captures = self.comparison_captures()
+        report.validate_comparison(captures)
+        # Fresh/reset experiments may deliberately use a different stream schedule.
+        for capture in captures:
+            config = capture["config"]
+            for index, frame in enumerate(config["frames"]):
+                frame["sampling_frame"] = config["seed"] * 1000 + index * 2
+        report.validate_comparison(captures)
+
+    def test_comparison_rejects_uncaptured_control_schedule_changes(self):
+        report = importlib.import_module("scripts.analysis.di_reuse")
+        changes = {"reset": True, "position": [1, 2, 3], "direction": [1, 0, 0],
+                   "up": [0, 0, 1], "logical_time_seconds": .25, "capture": True,
+                   "lighting": {"material": "emitter", "emissive_intensity_multiplier": 2}}
+        for field, value in changes.items():
+            captures = self.comparison_captures()
+            frame = captures[-1]["config"]["frames"][1]
+            self.assertFalse(frame["capture"])
+            frame[field] = value
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, "Compared.*schedule"):
+                report.validate_comparison(captures)
+
+    def test_comparison_rejects_missing_uncaptured_frames(self):
+        report = importlib.import_module("scripts.analysis.di_reuse")
+        captures = self.comparison_captures()
+        captures[-1]["config"]["frames"].pop(1)
+        with self.assertRaisesRegex(ValueError, "Compared.*schedule"):
+            report.validate_comparison(captures)
+
+    def test_comparison_rejects_same_seed_rng_changes_between_captures(self):
+        report = importlib.import_module("scripts.analysis.di_reuse")
+        captures = self.comparison_captures()
+        captures[-1]["config"]["frames"][1]["sampling_frame"] += 1
+        with self.assertRaisesRegex(ValueError, "Compared.*sampling"):
+            report.validate_comparison(captures)
+
     def test_pdf_toggle_is_allowed_but_other_controls_stay_matched(self):
         report = importlib.import_module("scripts.analysis.di_reuse")
-        from copy import deepcopy
         config = make_config(load_scene("cornell-box"), load_definition(), "combined", "static")
         capture = {"config": config, "manifest": {"gpu": "gpu", "build": {"shader": "same"}},
                    "frame": {"frame": 1}, "key": "same-pose"}

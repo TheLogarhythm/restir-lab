@@ -61,9 +61,15 @@ def load_definition(path=DEFAULT_CONFIG):
 def validate_definition(definition, seed, resolution):
     if type(definition.get("pdf_similarity", False)) is not bool:
         raise ValueError("pdf_similarity must be a boolean")
+    for name, default in (("cgns", False), ("cgns_early_stopping", True)):
+        if type(definition.get(name, default)) is not bool:
+            raise ValueError(f"{name} must be a boolean")
     def integer(value, minimum, maximum, name):
         if type(value) is not int or not minimum <= value <= maximum:
             raise ValueError(f"{name} must be an integer in {minimum}..{maximum}")
+    integer(definition.get("cgns_candidates", 32), 1, 32, "cgns_candidates")
+    if definition.get("cgns", False) and definition.get("pdf_similarity", False):
+        raise ValueError("CGNS and pdf_similarity must be evaluated separately")
     integer(definition.get("pdf_history_mode", 0), 0, 2, "pdf_history_mode")
     if definition.get("pdf_history_mode", 0) and not definition.get("pdf_similarity", False):
         raise ValueError("pdf_history_mode requires pdf_similarity")
@@ -111,6 +117,10 @@ def validate_definition(definition, seed, resolution):
     if type(definition.get("analytic_sun", True)) is not bool:
         raise ValueError("analytic_sun must be a boolean")
     integer(definition["spatial_neighbors"], 1, 32, "spatial_neighbors")
+    if definition.get("cgns", False):
+        integer(definition["spatial_neighbors"], 1, 4, "CGNS spatial_neighbors")
+        if definition.get("cgns_candidates", 32) < definition["spatial_neighbors"]:
+            raise ValueError("cgns_candidates must be at least spatial_neighbors")
     integer(definition["max_history_length"], 1, 16383, "max_history_length")
     if not math.isfinite(definition["spatial_radius"]) or definition["spatial_radius"] <= 0:
         raise ValueError("spatial_radius must be positive and finite")
@@ -131,6 +141,11 @@ def make_config(scene, definition, mode, scenario, seed=None, resolution=None, d
         raise ValueError("lighting scenario requires an explicit lighting schedule")
     if definition.get("pdf_similarity", False) and mode not in ("spatial", "combined"):
         raise ValueError("pdf_similarity requires spatial or combined reuse")
+    if definition.get("cgns", False):
+        if mode not in ("spatial", "combined"):
+            raise ValueError("cgns requires spatial or combined reuse")
+        definition.setdefault("cgns_candidates", 32)
+        definition.setdefault("cgns_early_stopping", True)
     settings = di_settings(width, height)
     settings.update(scene_arguments(scene))
     local_mode = definition.get("initial_local_sampling_mode", "UNIFORM")

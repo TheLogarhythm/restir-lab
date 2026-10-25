@@ -33,6 +33,27 @@ def reservoir_stats(path, width, height):
             "M_p95_valid": float(np.percentile(values, 95)) if values.size else 0}
 
 
+def cgns_stats(path, width, height, candidates, neighbors):
+    """Decode packed per-pixel counters; preserve the raw diagnostic for inspection."""
+    path = Path(path)
+    if not path.is_file() or path.stat().st_size != width * height * 4:
+        raise RuntimeError("Missing or incorrectly sized CGNS diagnostics")
+    values = np.fromfile(path, dtype="<u4")
+    tried, scored, selected = (values >> shift & 255 for shift in (0, 8, 16))
+    if (np.any(values >> 24) or np.any(tried > candidates) or np.any(scored > tried)
+            or np.any(selected > np.minimum(neighbors, scored))):
+        raise RuntimeError("Invalid CGNS diagnostic counts")
+    active = tried > 0
+    def active_mean(values):
+        return float(values[active].mean()) if active.any() else None
+    return {"cgns_active_pixel_fraction": float(active.mean()),
+            "cgns_tried_mean_active": active_mean(tried),
+            "cgns_scored_mean_active": active_mean(scored),
+            "cgns_selected_mean_active": active_mean(selected),
+            "cgns_zero_selected_fraction_active": active_mean(selected == 0),
+            "cgns_diagnostic_sha256": sha(path)}
+
+
 def finalize_outputs(output, config):
     validate_run_outputs(output, config)
     records = []
@@ -59,6 +80,10 @@ def finalize_outputs(output, config):
         if config["diagnostics"]:
             record.update(reservoir_stats(reservoir, config["width"], config["height"]))
             temporary_files.append(reservoir)
+            if config["definition"].get("cgns", False):
+                record.update(cgns_stats(stem.with_suffix(".cgns"), config["width"], config["height"],
+                                         config["definition"].get("cgns_candidates", 32),
+                                         config["definition"]["spatial_neighbors"]))
         records.append(record)
         temporary_files.append(raw)
     save_json(output / "captures.json", records)
@@ -89,6 +114,23 @@ def validate_run_outputs(output, config):
     actual_history = resolved.get("pdf_history_mode", None if resolved.get("pdf_similarity", False) else 0)
     if type(actual_history) is not int or actual_history != expected_history:
         raise RuntimeError("Resolved PDF history mode differs from requested mode")
+    cgns = config["definition"].get("cgns", False)
+    actual_cgns = resolved.get("cgns", False)
+    if type(actual_cgns) is not bool or actual_cgns != cgns:
+        raise RuntimeError("Resolved CGNS differs from requested mode")
+    if "cgns" in resolved:
+        for key, default, kind in (("cgns_candidates", 32, int), ("cgns_early_stopping", True, bool)):
+            actual = resolved.get(key)
+            if type(actual) is not kind or actual != config["definition"].get(key, default):
+                raise RuntimeError(f"Resolved CGNS parameter differs: {key}")
+    for row in timings:
+        if "cgns" in resolved and "neighbor_selection_ms" not in row:
+            raise RuntimeError("Missing CGNS neighbor selection timing")
+        neighbor_ms = float(row.get("neighbor_selection_ms", 0))
+        if (neighbor_ms > 0) != cgns:
+            raise RuntimeError("Unexpected CGNS neighbor selection pass execution")
+        if neighbor_ms > float(row["gpu_ms"]) + 1e-6:
+            raise RuntimeError("CGNS neighbor selection timing exceeds the GPU frame")
     if config.get("reference"):
         if resolved.get("estimator") != "conventional_light_sampling" or resolved.get("source_format") != "RGBA32_FLOAT accumulated reference":
             raise RuntimeError("Reference estimator/precision differs from requested mode")

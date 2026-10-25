@@ -97,7 +97,7 @@ class AnalysisReportingTests(unittest.TestCase):
                 errors = {r["method"]: float(r["rmae_mean"]) for r in rows}
                 self.assertAlmostEqual(errors["restir_di"], .5)
                 self.assertAlmostEqual(errors["pdf_similarity"], .05, places=6)
-                self.assertIn("| PDF off | combined | 0.5000 | 0.5000 | 1.00 |", summary)
+                self.assertIn("| ReSTIR DI | combined | 0.5000 | 0.5000 | 1.00 |", summary)
                 self.assertIn("| PDF on | combined | 0.0500 | 0.0500 | 3.00 |", summary)
             self.assertEqual(list(root.rglob("*.pfm")), [])
             old = json.loads(convergence.read_text())

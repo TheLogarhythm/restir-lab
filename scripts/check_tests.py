@@ -7,6 +7,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 INTEGRATION_GROUPS = {
     "native": ("test_pdf_similarity.PdfSimilarityMathTests", "test_reference_surface_support.ReferenceSurfaceSupportTests",
+               "test_cgns_math.CgnsMathTests", "test_cgns_spatial.CgnsSpatialTests",
                "test_light_geometry_index.LightGeometryIndexTests"),
     "media": ("test_pdf_artifacts.PdfArtifactTests.test_video_is_1080p_30fps_and_preserves_input_order",),
     "windows": ("test_pdf_supervisor.SupervisorTests",),

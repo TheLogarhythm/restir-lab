@@ -79,7 +79,7 @@ def plot_trajectories(plt, output, captures, summaries, scenes, scenarios):
                     yerr = [p["rmae_std"] or 0 for p in points] if any(p["seeds"] > 1 for p in points) else None
                     handle = ax.errorbar([p["frame"] for p in points], [p["rmae_mean"] for p in points],
                                          yerr=yerr, color=COLORS[mode], marker="o", markersize=3,
-                                         linewidth=1.2, capsize=2, linestyle="--" if name == "pdf_similarity" else "-",
+                                         linewidth=1.2, capsize=2, linestyle={"restir_di": "-", "pdf_similarity": "--", "cgns": ":"}[name],
                                          label=variant_label((name, mode)))
                     handles[(name, mode)] = handle
             definition = group[0]["config"]["definition"]
@@ -163,7 +163,7 @@ def write_report(output, captures, summaries, timing_rows, references, reference
                      f"{d['spatial_neighbors']} spatial neighbors, {d['spatial_radius']} px radius; history limit {d['max_history_length']}")
     hardware = sorted({c["manifest"].get("gpu", "unrecorded GPU") for c in captures})
     lines = ["# ReSTIR DI evaluation", "", "## Experimental design", "",
-             f"Controlled comparison of DI reuse modes and PDF Similarity settings: "
+             f"Controlled comparison of DI reuse modes and spatial reuse methods: "
              f"{len(configs)} runs, baseline seed(s) {', '.join(map(str,seeds))}. "
              "Camera paths, candidate budgets, lighting and materials are matched across methods/modes; denoising and AA are disabled.", "",
              "Settings: " + " / ".join(sorted(settings)) + ". GPU record: " + "; ".join(hardware) + ".", "",
@@ -229,7 +229,7 @@ def write_report(output, captures, summaries, timing_rows, references, reference
                   + ("Endpoint errors are below the reset-frame errors in these sequences."
                      if recovered and all(recovered) else "Subsequent captures show the evolution of the rebuilt history.")]
     if any(c["scenario"]=="motion" for c in configs.values()):
-        lines += ["", "The motion test uses constant-velocity camera translation with fixed orientation. "
+        lines += ["", "The motion test follows the camera poses recorded in each run. "
                   "Frames around motion start/stop are separate measurements. Error changes during motion combine "
                   "view-dependent sampling difficulty and reuse behavior; they do not isolate temporal artifacts."]
     lines += ["", "[Representative endpoint images](representative-images.png) use the recorded fixed exposure within each scene; "

@@ -19,6 +19,8 @@ def main():
     parser.add_argument("--diagnostics", action="store_true", help="Export captured-frame M statistics")
     parser.add_argument("--pdf-similarity", action="store_true", help="Enable PDF similarity (spatial/combined only)")
     parser.add_argument("--pdf-build", action="store_true", help="Use the PDF executable, including with the extension off")
+    parser.add_argument("--cgns", action="store_true", help="Enable CGNS neighbor selection (spatial/combined only)")
+    parser.add_argument("--cgns-build", action="store_true", help="Use the CGNS executable, including with the extension off")
     parser.add_argument("--output-name", help="Suite directory under runs/; defaults to a UTC timestamp; never overwritten")
     parser.add_argument("--windowed", action="store_true", help="Show the viewer instead of default headless rendering")
     parser.add_argument("--timeout", type=float, default=600, help="Seconds per renderer process")
@@ -36,11 +38,20 @@ def main():
     definition = load_definition(args.config)
     if args.pdf_similarity:
         definition["pdf_similarity"] = True
+    if args.cgns:
+        definition["cgns"] = True
     pdf_enabled = definition.get("pdf_similarity", False)
-    executable = RENDERER / "build/bin/FullSamplePdf.exe" if pdf_enabled or args.pdf_build else None
+    cgns_enabled = definition.get("cgns", False)
+    if (pdf_enabled or args.pdf_build) and (cgns_enabled or args.cgns_build):
+        parser.error("Select either the PDF or CGNS variant")
+    executable = None
+    if pdf_enabled or args.pdf_build:
+        executable = RENDERER / "build/bin/FullSamplePdf.exe"
+    elif cgns_enabled or args.cgns_build:
+        executable = RENDERER / "build/bin/FullSampleCgns.exe"
     scenarios = SCENARIOS if args.scenario == "all" else [args.scenario]
     modes = MODES if args.mode == "all" else [args.mode]
-    if pdf_enabled and args.mode == "all":
+    if (pdf_enabled or cgns_enabled) and args.mode == "all":
         modes = ["spatial", "combined"]
     # Resolve all inputs before creating output directories or launching a renderer.
     jobs = []

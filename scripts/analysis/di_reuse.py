@@ -61,16 +61,27 @@ def phase(config, frame):
 
 
 def validate_comparison(captures):
-    """Allow mode/seed/PDF toggles; require all other controls and targets to match."""
+    """Allow mode/seed/method toggles; match controls, histories and captured targets."""
     controls, poses, coverage = {}, {}, defaultdict(lambda: defaultdict(set))
+    control_schedules, sampling_schedules = {}, {}
     for capture in captures:
         config, manifest = capture["config"], capture["manifest"]
         group = (config["scene_id"], config["scenario"])
+        definition = {k: v for k, v in config["definition"].items() if k not in ("seed", "pdf_similarity", "cgns")}
+        definition.setdefault("cgns_candidates", 32)
+        definition.setdefault("cgns_early_stopping", True)
         settings = {"arguments": {k: v for k, v in config["arguments"].items() if k != "restirDI.diMode"},
                     "gpu": manifest["gpu"], "build": manifest["build"],
-                    "definition": {k: v for k, v in config["definition"].items() if k not in ("seed", "pdf_similarity")}}
+                    "definition": definition}
         if controls.setdefault(group, settings) != settings:
             raise ValueError("Compared modes/seeds have different settings/build/hardware; use separate reports")
+        # Uncaptured frames also determine the reservoirs reaching each capture.
+        schedule = [{k: v for k, v in frame.items() if k != "sampling_frame"} for frame in config["frames"]]
+        if control_schedules.setdefault(group, schedule) != schedule:
+            raise ValueError("Compared modes/seeds have different frame control schedules")
+        sampling = [frame["sampling_frame"] for frame in config["frames"]]
+        if sampling_schedules.setdefault((*group, config["seed"]), sampling) != sampling:
+            raise ValueError("Compared modes/methods have different sampling schedules for the same seed")
         variant = (method(config), config["mode"])
         point = (config["seed"], capture["frame"]["frame"])
         if point in coverage[group][variant]:

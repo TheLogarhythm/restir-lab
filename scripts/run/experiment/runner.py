@@ -54,6 +54,8 @@ def preflight(definition, executable=None):
     build = json.loads(executable.with_suffix(".build.json").read_text())
     if definition.get("pdf_similarity", False) and not build.get("pdf_similarity", False):
         raise RuntimeError("PDF similarity requires build_rtxdi_pdf.py")
+    if definition.get("cgns", False) and build.get("cgns") is not True:
+        raise RuntimeError("CGNS requires build_rtxdi_cgns.py")
     if build.get("renderer_commit") != definition["renderer_commit"]:
         raise RuntimeError("Build renderer revision differs from the experiment; rebuild first")
     if sha(executable) != build["executable_sha256"]:
@@ -117,6 +119,8 @@ def run_one(config, output, build, scene, timeout=600, *, executable=None, resum
             kind = "conventional_reference_on_author_renderer"
         elif config["definition"].get("pdf_similarity", False):
             kind = "independent_pdf_similarity_on_author_renderer"
+        elif config["definition"].get("cgns", False):
+            kind = "independent_cgns_on_author_renderer"
         record.update({"status": "running", "kind": kind, "command": command,
                   "project_commit": query("git", "rev-parse", "HEAD"),
                   "project_status": query("git", "status", "--porcelain", "--ignore-submodules=all"),

@@ -124,6 +124,24 @@ class ReferenceTests(unittest.TestCase):
                     self.assertEqual(tail["frames"], expected)
                     self.assertEqual(base, original)
 
+    def test_reference_disables_cgns_for_new_and_resumed_streams_with_same_target(self):
+        definition = load_definition()
+        definition.update(cgns=True, cgns_candidates=8, cgns_early_stopping=False)
+        base = make_config(load_scene("cornell-box"), definition, "combined", "motion")
+        original = copy.deepcopy(base)
+        pose = base["frames"][63]
+        for previous, image in ((0, None), (32, Path("previous.pfm.gz"))):
+            with self.subTest(previous=previous):
+                config = ref.reference_config(base, pose, [64], 8, 1001, "POWER_RIS",
+                    previous_samples=previous, resume_image=image)
+                self.assertEqual(config["mode"], "initial")
+                self.assertEqual(config["arguments"]["restirDI.diMode"], "NONE")
+                self.assertIs(config["definition"]["cgns"], False)
+                self.assertEqual(config["reference"]["estimator"], "conventional_light_sampling")
+                self.assertEqual(ref.target(config, config["frames"][0], "assets"),
+                                 ref.target(base, pose, "assets"))
+        self.assertEqual(base, original)
+
     def test_reference_clears_research_history_mode_for_new_and_resumed_streams(self):
         for mode in (1, 2):
             definition = load_definition()
