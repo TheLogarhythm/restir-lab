@@ -17,6 +17,7 @@ def main():
     parser.add_argument("--seed", type=int, help="Override the experiment definition's seed")
     parser.add_argument("--resolution", type=int, nargs=2, metavar=("WIDTH", "HEIGHT"))
     parser.add_argument("--diagnostics", action="store_true", help="Export captured-frame M statistics")
+    parser.add_argument("--geometry-export", action="store_true", help="Export primary depth and shading normals for shared analysis masks")
     parser.add_argument("--pdf-similarity", action="store_true", help="Enable PDF similarity (spatial/combined only)")
     parser.add_argument("--pdf-build", action="store_true", help="Use the PDF executable, including with the extension off")
     parser.add_argument("--cgns", action="store_true", help="Enable CGNS neighbor selection (spatial/combined only)")
@@ -36,6 +37,8 @@ def main():
     if len(set(names)) != len(names):
         parser.error("Duplicate scene IDs")
     definition = load_definition(args.config)
+    if args.geometry_export:
+        definition["geometry_export"] = True
     if args.pdf_similarity:
         definition["pdf_similarity"] = True
     if args.cgns:

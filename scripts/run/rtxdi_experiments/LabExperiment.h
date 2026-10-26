@@ -38,6 +38,32 @@ class LabExperiment
         stream.open(path, std::ios::binary);
         return stream;
     }
+    static void ExportGeometryTexture(nvrhi::IDevice* device, nvrhi::ITexture* source,
+                                      nvrhi::Format format, const std::filesystem::path& path)
+    {
+        auto desc = source->getDesc();
+        if (desc.format != format)
+            throw std::runtime_error("Unexpected geometry render target format");
+        auto staging = device->createStagingTexture(desc, nvrhi::CpuAccessMode::Read);
+        auto command = device->createCommandList();
+        command->open();
+        command->copyTexture(staging, nvrhi::TextureSlice(), source, nvrhi::TextureSlice());
+        command->close();
+        device->executeCommandList(command);
+        device->waitForIdle();
+        size_t pitch = 0;
+        auto pixels = static_cast<const char*>(device->mapStagingTexture(
+            staging, nvrhi::TextureSlice(), nvrhi::CpuAccessMode::Read, &pitch));
+        if (!pixels) throw std::runtime_error("Cannot map geometry capture");
+        try
+        {
+            auto stream = Open(path);
+            for (uint32_t y = 0; y < desc.height; ++y)
+                stream.write(pixels + y * pitch, size_t(desc.width) * 4);
+        }
+        catch (...) { device->unmapStagingTexture(staging); throw; }
+        device->unmapStagingTexture(staging);
+    }
     static dm::float3 Vector(const Json::Value& v)
     {
         return dm::float3(v[0].asFloat(), v[1].asFloat(), v[2].asFloat());
@@ -66,6 +92,8 @@ public:
 #endif
         if (!config["frames"].isArray() || config["frames"].empty())
             throw std::runtime_error("Experiment has no frame sequence");
+        if (config.isMember("geometry_export") && !config["geometry_export"].isBool())
+            throw std::runtime_error("geometry_export must be a boolean");
         output = config["output"].asString();
         timings = Open(output / "timings.csv");
         frameStates = Open(output / "resolved-frames.jsonl");
@@ -259,6 +287,9 @@ public:
         record["denoiser"] = uint32_t(ui.denoiserMode);
         record["aa"] = uint32_t(ui.aaMode);
         record["pixel_jitter"] = bool(ui.enablePixelJitter);
+        record["geometry_export"] = config.get("geometry_export", false).asBool();
+        if (record["geometry_export"].asBool())
+            record["geometry_format"] = "view_depth_r32_float+shading_normal_oct_unorm32_v1";
         record["textures"] = bool(ui.enableTextures);
         record["ray_counts"] = false;
         record["display_passes"] = headless ? "bypassed; no display output" : "bypassed; raw HDR blit for window only";
@@ -339,6 +370,15 @@ public:
             }
             catch (...) { device->unmapStagingTexture(staging); throw; }
             device->unmapStagingTexture(staging);
+
+            // Optional primary geometry readback is outside measured render passes.
+            if (config.get("geometry_export", false).asBool())
+            {
+                ExportGeometryTexture(device, targets.Depth, nvrhi::Format::R32_FLOAT,
+                                      stem.string() + ".depth32f");
+                ExportGeometryTexture(device, targets.GBufferNormals, nvrhi::Format::R32_UINT,
+                                      stem.string() + ".normals32u");
+            }
 
             if (config["diagnostics"].asBool())
             {

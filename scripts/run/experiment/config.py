@@ -61,7 +61,7 @@ def load_definition(path=DEFAULT_CONFIG):
 def validate_definition(definition, seed, resolution):
     if type(definition.get("pdf_similarity", False)) is not bool:
         raise ValueError("pdf_similarity must be a boolean")
-    for name, default in (("cgns", False), ("cgns_early_stopping", True)):
+    for name, default in (("cgns", False), ("cgns_early_stopping", True), ("geometry_export", False)):
         if type(definition.get(name, default)) is not bool:
             raise ValueError(f"{name} must be a boolean")
     def integer(value, minimum, maximum, name):
@@ -209,4 +209,5 @@ def make_config(scene, definition, mode, scenario, seed=None, resolution=None, d
     return {"schema_version": 3, "scene_id": scene["scene_id"], "scene": scene,
             "mode": mode, "scenario": scenario, "seed": seed, "width": width, "height": height,
             "diagnostics": diagnostics, "arguments": settings, "frames": frames,
+            **({"geometry_export": True} if definition.get("geometry_export", False) else {}),
             "definition": definition, "preview": {**scene["preview"], "transform": "Reinhard + sRGB"}}

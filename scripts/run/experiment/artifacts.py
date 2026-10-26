@@ -9,6 +9,7 @@ from PIL import Image, PngImagePlugin
 from .config import LOCAL_SAMPLING_MODES, MODE_VALUES
 from .images import write_pfm, preview_rgb
 from .scenes import camera_basis
+from .geometry_io import save_geometry, validate_geometry_outputs
 
 def save_json(path, value):
     path = Path(path)
@@ -84,6 +85,10 @@ def finalize_outputs(output, config):
                 record.update(cgns_stats(stem.with_suffix(".cgns"), config["width"], config["height"],
                                          config["definition"].get("cgns_candidates", 32),
                                          config["definition"]["spatial_neighbors"]))
+        if config.get("geometry_export", False):
+            record.update(save_geometry(stem, config["width"], config["height"],
+                                        config["scene"]["camera"]["vertical_fov"]))
+            temporary_files.extend((stem.with_suffix(".depth32f"), stem.with_suffix(".normals32u")))
         records.append(record)
         temporary_files.append(raw)
     save_json(output / "captures.json", records)
@@ -181,6 +186,7 @@ def validate_run_outputs(output, config):
         if not math.isclose(resolved[key], expected_scene["lighting"][key], rel_tol=1e-6, abs_tol=1e-6):
             raise RuntimeError(f"Renderer lighting differs from requested {key}")
     validate_frame_states(output, config)
+    validate_geometry_outputs(output, config, resolved)
 
 
 def validate_frame_states(output, config):
