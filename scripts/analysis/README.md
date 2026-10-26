@@ -1,5 +1,8 @@
 # Analysis
 
+For shared SMAPE, temporal/spatial covariance and geometry-based easy/hard regions,
+see [quality metrics](../../docs/metrics.md) and `sequence_metrics.py`.
+
 `di_reuse.py` validates saved HDR captures and pose-matched references, then writes
 CSV measurements and a concise academic report. `di_reuse_report.py` contains
 presentation code: one endpoint error/cost table, consolidated error trajectories,
