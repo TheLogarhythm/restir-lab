@@ -1,4 +1,4 @@
-"""Unclipped linear RGB error metrics for the PDF similarity comparison."""
+"""Shared unclipped linear RGB error metrics; historical definitions are stable."""
 import numpy as np
 
 _LUMINANCE = np.array([0.2126, 0.7152, 0.0722], dtype=np.float64)
