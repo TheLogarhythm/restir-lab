@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "scene_id": "bistro-mirror",
+  "source": {
+    "kind": "builtin",
+    "root": "renderers/rtxdi/Assets/Media",
+    "entry": "bistro_with_mirrors-rtxdi.scene.json",
+    "asset": "BistroMirror"
+  },
+  "camera": {
+    "position": [
+      -7.688,
+      2,
+      5.594
+    ],
+    "direction": [
+      0.3539,
+      0,
+      0.9426
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "vertical_fov": 60
+  },
+  "motion": {
+    "end_position": [
+      -7.688,
+      2,
+      5.594
+    ]
+  },
+  "lighting": {
+    "environment": "procedural",
+    "environment_intensity_ev": 0,
+    "environment_rotation_degrees": 0,
+    "emissive_scale": 1
+  },
+  "preview": {
+    "exposure_ev": 4
+  }
+}

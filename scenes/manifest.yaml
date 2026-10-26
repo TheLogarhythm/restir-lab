@@ -278,6 +278,26 @@
         "file_count": 6,
         "hash_scope": "Sorted UTF-8 <sha256><two spaces><relative path><LF>"
       }
+    },
+    {
+      "id": "bistro-mirror",
+      "source_url": "https://github.com/NVIDIA-RTX/RTXDI-Assets/blob/1da7b749ef0e3fb606ab46dde8e5bfbacd078a02/bistro_with_mirrors-rtxdi.scene.json",
+      "source_revision": "1da7b749ef0e3fb606ab46dde8e5bfbacd078a02",
+      "sha256": "9299982ec58c6d45d20a5976a2a8dbbcae0c9fb0eb391c70da2f89c239a291e4",
+      "hash_scope": "Sorted UTF-8 <sha256><two spaces><path relative to source.root><LF>; scene documents, model resources (Donut DDS preference), referenced IES",
+      "license": "RTXDI-Assets root MIT notice; Bistro CC BY 4.0; BrainStem retains its bundled Poser Pro EULA notice (Media/BrainStem/README.md)",
+      "local_path": "renderers/rtxdi/Assets/Media/bistro_with_mirrors-rtxdi.scene.json",
+      "conversion": "none (upstream RTXDI composite scene)",
+      "modifications": [],
+      "backend_configs": {
+        "rtxdi": "scenes/configs/rtxdi/bistro-mirror.json"
+      },
+      "role": "Optional static BistroMirror profile with upstream default camera; runtime resources checked; rendering, motion and quantitative evaluation unvalidated; excluded from default baseline scenes",
+      "runtime_assets": {
+        "sha256": "9299982ec58c6d45d20a5976a2a8dbbcae0c9fb0eb391c70da2f89c239a291e4",
+        "file_count": 365,
+        "hash_scope": "Sorted UTF-8 <sha256><two spaces><path relative to source.root><LF>; scene documents, model resources (Donut DDS preference), referenced IES"
+      }
     }
   ]
 }

@@ -1,7 +1,7 @@
 # RTXDI scene profiles
 
 Profiles: [Cornell](cornell-box.json), [Arcade](arcade.json),
-[Bistro](bistro.json), [Zero-Day Measure One](zero-day-measure-one.json),
+[Bistro](bistro.json), [BistroMirror](bistro-mirror.json), [Zero-Day Measure One](zero-day-measure-one.json),
 [Zero-Day Measure Seven](zero-day-measure-seven.json),
 [San Miguel](san-miguel.json), [Classroom](classroom.json),
 [Emerald Square](emerald-square.json), [Sun Temple](sun-temple.json), [Veach Ajar](veach-ajar.json).
@@ -38,6 +38,23 @@ The dependency check follows scene wrappers, local glTF resources, Donut's DDS
 texture preference and referenced IES profiles. Missing files, LFS pointers and
 paths outside the configured asset root fail before rendering. GLB is not supported
 by this validator yet. Adding a supported scene requires no Python/C++ changes.
+
+## BistroMirror
+
+Uses the upstream composite scene, including the archway/bar mirrors, BrainStem
+and sphere-with-holes models. The profile keeps the upstream default camera and
+a fixed motion endpoint; it is excluded from the default baseline scenes.
+Resource validation does not establish rendered correctness or a benchmark trajectory.
+
+From the repository root:
+
+~~~powershell
+python scripts/run/rtxdi_reuse.py --scene bistro-mirror --check
+python scripts/run/rtxdi_pdf_viewer.py --scene bistro-mirror --off --indirect RESTIRPT --denoise
+~~~
+
+The assets come from the existing RTXDI-Assets checkout; no conversion is needed.
+See the manifest for the pinned revision, resource hash and component notices.
 
 ## CGNS scene imports
 
