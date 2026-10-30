@@ -2,7 +2,7 @@
 
 Add meaningful numerical and small-scene checks as rendering code is integrated: controlled reservoir selection statistics, estimator/reference agreement, invalid values, reprojection/history resets, and repeatable captures.
 
-Run `python -m unittest discover -s tests -v` for asset-conversion, launcher, multi-scene experiment and offline analysis regressions (install scripts/run/requirements.txt; no Blender/GPU needed). With MSVC, PDF tests execute shared direction-reservoir math and the adapted RTXDI spatial loops on deterministic inputs. GPU validation is recorded in the [implementation note](../docs/reproductions/pdf-similarity.md). `python scripts/check_scaffold.py` checks repository structure, not rendering correctness.
+Run `python -B -m unittest discover -s tests -t . -v` for asset-conversion, launcher, multi-scene experiment and offline analysis regressions (install scripts/run/requirements.txt; no Blender/GPU needed). With MSVC, PDF tests execute shared direction-reservoir math and the adapted RTXDI spatial loops on deterministic inputs. GPU validation is recorded in the [implementation note](../docs/reproductions/pdf-similarity.md). `python scripts/check_scaffold.py` checks repository structure, not rendering correctness.
 
 Run the object-material, emitter-visibility and authored-light conversion fixture with Blender: `blender --background --factory-startup --disable-autoexec --python-exit-code 1 --python tests/blender_classroom.py`.
 For camera sensor-fit and pixel-aspect checks, use the same command with `tests/blender_camera.py`.
@@ -14,7 +14,7 @@ Set `TEMP` and `TMP` to its absolute path when running these checks to keep temp
 
 ## Test groups
 
-The ordinary `python -B -m unittest discover -s tests -v` command still discovers every unittest.
+The ordinary `python -B -m unittest discover -s tests -t . -v` command still discovers every unittest.
 For a dependency-specific run, use:
 
 ```powershell
@@ -39,5 +39,34 @@ The three Blender commands above remain the local integration entry points.
 
 Shared fixtures live in `tests/fixtures/`: isolated worker imports, controlled capture records,
 equal-time data and the MSVC/shader extraction harness. Assertions stay in their respective
-test modules. Gallery tests are now part of normal discovery in `test_gallery_catalog.py`.
-The six C++ fixture sources are retained; each checks a different mathematical or runtime contract.
+test modules. Gallery tests are part of normal discovery in `workflows/test_gallery_catalog.py`.
+The C++ fixture sources are retained; each checks a different mathematical or runtime contract.
+
+## Test packages and fixture ownership
+
+The test packages group checks by responsibility:
+
+- `core/`: numerical contracts and image storage.
+- `backends/`: renderer adapters and build/runtime contracts.
+- `workflows/`: experiment scheduling, references, reporting and test tooling.
+- `assets/`: scene conversion, installation and authored scene properties.
+- `fixtures/`: reusable input builders and native compilation helpers.
+
+Reusable fixture inputs belong in `fixtures/`: `provenance.py` owns lighting build
+records, `legacy_artifacts.py` owns capture/planar-geometry setup for existing
+analysis tests, and `cgns.py` supplies one-frame runtime records for CGNS and
+geometry checks. Tests must not import other test modules for fixtures. Scenario
+configs, expected values, numerical oracles, assertions and deliberate corruption
+remain in their tests; hash refreshes stay explicit.
+
+Use `-t .` with unittest discovery so modules have names such as
+`tests.backends.test_rtxdi_runner`. A focused module can run with
+`python -B -m unittest tests.core.test_covariance_metrics -v`; a group can run with
+`python -B -m unittest discover -s tests/core -t . -v`.
+
+Integration groups retain exact module/class prefixes under the `tests.`
+namespace. New grouping or file moves must compare
+`scripts/check_tests.py --suite all --list` and every integration-group inventory.
+Similar numerical checks at pure-function, saved-file and launcher boundaries
+protect different contracts and are retained. The Blender scripts and C++ fixture
+sources stay at the top of `tests/` so their manual entry points remain stable.

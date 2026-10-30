@@ -6,11 +6,11 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 INTEGRATION_GROUPS = {
-    "native": ("test_pdf_similarity.PdfSimilarityMathTests", "test_reference_surface_support.ReferenceSurfaceSupportTests",
-               "test_cgns_math.CgnsMathTests", "test_cgns_spatial.CgnsSpatialTests",
-               "test_light_geometry_index.LightGeometryIndexTests"),
-    "media": ("test_pdf_artifacts.PdfArtifactTests.test_video_is_1080p_30fps_and_preserves_input_order",),
-    "windows": ("test_pdf_supervisor.SupervisorTests",),
+    "native": ("tests.backends.test_pdf_similarity.PdfSimilarityMathTests", "tests.backends.test_reference_surface_support.ReferenceSurfaceSupportTests",
+               "tests.backends.test_cgns_math.CgnsMathTests", "tests.backends.test_cgns_spatial.CgnsSpatialTests",
+               "tests.backends.test_light_geometry_index.LightGeometryIndexTests"),
+    "media": ("tests.workflows.test_pdf_artifacts.PdfArtifactTests.test_video_is_1080p_30fps_and_preserves_input_order",),
+    "windows": ("tests.workflows.test_pdf_supervisor.SupervisorTests",),
 }
 
 
@@ -37,7 +37,7 @@ def main():
     args = parser.parse_args()
     sys.path.insert(0, str(ROOT))
     loader = unittest.TestLoader()
-    tests = list(flatten(loader.discover(str(ROOT / "tests"))))
+    tests = list(flatten(loader.discover(str(ROOT / "tests"), top_level_dir=str(ROOT))))
     if loader.errors:
         print("Test discovery failed; no filtered run can be reported as passing.", file=sys.stderr)
         for error in loader.errors:

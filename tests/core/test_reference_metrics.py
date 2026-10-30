@@ -1,0 +1,184 @@
+"""Numerical contracts for reference convergence and portable image comparisons."""
+from pathlib import Path
+import copy
+import sys
+import tempfile
+import unittest
+import numpy as np
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts/run"))
+from experiment import artifacts, reference as ref
+from experiment.config import make_config, load_definition
+from experiment.scenes import load_scene
+
+
+class ReferenceTests(unittest.TestCase):
+    def test_pfm_roundtrip_retains_hdr_and_orientation(self):
+        rgb = np.arange(18, dtype=np.float32).reshape(2, 3, 3) - 2
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "image.pfm"
+            artifacts.write_pfm(path, rgb)
+            np.testing.assert_array_equal(ref.read_pfm(path), rgb)
+            path.write_bytes(path.read_bytes()[:-4])
+            with self.assertRaises(ValueError):
+                ref.read_pfm(path)
+
+    def test_metrics_have_known_scale_and_brightness_offset(self):
+        reference = np.full((2, 3, 3), 2.0)
+        result = ref.metrics(reference * 1.5, reference)
+        self.assertAlmostEqual(result["rmse"], 1.0)
+        self.assertAlmostEqual(result["nrmse"], 0.5)
+        self.assertAlmostEqual(result["rmae"], 0.5)
+        self.assertAlmostEqual(result["relative_luminance_offset"], 0.5)
+        self.assertEqual(ref.metrics(reference, reference)["rmse"], 0)
+        with self.assertRaises(ValueError):
+            ref.metrics(reference[:1], reference)
+        with self.assertRaises(ValueError):
+            ref.metrics(reference * np.nan, reference)
+
+    def test_reference_is_rechecked_for_a_more_accurate_method(self):
+        checks = [{"samples_per_class_per_stream": n, "regions": {"full": {"stream_disagreement_rmae": .001, "change_rmae": None if n == 16 else .001}}} for n in (16, 32, 64)]
+        self.assertTrue(ref.reference_ready(checks, {"full": .02}, .1, ref.CONVERGENCE_METRIC))
+        self.assertFalse(ref.reference_ready(checks, {"full": .005}, .1, ref.CONVERGENCE_METRIC))
+        self.assertFalse(ref.reference_ready(checks[:2], {"full": .02}, .1, ref.CONVERGENCE_METRIC))
+
+    def test_recheck_uses_full_image_even_when_quadrants_fail(self):
+        checks = [{"samples_per_class_per_stream": n, "regions": {
+            "full": {"stream_disagreement_rmae": .001, "change_rmae": None if n == 16 else .001},
+            "quadrant-0-0": {"stream_disagreement_rmae": .1, "change_rmae": None if n == 16 else .1}}}
+            for n in (16, 32, 64)]
+        for best in ({"full": .02}, {"full": .02, "quadrant-0-0": .001}):
+            with self.subTest(best=best):
+                self.assertTrue(ref.reference_ready(checks, best, .1, ref.CONVERGENCE_METRIC))
+        checks[-1]["regions"]["full"]["change_rmae"] = .003
+        self.assertFalse(ref.reference_ready(checks, {"full": .02}, .1, ref.CONVERGENCE_METRIC))
+        checks[-1]["regions"].pop("full")
+        with self.assertRaises(ValueError):
+            ref.reference_ready(checks, {"full": .02}, .1, ref.CONVERGENCE_METRIC)
+
+
+    def test_rmae_normalizes_after_averaging_and_handles_black_reference(self):
+        reference = np.array([[[0., 0., 0.], [2., 2., 2.]]])
+        image = reference.copy()
+        image[0, 0] = 1.
+        self.assertAlmostEqual(ref.metrics(image, reference)["rmae"], .5)
+        black = np.zeros_like(reference)
+        self.assertEqual(ref.metrics(black, black)["rmae"], 0.)
+        self.assertTrue(np.isfinite(ref.metrics(image, black)["rmae"]))
+
+    def test_independent_pair_uncertainty_is_for_the_average(self):
+        # Average is 2; difference is 2; estimated reference MSE = 2^2 / 4.
+        a, b = np.ones((2, 3, 3)), np.full((2, 3, 3), 3.0)
+        result = ref.convergence(a, b)
+        self.assertAlmostEqual(result["estimated_reference_rmse"], 1.0)
+        self.assertAlmostEqual(result["estimated_reference_nrmse"], 0.5)
+        self.assertIsNone(result["change_nrmse"])
+        self.assertAlmostEqual(ref.convergence(a, b, np.full_like(a, 1.0))["change_nrmse"], 0.5)
+
+    def test_rmae_pair_check_is_linear_and_first_checkpoint_cannot_pass(self):
+        a = np.ones((20, 20, 3))
+        b = a.copy()
+        b[0, 0] = 101.
+        result = ref.convergence(a, b, (a+b)/2)
+        self.assertAlmostEqual(result["stream_disagreement_rmae"], .125/1.125)
+        self.assertEqual(result["change_rmae"], 0.)
+        self.assertGreater(result["estimated_reference_nrmse"], result["stream_disagreement_rmae"])
+        self.assertIsNone(ref.convergence(a, b)["change_rmae"])
+        with self.assertRaises(ValueError):
+            ref.reference_ready([], {}, .1, {"name": "NRMSE", "version": 1})
+
+    def test_resume_continues_rng_and_accumulation_count(self):
+        base = make_config(load_scene("cornell-box"), load_definition(), "combined", "static")
+        whole = ref.reference_config(base, base["frames"][0], [16, 32, 64], 8, 1001, "POWER_RIS")
+        tail = ref.reference_config(base, base["frames"][0], [64], 8, 1001, "POWER_RIS",
+                                       previous_samples=32, resume_image=Path("previous.pfm.gz"))
+        expected = whole["frames"][4:]
+        expected[0]["reset"] = True
+        self.assertEqual(tail["frames"], expected)
+        self.assertEqual(tail["reference"]["resume_batches"], 4)
+        with self.assertRaises(ValueError):
+            ref.reference_config(base, base["frames"][0], [64], 8, 1001, "POWER_RIS", previous_samples=24)
+
+    def test_reference_disables_pdf_for_new_and_resumed_streams_without_changing_baseline(self):
+        for enabled in (None, False, True):
+            for mode in ("spatial", "combined"):
+                with self.subTest(enabled=enabled, mode=mode):
+                    definition = load_definition()
+                    if enabled is not None:
+                        definition["pdf_similarity"] = enabled
+                    base = make_config(load_scene("cornell-box"), definition, mode, "motion")
+                    original = copy.deepcopy(base)
+                    pose = base["frames"][63]
+                    whole = ref.reference_config(base, pose, [16, 32, 64], 8, 1001, "POWER_RIS")
+                    tail = ref.reference_config(base, pose, [64], 8, 1001, "POWER_RIS",
+                                                   previous_samples=32, resume_image=Path("previous.pfm.gz"))
+                    for config in (whole, tail):
+                        self.assertIs(config["definition"]["pdf_similarity"], False)
+                        self.assertEqual(config["arguments"]["restirDI.diMode"], "NONE")
+                        self.assertEqual(config["reference"]["estimator"], "conventional_light_sampling")
+                        self.assertEqual(ref.target(config, config["frames"][0], "assets"),
+                                         ref.target(base, pose, "assets"))
+                    expected = copy.deepcopy(whole["frames"][4:])
+                    expected[0]["reset"] = True
+                    self.assertEqual(tail["frames"], expected)
+                    self.assertEqual(base, original)
+
+    def test_reference_disables_cgns_for_new_and_resumed_streams_with_same_target(self):
+        definition = load_definition()
+        definition.update(cgns=True, cgns_candidates=8, cgns_early_stopping=False)
+        base = make_config(load_scene("cornell-box"), definition, "combined", "motion")
+        original = copy.deepcopy(base)
+        pose = base["frames"][63]
+        for previous, image in ((0, None), (32, Path("previous.pfm.gz"))):
+            with self.subTest(previous=previous):
+                config = ref.reference_config(base, pose, [64], 8, 1001, "POWER_RIS",
+                    previous_samples=previous, resume_image=image)
+                self.assertEqual(config["mode"], "initial")
+                self.assertEqual(config["arguments"]["restirDI.diMode"], "NONE")
+                self.assertIs(config["definition"]["cgns"], False)
+                self.assertEqual(config["reference"]["estimator"], "conventional_light_sampling")
+                self.assertEqual(ref.target(config, config["frames"][0], "assets"),
+                                 ref.target(base, pose, "assets"))
+        self.assertEqual(base, original)
+
+    def test_reference_clears_research_history_mode_for_new_and_resumed_streams(self):
+        for mode in (1, 2):
+            definition = load_definition()
+            definition.update(pdf_similarity=True, pdf_history_mode=mode)
+            base = make_config(load_scene("cornell-box"), definition, "combined", "motion")
+            original = copy.deepcopy(base)
+            for previous, image in ((0, None), (32, Path("previous.pfm.gz"))):
+                with self.subTest(mode=mode, previous=previous):
+                    config = ref.reference_config(base, base["frames"][63], [64], 8, 1001,
+                        "POWER_RIS", previous_samples=previous, resume_image=image)
+                    self.assertIs(config["definition"]["pdf_similarity"], False)
+                    self.assertEqual(config["definition"]["pdf_history_mode"], 0)
+            self.assertEqual(base, original)
+
+    def test_pose_key_ignores_reuse_but_detects_camera_lighting_and_assets(self):
+        configs = [make_config(load_scene("cornell-box"), load_definition(), mode, "motion")
+                   for mode in ("initial", "combined")]
+        a = ref.target(configs[0], configs[0]["frames"][0], "assets-a")
+        b = ref.target(configs[1], configs[1]["frames"][0], "assets-a")
+        self.assertEqual(ref.target_key(a), ref.target_key(b))
+        self.assertNotEqual(ref.target_key(a), ref.target_key(ref.target(configs[0], configs[0]["frames"][63], "assets-a")))
+        self.assertNotEqual(ref.target_key(a), ref.target_key(ref.target(configs[0], configs[0]["frames"][0], "assets-b")))
+        configs[0]["definition"]["analytic_sun"] = False
+        self.assertNotEqual(ref.target_key(a), ref.target_key(ref.target(configs[0], configs[0]["frames"][0], "assets-a")))
+
+    def test_reference_config_freezes_pose_and_uses_distinct_streams(self):
+        base = make_config(load_scene("cornell-box"), load_definition(), "combined", "motion")
+        a = ref.reference_config(base, base["frames"][63], [16, 32, 64], 8, 1001, "POWER_RIS")
+        b = ref.reference_config(base, base["frames"][63], [16, 32, 64], 8, 2001, "POWER_RIS")
+        self.assertEqual(len(a["frames"]), 8)
+        self.assertEqual([f["frame"] for f in a["frames"] if f["capture"]], [2, 4, 8])
+        self.assertTrue(all(f["position"] == base["frames"][63]["position"] for f in a["frames"]))
+        self.assertTrue(set(f["sampling_frame"] for f in a["frames"]).isdisjoint(f["sampling_frame"] for f in b["frames"]))
+        self.assertEqual(a["arguments"]["restirDI.diMode"], "NONE")
+        with self.assertRaises(ValueError):
+            ref.reference_config(base, base["frames"][0], [16, 24], 8, 1001, "POWER_RIS")
+
+
+if __name__ == "__main__":
+    unittest.main()
