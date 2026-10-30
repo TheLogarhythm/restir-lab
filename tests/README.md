@@ -85,3 +85,13 @@ through the `exr` extra above.
 `fixtures/saved_runs.py` writes independent native-format fixtures for the shared
 readers. Keep expected values, assertions, deliberate corruption and hash refreshes
 explicit in the consuming tests.
+
+## Falcor adapter checks
+
+`backends/test_falcor_runner.py` and `backends/test_falcor_concurrency.py` exercise
+configuration, dependency pins, captured output validation and process ownership
+with CPU stand-ins. They run in the portable suite; no Falcor build, submodule
+checkout or GPU is required. The `exr` extra above supplies their HDR dependency,
+also declared in [scripts/falcor/requirements.txt](../scripts/falcor/requirements.txt).
+The separate bounded native validation commands are in the
+[Falcor integration guide](../renderers/falcor/README.md).

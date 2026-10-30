@@ -10,7 +10,7 @@ Requires an NVIDIA RTX GPU and driver, Visual Studio 2022 C++ tools with a Windo
 $previousLfsSetting = $env:GIT_LFS_SKIP_SMUDGE
 try {
     $env:GIT_LFS_SKIP_SMUDGE = '1'
-    git submodule update --init --recursive
+    git submodule update --init --recursive renderers/rtxdi
 } finally {
     $env:GIT_LFS_SKIP_SMUDGE = $previousLfsSetting
 }
@@ -48,3 +48,7 @@ pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build/latex/p
 pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build/latex/proposal writing/course/proposal/main.tex
 pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build/latex/report writing/course/report/main.tex
 ```
+
+## Falcor 9.0 on Windows
+
+See [the independent Falcor integration](../renderers/falcor/README.md) for the exact pin, SDK override, build commands, verifier environment and bounded PathTracer/ReSTIR PT runs. Falcor uses its own build and Packman cache, and does not modify the RTXDI experiment runner or binaries.

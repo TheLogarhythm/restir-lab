@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/NVIDIAGameWorks/Falcor.git",
+  "tag": "9.0",
+  "commit": "759aad033ff610fb0d82c74f7e0a508d0096d5f2",
+  "preset": "lab-vs2022",
+  "sdk": "10.0.22621.0",
+  "configuration": "Release",
+  "cmake_dependencies": {
+    "dlss": {
+      "repository": "https://github.com/NVIDIA/DLSS.git",
+      "tag": "v310.1.0",
+      "commit": "01e4efdcf4bd4e47820f4917ef7b26237ba4b006"
+    },
+    "nvapi": {
+      "repository": "https://github.com/NVIDIA/nvapi.git",
+      "commit": "3d34a4faf095996663321646ebe003539a908f89"
+    }
+  }
+}

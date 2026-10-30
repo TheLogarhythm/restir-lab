@@ -6,7 +6,7 @@ Start with the [scope](docs/scope.md), [literature review](docs/literature/READM
 
 | Directory | Contents |
 | --- | --- |
-| `renderers/` | Pinned RTXDI submodule and Falcor slot |
+| `renderers/` | Pinned RTXDI and Falcor 9.0 submodules |
 | `scenes/` | Asset provenance and scene settings |
 | `experiments/`, `results/` | Configurations and research results |
 | `scripts/`, `tests/` | Runners, analysis, and regression tests |

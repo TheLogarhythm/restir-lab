@@ -1,0 +1,5 @@
+# Import check only: shared geometry does not imply transport equivalence.
+from pathlib import Path
+from falcor import *
+root=Path(__file__).resolve().parents[3]
+sceneBuilder.importScene(str(root/"renderers/rtxdi/Assets/Media/CornellBox/CornellBox.gltf"))

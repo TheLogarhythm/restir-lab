@@ -17,7 +17,7 @@ The original `proposal.tex`, `report.tex`, and `projguidelines.pdf` came from th
 | Classroom | [Blender demo](https://www.blender.org/download/demo-files/), Christophe Seux; [source ZIP](https://download.blender.org/demo/test/classroom.zip) | CC0; source/conversion in ignored `assets/` |
 | Open Sans font | RTXDI Assets, `fonts/OpenSans/` | Bundled Apache 2.0 notice |
 
-Nested submodules retain their notices. CMake fetches DXC `v1.8.2505.1`, DLSS `a8ed84e2d1cc1efa7bef63fb9394be6cb06c0d74`, and MathLib `v11`. Falcor is not installed. [Pitch illustrations](writing/course/slides/sources.md) have separate attribution.
+Nested submodules retain their notices. RTXDI CMake fetches DXC `v1.8.2505.1`, DLSS `a8ed84e2d1cc1efa7bef63fb9394be6cb06c0d74`, and MathLib `v11`. Falcor 9.0 is pinned at `759aad033ff610fb0d82c74f7e0a508d0096d5f2`; its [BSD-3-Clause-style license and component notices](https://github.com/NVIDIAGameWorks/Falcor/blob/759aad033ff610fb0d82c74f7e0a508d0096d5f2/LICENSE.md) remain intact. Packman dependencies retain their separate licenses. The small build/run/graph adapters are project integration code developed with Codex; the native PathTracer and ReSTIR PT are upstream implementations. [Pitch illustrations](writing/course/slides/sources.md) have separate attribution.
 
 ## Provenance
 

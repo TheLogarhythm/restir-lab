@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "width": 320,
+  "height": 180,
+  "frames": 16,
+  "captures": [
+    1,
+    16
+  ],
+  "timeout": 600
+}
