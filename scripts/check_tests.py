@@ -35,7 +35,7 @@ def main():
     parser.add_argument("--suite", choices=("cpu", "all", *INTEGRATION_GROUPS), default="cpu")
     parser.add_argument("--list", action="store_true", help="List selected test IDs without executing them")
     args = parser.parse_args()
-    sys.path.insert(0, str(ROOT))
+    sys.path[:0] = [str(ROOT), str(ROOT / "src")]
     loader = unittest.TestLoader()
     tests = list(flatten(loader.discover(str(ROOT / "tests"), top_level_dir=str(ROOT))))
     if loader.errors:

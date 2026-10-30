@@ -10,6 +10,7 @@ import subprocess
 import time
 from rtxdi_common import ROOT, RENDERER, sha
 from rtxdi_build import validate_integration
+from records.provenance import shared_source_hashes
 from .artifacts import save_json, finalize_outputs
 
 EXE = RENDERER / "build/bin/FullSampleExperiments.exe"
@@ -131,9 +132,10 @@ def run_one(config, output, build, scene, timeout=600, *, executable=None, resum
                                  "build.shader_sha256": (executable.parent / build.get("shader_directory", "shaders/full-sample")).relative_to(ROOT).as_posix()},
                   "environment": {"RTXDI_EXPERIMENT_CONFIG": "config.json"},
                   "run_id": output.relative_to(ROOT / "runs").as_posix() if output.is_relative_to(ROOT / "runs") else output.name,
-                  "python_source_sha256": {p.relative_to(ROOT).as_posix(): sha(p)
+                  "python_source_sha256": {**{p.relative_to(ROOT).as_posix(): sha(p)
                       for p in [ROOT / "scripts/run/rtxdi_reuse.py", ROOT / "scripts/run/rtxdi_common.py",
                                 ROOT / "scripts/assets/gltf.py", *Path(__file__).parent.glob("*.py")]},
+                      **shared_source_hashes(ROOT)},
                   "config_sha256": sha(output / "config.json"),
                   "dependencies": query("git", "submodule", "status", "--recursive", cwd=RENDERER).splitlines(),
                   "os": platform.platform(), "python": platform.python_version(),

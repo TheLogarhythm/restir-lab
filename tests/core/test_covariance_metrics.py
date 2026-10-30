@@ -6,9 +6,9 @@ import unittest
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "scripts/run"))
-from experiment import covariance_metrics as metric
-from experiment.neighborhoods import disk_offsets, disk_row_spans
+sys.path[:0] = [str(ROOT / "src"), str(ROOT / "scripts/run")]
+from metrics import covariance_metrics as metric
+from metrics.neighborhoods import disk_offsets, disk_row_spans
 
 
 def direct_radial(samples, radius, epsilon):

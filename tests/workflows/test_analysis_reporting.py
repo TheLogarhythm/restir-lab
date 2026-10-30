@@ -78,6 +78,10 @@ class AnalysisReportingTests(unittest.TestCase):
                 self.assertEqual(len(counts), 5)  # Four baseline images plus one shared reference.
                 self.assertTrue(all(count == 1 for count in counts.values()))
             output = baseline / "analysis"
+            analysis = json.loads((output / "analysis.json").read_text())
+            self.assertEqual(analysis["metrics_source_sha256"], sha(ROOT / "scripts/run/experiment/reference.py"))
+            for source_path in ("src/metrics/error_metrics.py", "src/image_io/images.py"):
+                self.assertEqual(analysis["shared_source_sha256"][source_path], sha(ROOT / source_path))
             self.assertTrue((output / "metrics.csv").is_file())
             self.assertTrue((output / "summary.md").is_file())
             self.assertEqual(len(list(output.glob("*.png"))), 2)

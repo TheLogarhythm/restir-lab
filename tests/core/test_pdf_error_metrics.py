@@ -5,8 +5,8 @@ import unittest
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "scripts/run"))
-from experiment import error_metrics as metric
+sys.path[:0] = [str(ROOT / "src"), str(ROOT / "scripts/run")]
+from metrics import error_metrics as metric
 
 
 class PdfErrorMetricTests(unittest.TestCase):

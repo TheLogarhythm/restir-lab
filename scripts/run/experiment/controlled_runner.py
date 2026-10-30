@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import sys
 import numpy as np
+from records.provenance import shared_source_hashes
 from rtxdi_common import ROOT, RENDERER, sha
 from .artifacts import save_json
 from .controlled_suite import build_config, completed_run, conditions, load_campaign, method_run_count, CAMPAIGN_PATH
@@ -303,7 +304,8 @@ class ControlledExperiment:
                    *(ROOT / "scripts/run/experiment").glob("*.py")]
         identity = {"reports": json.loads(json.dumps(reports, default=str)), "settings": settings,
                     "inputs": {str(path.resolve()): sha(path) for path in sorted(inputs)},
-                    "sources": {path.relative_to(ROOT).as_posix(): sha(path) for path in sources}}
+                    "sources": {**{path.relative_to(ROOT).as_posix(): sha(path) for path in sources},
+                                **shared_source_hashes(ROOT)}}
         def bounded_generate(output):
             self.budget.check()
             generate(output)

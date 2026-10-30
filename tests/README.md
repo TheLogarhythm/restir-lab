@@ -2,7 +2,7 @@
 
 Add meaningful numerical and small-scene checks as rendering code is integrated: controlled reservoir selection statistics, estimator/reference agreement, invalid values, reprojection/history resets, and repeatable captures.
 
-Run `python -B -m unittest discover -s tests -t . -v` for asset-conversion, launcher, multi-scene experiment and offline analysis regressions (install scripts/run/requirements.txt; no Blender/GPU needed). With MSVC, PDF tests execute shared direction-reservoir math and the adapted RTXDI spatial loops on deterministic inputs. GPU validation is recorded in the [implementation note](../docs/reproductions/pdf-similarity.md). `python scripts/check_scaffold.py` checks repository structure, not rendering correctness.
+Run `python -B -m unittest discover -s tests -t . -v` for asset-conversion, launcher, multi-scene experiment and offline analysis regressions (install with `python -m pip install -e ".[exr]" -r scripts/run/requirements.txt`; no Blender/GPU needed). With MSVC, PDF tests execute shared direction-reservoir math and the adapted RTXDI spatial loops on deterministic inputs. GPU validation is recorded in the [implementation note](../docs/reproductions/pdf-similarity.md). `python scripts/check_scaffold.py` checks repository structure, not rendering correctness.
 
 Run the object-material, emitter-visibility and authored-light conversion fixture with Blender: `blender --background --factory-startup --disable-autoexec --python-exit-code 1 --python tests/blender_classroom.py`.
 For camera sensor-fit and pixel-aspect checks, use the same command with `tests/blender_camera.py`.
@@ -25,7 +25,8 @@ python -B scripts/check_tests.py --suite windows
 ```
 
 The CPU group runs on every push and pull request; it needs the Python packages in
-[scripts/run/requirements.txt](../scripts/run/requirements.txt), without downloaded scenes,
+[scripts/run/requirements.txt](../scripts/run/requirements.txt) and the `exr` extra in
+[pyproject.toml](../pyproject.toml), plus Git for isolated dependency fixtures, without downloaded scenes,
 Blender, MSVC, FFmpeg or a GPU. Native checks compile production shader functions with MSVC
 and need the pinned RTXDI/Donut sources. Media checks encode, probe and decode an actual
 video with FFmpeg/ffprobe. Windows checks run the PowerShell supervisor with CPU stand-ins
@@ -70,3 +71,17 @@ namespace. New grouping or file moves must compare
 Similar numerical checks at pure-function, saved-file and launcher boundaries
 protect different contracts and are retained. The Blender scripts and C++ fixture
 sources stay at the top of `tests/` so their manual entry points remain stable.
+
+## Shared library checks
+
+The canonical implementations are under `src/{metrics,image_io,records,analysis,backends}`;
+numerical tests import them directly. `core/test_shared_core.py` retains explicit
+historical import compatibility and image-format boundaries.
+`backends/test_saved_run_readers.py` tests backend records with tiny real PFM/EXR
+files. `workflows/test_shared_analysis.py` covers offline CLI behavior and
+independent-trial guards. These are portable CPU tests, with OpenEXR installed
+through the `exr` extra above.
+
+`fixtures/saved_runs.py` writes independent native-format fixtures for the shared
+readers. Keep expected values, assertions, deliberate corruption and hash refreshes
+explicit in the consuming tests.

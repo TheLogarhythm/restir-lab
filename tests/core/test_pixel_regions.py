@@ -6,12 +6,12 @@ import unittest
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "scripts/run"))
+sys.path[:0] = [str(ROOT / "src"), str(ROOT / "scripts/run")]
 
 
 class PixelRegionTests(unittest.TestCase):
     def module(self):
-        return importlib.import_module("experiment.pixel_regions")
+        return importlib.import_module("metrics.pixel_regions")
 
     @staticmethod
     def normals(shape):

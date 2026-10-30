@@ -7,8 +7,8 @@ import unittest
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "scripts/run"))
-from experiment import images
+sys.path[:0] = [str(ROOT / "src"), str(ROOT / "scripts/run")]
+from image_io import images
 
 
 class ImageIOTests(unittest.TestCase):

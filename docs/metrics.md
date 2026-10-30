@@ -1,9 +1,9 @@
 # Shared quality and correlation metrics
 
 [Sequence analysis](../scripts/analysis/sequence_metrics.py) compares saved runs without rendering.
-[Pure covariance functions](../scripts/run/experiment/covariance_metrics.py) and the
-[streaming API](../scripts/run/experiment/sequence_metrics.py) also accept custom loaders/arrays.
-Existing [SMAPE/TRMAE interfaces](../scripts/run/experiment/error_metrics.py) and historical values are unchanged.
+[Pure covariance functions](../src/metrics/covariance_metrics.py) and the
+[streaming API](../src/metrics/sequence_metrics.py) also accept custom loaders/arrays.
+Existing [SMAPE/TRMAE interfaces](../src/metrics/error_metrics.py) and historical values are unchanged.
 
 ## Definitions and aggregation
 
@@ -39,7 +39,7 @@ pixel-pair counts and run×pixel-pair counts. For 512 continuous measured frames
 
 ## Shared easy/hard regions
 
-[Classification](../scripts/run/experiment/pixel_regions.py) uses one primary geometry source for all methods/runs.
+[Classification](../src/metrics/pixel_regions.py) uses one primary geometry source for all methods/runs.
 A neighbor passes when `dot(shading_normal_i, shading_normal_j) >= .5` and
 `abs(camera_distance_i-camera_distance_j) < .1*camera_distance_i`. There is no material test.
 Camera distance is radial distance, not view-space Z.
@@ -140,3 +140,7 @@ Validation: hand-computed covariance/lag/negative/zero cases, disk boundaries, t
 direct calculations, invalid histories/inputs and unchanged legacy SMAPE. A short Cornell Box check
 (3 runs × 4 frames, 64×48) verified identical geometry across seeds, exact HDR equality with export
 on/off, and the complete all/hard analysis path. This is functional validation, not a quality campaign.
+
+## Shared backend readers
+
+See [shared offline analysis](shared-analysis.md) for flat-package imports and the common RTXDI/Falcor saved-run entry point. Historical metric APIs remain compatible; saved-format and independent-trial limits are explicit.

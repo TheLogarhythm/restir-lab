@@ -6,13 +6,13 @@ import unittest
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "scripts/run"))
+sys.path[:0] = [str(ROOT / "src"), str(ROOT / "scripts/run")]
 
 
 class SequenceMetricTests(unittest.TestCase):
     def setUp(self):
         try:
-            self.api = importlib.import_module("experiment.sequence_metrics")
+            self.api = importlib.import_module("metrics.sequence_metrics")
         except ImportError:
             self.fail("The shared sequence metric entry point is not implemented")
 
@@ -55,7 +55,7 @@ class SequenceMetricTests(unittest.TestCase):
         self.assertEqual(a["summary"]["all"]["temporal_relative_autocovariance"],
                          b["summary"]["all"]["temporal_relative_autocovariance"])
         self.assertLess(a["summary"]["all"]["temporal_relative_autocovariance"], 0.)
-        from experiment.error_metrics import smape
+        from metrics.error_metrics import smape
         expected = np.mean([smape(np.repeat(im[..., None], 3, axis=-1), np.ones((1, 2, 3)))
                             for run in values for im in run])
         self.assertAlmostEqual(a["summary"]["all"]["smape_percent"], expected)

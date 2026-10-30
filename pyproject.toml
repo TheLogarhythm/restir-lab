@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "restir-lab"
+version = "0.1.0"
+description = "Shared metrics and saved-result analysis for rendering experiments"
+requires-python = ">=3.11"
+dependencies = ["numpy>=2,<3", "Pillow>=10,<12"]
+
+[project.optional-dependencies]
+exr = ["OpenEXR>=3.3,<4"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["metrics", "metrics.*", "image_io", "image_io.*", "records", "records.*", "analysis", "analysis.*", "backends", "backends.*"]
+namespaces = false

@@ -39,3 +39,6 @@ Thumbs.db
 
 # Native sample UI state
 /imgui.ini
+
+# Local Python package metadata
+*.egg-info/

@@ -19,6 +19,7 @@ from experiment.reference import (
 )
 from experiment.runner import relative_path
 from experiment.scenes import ACTIVE_SCENES
+from records.provenance import shared_source_hashes
 from scripts.analysis.di_reuse_report import write_report
 from scripts.analysis.di_methods import method, row_method
 
@@ -211,6 +212,7 @@ def main():
         "report_source_sha256": sha(Path(__file__).with_name("di_reuse_report.py")),
         "methods_source_sha256": sha(Path(__file__).with_name("di_methods.py")),
         "metrics_source_sha256": sha(ROOT / "scripts/run/experiment/reference.py"),
+        "shared_source_sha256": shared_source_hashes(ROOT),
         "epsilon": EPSILON, "convergence_metric": CONVERGENCE_METRIC,
         "convergence_regions": ["full"],
         "selection": {"scenes": args.scene, "scenario": args.scenario},
