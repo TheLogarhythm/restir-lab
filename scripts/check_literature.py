@@ -297,6 +297,9 @@ def main():
         figures = json.loads((DATA / "figures.json").read_text(encoding="utf-8"))
         errors.extend(check_figures(papers["papers"], figures, ROOT / "web/restir-map/public"))
         if args.sync_matrix and not errors:
+            # Duplicate IDs make preserving human workflow fields ambiguous.
+            if len({row["paper_id"] for row in matrix}) != len(matrix):
+                raise ValueError("duplicate reading-matrix paper_id")
             with matrix_path.open("w", encoding="utf-8", newline="") as file:
                 writer = csv.DictWriter(file, fieldnames=MATRIX_FIELDS, lineterminator="\n")
                 writer.writeheader()

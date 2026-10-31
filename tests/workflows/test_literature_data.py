@@ -1,8 +1,11 @@
 """Portable research-data invariants, without PDFs, APIs, renderers or npm."""
 import copy
+import csv
 import json
 import hashlib
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -191,6 +194,75 @@ class FigureValidationTests(unittest.TestCase):
         self.assertTrue(any("hash" in e for e in self.check()))
         self.asset.unlink()
         self.assertTrue(any("missing" in e for e in self.check()))
+
+
+class MatrixSyncTests(unittest.TestCase):
+    def setUp(self):
+        scratch = ROOT / "tmp"
+        scratch.mkdir(exist_ok=True)
+        temporary = tempfile.TemporaryDirectory(dir=scratch, prefix="literature-sync-")
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+        self.script = self.root / "scripts/check_literature.py"
+        self.script.parent.mkdir()
+        self.script.write_bytes((ROOT / "scripts/check_literature.py").read_bytes())
+        data = self.root / "docs/literature/restir-map"
+        data.mkdir(parents=True)
+        papers, relations = fixture()
+        (data / "papers.json").write_text(json.dumps(papers), encoding="utf-8")
+        (data / "relations.json").write_text(json.dumps(relations), encoding="utf-8")
+        (data / "figures.json").write_text(json.dumps({"schema_version": 1, "records": [
+            {"paper_id": item["paper_id"], "status": "unavailable", "images": [],
+             "reason": "No fixture image."} for item in papers["papers"]
+        ]}), encoding="utf-8")
+        layout = self.root / "web/restir-map/src/graph/layout.json"
+        layout.parent.mkdir(parents=True)
+        layout.write_text(json.dumps({
+            "prior2020": {"x": 0, "y": 0}, "next2021": {"x": 150, "y": 60},
+        }), encoding="utf-8")
+        self.matrix = self.root / "docs/literature/reading-matrix.csv"
+        self.rows = [{
+            "paper_id": "prior2020", "title": "Stale title", "year": "2019",
+            "venue": "Stale venue", "source_url": "https://example.org/stale",
+            "code_url": "", "method_family": "transport", "reading_status": "read_sections_2_3",
+            "reproduction_status": "in_progress", "notes_path": "notes/mine.md",
+        }]
+
+    def write_matrix(self):
+        with self.matrix.open("w", encoding="utf-8", newline="") as file:
+            writer = csv.DictWriter(file, fieldnames=list(self.rows[0]))
+            writer.writeheader()
+            writer.writerows(self.rows)
+
+    def sync(self):
+        return subprocess.run([sys.executable, "-B", str(self.script), "--sync-matrix"],
+                              cwd=self.root, capture_output=True, text=True, check=False)
+
+    def test_duplicate_ids_fail_without_changing_input_bytes(self):
+        self.rows.append({**self.rows[0], "reading_status": "not_started",
+                          "reproduction_status": "not_started", "notes_path": "notes/other.md"})
+        self.write_matrix()
+        before = self.matrix.read_bytes()
+        result = self.sync()
+        self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("duplicate reading-matrix paper_id", result.stdout)
+        self.assertEqual(self.matrix.read_bytes(), before)
+
+    def test_metadata_drift_sync_preserves_workflow_state(self):
+        self.write_matrix()
+        result = self.sync()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        with self.matrix.open(encoding="utf-8", newline="") as file:
+            rows = list(csv.DictReader(file))
+        self.assertEqual([row["paper_id"] for row in rows], ["prior2020", "next2021"])
+        self.assertEqual(rows[0], {
+            "paper_id": "prior2020", "title": "Title prior2020", "year": "2020",
+            "venue": "Example Journal", "source_url": "https://example.org/paper",
+            "code_url": "", "method_family": "foundations", "reading_status": "read_sections_2_3",
+            "reproduction_status": "in_progress", "notes_path": "notes/mine.md",
+        })
+        self.assertEqual(rows[1]["reading_status"], "not_started")
+        self.assertEqual(rows[1]["reproduction_status"], "not_started")
 
 
 if __name__ == "__main__":
