@@ -1,0 +1,2417 @@
+{
+  "schema_version": 1,
+  "relations": [
+    {
+      "id": "inheritance:ris2005:restir_di2020",
+      "predecessor": "ris2005",
+      "successor": "restir_di2020",
+      "type": "inheritance",
+      "citing_paper": "restir_di2020",
+      "cited_paper": "ris2005",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf",
+          "locator": "§2.1 Resampled Importance Sampling; §3.2 Spatiotemporal Reuse",
+          "explanation": "Recasts Talbot et al.'s RIS as streaming reservoir sampling and merges reservoirs across pixels and frames.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_di2020:production2021",
+      "predecessor": "restir_di2020",
+      "successor": "production2021",
+      "type": "inheritance",
+      "citing_paper": "production2021",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/hpg21_rearchitectingReSTIR.pdf",
+          "locator": "§1 Introduction; §§5–7",
+          "explanation": "Builds directly on the original ReSTIR, restructuring presampling, visibility handling, shading, and reuse for GPU execution.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_di2020:restir_gi2021",
+      "predecessor": "restir_di2020",
+      "successor": "restir_gi2021",
+      "type": "inheritance",
+      "citing_paper": "restir_gi2021",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/ReSTIR%20GI.pdf",
+          "locator": "§1 Introduction; §2 Previous Work",
+          "explanation": "Explicitly follows ReSTIR's screen-space spatiotemporal resampling approach, using multibounce indirect paths as candidates. The paper describes how reservoirs are merged and paths reconnected.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_di2020:volume2021",
+      "predecessor": "restir_di2020",
+      "successor": "volume2021",
+      "type": "inheritance",
+      "citing_paper": "volume2021",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/papers/siga21_volumeReSTIR_small.pdf",
+          "locator": "§1 Introduction; §3 RIS for Volume Rendering; §4 Spatiotemporal Reuse",
+          "explanation": "Extends ReSTIR from direct surface lighting to path space in participating media, separating inexpensive reuse evaluations from final unbiased shading.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_di2020:gris2022",
+      "predecessor": "restir_di2020",
+      "successor": "gris2022",
+      "type": "inheritance",
+      "citing_paper": "gris2022",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/sig22_GRIS.pdf",
+          "locator": "§6 Amortization over an Image with ReSTIR",
+          "explanation": "Explicitly reformulates Bitterli et al.'s ReSTIR using GRIS and analyzes sample correlation and convergence conditions.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:conditional2023",
+      "predecessor": "gris2022",
+      "successor": "conditional2023",
+      "type": "inheritance",
+      "citing_paper": "conditional2023",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/kettunen2023conditional/kettunen2023conditional.pdf",
+          "locator": "§1 Introduction; §2 Key Challenge in RIS and ReSTIR",
+          "explanation": "Extends GRIS to conditional probability spaces and modifies ReSTIR PT to reuse path suffixes through final gathering.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_di2020:pdf_similarity2023",
+      "predecessor": "restir_di2020",
+      "successor": "pdf_similarity2023",
+      "type": "inheritance",
+      "citing_paper": "pdf_similarity2023",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://yusuketokuyoshi.com/papers/2023/Efficient_Spatial_Resampling_Using_the_PDF_Similarity.pdf",
+          "locator": "§3 Our Rejection Method for ReSTIR; §§3.1–3.3",
+          "explanation": "Uses approximate similarity between target PDFs to revise the rejection criterion for spatial reuse, alongside the original ReSTIR's geometric heuristics.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:production2021:pdf_similarity2023",
+      "predecessor": "production2021",
+      "successor": "pdf_similarity2023",
+      "type": "inheritance",
+      "citing_paper": "pdf_similarity2023",
+      "cited_paper": "production2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://yusuketokuyoshi.com/papers/2023/Efficient_Spatial_Resampling_Using_the_PDF_Similarity.pdf",
+          "locator": "§2.1 Related Work; §4 Experimental Results; Figure 1",
+          "explanation": "Applies PDF-similarity rejection to Wyman and Panteleev's production visibility reuse method to reduce errors near shadow boundaries.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:mcmc2024",
+      "predecessor": "gris2022",
+      "successor": "mcmc2024",
+      "type": "inheritance",
+      "citing_paper": "mcmc2024",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/sawhney2024decorrelating/ReSTIRMCMC.pdf",
+          "locator": "§2.2 Generalized RIS; §3 Method; §4 Implementation Details",
+          "explanation": "Uses the unbiased contribution weight formulation of GRIS, inserting mutations into resampling and updating the weights accordingly.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_di2020:area2024",
+      "predecessor": "restir_di2020",
+      "successor": "area2024",
+      "type": "inheritance",
+      "citing_paper": "area2024",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/zhang2024area/zhang2024area.pdf",
+          "locator": "§4 Area ReSTIR; §5 Implementation Details",
+          "explanation": "The implementation builds on direct-lighting ReSTIR, adding subpixel and lens positions to samples and adapting temporal reuse.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:area2024",
+      "predecessor": "gris2022",
+      "successor": "area2024",
+      "type": "inheritance",
+      "citing_paper": "area2024",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/zhang2024area/zhang2024area.pdf",
+          "locator": "§4.6 Depth of Field; §5 Implementation Details",
+          "explanation": "Uses GRIS and ReSTIR PT's hybrid shift, adding mappings for film and lens coordinates. The paper also evaluates global illumination with ReSTIR PT.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:sss2024",
+      "predecessor": "gris2022",
+      "successor": "sss2024",
+      "type": "inheritance",
+      "citing_paper": "sss2024",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cg.ivd.kit.edu/publications/2024/restir-sss/restir-sss.pdf",
+          "locator": "§2.2.1 GRIS; §3 ReSTIR for Subsurface Scattering; §4 Combining Shifts",
+          "explanation": "Introduces BSSRDF candidates and subsurface-specific hybrid and sequential shifts within the GRIS framework of contribution weights and path mappings.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:parameter2023",
+      "predecessor": "gris2022",
+      "successor": "parameter2023",
+      "type": "inheritance",
+      "citing_paper": "parameter2023",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://weschang.com/publications/restir-dr/restir-dr.pdf",
+          "locator": "§1 Introduction; §3 GRIS for Derivatives; §4.2 Sample Reuse",
+          "explanation": "Extends GRIS to positivized GRIS for signed gradients and uses parameter-space reservoirs to reuse samples across optimization iterations.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_di2020:inverse2023",
+      "predecessor": "restir_di2020",
+      "successor": "inverse2023",
+      "type": "inheritance",
+      "citing_paper": "inverse2023",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://projects.shuangz.com/psdr-restir-sa23/psdr-restir-sa23.pdf",
+          "locator": "§1 Introduction; §§4–5",
+          "explanation": "Explicitly adopts the original ReSTIR to construct estimators that reuse samples across iterations for the interior and boundary integrals of differential direct illumination.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_di2020:regir2021",
+      "predecessor": "restir_di2020",
+      "successor": "regir2021",
+      "type": "inheritance",
+      "citing_paper": "regir2021",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/papers/rtg2-manyLightReGIR.pdf",
+          "locator": "Chapter 23, §23.2.2; §23.3 Grid-Based Reservoirs",
+          "explanation": "Moves ReSTIR reservoirs and reservoir merging into a coarse world-space grid, using two-stage RIS to supply light candidates for secondary rays.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_di2020:ddgi_resampling2022",
+      "predecessor": "restir_di2020",
+      "successor": "ddgi_resampling2022",
+      "type": "inheritance",
+      "citing_paper": "ddgi_resampling2022",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://tom94.net/data/publications/majercik21dynamic/majercik21dynamic.pdf",
+          "locator": "§1 Introduction; §3",
+          "explanation": "Defers the DDGI query by one bounce so ReSTIR can jointly resample direct and cached indirect contributions. The authors explicitly acknowledge bias from the probe approximation.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_di2020:world_space2021",
+      "predecessor": "restir_di2020",
+      "successor": "world_space2021",
+      "type": "inheritance",
+      "citing_paper": "world_space2021",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://gpuopen.com/download/publications/SA2021_WorldSpace_ReSTIR.pdf",
+          "locator": "§4 World-Space Spatiotemporal Reservoir Reuse",
+          "explanation": "Explicitly follows Bitterli et al.'s reuse scheme, replacing image-space neighborhood searches with a hash grid for finding nearby reservoirs.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:ris2005:restir_di2020",
+      "predecessor": "ris2005",
+      "successor": "restir_di2020",
+      "type": "citation",
+      "citing_paper": "restir_di2020",
+      "cited_paper": "ris2005",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf",
+          "locator": "References: Talbot, Cline and Egbert (2005), EGSR paper",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:production2021",
+      "predecessor": "restir_di2020",
+      "successor": "production2021",
+      "type": "citation",
+      "citing_paper": "production2021",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/hpg21_rearchitectingReSTIR.pdf",
+          "locator": "References: [BWP*20]",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:ris2005:production2021",
+      "predecessor": "ris2005",
+      "successor": "production2021",
+      "type": "citation",
+      "citing_paper": "production2021",
+      "cited_paper": "ris2005",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/hpg21_rearchitectingReSTIR.pdf",
+          "locator": "References: [TCE05]",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_gi2021:production2021",
+      "predecessor": "restir_gi2021",
+      "successor": "production2021",
+      "type": "citation",
+      "citing_paper": "production2021",
+      "cited_paper": "restir_gi2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/hpg21_rearchitectingReSTIR.pdf",
+          "locator": "References: [OLK*21]",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:restir_gi2021",
+      "predecessor": "restir_di2020",
+      "successor": "restir_gi2021",
+      "type": "citation",
+      "citing_paper": "restir_gi2021",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/ReSTIR%20GI.pdf",
+          "locator": "References: [BWP*20]",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:ris2005:restir_gi2021",
+      "predecessor": "ris2005",
+      "successor": "restir_gi2021",
+      "type": "citation",
+      "citing_paper": "restir_gi2021",
+      "cited_paper": "ris2005",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/ReSTIR%20GI.pdf",
+          "locator": "References: [TCE05]",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:volume2021",
+      "predecessor": "restir_di2020",
+      "successor": "volume2021",
+      "type": "citation",
+      "citing_paper": "volume2021",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/papers/siga21_volumeReSTIR_small.pdf",
+          "locator": "References: Bitterli et al. (2020)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_gi2021:volume2021",
+      "predecessor": "restir_gi2021",
+      "successor": "volume2021",
+      "type": "citation",
+      "citing_paper": "volume2021",
+      "cited_paper": "restir_gi2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/papers/siga21_volumeReSTIR_small.pdf",
+          "locator": "References: Ouyang et al. (2021)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:ris2005:volume2021",
+      "predecessor": "ris2005",
+      "successor": "volume2021",
+      "type": "citation",
+      "citing_paper": "volume2021",
+      "cited_paper": "ris2005",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/papers/siga21_volumeReSTIR_small.pdf",
+          "locator": "References: Talbot, Cline and Egbert (2005)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:production2021:volume2021",
+      "predecessor": "production2021",
+      "successor": "volume2021",
+      "type": "citation",
+      "citing_paper": "volume2021",
+      "cited_paper": "production2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/papers/siga21_volumeReSTIR_small.pdf",
+          "locator": "References: Wyman and Panteleev (2021)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:gris2022",
+      "predecessor": "restir_di2020",
+      "successor": "gris2022",
+      "type": "citation",
+      "citing_paper": "gris2022",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/sig22_GRIS.pdf",
+          "locator": "References: Bitterli et al. (2020)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_gi2021:gris2022",
+      "predecessor": "restir_gi2021",
+      "successor": "gris2022",
+      "type": "citation",
+      "citing_paper": "gris2022",
+      "cited_paper": "restir_gi2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/sig22_GRIS.pdf",
+          "locator": "References: Ouyang et al. (2021)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:volume2021:gris2022",
+      "predecessor": "volume2021",
+      "successor": "gris2022",
+      "type": "citation",
+      "citing_paper": "gris2022",
+      "cited_paper": "volume2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/sig22_GRIS.pdf",
+          "locator": "References: Lin, Wyman and Yuksel (2021)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:ris2005:gris2022",
+      "predecessor": "ris2005",
+      "successor": "gris2022",
+      "type": "citation",
+      "citing_paper": "gris2022",
+      "cited_paper": "ris2005",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/sig22_GRIS.pdf",
+          "locator": "References: Talbot, Cline and Egbert (2005)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:conditional2023",
+      "predecessor": "gris2022",
+      "successor": "conditional2023",
+      "type": "citation",
+      "citing_paper": "conditional2023",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/kettunen2023conditional/kettunen2023conditional.pdf",
+          "locator": "References: Lin et al. (2022)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:conditional2023",
+      "predecessor": "restir_di2020",
+      "successor": "conditional2023",
+      "type": "citation",
+      "citing_paper": "conditional2023",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/kettunen2023conditional/kettunen2023conditional.pdf",
+          "locator": "References: Bitterli et al. (2020)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:pdf_similarity2023",
+      "predecessor": "restir_di2020",
+      "successor": "pdf_similarity2023",
+      "type": "citation",
+      "citing_paper": "pdf_similarity2023",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://yusuketokuyoshi.com/papers/2023/Efficient_Spatial_Resampling_Using_the_PDF_Similarity.pdf",
+          "locator": "References: Bitterli et al. (2020)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:production2021:pdf_similarity2023",
+      "predecessor": "production2021",
+      "successor": "pdf_similarity2023",
+      "type": "citation",
+      "citing_paper": "pdf_similarity2023",
+      "cited_paper": "production2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://yusuketokuyoshi.com/papers/2023/Efficient_Spatial_Resampling_Using_the_PDF_Similarity.pdf",
+          "locator": "References: Wyman and Panteleev (2021)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:pdf_similarity2023",
+      "predecessor": "gris2022",
+      "successor": "pdf_similarity2023",
+      "type": "citation",
+      "citing_paper": "pdf_similarity2023",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://yusuketokuyoshi.com/papers/2023/Efficient_Spatial_Resampling_Using_the_PDF_Similarity.pdf",
+          "locator": "References: Lin et al. (2022)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:world_space2021:pdf_similarity2023",
+      "predecessor": "world_space2021",
+      "successor": "pdf_similarity2023",
+      "type": "citation",
+      "citing_paper": "pdf_similarity2023",
+      "cited_paper": "world_space2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://yusuketokuyoshi.com/papers/2023/Efficient_Spatial_Resampling_Using_the_PDF_Similarity.pdf",
+          "locator": "References: Boissé (2021)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:regir2021:pdf_similarity2023",
+      "predecessor": "regir2021",
+      "successor": "pdf_similarity2023",
+      "type": "citation",
+      "citing_paper": "pdf_similarity2023",
+      "cited_paper": "regir2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://yusuketokuyoshi.com/papers/2023/Efficient_Spatial_Resampling_Using_the_PDF_Similarity.pdf",
+          "locator": "References: Boksansky et al. (2021)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:mcmc2024",
+      "predecessor": "gris2022",
+      "successor": "mcmc2024",
+      "type": "citation",
+      "citing_paper": "mcmc2024",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/sawhney2024decorrelating/ReSTIRMCMC.pdf",
+          "locator": "References: Lin et al. (2022)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:mcmc2024",
+      "predecessor": "restir_di2020",
+      "successor": "mcmc2024",
+      "type": "citation",
+      "citing_paper": "mcmc2024",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/sawhney2024decorrelating/ReSTIRMCMC.pdf",
+          "locator": "References: Bitterli et al. (2020)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_gi2021:mcmc2024",
+      "predecessor": "restir_gi2021",
+      "successor": "mcmc2024",
+      "type": "citation",
+      "citing_paper": "mcmc2024",
+      "cited_paper": "restir_gi2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/sawhney2024decorrelating/ReSTIRMCMC.pdf",
+          "locator": "References: Ouyang et al. (2021)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:area2024",
+      "predecessor": "gris2022",
+      "successor": "area2024",
+      "type": "citation",
+      "citing_paper": "area2024",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/zhang2024area/zhang2024area.pdf",
+          "locator": "References: Lin et al. (2022)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:area2024",
+      "predecessor": "restir_di2020",
+      "successor": "area2024",
+      "type": "citation",
+      "citing_paper": "area2024",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/zhang2024area/zhang2024area.pdf",
+          "locator": "References: Bitterli et al. (2020)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:mcmc2024:area2024",
+      "predecessor": "mcmc2024",
+      "successor": "area2024",
+      "type": "citation",
+      "citing_paper": "area2024",
+      "cited_paper": "mcmc2024",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/zhang2024area/zhang2024area.pdf",
+          "locator": "References: Sawhney et al. (2024)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:sss2024",
+      "predecessor": "gris2022",
+      "successor": "sss2024",
+      "type": "citation",
+      "citing_paper": "sss2024",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cg.ivd.kit.edu/publications/2024/restir-sss/restir-sss.pdf",
+          "locator": "References: Lin et al. (2022)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:sss2024",
+      "predecessor": "restir_di2020",
+      "successor": "sss2024",
+      "type": "citation",
+      "citing_paper": "sss2024",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cg.ivd.kit.edu/publications/2024/restir-sss/restir-sss.pdf",
+          "locator": "References: Bitterli et al. (2020)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:parameter2023",
+      "predecessor": "gris2022",
+      "successor": "parameter2023",
+      "type": "citation",
+      "citing_paper": "parameter2023",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://weschang.com/publications/restir-dr/restir-dr.pdf",
+          "locator": "References: Lin et al. (2022)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:parameter2023",
+      "predecessor": "restir_di2020",
+      "successor": "parameter2023",
+      "type": "citation",
+      "citing_paper": "parameter2023",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://weschang.com/publications/restir-dr/restir-dr.pdf",
+          "locator": "References: Bitterli et al. (2020)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:inverse2023",
+      "predecessor": "restir_di2020",
+      "successor": "inverse2023",
+      "type": "citation",
+      "citing_paper": "inverse2023",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://projects.shuangz.com/psdr-restir-sa23/psdr-restir-sa23.pdf",
+          "locator": "References: Bitterli et al. (2020)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:regir2021",
+      "predecessor": "restir_di2020",
+      "successor": "regir2021",
+      "type": "citation",
+      "citing_paper": "regir2021",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/papers/rtg2-manyLightReGIR.pdf",
+          "locator": "References: [3]",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:ris2005:regir2021",
+      "predecessor": "ris2005",
+      "successor": "regir2021",
+      "type": "citation",
+      "citing_paper": "regir2021",
+      "cited_paper": "ris2005",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/papers/rtg2-manyLightReGIR.pdf",
+          "locator": "References: [5]",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:ddgi_resampling2022",
+      "predecessor": "restir_di2020",
+      "successor": "ddgi_resampling2022",
+      "type": "citation",
+      "citing_paper": "ddgi_resampling2022",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://tom94.net/data/publications/majercik21dynamic/majercik21dynamic.pdf",
+          "locator": "References: [BWP*20]",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_gi2021:ddgi_resampling2022",
+      "predecessor": "restir_gi2021",
+      "successor": "ddgi_resampling2022",
+      "type": "citation",
+      "citing_paper": "ddgi_resampling2022",
+      "cited_paper": "restir_gi2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://tom94.net/data/publications/majercik21dynamic/majercik21dynamic.pdf",
+          "locator": "References: [OLK*21a]",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:world_space2021",
+      "predecessor": "restir_di2020",
+      "successor": "world_space2021",
+      "type": "citation",
+      "citing_paper": "world_space2021",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://gpuopen.com/download/publications/SA2021_WorldSpace_ReSTIR.pdf",
+          "locator": "References: Bitterli et al. (2020)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_gi2021:world_space2021",
+      "predecessor": "restir_gi2021",
+      "successor": "world_space2021",
+      "type": "citation",
+      "citing_paper": "world_space2021",
+      "cited_paper": "restir_gi2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://gpuopen.com/download/publications/SA2021_WorldSpace_ReSTIR.pdf",
+          "locator": "References: Ouyang et al. (2021)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:production2021:world_space2021",
+      "predecessor": "production2021",
+      "successor": "world_space2021",
+      "type": "citation",
+      "citing_paper": "world_space2021",
+      "cited_paper": "production2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://gpuopen.com/download/publications/SA2021_WorldSpace_ReSTIR.pdf",
+          "locator": "References: Wyman and Panteleev (2021)",
+          "explanation": "Confirmed in the citing paper's reference list. This record establishes a citation; any adoption of the method is documented separately as technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:mcmc2024:pdf_similarity2023",
+      "predecessor": "mcmc2024",
+      "successor": "pdf_similarity2023",
+      "type": "citation",
+      "citing_paper": "pdf_similarity2023",
+      "cited_paper": "mcmc2024",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://yusuketokuyoshi.com/papers/2023/Efficient_Spatial_Resampling_Using_the_PDF_Similarity.pdf",
+          "locator": "References: Sawhney et al. (2022), arXiv:2211.00166",
+          "explanation": "The citation refers to the 2022 preprint version. The shared node uses the formal publication year, 2024, so the citing paper appears earlier than the cited node. This does not indicate a reversed citation.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:mis_weight2024",
+      "predecessor": "restir_di2020",
+      "successor": "mis_weight2024",
+      "type": "citation",
+      "citing_paper": "mis_weight2024",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://onlinelibrary.wiley.com/doi/10.1111/cgf.15049",
+          "locator": "References: Bitterli et al. (2020)",
+          "explanation": "The publisher's public reference list explicitly includes this work; the method section has not yet been verified.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:mis_weight2024",
+      "predecessor": "gris2022",
+      "successor": "mis_weight2024",
+      "type": "citation",
+      "citing_paper": "mis_weight2024",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://onlinelibrary.wiley.com/doi/10.1111/cgf.15049",
+          "locator": "References: Lin et al. (2022)",
+          "explanation": "The publisher's public reference list explicitly includes this work; the method section has not yet been verified.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_gi2021:mis_weight2024",
+      "predecessor": "restir_gi2021",
+      "successor": "mis_weight2024",
+      "type": "citation",
+      "citing_paper": "mis_weight2024",
+      "cited_paper": "restir_gi2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://onlinelibrary.wiley.com/doi/10.1111/cgf.15049",
+          "locator": "References: Ouyang et al. (2021)",
+          "explanation": "The publisher's public reference list explicitly includes this work; the method section has not yet been verified.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:mis_weight2024",
+      "predecessor": "gris2022",
+      "successor": "mis_weight2024",
+      "type": "inheritance",
+      "citing_paper": "mis_weight2024",
+      "cited_paper": "gris2022",
+      "verification": "pending",
+      "evidence": [
+        {
+          "source_url": "https://onlinelibrary.wiley.com/doi/10.1111/cgf.15049",
+          "locator": "Abstract (method section not yet verified)",
+          "explanation": "The abstract describes revised weights in the context of GRIS and generalized MIS. The full text is needed to verify the specific use of these methods and their applicability conditions.",
+          "checked": "2026-10-30",
+          "method": "abstract_screening"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:fg2024",
+      "predecessor": "gris2022",
+      "successor": "fg2024",
+      "type": "inheritance",
+      "citing_paper": "fg2024",
+      "cited_paper": "gris2022",
+      "verification": "pending",
+      "evidence": [
+        {
+          "source_url": "https://diglib.eg.org/items/df98f89d-a0ca-4800-9bc4-74528feaf872",
+          "locator": "Abstract (method section not yet verified)",
+          "explanation": "The abstract compares FG with PT and Suffix ReSTIR and combines ReSTIR with photon final gathering. A comparison does not establish inheritance from GRIS; full-text verification is still needed.",
+          "checked": "2026-10-30",
+          "method": "abstract_screening"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:shape_splatting2024",
+      "predecessor": "gris2022",
+      "successor": "shape_splatting2024",
+      "type": "inheritance",
+      "citing_paper": "shape_splatting2024",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cs.uwaterloo.ca/~xtong/assets/pdf/shape_splatting.pdf",
+          "locator": "p.233:1 Figure 1; p.233:2 §2 Related Work (Path reuse)",
+          "explanation": "Figure 1 of the published paper combines shape splatting with offline ReSTIR PT and presents an equal-time comparison; §2 explains that it can be combined with existing path reuse. This edge records the use of ReSTIR PT and an extension to the image-contribution splatting stage. It does not imply changes to real-time reservoir mechanisms or that the method is exclusive to ReSTIR.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_di2020:histogram2025",
+      "predecessor": "restir_di2020",
+      "successor": "histogram2025",
+      "type": "inheritance",
+      "citing_paper": "histogram2025",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://iribis.github.io/files/Stratified_Histogram_Resampling/paper.pdf",
+          "locator": "§3.1 Spatio-temporal reservoir re-sampling; §4",
+          "explanation": "Retains the spatiotemporal reservoir resampling pipeline and adds histogram-based stratification to candidate selection.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:histogram2025",
+      "predecessor": "restir_di2020",
+      "successor": "histogram2025",
+      "type": "citation",
+      "citing_paper": "histogram2025",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://iribis.github.io/files/Stratified_Histogram_Resampling/paper.pdf",
+          "locator": "References: Bitterli et al. (2020), Spatiotemporal Reservoir Resampling",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:spmis2026",
+      "predecessor": "gris2022",
+      "successor": "spmis2026",
+      "type": "inheritance",
+      "citing_paper": "spmis2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/hedstrom2026stochastic/hedstrom2026stochastic.pdf",
+          "locator": "§2.3; §3 Stochastic Resampling MIS; Appendix A",
+          "explanation": "Uses stochastic MIS weights in the GRIS estimator; the appendix proves that the resulting contribution weights are unbiased.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:spmis2026",
+      "predecessor": "gris2022",
+      "successor": "spmis2026",
+      "type": "citation",
+      "citing_paper": "spmis2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/hedstrom2026stochastic/hedstrom2026stochastic.pdf",
+          "locator": "References: [LKB*22], Generalized Resampled Importance Sampling",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_di2020:cgns2026",
+      "predecessor": "restir_di2020",
+      "successor": "cgns2026",
+      "type": "inheritance",
+      "citing_paper": "cgns2026",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/junkins2026compatibility.pdf",
+          "locator": "§1; §4 Pixel Compatibility Heuristics; §5",
+          "explanation": "Replaces the original DI method's uniform neighbor selection and binary geometric rejection rules with randomized selection weighted by continuous compatibility.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:cgns2026",
+      "predecessor": "restir_di2020",
+      "successor": "cgns2026",
+      "type": "citation",
+      "citing_paper": "cgns2026",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/junkins2026compatibility.pdf",
+          "locator": "References: Bitterli et al. (2020)",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:cgns2026",
+      "predecessor": "gris2022",
+      "successor": "cgns2026",
+      "type": "inheritance",
+      "citing_paper": "cgns2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/junkins2026compatibility.pdf",
+          "locator": "§4–6",
+          "explanation": "Improves neighbor selection within ReSTIR PT's shift-based reuse framework. Section 6 describes the PT experiments, which also incorporate area reservoirs and splatting.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:cgns2026",
+      "predecessor": "gris2022",
+      "successor": "cgns2026",
+      "type": "citation",
+      "citing_paper": "cgns2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/junkins2026compatibility.pdf",
+          "locator": "References: Lin et al. (2022), Generalized Resampled Importance Sampling",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:spmis2026:cgns2026",
+      "predecessor": "spmis2026",
+      "successor": "cgns2026",
+      "type": "citation",
+      "citing_paper": "cgns2026",
+      "cited_paper": "spmis2026",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/junkins2026compatibility.pdf",
+          "locator": "References: Hedstrom et al. (2026), Stochastic Pairwise MIS",
+          "explanation": "Section 8 identifies combining the two methods as future work. This citation does not indicate that the method has already been adopted.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:pt_enhanced2026",
+      "predecessor": "gris2022",
+      "successor": "pt_enhanced2026",
+      "type": "inheritance",
+      "citing_paper": "pt_enhanced2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/lin2026restirptenhanced/lin2026restirptenhanced.pdf",
+          "locator": "§2.3 ReSTIR PT; §3–6",
+          "explanation": "Explicitly targets the original ReSTIR PT for improvement, optimizing reconnection, neighbor reuse, and duplicate-sample handling.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:pt_enhanced2026",
+      "predecessor": "gris2022",
+      "successor": "pt_enhanced2026",
+      "type": "citation",
+      "citing_paper": "pt_enhanced2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/lin2026restirptenhanced/lin2026restirptenhanced.pdf",
+          "locator": "References: Lin et al. (2022), Generalized Resampled Importance Sampling",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:area2024:splatting2025",
+      "predecessor": "area2024",
+      "successor": "splatting2025",
+      "type": "inheritance",
+      "citing_paper": "splatting2025",
+      "cited_paper": "area2024",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/liu2025splatting/liu2025splatting_paper.pdf",
+          "locator": "§2.3; §4 Reservoir Splatting",
+          "explanation": "Explicitly builds on Area ReSTIR, redesigning temporal reuse to forward-project primary hits.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:area2024:splatting2025",
+      "predecessor": "area2024",
+      "successor": "splatting2025",
+      "type": "citation",
+      "citing_paper": "splatting2025",
+      "cited_paper": "area2024",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/liu2025splatting/liu2025splatting_paper.pdf",
+          "locator": "References: Zhang et al. (2024), Area ReSTIR",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:splatting2025:multilayer2026",
+      "predecessor": "splatting2025",
+      "successor": "multilayer2026",
+      "type": "inheritance",
+      "citing_paper": "multilayer2026",
+      "cited_paper": "splatting2025",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/hong2026multilayer/hong2026multilayer.pdf",
+          "locator": "§3 Preliminaries; §4 Multi-Layer Reservoir Splatting",
+          "explanation": "Extends single-layer splatting to multilayer storage and transfers between layers, retaining history that is temporarily occluded.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:splatting2025:multilayer2026",
+      "predecessor": "splatting2025",
+      "successor": "multilayer2026",
+      "type": "citation",
+      "citing_paper": "multilayer2026",
+      "cited_paper": "splatting2025",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/hong2026multilayer/hong2026multilayer.pdf",
+          "locator": "References: Liu et al. (2025), Reservoir Splatting for Temporal Path Resampling and Motion Blur",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:splatting2025:lod2026",
+      "predecessor": "splatting2025",
+      "successor": "lod2026",
+      "type": "inheritance",
+      "citing_paper": "lod2026",
+      "cited_paper": "splatting2025",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/wang2026levelOfDetail/wang2026levelOfDetail.pdf",
+          "locator": "§4.4 LoD-aware ReSTIR path tracing",
+          "explanation": "Explicitly builds on Reservoir Splatting, replacing its index mapping with a new UV-based vertex mapping across LoD changes.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:splatting2025:lod2026",
+      "predecessor": "splatting2025",
+      "successor": "lod2026",
+      "type": "citation",
+      "citing_paper": "lod2026",
+      "cited_paper": "splatting2025",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/wang2026levelOfDetail/wang2026levelOfDetail.pdf",
+          "locator": "References: Liu et al. (2025), Reservoir Splatting for Temporal Path Resampling and Motion Blur",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:bdpt2025",
+      "predecessor": "gris2022",
+      "successor": "bdpt2025",
+      "type": "inheritance",
+      "citing_paper": "bdpt2025",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/papers/tog25_ReSTIR_BDPT.pdf",
+          "locator": "§1; §4–5",
+          "explanation": "Applies GRIS to an extended path space that records the sampling technique and designs a hybrid shift for bidirectional paths.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:bdpt2025",
+      "predecessor": "gris2022",
+      "successor": "bdpt2025",
+      "type": "citation",
+      "citing_paper": "bdpt2025",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/papers/tog25_ReSTIR_BDPT.pdf",
+          "locator": "References: Lin et al. (2022), Generalized Resampled Importance Sampling",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:psms2025",
+      "predecessor": "gris2022",
+      "successor": "psms2025",
+      "type": "inheritance",
+      "citing_paper": "psms2025",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/hong2025partition/hong2025partition_paper.pdf",
+          "locator": "§5.2 GRIS for SMS paths",
+          "explanation": "Uses specular paths generated by SMS as GRIS samples, with manifold shifts enabling reuse across pixels and frames.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:psms2025",
+      "predecessor": "gris2022",
+      "successor": "psms2025",
+      "type": "citation",
+      "citing_paper": "psms2025",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/hong2025partition/hong2025partition_paper.pdf",
+          "locator": "References: Lin et al. (2022), Generalized Resampled Importance Sampling",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:pg2025",
+      "predecessor": "gris2022",
+      "successor": "pg2025",
+      "type": "inheritance",
+      "citing_paper": "pg2025",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/papers/siga25_ReSTIR_PG.pdf",
+          "locator": "Fig.1; §3.1; §4",
+          "explanation": "Learns directional distributions from paths resampled by ReSTIR PT and uses them to generate subsequent initial candidates.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:pg2025",
+      "predecessor": "gris2022",
+      "successor": "pg2025",
+      "type": "citation",
+      "citing_paper": "pg2025",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/papers/siga25_ReSTIR_PG.pdf",
+          "locator": "References: Lin et al. (2022), Generalized Resampled Importance Sampling",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:gradient2026",
+      "predecessor": "gris2022",
+      "successor": "gradient2026",
+      "type": "inheritance",
+      "citing_paper": "gradient2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/wang2026gradient/wang2026gradient.pdf",
+          "locator": "§3.2.2 Generalized RIS; §4",
+          "explanation": "Reuses GRIS samples in an extended path space for pixel pairs to construct gradient estimators.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:gradient2026",
+      "predecessor": "gris2022",
+      "successor": "gradient2026",
+      "type": "citation",
+      "citing_paper": "gradient2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/wang2026gradient/wang2026gradient.pdf",
+          "locator": "References: [LKB*22], Generalized Resampled Importance Sampling",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:area2024:gradient2026",
+      "predecessor": "area2024",
+      "successor": "gradient2026",
+      "type": "inheritance",
+      "citing_paper": "gradient2026",
+      "cited_paper": "area2024",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/wang2026gradient/wang2026gradient.pdf",
+          "locator": "§4.3, temporal reuse / fractional pixel-pair motion vectors",
+          "explanation": "Explicitly adopts Area ReSTIR for temporal reuse and designs fractional motion vectors for pixel pairs.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:area2024:gradient2026",
+      "predecessor": "area2024",
+      "successor": "gradient2026",
+      "type": "citation",
+      "citing_paper": "gradient2026",
+      "cited_paper": "area2024",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/wang2026gradient/wang2026gradient.pdf",
+          "locator": "References: [ZLK*24], Area ReSTIR",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:restcv2026",
+      "predecessor": "gris2022",
+      "successor": "restcv2026",
+      "type": "inheritance",
+      "citing_paper": "restcv2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://hercier.github.io/restcv/assets/pdfs/paper.pdf",
+          "locator": "§5.2 Efficient Difference Estimation using ReSTIR; Codebase paragraph (p.7)",
+          "explanation": "Uses ReSTIR samples for pixel differences and control-variate estimation. The code builds on the public ReSTIR PT implementation.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:restcv2026",
+      "predecessor": "gris2022",
+      "successor": "restcv2026",
+      "type": "citation",
+      "citing_paper": "restcv2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://hercier.github.io/restcv/assets/pdfs/paper.pdf",
+          "locator": "References: Lin et al. (2022), Generalized Resampled Importance Sampling",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_di2020:shadow_maps2025",
+      "predecessor": "restir_di2020",
+      "successor": "shadow_maps2025",
+      "type": "inheritance",
+      "citing_paper": "shadow_maps2025",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/zhang2025many-light/zhang2025many-light.pdf",
+          "locator": "§3 ReSTIR-Sampled Shadow Maps",
+          "explanation": "Uses DI's spatiotemporal reservoir sampling to rank important lights and reuses its light selection during final shading.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:shadow_maps2025",
+      "predecessor": "restir_di2020",
+      "successor": "shadow_maps2025",
+      "type": "citation",
+      "citing_paper": "shadow_maps2025",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/zhang2025many-light/zhang2025many-light.pdf",
+          "locator": "References: [BWP*20], Spatiotemporal Reservoir Resampling",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:tof2026",
+      "predecessor": "gris2022",
+      "successor": "tof2026",
+      "type": "inheritance",
+      "citing_paper": "tof2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://arxiv.org/pdf/2605.11536v2",
+          "locator": "§4.1 Offset Path Further Perturbation",
+          "explanation": "Explicitly uses ReSTIR PT's hybrid shift as a baseline, then perturbs reconnection points to satisfy path-length constraints.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:tof2026",
+      "predecessor": "gris2022",
+      "successor": "tof2026",
+      "type": "citation",
+      "citing_paper": "tof2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://arxiv.org/pdf/2605.11536v2",
+          "locator": "References: Lin et al. (2022), Generalized Resampled Importance Sampling",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:rgb2026",
+      "predecessor": "gris2022",
+      "successor": "rgb2026",
+      "type": "inheritance",
+      "citing_paper": "rgb2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://webpages.tuni.fi/vga/publications/RGB_ReSTIR_GRIVAPP2026_preprint.pdf",
+          "locator": "§1; §3 RGB ReSTIR",
+          "explanation": "Builds on ReSTIR PT, maintaining separate reservoirs and target functions for the R, G, and B channels.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:rgb2026",
+      "predecessor": "gris2022",
+      "successor": "rgb2026",
+      "type": "citation",
+      "citing_paper": "rgb2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://webpages.tuni.fi/vga/publications/RGB_ReSTIR_GRIVAPP2026_preprint.pdf",
+          "locator": "References: Lin et al. (2022), Generalized Resampled Importance Sampling",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:volume2021:ghost2026",
+      "predecessor": "volume2021",
+      "successor": "ghost2026",
+      "type": "inheritance",
+      "citing_paper": "ghost2026",
+      "cited_paper": "volume2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/abstracts/sig2026_ghostReSTIR.pdf",
+          "locator": "§1 Introduction; §2 (3-page poster abstract)",
+          "explanation": "The extended abstract addresses limitations of transmittance approximation and tracking in the 2021 volume ReSTIR method, reformulating reuse in null-scattering space with ghost vertices.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:volume2021:ghost2026",
+      "predecessor": "volume2021",
+      "successor": "ghost2026",
+      "type": "citation",
+      "citing_paper": "ghost2026",
+      "cited_paper": "volume2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/abstracts/sig2026_ghostReSTIR.pdf",
+          "locator": "References: Lin, Wyman and Yuksel (2021), Fast Volume Rendering with Spatiotemporal Reservoir Resampling",
+          "explanation": "The citing paper's reference list explicitly includes this work. The displayed arrow runs from the earlier work to the paper that cites it.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:blue_noise2026",
+      "predecessor": "gris2022",
+      "successor": "blue_noise2026",
+      "type": "inheritance",
+      "citing_paper": "blue_noise2026",
+      "cited_paper": "gris2022",
+      "verification": "pending",
+      "evidence": [
+        {
+          "source_url": "https://ieeexplore.ieee.org/abstract/document/11589466",
+          "locator": "Publisher abstract only; full text unavailable",
+          "explanation": "The abstract describes blue-noise resampling for ReSTIR, but the specific predecessor version cannot yet be determined. Full-text verification is pending.",
+          "checked": "2026-10-30",
+          "method": "abstract_screening"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:fg2024:guided_fg2026",
+      "predecessor": "fg2024",
+      "successor": "guided_fg2026",
+      "type": "inheritance",
+      "citing_paper": "guided_fg2026",
+      "cited_paper": "fg2024",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/a01e94bb-61c1-458b-9bfa-cba04e06f43e/content",
+          "locator": "§4.2 ReSTIR FG+, pp.7–8",
+          "explanation": "Explicitly builds on FG's reuse of photon final gathers, adding hybrid shifts and projected reuse of directly visible caustics. Verified against the publisher's full text.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:fg2024:guided_fg2026",
+      "predecessor": "fg2024",
+      "successor": "guided_fg2026",
+      "type": "citation",
+      "citing_paper": "guided_fg2026",
+      "cited_paper": "fg2024",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/a01e94bb-61c1-458b-9bfa-cba04e06f43e/content",
+          "locator": "References: [KBG24], pp.12–13",
+          "explanation": "The reference list explicitly includes Kern, Brüll, and Grosch (2024), ReSTIR FG, DOI 10.2312/sr.20241155.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:gris2022:guided_fg2026",
+      "predecessor": "gris2022",
+      "successor": "guided_fg2026",
+      "type": "inheritance",
+      "citing_paper": "guided_fg2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/a01e94bb-61c1-458b-9bfa-cba04e06f43e/content",
+          "locator": "§4.2.2 Path Reservoir Resampling, p.8",
+          "explanation": "Explicitly uses Lin et al.'s hybrid shift and GRIS weights for spatiotemporal resampling of path reservoirs.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:guided_fg2026",
+      "predecessor": "gris2022",
+      "successor": "guided_fg2026",
+      "type": "citation",
+      "citing_paper": "guided_fg2026",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/a01e94bb-61c1-458b-9bfa-cba04e06f43e/content",
+          "locator": "References: [LKB*22], pp.12–13",
+          "explanation": "The reference list explicitly includes this work, which is also cited in the relevant method subsection.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:bdpt2025:guided_fg2026",
+      "predecessor": "bdpt2025",
+      "successor": "guided_fg2026",
+      "type": "inheritance",
+      "citing_paper": "guided_fg2026",
+      "cited_paper": "bdpt2025",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/a01e94bb-61c1-458b-9bfa-cba04e06f43e/content",
+          "locator": "§4.2.3 Caustic Reservoir Resampling, p.8",
+          "explanation": "The authors explicitly describe their caustic reservoir pipeline as similar to ReSTIR BDPT, with elements of splatting incorporated.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:bdpt2025:guided_fg2026",
+      "predecessor": "bdpt2025",
+      "successor": "guided_fg2026",
+      "type": "citation",
+      "citing_paper": "guided_fg2026",
+      "cited_paper": "bdpt2025",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/a01e94bb-61c1-458b-9bfa-cba04e06f43e/content",
+          "locator": "References: [HKL*25], pp.12–13",
+          "explanation": "The reference list explicitly includes this work, which is also cited in the relevant method subsection.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:splatting2025:guided_fg2026",
+      "predecessor": "splatting2025",
+      "successor": "guided_fg2026",
+      "type": "inheritance",
+      "citing_paper": "guided_fg2026",
+      "cited_paper": "splatting2025",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/a01e94bb-61c1-458b-9bfa-cba04e06f43e/content",
+          "locator": "§4.2.3 Caustic Reservoir Resampling, pp.8–9",
+          "explanation": "Projected caustic reservoirs are explicitly merged using the GRIS formulation defined in Reservoir Splatting, which also supplies the confidence update method.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:splatting2025:guided_fg2026",
+      "predecessor": "splatting2025",
+      "successor": "guided_fg2026",
+      "type": "citation",
+      "citing_paper": "guided_fg2026",
+      "cited_paper": "splatting2025",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/a01e94bb-61c1-458b-9bfa-cba04e06f43e/content",
+          "locator": "References: [LLK*25], pp.12–13",
+          "explanation": "The reference list explicitly includes this work, which is also cited in the relevant method subsection.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:sample_space2024",
+      "predecessor": "restir_di2020",
+      "successor": "sample_space2024",
+      "type": "citation",
+      "citing_paper": "sample_space2024",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://link.springer.com/chapter/10.1007/978-3-031-50078-7_7",
+          "locator": "References, item 3",
+          "explanation": "Item 3 in the publisher's reference list is Bitterli et al.'s published ReSTIR DI paper.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:world_space2021:sample_space2024",
+      "predecessor": "world_space2021",
+      "successor": "sample_space2024",
+      "type": "citation",
+      "citing_paper": "sample_space2024",
+      "cited_paper": "world_space2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://link.springer.com/chapter/10.1007/978-3-031-50078-7_7",
+          "locator": "References, item 4",
+          "explanation": "Item 4 in the publisher's reference list is Boissé's paper on world-space reservoir reuse.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:sample_space2024",
+      "predecessor": "gris2022",
+      "successor": "sample_space2024",
+      "type": "citation",
+      "citing_paper": "sample_space2024",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://link.springer.com/chapter/10.1007/978-3-031-50078-7_7",
+          "locator": "References, item 12",
+          "explanation": "Item 12 in the publisher's reference list is Lin et al.'s GRIS theory paper.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:volume2021:sample_space2024",
+      "predecessor": "volume2021",
+      "successor": "sample_space2024",
+      "type": "citation",
+      "citing_paper": "sample_space2024",
+      "cited_paper": "volume2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://link.springer.com/chapter/10.1007/978-3-031-50078-7_7",
+          "locator": "References, item 13",
+          "explanation": "Item 13 in the publisher's reference list is the volume ReSTIR paper by Lin, Wyman, and Yuksel.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_gi2021:sample_space2024",
+      "predecessor": "restir_gi2021",
+      "successor": "sample_space2024",
+      "type": "citation",
+      "citing_paper": "sample_space2024",
+      "cited_paper": "restir_gi2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://link.springer.com/chapter/10.1007/978-3-031-50078-7_7",
+          "locator": "References, item 17",
+          "explanation": "Item 17 in the publisher's reference list is Ouyang et al.'s published ReSTIR GI paper.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_gi2021:sample_space2024",
+      "predecessor": "restir_gi2021",
+      "successor": "sample_space2024",
+      "type": "inheritance",
+      "citing_paper": "sample_space2024",
+      "cited_paper": "restir_gi2021",
+      "verification": "pending",
+      "evidence": [
+        {
+          "source_url": "https://link.springer.com/chapter/10.1007/978-3-031-50078-7_7",
+          "locator": "Abstract; full-text locator not yet available",
+          "explanation": "The abstract explicitly states that sample-space filtering is applied to ReSTIR GI. Since the full text has not been obtained, this inheritance edge remains pending and is hidden by default.",
+          "checked": "2026-10-30",
+          "method": "abstract_screening"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:visibility_reuse2024",
+      "predecessor": "restir_di2020",
+      "successor": "visibility_reuse2024",
+      "type": "citation",
+      "citing_paper": "visibility_reuse2024",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://gpuopen.com/download/publications/Efficient_Visibility_Reuse_for_Real-time_ReSTIR.pdf",
+          "locator": "p. 2, References, Bitterli et al. 2020",
+          "explanation": "The paper's reference list explicitly includes the corresponding work by Bitterli et al. (2020).",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:production2021:visibility_reuse2024",
+      "predecessor": "production2021",
+      "successor": "visibility_reuse2024",
+      "type": "citation",
+      "citing_paper": "visibility_reuse2024",
+      "cited_paper": "production2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://gpuopen.com/download/publications/Efficient_Visibility_Reuse_for_Real-time_ReSTIR.pdf",
+          "locator": "p. 2, References, Wyman and Panteleev 2021",
+          "explanation": "The paper's reference list explicitly includes the corresponding work by Wyman and Panteleev (2021).",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:visibility_reuse2024",
+      "predecessor": "gris2022",
+      "successor": "visibility_reuse2024",
+      "type": "citation",
+      "citing_paper": "visibility_reuse2024",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://gpuopen.com/download/publications/Efficient_Visibility_Reuse_for_Real-time_ReSTIR.pdf",
+          "locator": "p. 2, References, Lin et al. 2022",
+          "explanation": "The paper's reference list explicitly includes the corresponding work by Lin et al. (2022).",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:production2021:visibility_reuse2024",
+      "predecessor": "production2021",
+      "successor": "visibility_reuse2024",
+      "type": "inheritance",
+      "citing_paper": "visibility_reuse2024",
+      "cited_paper": "production2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://gpuopen.com/download/publications/Efficient_Visibility_Reuse_for_Real-time_ReSTIR.pdf",
+          "locator": "p. 1, §1 Introduction; p. 2, §3 Our Visibility Reuse",
+          "explanation": "Explicitly builds on Wyman and Panteleev's visibility reuse, retaining past sample visibility and spatial correction rays. To reduce variance, it estimates the selected sample's visibility as a weighted average of spatiotemporal visibility values.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:tiled_reservoir2021",
+      "predecessor": "restir_di2020",
+      "successor": "tiled_reservoir2021",
+      "type": "citation",
+      "citing_paper": "tiled_reservoir2021",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://yusuketokuyoshi.com/papers/2021/TiledReservoirSampling21-11-ecdc.pdf",
+          "locator": "References, Bitterli et al. 2020",
+          "explanation": "The report's reference list includes Bitterli et al. (2020). Section 4 discusses ReGIR as a possible future improvement to light-subset sampling; this does not establish an inheritance edge.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:production2021:tiled_reservoir2021",
+      "predecessor": "production2021",
+      "successor": "tiled_reservoir2021",
+      "type": "citation",
+      "citing_paper": "tiled_reservoir2021",
+      "cited_paper": "production2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://yusuketokuyoshi.com/papers/2021/TiledReservoirSampling21-11-ecdc.pdf",
+          "locator": "References, Wyman and Panteleev 2021",
+          "explanation": "The report's reference list includes Wyman and Panteleev (2021). Section 4 discusses ReGIR as a possible future improvement to light-subset sampling; this does not establish an inheritance edge.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:regir2021:tiled_reservoir2021",
+      "predecessor": "regir2021",
+      "successor": "tiled_reservoir2021",
+      "type": "citation",
+      "citing_paper": "tiled_reservoir2021",
+      "cited_paper": "regir2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://yusuketokuyoshi.com/papers/2021/TiledReservoirSampling21-11-ecdc.pdf",
+          "locator": "References, Boksansky et al. 2021",
+          "explanation": "The report's reference list includes Boksansky et al. (2021). Section 4 discusses ReGIR as a possible future improvement to light-subset sampling; this does not establish an inheritance edge.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:production2021:tiled_reservoir2021",
+      "predecessor": "production2021",
+      "successor": "tiled_reservoir2021",
+      "type": "inheritance",
+      "citing_paper": "tiled_reservoir2021",
+      "cited_paper": "production2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://yusuketokuyoshi.com/papers/2021/TiledReservoirSampling21-11-ecdc.pdf",
+          "locator": "§2.1 Stochastic Light Culling for Candidates; §3 Results",
+          "explanation": "Replaces Production ReSTIR's uniform per-pixel candidates with candidate sampling that incorporates stochastic culling. Section 3 explicitly retains Wyman and Panteleev's temporal resampling and visibility reuse during shading.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:object_space2024",
+      "predecessor": "restir_di2020",
+      "successor": "object_space2024",
+      "type": "citation",
+      "citing_paper": "object_space2024",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/f1264f05-ba89-4f21-81e7-7e7c77ec9115/content",
+          "locator": "References, p.4, [BWP*20] Bitterli et al.",
+          "explanation": "The published short paper's reference list includes this work; §2, p. 2, discusses its reservoir reuse.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_gi2021:object_space2024",
+      "predecessor": "restir_gi2021",
+      "successor": "object_space2024",
+      "type": "citation",
+      "citing_paper": "object_space2024",
+      "cited_paper": "restir_gi2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/f1264f05-ba89-4f21-81e7-7e7c77ec9115/content",
+          "locator": "References, p.4, [OLK*21] Ouyang et al.",
+          "explanation": "The published short paper's reference list includes this work; §2, p. 2, discusses its reservoir reuse.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:object_space2024",
+      "predecessor": "gris2022",
+      "successor": "object_space2024",
+      "type": "citation",
+      "citing_paper": "object_space2024",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/f1264f05-ba89-4f21-81e7-7e7c77ec9115/content",
+          "locator": "References, p.4, [LKB*22] Lin et al.",
+          "explanation": "The published short paper's reference list includes this work; §2, p. 2, discusses its reservoir reuse.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:regir2021:object_space2024",
+      "predecessor": "regir2021",
+      "successor": "object_space2024",
+      "type": "citation",
+      "citing_paper": "object_space2024",
+      "cited_paper": "regir2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/f1264f05-ba89-4f21-81e7-7e7c77ec9115/content",
+          "locator": "References, p.4, [BJW21] Boksansky et al.",
+          "explanation": "The published short paper's reference list includes this work; §2, p. 2, discusses its reservoir reuse.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "inheritance:restir_gi2021:object_space2024",
+      "predecessor": "restir_gi2021",
+      "successor": "object_space2024",
+      "type": "inheritance",
+      "citing_paper": "object_space2024",
+      "cited_paper": "restir_gi2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/f1264f05-ba89-4f21-81e7-7e7c77ec9115/content",
+          "locator": "§4 Implementation and Results; §4.1–4.3, p.3",
+          "explanation": "Explicitly implements ReSTIR GI in a Unity object-space system. Surface adjacency determines spatial neighbors, object-space addressing removes the need for motion-based reprojection, and persistent layers provide fallback reservoirs for disocclusions. Section 4 also states that bias correction was not implemented, so the results are biased.",
+          "checked": "2026-10-30",
+          "method": "full_text_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:object_space2024:pg2025",
+      "predecessor": "object_space2024",
+      "successor": "pg2025",
+      "type": "citation",
+      "citing_paper": "pg2025",
+      "cited_paper": "object_space2024",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/papers/siga25_ReSTIR_PG.pdf",
+          "locator": "References, p.11, Tianyu Li and Xiaoxin Guo (2024); §2.2",
+          "explanation": "The reference list includes the Object Space short paper, and §2.2 identifies it as a variant that stores samples in texture space. This does not establish that PG inherits its method.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:multiview2023:pg2025",
+      "predecessor": "multiview2023",
+      "successor": "pg2025",
+      "type": "citation",
+      "citing_paper": "pg2025",
+      "cited_paper": "multiview2023",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://cwyman.org/papers/siga25_ReSTIR_PG.pdf",
+          "locator": "References, p.11, Alexander Weinrauch et al. (2023); §2.2",
+          "explanation": "The reference list includes TOG 42(4), Article 87, and §2.2 identifies it as a surface-cache reservoir variant. This confirms direct relevance but does not establish that PG adopts its cache architecture.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_di2020:light_subpath2023",
+      "predecessor": "restir_di2020",
+      "successor": "light_subpath2023",
+      "type": "citation",
+      "citing_paper": "light_subpath2023",
+      "cited_paper": "restir_di2020",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://www.sciencedirect.com/science/article/pii/S0097849323000055",
+          "locator": "Publisher public References (22), Bitterli et al., Spatiotemporal reservoir resampling (2020)",
+          "explanation": "The publisher's public reference list includes this work. The full text is unavailable, so this record establishes a citation only, not technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:restir_gi2021:light_subpath2023",
+      "predecessor": "restir_gi2021",
+      "successor": "light_subpath2023",
+      "type": "citation",
+      "citing_paper": "light_subpath2023",
+      "cited_paper": "restir_gi2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://www.sciencedirect.com/science/article/pii/S0097849323000055",
+          "locator": "Publisher public References (22), Ouyang et al., ReSTIR GI",
+          "explanation": "The publisher's public reference list includes this work. The full text is unavailable, so this record establishes a citation only, not technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:gris2022:light_subpath2023",
+      "predecessor": "gris2022",
+      "successor": "light_subpath2023",
+      "type": "citation",
+      "citing_paper": "light_subpath2023",
+      "cited_paper": "gris2022",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://www.sciencedirect.com/science/article/pii/S0097849323000055",
+          "locator": "Publisher public References (22), Lin et al., Generalized resampled importance sampling (2022)",
+          "explanation": "The publisher's public reference list includes this work. The full text is unavailable, so this record establishes a citation only, not technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    },
+    {
+      "id": "citation:world_space2021:light_subpath2023",
+      "predecessor": "world_space2021",
+      "successor": "light_subpath2023",
+      "type": "citation",
+      "citing_paper": "light_subpath2023",
+      "cited_paper": "world_space2021",
+      "verification": "verified",
+      "evidence": [
+        {
+          "source_url": "https://www.sciencedirect.com/science/article/pii/S0097849323000055",
+          "locator": "Publisher public References (22), Boissé, World-space spatiotemporal reservoir reuse (2021)",
+          "explanation": "The publisher's public reference list includes this work. The full text is unavailable, so this record establishes a citation only, not technical inheritance.",
+          "checked": "2026-10-30",
+          "method": "reference_list_review"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2743 @@
+{
+  "schema_version": 1,
+  "cutoff_date": "2026-10-30",
+  "papers": [
+    {
+      "paper_id": "ris2005",
+      "title": "Importance Resampling for Global Illumination",
+      "short_title": "RIS",
+      "authors": [
+        "Justin F. Talbot",
+        "David Cline",
+        "Parris Egbert"
+      ],
+      "year": 2005,
+      "venue": "EGSR",
+      "publication_status": "published",
+      "doi": "10.2312/EGWR/EGSR05/139-146",
+      "tags": [
+        "foundations"
+      ],
+      "role": "mainline",
+      "problem": "How can Monte Carlo variance be reduced when a target distribution is easy to evaluate but difficult to sample directly?",
+      "contributions": [
+        "Applies importance resampling to lighting integrals and derives the corresponding RIS estimator.",
+        "Analyzes the tradeoff between the number of candidates and the number of final samples."
+      ],
+      "changes": "Provides the estimator foundation for later reservoir resampling, without the cross-pixel or cross-frame reuse introduced by ReSTIR.",
+      "limitations": [
+        "Candidates still have to be generated and evaluated, so their cost limits the benefit of resampling.",
+        "This map includes the EGSR paper; the master's thesis with the same title is not a separate node."
+      ],
+      "links": {
+        "paper": "https://doi.org/10.2312/EGWR/EGSR05/139-146",
+        "pdf": "https://diglib.eg.org/bitstream/handle/10.2312/EGWR.EGSR05.139-146/139-146.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://doi.org/10.2312/EGWR/EGSR05/139-146",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://diglib.eg.org/bitstream/handle/10.2312/EGWR.EGSR05.139-146/139-146.pdf",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2005-importance-resampling-for-global-illumination.pdf",
+        "sha256": "c9cf4623e34df98bfd63fe6cdb36fa27855c9934e2bbc1cc2452f2876f9ac630",
+        "version": "Publisher's public PDF of the EGSR 2005 paper",
+        "source_url": "https://diglib.eg.org/bitstream/handle/10.2312/EGWR.EGSR05.139-146/139-146.pdf"
+      }
+    },
+    {
+      "paper_id": "restir_di2020",
+      "title": "Spatiotemporal Reservoir Resampling for Real-time Ray Tracing with Dynamic Direct Lighting",
+      "short_title": "ReSTIR DI",
+      "authors": [
+        "Benedikt Bitterli",
+        "Chris Wyman",
+        "Matt Pharr",
+        "Peter Shirley",
+        "Aaron Lefohn",
+        "Wojciech Jarosz"
+      ],
+      "year": 2020,
+      "venue": "TOG / SIGGRAPH",
+      "publication_status": "published",
+      "doi": "10.1145/3386569.3392481",
+      "tags": [
+        "foundations"
+      ],
+      "role": "mainline",
+      "problem": "How can millions of dynamic lights be handled with only a few shadow rays per pixel?",
+      "contributions": [
+        "Compresses candidates into weighted reservoirs and repeatedly resamples them across space and time.",
+        "Derives both an unbiased estimator and lower-noise biased variants that allow energy loss."
+      ],
+      "changes": "Extends RIS with sample reuse and normalization across pixels and frames.",
+      "limitations": [
+        "The original paper primarily addresses direct illumination.",
+        "Correlation, visibility changes, and rare useful candidates can still cause artifacts; the biased variants lose energy."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/bitterli2020spatiotemporal/",
+        "pdf": "https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf",
+        "code": "https://github.com/NVIDIA-RTX/RTXDI"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/bitterli2020spatiotemporal/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2020-spatiotemporal-reservoir-resampling-for-direct-lighting.pdf",
+        "sha256": "a1ae1233eecd4f82cc9502900de08012e9a0c233fb8014f53f20c2e9814f243d",
+        "version": "Existing local author PDF; its SHA-256 matches the catalog. RTXDI is a later production implementation, not the original paper's exact code.",
+        "source_url": "https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf"
+      }
+    },
+    {
+      "paper_id": "production2021",
+      "title": "Rearchitecting Spatiotemporal Resampling for Production",
+      "short_title": "Production ReSTIR",
+      "authors": [
+        "Chris Wyman",
+        "Alexey Panteleev"
+      ],
+      "year": 2021,
+      "venue": "HPG",
+      "publication_status": "published",
+      "doi": "10.2312/hpg.20211281",
+      "tags": [
+        "foundations",
+        "reuse_quality"
+      ],
+      "role": "optimization",
+      "problem": "How can the sampling and shading costs of the original ReSTIR fit within a game's rendering budget?",
+      "contributions": [
+        "Uses presampling to improve memory access coherence.",
+        "Revises visibility handling and decouples shading from reuse to offer quality–performance controls."
+      ],
+      "changes": "Rearchitects the execution pipeline and candidate generation of the original ReSTIR DI.",
+      "limitations": [
+        "Production configurations such as visibility reuse include biased choices.",
+        "Very small or rare contributing lights can still be missed; fine detail, specular transport, and correlation remain challenging."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/wyman2021rearchitecting/",
+        "pdf": "https://d1qx31qr3h6wln.cloudfront.net/publications/hpg21_rearchitectingReSTIR.pdf",
+        "code": "https://github.com/NVIDIA-RTX/RTXDI"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/wyman2021rearchitecting/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://d1qx31qr3h6wln.cloudfront.net/publications/hpg21_rearchitectingReSTIR.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2021-rearchitecting-spatiotemporal-resampling-for-production.pdf",
+        "sha256": "b8f225c6989527003dfc0963b44c78fc5e7c4ff0390f1fe620ed33bd3c4d2265",
+        "version": "Public author version. The work is identified by its published metadata; this copy is not designated as the version of record.",
+        "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/hpg21_rearchitectingReSTIR.pdf"
+      }
+    },
+    {
+      "paper_id": "regir2021",
+      "title": "Rendering Many Lights with Grid-Based Reservoirs",
+      "short_title": "ReGIR",
+      "authors": [
+        "Jakub Boksansky",
+        "Paula Jukarainen",
+        "Chris Wyman"
+      ],
+      "year": 2021,
+      "venue": "Ray Tracing Gems II (book chapter)",
+      "publication_status": "book_chapter",
+      "doi": "10.1007/978-1-4842-7185-8_23",
+      "tags": [
+        "supporting",
+        "transport"
+      ],
+      "role": "resource",
+      "problem": "How can useful many-light candidates be generated quickly at arbitrary shading points in world space?",
+      "contributions": [
+        "Stores reservoirs in a coarse grid to preselect light candidates in world space.",
+        "Resamples the grid's candidates at each shading point using the BRDF."
+      ],
+      "changes": "Applies ReSTIR's reservoir and chained-resampling ideas to world-space candidate generation, including for secondary rays.",
+      "limitations": [
+        "Grid resolution, coverage, and memory usage affect performance and quality.",
+        "This book chapter focuses on candidate generation, which differs from screen-space reuse of complete paths."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/boksansky2021rendering/",
+        "pdf": "https://cwyman.org/papers/rtg2-manyLightReGIR.pdf",
+        "code": "https://github.com/NVIDIA-RTX/RTXDI"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/boksansky2021rendering/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://cwyman.org/papers/rtg2-manyLightReGIR.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2021-rendering-many-lights-with-grid-based-reservoirs.pdf",
+        "sha256": "f82c945864403187ee21df9f292bdd455e4683ed18b63fab46828a383960d873",
+        "version": "Public author version. The work is identified by its published metadata; this copy is not designated as the version of record.",
+        "source_url": "https://cwyman.org/papers/rtg2-manyLightReGIR.pdf"
+      }
+    },
+    {
+      "paper_id": "restir_gi2021",
+      "title": "ReSTIR GI: Path Resampling for Real-Time Path Tracing",
+      "short_title": "ReSTIR GI",
+      "authors": [
+        "Yaobin Ouyang",
+        "Shiqiu Liu",
+        "Markus Kettunen",
+        "Matt Pharr",
+        "Jacopo Pantaleoni"
+      ],
+      "year": 2021,
+      "venue": "CGF / HPG",
+      "publication_status": "published",
+      "doi": "10.1111/cgf.14378",
+      "tags": [
+        "foundations",
+        "transport"
+      ],
+      "role": "mainline",
+      "problem": "How can useful multi-bounce indirect lighting be reused when tracing only a few paths per pixel?",
+      "contributions": [
+        "Applies screen-space spatiotemporal resampling to indirect lighting paths.",
+        "Uses path-vertex reconnection and reservoir merging for highly parallel path reuse."
+      ],
+      "changes": "Moves from DI light samples to multi-bounce paths, sharing indirect lighting information between neighboring pixels.",
+      "limitations": [
+        "Uses a Lambertian approximation at the reuse point, limiting its suitability for complex multi-bounce glossy transport.",
+        "Screen-space history can fail under rapid motion and in disoccluded regions; practical handling of dynamic scenes may introduce bias."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/publication/2021-06_restir-gi-path-resampling-real-time-path-tracing",
+        "pdf": "https://d1qx31qr3h6wln.cloudfront.net/publications/ReSTIR%20GI.pdf",
+        "code": "https://github.com/NVIDIA-RTX/RTXDI"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/publication/2021-06_restir-gi-path-resampling-real-time-path-tracing",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://d1qx31qr3h6wln.cloudfront.net/publications/ReSTIR%20GI.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "The institution's page is dated 2021-06-24, and the journal's formal online publication date is 2021-11-28. Both fall in 2021. The RTXDI link points to a later production implementation, not the original paper's code."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2021-restir-gi.pdf",
+        "sha256": "52a748cb107850036633e7e948adf364e174fc4e423f7329f5a850986464dac5",
+        "version": "Public author version. The work is identified by its published metadata; this copy is not designated as the version of record.",
+        "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/ReSTIR%20GI.pdf"
+      }
+    },
+    {
+      "paper_id": "tiled_reservoir2021",
+      "title": "Tiled Reservoir Sampling for Many-Light Rendering",
+      "short_title": "Tiled Reservoirs",
+      "authors": [
+        "Yusuke Tokuyoshi"
+      ],
+      "year": 2021,
+      "venue": "Advanced Micro Devices Technical Report No. 21-11-ecdc, November 2021",
+      "publication_status": "technical_report",
+      "doi": null,
+      "tags": [
+        "reuse_quality",
+        "supporting"
+      ],
+      "role": "resource",
+      "problem": "Dynamic VPL lighting retains high variance when ReSTIR's initial candidates ignore distance variation near light sources.",
+      "contributions": [
+        "Combines tiled stochastic light culling with reservoir sampling so initial candidates account for light intensity and distance.",
+        "Uses interleaved sampling to improve GPU access coherence and stochastic rounding during reprojection to reduce correlation artifacts in motion."
+      ],
+      "changes": "Improves Production ReSTIR's tiled uniform candidate generation; the experiments retain its temporal visibility reuse.",
+      "limitations": [
+        "Experiments use single-bounce diffuse VPLs and omit spatial reuse.",
+        "The per-tile light subset itself still ignores distance, and interleaved correlation patterns can remain."
+      ],
+      "links": {
+        "paper": "https://yusuketokuyoshi.com/",
+        "pdf": "https://yusuketokuyoshi.com/papers/2021/TiledReservoirSampling21-11-ecdc.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://yusuketokuyoshi.com/papers/2021/TiledReservoirSampling21-11-ecdc.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Checked the November 2021 cover date, §§2.1–2.4, §3, §4, and References through the search service's indexed full text."
+        },
+        {
+          "url": "https://yusuketokuyoshi.com/",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "The author's bibliography confirms Technical Report No. 21-11-ecdc (2021)."
+        },
+        {
+          "url": "https://gpuopen.com/learn/publications/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "AMD's directory confirms the report number, author, and year 2021; the public PDF is approximately 93 MB."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "Reviewed selected passages and references from the search index of the author's public PDF; the approximately 93 MB file was not downloaded locally. The year follows the November 2021 cover date and the AMD and author directories. Later references dated 2022 do not create a separate node. No evidence of a separate conference version or standalone code was found."
+      },
+      "pdf": {
+        "status": "missing",
+        "local_file": null,
+        "sha256": null,
+        "version": "AMD Technical Report No. 21-11-ecdc, November 2021. Public full text confirmed; no local copy.",
+        "source_url": "https://yusuketokuyoshi.com/papers/2021/TiledReservoirSampling21-11-ecdc.pdf"
+      }
+    },
+    {
+      "paper_id": "volume2021",
+      "title": "Fast Volume Rendering with Spatiotemporal Reservoir Resampling",
+      "short_title": "Volumetric ReSTIR",
+      "authors": [
+        "Daqi Lin",
+        "Chris Wyman",
+        "Cem Yuksel"
+      ],
+      "year": 2021,
+      "venue": "TOG / SIGGRAPH Asia",
+      "publication_status": "published",
+      "doi": "10.1145/3478513.3480499",
+      "tags": [
+        "transport"
+      ],
+      "role": "branch",
+      "problem": "How can expensive transmittance and multiple scattering in participating media be estimated with few samples?",
+      "contributions": [
+        "Extends ReSTIR to volumetric path space.",
+        "Uses inexpensive approximations during reuse and unbiased evaluation for final shading to concentrate expensive computation."
+      ],
+      "changes": "Extends surface direct-light sampling to multidimensional paths that include free-flight distances and volume emission.",
+      "limitations": [
+        "High-dimensional path reuse depends on available candidates and effective mappings.",
+        "Target-function evaluation, sample correlation, and computational costs in media still limit the benefit."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/publication/2021-11_fast-volume-rendering-spatiotemporal-reservoir-resampling",
+        "pdf": "https://cwyman.org/papers/siga21_volumeReSTIR_small.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/publication/2021-11_fast-volume-rendering-spatiotemporal-reservoir-resampling",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://cwyman.org/papers/siga21_volumeReSTIR_small.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2021-fast-volume-rendering-with-restir.pdf",
+        "sha256": "83c496ea69c8ed03aace5025eddb41295182cf527f6b7c21d09f80b4f85ff4d8",
+        "version": "Existing compressed author preprint corresponding to the published TOG paper; supplementary material belongs to the same node.",
+        "source_url": "https://cwyman.org/papers/siga21_volumeReSTIR_small.pdf"
+      }
+    },
+    {
+      "paper_id": "world_space2021",
+      "title": "World-Space Spatiotemporal Reservoir Reuse for Ray-Traced Global Illumination",
+      "short_title": "World-Space ReSTIR",
+      "authors": [
+        "Guillaume Boissé"
+      ],
+      "year": 2021,
+      "venue": "SIGGRAPH Asia Technical Communications",
+      "publication_status": "published",
+      "doi": "10.1145/3478512.3488613",
+      "tags": [
+        "transport",
+        "reuse_quality"
+      ],
+      "role": "branch",
+      "problem": "How can screen-space reservoirs be extended to secondary vertices along eye paths?",
+      "contributions": [
+        "Caches path-vertex reservoirs in a GPU hash grid.",
+        "Randomly selects neighboring reservoirs and jitters descriptors to reduce block artifacts from grid-based reuse."
+      ],
+      "changes": "Retains ReSTIR resampling while replacing screen-space neighborhoods with world-space hash neighborhoods.",
+      "limitations": [
+        "Grid resolution, cache capacity, and reuse range affect the benefit.",
+        "The paper uses normal-based rejection to reduce darkening from biased reuse; this does not guarantee full unbiasedness."
+      ],
+      "links": {
+        "paper": "https://sa2021.siggraph.org/en/attend/technical-communications/7/session/176.html",
+        "pdf": "https://gpuopen.com/download/publications/SA2021_WorldSpace_ReSTIR.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://sa2021.siggraph.org/en/attend/technical-communications/7/session/176.html",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://gpuopen.com/download/publications/SA2021_WorldSpace_ReSTIR.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2021-world-space-spatiotemporal-reservoir-reuse.pdf",
+        "sha256": "b71e275b81e0b88c77646955d46a27cf761663528677f8c08bfb9d8c36ac0c1f",
+        "version": "AMD's public four-page author version of the technical communication, corresponding to the published ACM paper.",
+        "source_url": "https://gpuopen.com/download/publications/SA2021_WorldSpace_ReSTIR.pdf"
+      }
+    },
+    {
+      "paper_id": "ddgi_resampling2022",
+      "title": "Dynamic Diffuse Global Illumination Resampling",
+      "short_title": "DDGI Resampling",
+      "authors": [
+        "Zander Majercik",
+        "Thomas Müller",
+        "Alexander Keller",
+        "Derek Nowrouzezahrai",
+        "Morgan McGuire"
+      ],
+      "year": 2022,
+      "venue": "CGF 41(1)",
+      "publication_status": "published",
+      "doi": "10.1111/cgf.14427",
+      "tags": [
+        "transport"
+      ],
+      "role": "branch",
+      "problem": "How can screen-space resampling and a world-space lighting cache be combined to reduce multi-bounce diffuse noise?",
+      "contributions": [
+        "Delays the DDGI lookup by one bounce and jointly resamples cached indirect lighting and direct-light candidates.",
+        "Adapts probe interpolation, glossy transport, and cache queries."
+      ],
+      "changes": "Combines ReSTIR with DDGI, trading cache bias for low-noise real-time global illumination.",
+      "limitations": [
+        "Resampling does not automatically remove probe-cache bias or light leaks.",
+        "Best suited to transport terminated at a rough glossy or diffuse event."
+      ],
+      "links": {
+        "paper": "https://onlinelibrary.wiley.com/doi/10.1111/cgf.14427",
+        "pdf": "https://tom94.net/data/publications/majercik21dynamic/majercik21dynamic.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://onlinelibrary.wiley.com/doi/10.1111/cgf.14427",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://tom94.net/data/publications/majercik21dynamic/majercik21dynamic.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2022-dynamic-diffuse-global-illumination-resampling.pdf",
+        "sha256": "ea630272d98bb72db5c3272ae9ed74b2916fdac5dde73e29e8d889d0acab765e",
+        "version": "Author manuscript released in December 2021. The CGF volume is dated 2022; first published online on 2021-12-06. The SIGGRAPH 2021 Talk is an earlier short version, not a separate node.",
+        "source_url": "https://tom94.net/data/publications/majercik21dynamic/majercik21dynamic.pdf"
+      }
+    },
+    {
+      "paper_id": "gris2022",
+      "title": "Generalized Resampled Importance Sampling: Foundations of ReSTIR",
+      "short_title": "GRIS / ReSTIR PT",
+      "authors": [
+        "Daqi Lin",
+        "Markus Kettunen",
+        "Benedikt Bitterli",
+        "Jacopo Pantaleoni",
+        "Cem Yuksel",
+        "Chris Wyman"
+      ],
+      "year": 2022,
+      "venue": "TOG / SIGGRAPH",
+      "publication_status": "published",
+      "doi": "10.1145/3528223.3530158",
+      "tags": [
+        "foundations",
+        "transport"
+      ],
+      "role": "mainline",
+      "problem": "When is resampling still correct and convergent with correlated samples, unknown densities, and different path domains?",
+      "contributions": [
+        "Generalizes RIS using unbiased contribution weights and establishes variance and convergence conditions.",
+        "Uses shift mappings to build ReSTIR PT for more complex diffuse and specular paths."
+      ],
+      "changes": "Unifies earlier ReSTIR methods while relaxing the assumptions of independent, identically distributed samples and evaluable PDFs.",
+      "limitations": [
+        "Unbiasedness alone does not ensure convergence; support, weight, and correlation conditions still apply.",
+        "Complex mappings, complete path state, and target evaluation add cost; practical temporal-reuse settings do not automatically inherit every theoretical guarantee."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/lin2022generalized/",
+        "pdf": "https://d1qx31qr3h6wln.cloudfront.net/publications/sig22_GRIS.pdf",
+        "code": "https://github.com/DQLin/ReSTIR_PT"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/lin2022generalized/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://d1qx31qr3h6wln.cloudfront.net/publications/sig22_GRIS.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2022-generalized-resampled-importance-sampling.pdf",
+        "sha256": "38b86bffc20f61d6984b868be3f5a630b9d3d93a92c106896133799188a33f00",
+        "version": "Public author version. The work is identified by its published metadata; this copy is not designated as the version of record.",
+        "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/sig22_GRIS.pdf"
+      }
+    },
+    {
+      "paper_id": "conditional2023",
+      "title": "Conditional Resampled Importance Sampling and ReSTIR",
+      "short_title": "Conditional / Suffix ReSTIR",
+      "authors": [
+        "Markus Kettunen",
+        "Daqi Lin",
+        "Ravi Ramamoorthi",
+        "Thomas Bashford-Rogers",
+        "Chris Wyman"
+      ],
+      "year": 2023,
+      "venue": "SIGGRAPH Asia Conference",
+      "publication_status": "published",
+      "doi": "10.1145/3610548.3618245",
+      "tags": [
+        "foundations",
+        "transport"
+      ],
+      "role": "mainline",
+      "problem": "How can a path suffix be reused correctly when it depends on a prefix that is not reused?",
+      "contributions": [
+        "Extends GRIS and contribution weights to conditional probability spaces.",
+        "Demonstrates unbiased subpath reuse with the Suffix ReSTIR final-gather prototype."
+      ],
+      "changes": "Extends whole-path resampling to conditional subpath reuse and adds final gathering to reduce correlation.",
+      "limitations": [
+        "Requires the paper's conditional-independence and conditional-weight conditions.",
+        "The prototype is not fully optimized, and the additional gathering costs more than standard ReSTIR PT."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/kettunen2023conditional/",
+        "pdf": "https://research.nvidia.com/labs/rtr/publication/kettunen2023conditional/kettunen2023conditional.pdf",
+        "code": "https://github.com/NVlabs/conditional-restir-prototype"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/kettunen2023conditional/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/kettunen2023conditional/kettunen2023conditional.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2023-conditional-resampled-importance-sampling.pdf",
+        "sha256": "7c39a32f168c0f67d721d2df82d385358a9132ec58e724bc4e0f0e98339ca4b9",
+        "version": "Public author version. The work is identified by its published metadata; this copy is not designated as the version of record.",
+        "source_url": "https://research.nvidia.com/labs/rtr/publication/kettunen2023conditional/kettunen2023conditional.pdf"
+      }
+    },
+    {
+      "paper_id": "course2023",
+      "title": "A Gentle Introduction to ReSTIR: Path Reuse in Real-time",
+      "short_title": "ReSTIR Course",
+      "authors": [
+        "Chris Wyman",
+        "Markus Kettunen",
+        "Daqi Lin",
+        "Benedikt Bitterli",
+        "Cem Yuksel",
+        "Wojciech Jarosz",
+        "Pawel Kozlowski",
+        "Giovanni De Francesco"
+      ],
+      "year": 2023,
+      "venue": "SIGGRAPH Course",
+      "publication_status": "course",
+      "doi": "10.1145/3587423.3595511",
+      "tags": [
+        "supporting",
+        "foundations"
+      ],
+      "role": "resource",
+      "problem": "How can RIS, reservoirs, path reuse, and production practice be understood as a coherent whole?",
+      "contributions": [
+        "Brings together theoretical derivations, algorithm descriptions, and implementation experience.",
+        "Provides course notes, slides, and examples that connect concepts spread across the original papers."
+      ],
+      "changes": "An educational synthesis, not a new method-inheritance node.",
+      "limitations": [
+        "The course was published in 2023; the current public long-form notes were updated on 2024-03-04.",
+        "The course cannot replace each research paper's specific guarantees and experimental evidence."
+      ],
+      "links": {
+        "paper": "https://intro-to-restir.cwyman.org/",
+        "pdf": "https://intro-to-restir.cwyman.org/presentations/2023ReSTIR_Course_Notes.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://intro-to-restir.cwyman.org/",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://intro-to-restir.cwyman.org/presentations/2023ReSTIR_Course_Notes.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2023-gentle-introduction-to-restir-course-notes.pdf",
+        "sha256": "10ff8a6ce481ea40f0325a347fc4be7b21d5af64a90c939128b2ae4a2e83bbee",
+        "version": "Long-form notes for the 2023 course; the author's site states Updated Mar 4, 2024.",
+        "source_url": "https://intro-to-restir.cwyman.org/presentations/2023ReSTIR_Course_Notes.pdf"
+      }
+    },
+    {
+      "paper_id": "inverse2023",
+      "title": "Amortizing Samples in Physics-Based Inverse Rendering using ReSTIR",
+      "short_title": "Inverse-rendering ReSTIR",
+      "authors": [
+        "Yu-Chen Wang",
+        "Chris Wyman",
+        "Lifan Wu",
+        "Shuang Zhao"
+      ],
+      "year": 2023,
+      "venue": "TOG / SIGGRAPH Asia",
+      "publication_status": "published",
+      "doi": "10.1145/3618331",
+      "tags": [
+        "estimators"
+      ],
+      "role": "branch",
+      "problem": "How can temporal coherence be exploited as a scene changes gradually during gradient descent?",
+      "contributions": [
+        "Develops ReSTIR estimators for the interior and boundary terms of differential direct illumination.",
+        "Combines antithetic sampling with an inverse-rendering pipeline."
+      ],
+      "changes": "Adapts temporal reuse in dynamic forward lighting to reuse differential samples across inverse-rendering iterations.",
+      "limitations": [
+        "Primarily addresses inverse direct illumination; it does not claim to solve all multi-bounce differential transport.",
+        "Boundary terms, changes in scene parameters, and antithetic sampling require dedicated implementation."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/wang2023amortizing/",
+        "pdf": "https://projects.shuangz.com/psdr-restir-sa23/psdr-restir-sa23.pdf",
+        "code": "https://projects.shuangz.com/psdr-restir-sa23/"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/wang2023amortizing/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://projects.shuangz.com/psdr-restir-sa23/psdr-restir-sa23.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2023-amortizing-samples-in-inverse-rendering-using-restir.pdf",
+        "sha256": "3c89fb07d8c0b473b6e70110644bda3b7619a7de5c8a71a0b94efe82197b4480",
+        "version": "Public author version. The work is identified by its published metadata; this copy is not designated as the version of record.",
+        "source_url": "https://projects.shuangz.com/psdr-restir-sa23/psdr-restir-sa23.pdf"
+      }
+    },
+    {
+      "paper_id": "light_subpath2023",
+      "title": "Light subpath reservoir for interactive ray-traced global illumination",
+      "short_title": "Light Subpath",
+      "authors": [
+        "Fuyan Liu",
+        "Junwen Gan"
+      ],
+      "year": 2023,
+      "venue": "Computers & Graphics 111, 37–46",
+      "publication_status": "published",
+      "doi": "10.1016/j.cag.2023.01.004",
+      "tags": [
+        "transport"
+      ],
+      "role": "branch",
+      "problem": "How can useful light subpaths from bidirectional paths be reused at interactive cost in scenes dominated by indirect illumination?",
+      "contributions": [
+        "Stores and resamples high-contribution light subpaths in a world-space grid for connection at arbitrary eye-path vertices.",
+        "Builds a geometric grid to estimate resampling weights and updates reservoirs with new light subpaths each frame."
+      ],
+      "changes": "Combines RIS with BDPT, storing light subpaths rather than only path samples at screen pixels.",
+      "limitations": [
+        "The publisher's public limitations section states that the computational overhead remains unsuitable for real-time games; time and memory costs increase.",
+        "Only the abstract, introduction, section summaries, and public references were accessible. Full text and implementation were not obtained, so the estimator's correctness still requires review of the methods."
+      ],
+      "links": {
+        "paper": "https://www.sciencedirect.com/science/article/pii/S0097849323000055",
+        "pdf": null,
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://www.sciencedirect.com/science/article/pii/S0097849323000055",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "The publisher confirms the title, authors, volume 111, pages 37–46, April 2023, and public References. The accessible Introduction explicitly combines RIS with BDPT; the complete method is inaccessible."
+        },
+        {
+          "url": "https://doi.org/10.1016/j.cag.2023.01.004",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "The formal DOI was also cross-checked against the bibliography of the ReSTIR BDPT author manuscript."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "abstract_only",
+        "notes": "Reviewed the publisher's public abstract, Introduction, Limitations excerpts, and references, without claiming access to the complete paper. Only visible citations are included; a general mention of RIS does not establish technical inheritance."
+      },
+      "pdf": {
+        "status": "missing",
+        "local_file": null,
+        "sha256": null,
+        "version": "Published C&G 2023; no legal public PDF located in this audit",
+        "source_url": null
+      }
+    },
+    {
+      "paper_id": "multiview2023",
+      "title": "Effect-based Multi-viewer Caching for Cloud-native Rendering",
+      "short_title": "Multi-viewer Cache",
+      "authors": [
+        "Alexander Weinrauch",
+        "Wolfgang Tatzgern",
+        "Pascal Stadlbauer",
+        "Alexis Crickx",
+        "Jozef Hladky",
+        "Arno Coomans",
+        "Martin Winter",
+        "Joerg H. Mueller",
+        "Markus Steinberger"
+      ],
+      "year": 2023,
+      "venue": "TOG 42(4), Article 87",
+      "publication_status": "published",
+      "doi": "10.1145/3592431",
+      "tags": [
+        "reuse_quality"
+      ],
+      "role": "branch",
+      "problem": "How can multiple viewers in the same virtual scene share lighting computations to reduce cloud-rendering costs?",
+      "contributions": [
+        "Shares shading computations across viewers through world-space and surface caches.",
+        "Organizes caches by effect, covering ambient occlusion, direct lighting, and diffuse indirect lighting, and evaluates multi-GPU communication costs."
+      ],
+      "changes": "Extends sharing to multiple viewers. ReSTIR PG §2.2 explicitly places this work in the surface-reservoir-cache family.",
+      "limitations": [
+        "Only the institutional abstract and a subsequent paper's direct technical description were verified. The original full text, cache bias, and details of each effect remain to be checked.",
+        "The work focuses on multiple viewers sharing the same virtual world. Its abstract does not establish inheritance from a specific ReSTIR estimator."
+      ],
+      "links": {
+        "paper": "https://doi.org/10.1145/3592431",
+        "pdf": null,
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://tugraz.elsevierpure.com/en/publications/effect-based-multi-viewer-caching-for-cloud-native-rendering/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Verified all nine authors, the year, TOG volume and issue, DOI, and abstract. The institutional page uses the DOI suffix as the article number; Article 87 was cross-checked against ReSTIR PG's published references."
+        },
+        {
+          "url": "https://stadlbauer.solutions/en/publications",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "The author's publication list confirms the paper and its ACM link."
+        },
+        {
+          "url": "https://cwyman.org/papers/siga25_ReSTIR_PG.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Section 2.2 and References on p. 11 confirm that this work stores ReSTIR samples in surface caches, establishing its direct relevance."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "abstract_only",
+        "notes": "The complete paper could not be obtained. Inclusion rests on the institutional abstract, with direct ReSTIR relevance confirmed by the reviewed ReSTIR PG text. The later paper's description is not treated as a full-text review of this work."
+      },
+      "pdf": {
+        "status": "missing",
+        "local_file": null,
+        "sha256": null,
+        "version": "Published TOG 2023; no legal public full text located in this audit",
+        "source_url": null
+      }
+    },
+    {
+      "paper_id": "parameter2023",
+      "title": "Parameter-space ReSTIR for Differentiable and Inverse Rendering",
+      "short_title": "Parameter-space ReSTIR",
+      "authors": [
+        "Wesley Chang",
+        "Venkataram Sivaram",
+        "Derek Nowrouzezahrai",
+        "Toshiya Hachisuka",
+        "Ravi Ramamoorthi",
+        "Tzu-Mao Li"
+      ],
+      "year": 2023,
+      "venue": "SIGGRAPH Conference",
+      "publication_status": "published",
+      "doi": "10.1145/3588432.3591512",
+      "tags": [
+        "estimators"
+      ],
+      "role": "branch",
+      "problem": "Can neighboring inverse-rendering optimization iterations share gradient samples?",
+      "contributions": [
+        "Reformulates differential rendering integrals in parameter space.",
+        "Introduces positivized GRIS for signed gradients and reuses samples across iterations."
+      ],
+      "changes": "Associates reservoirs with optimization parameters rather than only pixels, shifting reuse from lighting values to parameter derivatives.",
+      "limitations": [
+        "The prototype mainly evaluates material-texture optimization under complex direct illumination.",
+        "Per-parameter state and signed contributions require special treatment; the method is not a general solution to full-path inverse rendering."
+      ],
+      "links": {
+        "paper": "https://weschang.com/publications/restir-dr/",
+        "pdf": "https://weschang.com/publications/restir-dr/restir-dr.pdf",
+        "code": "https://github.com/wchang22/ReSTIR_DR"
+      },
+      "sources": [
+        {
+          "url": "https://weschang.com/publications/restir-dr/",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://weschang.com/publications/restir-dr/restir-dr.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2023-parameter-space-restir.pdf",
+        "sha256": "8292f672bd90433622d26cafe4487fbf7a90d8a66064e454d5cb21c590d7c529",
+        "version": "Public author version. The work is identified by its published metadata; this copy is not designated as the version of record.",
+        "source_url": "https://weschang.com/publications/restir-dr/restir-dr.pdf"
+      }
+    },
+    {
+      "paper_id": "pdf_similarity2023",
+      "title": "Efficient Spatial Resampling Using the PDF Similarity",
+      "short_title": "PDF Similarity",
+      "authors": [
+        "Yusuke Tokuyoshi"
+      ],
+      "year": 2023,
+      "venue": "PACMCGIT / I3D",
+      "publication_status": "published",
+      "doi": "10.1145/3585501",
+      "tags": [
+        "reuse_quality"
+      ],
+      "role": "optimization",
+      "problem": "Why can samples reused across material and shadow boundaries produce worse results than no reuse?",
+      "contributions": [
+        "Rejects unsuitable spatial reuse based on the similarity of target-PDF shapes.",
+        "Estimates distributions using vMF approximations and temporal accumulation, with conventional geometric rejection to handle estimation uncertainty."
+      ],
+      "changes": "Extends depth- and normal-based heuristics to target-distribution similarity that incorporates BSDF and shadow information.",
+      "limitations": [
+        "Targets single-bounce connections such as direct lighting, rather than a similarity criterion for arbitrary complete paths.",
+        "Temporal estimates can respond slowly to moving shadows and introduce small bias; disocclusions and moving lights require care."
+      ],
+      "links": {
+        "paper": "https://yusuketokuyoshi.com/",
+        "pdf": "https://yusuketokuyoshi.com/papers/2023/Efficient_Spatial_Resampling_Using_the_PDF_Similarity.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://yusuketokuyoshi.com/",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://yusuketokuyoshi.com/papers/2023/Efficient_Spatial_Resampling_Using_the_PDF_Similarity.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2023-efficient-spatial-resampling-using-pdf-similarity.pdf",
+        "sha256": "433dd3662ad9c9b2233eb2c2cc6f34a1a9e14e24df8676f8828863741cb608fa",
+        "version": "Existing author version. Its copyright notice permits personal use and prohibits redistribution; the website links only to the public source.",
+        "source_url": "https://yusuketokuyoshi.com/papers/2023/Efficient_Spatial_Resampling_Using_the_PDF_Similarity.pdf"
+      }
+    },
+    {
+      "paper_id": "area2024",
+      "title": "Area ReSTIR: Resampling for Real-Time Defocus and Antialiasing",
+      "short_title": "Area ReSTIR",
+      "authors": [
+        "Song Zhang",
+        "Daqi Lin",
+        "Markus Kettunen",
+        "Cem Yuksel",
+        "Chris Wyman"
+      ],
+      "year": 2024,
+      "venue": "TOG / SIGGRAPH",
+      "publication_status": "published",
+      "doi": "10.1145/3658210",
+      "tags": [
+        "camera_dynamics"
+      ],
+      "role": "branch",
+      "problem": "How can ReSTIR handle subpixel detail, antialiasing, and depth of field effectively?",
+      "contributions": [
+        "Includes both two-dimensional film positions and two-dimensional lens positions in the reservoir's integration domain.",
+        "Develops subpixel temporal tracking and corresponding shift mappings."
+      ],
+      "changes": "Extends path integration at fixed subpixel positions to four-dimensional camera sampling over the pixel and lens.",
+      "limitations": [
+        "Temporal tracking and mappings require additional state and computation.",
+        "Does not resolve every dynamic-scene or motion-blur case; the public author code primarily demonstrates direct illumination."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/zhang2024area/",
+        "pdf": "https://research.nvidia.com/labs/rtr/publication/zhang2024area/zhang2024area.pdf",
+        "code": "https://github.com/guiqi134/Area-ReSTIR"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/zhang2024area/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/zhang2024area/zhang2024area.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2024-area-restir.pdf",
+        "sha256": "f204154cc16a236cbafb5a1b73d167c953476282c71bb62f58381dc2e37cdb1f",
+        "version": "Public author version. The work is identified by its published metadata; this copy is not designated as the version of record.",
+        "source_url": "https://research.nvidia.com/labs/rtr/publication/zhang2024area/zhang2024area.pdf"
+      }
+    },
+    {
+      "paper_id": "fg2024",
+      "title": "ReSTIR FG: Real-Time Reservoir Resampled Photon Final Gathering",
+      "short_title": "ReSTIR FG",
+      "authors": [
+        "René Kern",
+        "Felix Brüll",
+        "Thorsten Grosch"
+      ],
+      "year": 2024,
+      "venue": "EGSR Symposium Track",
+      "publication_status": "published",
+      "doi": "10.2312/sr.20241155",
+      "tags": [
+        "transport"
+      ],
+      "role": "branch",
+      "problem": "How can real-time global illumination capture both multi-bounce indirect lighting and caustics?",
+      "contributions": [
+        "Combines photon final gathering with spatiotemporal reservoir resampling.",
+        "Reuses photon-based candidates to capture caustic paths that are difficult to find from the camera."
+      ],
+      "changes": "Uses photon candidates and final gathering to complement camera-path approaches such as GI and PT in caustic transport.",
+      "limitations": [
+        "Photon density, gathering radius, and acceleration-structure costs affect quality and speed.",
+        "The author implementation does not emit photons from environment maps or directional lights; this is an implementation limitation."
+      ],
+      "links": {
+        "paper": "https://diglib.eg.org/items/df98f89d-a0ca-4800-9bc4-74528feaf872",
+        "pdf": "https://diglib.eg.org/bitstream/handle/10.2312/sr20241155/10_sr20241155.pdf",
+        "code": "https://github.com/TU-Clausthal-Rendering/ReSTIR-FG"
+      },
+      "sources": [
+        {
+          "url": "https://diglib.eg.org/items/df98f89d-a0ca-4800-9bc4-74528feaf872",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "abstract_only",
+        "notes": "Verified the publisher's metadata and abstract and the author's code README. The PDF download was interrupted; the incomplete file is retained but is not counted as available full text. Evidence from the methods remains to be added."
+      },
+      "pdf": {
+        "status": "missing",
+        "local_file": null,
+        "sha256": null,
+        "version": "Public author version. The work is identified by its published metadata; this copy is not designated as the version of record.",
+        "source_url": "https://diglib.eg.org/bitstream/handle/10.2312/sr20241155/10_sr20241155.pdf"
+      }
+    },
+    {
+      "paper_id": "mcmc2024",
+      "title": "Decorrelating ReSTIR Samplers via MCMC Mutations",
+      "short_title": "ReSTIR + MCMC",
+      "authors": [
+        "Rohan Sawhney",
+        "Daqi Lin",
+        "Markus Kettunen",
+        "Benedikt Bitterli",
+        "Ravi Ramamoorthi",
+        "Chris Wyman",
+        "Matt Pharr"
+      ],
+      "year": 2024,
+      "venue": "TOG",
+      "publication_status": "published",
+      "doi": "10.1145/3629166",
+      "tags": [
+        "reuse_quality",
+        "foundations"
+      ],
+      "role": "optimization",
+      "problem": "How can correlated noise and duplicate reservoir samples from repeated reuse be reduced?",
+      "contributions": [
+        "Inserts MCMC mutations between ReSTIR resampling steps.",
+        "Adjusts contribution weights after mutation to preserve unbiasedness of the corresponding estimator."
+      ],
+      "changes": "Locally modifies samples to increase diversity instead of only selecting among existing samples.",
+      "limitations": [
+        "Mutations add computation, and their benefit depends on the paths and proposal strategy.",
+        "Does not guarantee the removal of all correlation; rare, complex paths remain limited by candidate discovery."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/sawhney2024decorrelating/",
+        "pdf": "https://research.nvidia.com/labs/rtr/publication/sawhney2024decorrelating/ReSTIRMCMC.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/sawhney2024decorrelating/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/sawhney2024decorrelating/ReSTIRMCMC.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2024-decorrelating-restir-samplers-via-mcmc-mutations.pdf",
+        "sha256": "edd1b2a2d7a597799d2f55d165dba07606d147a22e205cc0d692d4098e5748c7",
+        "version": "The existing author manuscript has an October 2023 footer. The formal TOG publication is dated 2024; an earlier arXiv version appeared in 2022.",
+        "source_url": "https://research.nvidia.com/labs/rtr/publication/sawhney2024decorrelating/ReSTIRMCMC.pdf"
+      },
+      "versions": [
+        {
+          "kind": "preprint",
+          "year": 2022,
+          "url": "https://arxiv.org/abs/2211.00166"
+        }
+      ]
+    },
+    {
+      "paper_id": "mis_weight2024",
+      "title": "Enhancing Spatiotemporal Resampling with a Novel MIS Weight",
+      "short_title": "Novel MIS Weight",
+      "authors": [
+        "Xingyue Pan",
+        "Jiaxuan Zhang",
+        "Jiancong Huang",
+        "Ligang Liu"
+      ],
+      "year": 2024,
+      "venue": "CGF / Eurographics",
+      "publication_status": "published",
+      "doi": "10.1111/cgf.15049",
+      "tags": [
+        "reuse_quality"
+      ],
+      "role": "optimization",
+      "problem": "How can ReSTIR's energy loss and noise be reduced when candidate domains differ substantially?",
+      "contributions": [
+        "Introduces symmetric-ratio weights for resampling.",
+        "Discusses temporal-resampling and visibility optimizations that reduce energy loss in biased DI."
+      ],
+      "changes": "Revises weight design within GRIS and existing generalized MIS weighting schemes.",
+      "limitations": [
+        "The abstract's main empirical focus is ReSTIR DI; this does not establish applicability to arbitrary path domains.",
+        "The complete method and its conditions remain unverified, so the proposed inheritance relationship is not marked as verified."
+      ],
+      "links": {
+        "paper": "https://onlinelibrary.wiley.com/doi/10.1111/cgf.15049",
+        "pdf": "https://diglib.eg.org/bitstream/handle/10.1111/cgf15049/v43i2_40_15049.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://onlinelibrary.wiley.com/doi/10.1111/cgf.15049",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "abstract_only",
+        "notes": "Checked the publisher's metadata, abstract, and references. The public PDF endpoint returned HTML or a 403 response during this review; the method text has not been verified."
+      },
+      "pdf": {
+        "status": "missing",
+        "local_file": null,
+        "sha256": null,
+        "version": "Public author version. The work is identified by its published metadata; this copy is not designated as the version of record.",
+        "source_url": "https://diglib.eg.org/bitstream/handle/10.1111/cgf15049/v43i2_40_15049.pdf"
+      }
+    },
+    {
+      "paper_id": "object_space2024",
+      "title": "Real-time Seamless Object Space Shading",
+      "short_title": "Object Space",
+      "authors": [
+        "Tianyu Li",
+        "Xiaoxin Guo"
+      ],
+      "year": 2024,
+      "venue": "Eurographics Short Papers",
+      "publication_status": "published",
+      "doi": "10.2312/egs.20241026",
+      "tags": [
+        "camera_dynamics",
+        "reuse_quality"
+      ],
+      "role": "branch",
+      "problem": "How can ReSTIR GI operate on object surfaces while avoiding texture seams, reprojection errors, and disocclusion noise?",
+      "contributions": [
+        "Uses virtualized per-halfedge textures for seamless object-space shading.",
+        "Implements ReSTIR GI with surface-adjacency searches for spatial reuse and persistent layers that provide fallback reservoirs after disocclusion."
+      ],
+      "changes": "Moves ReSTIR GI sample addressing into object space, eliminating motion-vector reprojection and finding spatial neighbors through surface adjacency.",
+      "limitations": [
+        "Section 4 explicitly states that ReSTIR bias correction was not implemented; the experimental results are biased.",
+        "Persistent layers and virtual textures add storage and management overhead. This is a four-page short paper."
+      ],
+      "links": {
+        "paper": "https://diglib.eg.org/items/538ea8c6-183c-4c07-bf4c-73dd852a411a",
+        "pdf": "https://diglib.eg.org/server/api/core/bitstreams/f1264f05-ba89-4f21-81e7-7e7c77ec9115/content",
+        "code": "https://github.com/WeakKnight/real-time-seamless-object-space-shading"
+      },
+      "sources": [
+        {
+          "url": "https://diglib.eg.org/server/api/core/bitstreams/f1264f05-ba89-4f21-81e7-7e7c77ec9115/content",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, DOI, and short-paper designation on the first page of the published open-access version, and the implementation in §4."
+        },
+        {
+          "url": "https://github.com/WeakKnight/real-time-seamless-object-space-shading",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "The author's code repository and the corresponding paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "Reviewed the four-page published version, focusing on §2, §§4.1–4.3, and References. Both authors contributed equally."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2024-real-time-seamless-object-space-shading.pdf",
+        "sha256": "d5b50602f47eb9b31c54d124a12386b3690c8384f9ddb98493841f9eb57e18eb",
+        "version": "Eurographics 2024 published open-access short paper, 4 pages",
+        "source_url": "https://diglib.eg.org/server/api/core/bitstreams/f1264f05-ba89-4f21-81e7-7e7c77ec9115/content"
+      }
+    },
+    {
+      "paper_id": "sample_space2024",
+      "title": "A ReSTIR GI Method Using the Sample-Space Filtering",
+      "short_title": "Sample-Space Filtering",
+      "authors": [
+        "Jie Jiang",
+        "Xiang Xu",
+        "Beibei Wang"
+      ],
+      "year": 2024,
+      "venue": "Advances in Computer Graphics (CGI 2023), LNCS 14498, pp. 79–92",
+      "publication_status": "published",
+      "doi": "10.1007/978-3-031-50078-7_7",
+      "tags": [
+        "reuse_quality",
+        "transport"
+      ],
+      "role": "optimization",
+      "problem": "ReSTIR GI retains substantial Monte Carlo noise at low sampling rates.",
+      "contributions": [
+        "Filters the sample distribution before reservoir resampling to improve the final image quality of ReSTIR GI."
+      ],
+      "changes": "Adds a sample-space filtering stage to ReSTIR GI. This description is based on the publisher's abstract; the filtering implementation still requires full-text verification.",
+      "limitations": [
+        "The abstract reports an average rendering-time increase of approximately 12%; applicability and bias analysis still require full-text review.",
+        "No legal public full text matching the title and authors has been found. An inheritance claim based on the abstract is not treated as verified from the method text."
+      ],
+      "links": {
+        "paper": "https://link.springer.com/chapter/10.1007/978-3-031-50078-7_7",
+        "pdf": null,
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://link.springer.com/chapter/10.1007/978-3-031-50078-7_7",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Checked the title, all three authors, DOI, LNCS 14498, pages, abstract, and References. The publisher's Cite this paper section uses 2024; First Online is 2023-12-24, and the conference is CGI 2023."
+        },
+        {
+          "url": "https://xuxiang440.github.io/",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "The corresponding author's homepage confirms the title, authors, and CGI 2023. The conference year does not replace the publisher's formal bibliographic year."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "abstract_only",
+        "notes": "Verified the publisher's abstract and complete reference list; the full text was not obtained. The citation year follows Springer's Cite this paper entry, 2024; first online publication was on 2023-12-24. The search result paper_ReSTIRGI.pdf is Zhang and Wang's World-Space paper and cannot serve as this work's full text. The user's reading status was not advanced."
+      },
+      "pdf": {
+        "status": "missing",
+        "local_file": null,
+        "sha256": null,
+        "version": "Subscription full text; no legal public author version confirmed.",
+        "source_url": null
+      }
+    },
+    {
+      "paper_id": "shape_splatting2024",
+      "title": "Efficient Image-Space Shape Splatting for Monte Carlo Rendering",
+      "short_title": "Image-Space Shape Splatting",
+      "authors": [
+        "Xiaochun Tong",
+        "Toshiya Hachisuka"
+      ],
+      "year": 2024,
+      "venue": "TOG / SIGGRAPH Asia",
+      "publication_status": "published",
+      "doi": "10.1145/3687943",
+      "tags": [
+        "reuse_quality",
+        "estimators"
+      ],
+      "role": "optimization",
+      "problem": "Can one light path contribute to a region of pixels with sublinear additional cost?",
+      "contributions": [
+        "Uses a debiasing estimator to make shape splatting cost less than visiting every pixel in the shape.",
+        "Derives an MCMC weighting formulation and adds it to renderers including ReSTIR PT."
+      ],
+      "changes": "Adds image-space shape reuse to contribution estimation after path resampling, as a composable estimator extension.",
+      "limitations": [
+        "Efficiency depends on the shift mapping and shape selection; improvements are not guaranteed for arbitrary visibility or materials.",
+        "This is not a new reservoir-construction method, and its generality does not mean that every result uses ReSTIR."
+      ],
+      "links": {
+        "paper": "https://cs.uwaterloo.ca/~thachisu/index.html",
+        "pdf": "https://cs.uwaterloo.ca/~thachisu/mcsplat.pdf",
+        "code": "https://github.com/LuisaGroup/Efficient-Image-Shape-Splatting"
+      },
+      "sources": [
+        {
+          "url": "https://cs.uwaterloo.ca/~thachisu/index.html",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://cs.uwaterloo.ca/~thachisu/mcsplat.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        },
+        {
+          "url": "https://cs.uwaterloo.ca/~xtong/assets/pdf/shape_splatting.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Read pp. 233:1–233:2 of the author PDF through the search index, checking the DOI, published volume and issue, Figure 1's ReSTIR PT combination, and §2. The local download is still missing."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "Reviewed Figure 1 on p. 233:1 and the related-work and method overview on p. 233:2 of the author paper. The figure caption explicitly describes adding the method to ReSTIR PT and reports the combined results. Only this combination was verified, not every experiment or proof. The local PDF download was interrupted; the incomplete file is not counted as available full text."
+      },
+      "pdf": {
+        "status": "missing",
+        "local_file": null,
+        "sha256": null,
+        "version": "Public author version. The work is identified by its published metadata; this copy is not designated as the version of record.",
+        "source_url": "https://cs.uwaterloo.ca/~thachisu/mcsplat.pdf"
+      }
+    },
+    {
+      "paper_id": "sss2024",
+      "title": "ReSTIR Subsurface Scattering for Real-Time Path Tracing",
+      "short_title": "ReSTIR SSS",
+      "authors": [
+        "Mirco Werner",
+        "Vincent Schüßler",
+        "Carsten Dachsbacher"
+      ],
+      "year": 2024,
+      "venue": "PACMCGIT / HPG",
+      "publication_status": "published",
+      "doi": "10.1145/3675372",
+      "tags": [
+        "transport"
+      ],
+      "role": "branch",
+      "problem": "How can subsurface-scattering noise be reduced in real-time path tracing?",
+      "contributions": [
+        "Applies ReSTIR to subsurface light paths generated by BSSRDF importance sampling.",
+        "Introduces an SSS-specific hybrid-shift criterion and a sequential shift that applies multiple mappings in turn."
+      ],
+      "changes": "Designs domain mappings for subsurface transport within the GRIS path-reuse framework.",
+      "limitations": [
+        "Models subsurface transport through a diffusion approximation or BSSRDF, rather than general volumetric random walks.",
+        "The local hybrid criterion can choose the wrong mapping at shadow boundaries; sequential reuse adds rendering-pass cost."
+      ],
+      "links": {
+        "paper": "https://cg.ivd.kit.edu/english/restir-sss.php",
+        "pdf": "https://cg.ivd.kit.edu/publications/2024/restir-sss/restir-sss.pdf",
+        "code": "https://github.com/MircoWerner/ReSTIR-SSS"
+      },
+      "sources": [
+        {
+          "url": "https://cg.ivd.kit.edu/english/restir-sss.php",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the authors, title, year, and publication type. Bibliographic metadata and the local PDF version are recorded separately."
+        },
+        {
+          "url": "https://cg.ivd.kit.edu/publications/2024/restir-sss/restir-sss.pdf",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Reviewed selected passages from the introduction, methods, limitations, and references to verify this map's summaries and relationships; this was not a line-by-line review of the entire paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "A research agent cross-checked public sources and the cited passages. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2024-restir-subsurface-scattering.pdf",
+        "sha256": "9482388bd8d41377d46faa489633aebf5fc2c461a5e3b313a29a199892003219",
+        "version": "Public author version. The work is identified by its published metadata; this copy is not designated as the version of record.",
+        "source_url": "https://cg.ivd.kit.edu/publications/2024/restir-sss/restir-sss.pdf"
+      }
+    },
+    {
+      "paper_id": "visibility_reuse2024",
+      "title": "Efficient Visibility Reuse for Real-time ReSTIR",
+      "short_title": "Visibility Reuse",
+      "authors": [
+        "Yusuke Tokuyoshi"
+      ],
+      "year": 2024,
+      "venue": "ACM SIGGRAPH 2024 Talks, Article 20, 2 pages",
+      "publication_status": "talk",
+      "doi": "10.1145/3641233.3664320",
+      "tags": [
+        "reuse_quality",
+        "estimators",
+        "supporting"
+      ],
+      "role": "resource",
+      "problem": "A single ReSTIR visibility sample produces high variance at shadow edges.",
+      "contributions": [
+        "Accumulates weighted visibility across spatiotemporal samples to improve shadow quality with existing visibility reuse.",
+        "Analyzes cancellation of weight-normalization factors and the conditions for unbiased results."
+      ],
+      "changes": "Adds a weighted-average estimator to Wyman and Panteleev's visibility reuse, extending its purpose from reducing shadow rays to reducing shadow noise.",
+      "limitations": [
+        "Typical implementations can introduce color-leak bias at shadow edges; unbiasedness requires a static scene and specific target-distribution conditions.",
+        "Dynamic lighting can retain the shadow lag of the original visibility reuse. This work is a two-page Talks paper."
+      ],
+      "links": {
+        "paper": "https://doi.org/10.1145/3641233.3664320",
+        "pdf": "https://gpuopen.com/download/publications/Efficient_Visibility_Reuse_for_Real-time_ReSTIR.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://yusuketokuyoshi.com/",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "The author's bibliography confirms SIGGRAPH 2024 Talks Article 20, the DOI, and links to the paper and supplementary material."
+        },
+        {
+          "url": "https://gpuopen.com/download/publications/Efficient_Visibility_Reuse_for_Real-time_ReSTIR.pdf",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "AMD-hosted author version. Checked the first-page ACM Reference Format, §§1–4, and second-page References."
+        },
+        {
+          "url": "https://gpuopen.com/learn/publications/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "The institutional directory independently confirms Talks, Article 20, and 2024."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "Reviewed §§1–4 and References in the two-page author version; this is not a record of the user reading the paper. The author version explicitly permits personal use and prohibits redistribution, so the website links to the institution's public source. No standalone code link was found."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2024-efficient-visibility-reuse-for-real-time-restir.pdf",
+        "sha256": "be1f99fe2526ce54abd5733b33ff44c6fa6eabd9733e210fddb43b0b8250d1c2",
+        "version": "Author version, ACM SIGGRAPH Talks 2024; 2 pages, 11645148 bytes.",
+        "source_url": "https://gpuopen.com/download/publications/Efficient_Visibility_Reuse_for_Real-time_ReSTIR.pdf"
+      }
+    },
+    {
+      "paper_id": "bdpt2025",
+      "title": "ReSTIR BDPT: Bidirectional ReSTIR Path Tracing with Caustics",
+      "short_title": "ReSTIR BDPT",
+      "authors": [
+        "Trevor Hedstrom",
+        "Markus Kettunen",
+        "Daqi Lin",
+        "Chris Wyman",
+        "Tzu-Mao Li"
+      ],
+      "year": 2025,
+      "venue": "TOG",
+      "publication_status": "published",
+      "doi": "10.1145/3744898",
+      "tags": [
+        "transport"
+      ],
+      "role": "branch",
+      "problem": "How can bidirectional paths be reused when unidirectional candidates struggle to find caustics and occluded lights?",
+      "contributions": [
+        "Applies GRIS in an extended path space that explicitly records the sampling technique.",
+        "Introduces bidirectional hybrid shifts and a caustics reservoir."
+      ],
+      "changes": "Extends ReSTIR PT's unidirectional path reuse to BDPT and light tracing.",
+      "limitations": [
+        "Can be slower than PT in scenes that do not benefit from light tracing.",
+        "SDS paths remain challenging, and some implementation weights use practical approximations."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/hedstrom2025restir/",
+        "pdf": "https://cwyman.org/papers/tog25_ReSTIR_BDPT.pdf",
+        "code": "https://github.com/Shmaug/ReSTIR-BDPT"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/hedstrom2025restir/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1145/3744898",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "The DOI in the local manuscript is a placeholder and is not used. The formal publication is TOG 44(5), 2025, DOI 10.1145/3744898."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2025-restir-bdpt.pdf",
+        "sha256": "eff6f643e5f6cdc02e2ca9ece1a60df65b81cd74884b8cd2156e342af9fc4d90",
+        "version": "Author manuscript with placeholder DOI; formal TOG DOI from institutional publication page",
+        "source_url": "https://cwyman.org/papers/tog25_ReSTIR_BDPT.pdf"
+      }
+    },
+    {
+      "paper_id": "histogram2025",
+      "title": "Histogram Stratification for Spatio-Temporal Reservoir Sampling",
+      "short_title": "Histogram RIS",
+      "authors": [
+        "Corentin Salaün",
+        "Martin Bálint",
+        "Laurent Belcour",
+        "Eric Heitz",
+        "Gurprit Singh",
+        "Karol Myszkowski"
+      ],
+      "year": 2025,
+      "venue": "SIGGRAPH Conference",
+      "publication_status": "published",
+      "doi": "10.1145/3721238.3730723",
+      "tags": [
+        "reuse_quality"
+      ],
+      "role": "optimization",
+      "problem": "How can reused candidates retain the noise-reduction benefits of stratified and low-discrepancy sampling?",
+      "contributions": [
+        "Organizes candidates into contribution-value histograms and combines QMC with antithetic sample selection.",
+        "Introduces control over the error distribution into spatiotemporal resampling."
+      ],
+      "changes": "Adds histogram ordering and stratification to RIS candidate selection without changing the light-transport domain.",
+      "limitations": [
+        "Requires candidate organization and sorting; it is not a cost-free replacement for streaming reservoirs.",
+        "Benefits depend on candidate quality and the sampling pattern; it cannot recover important paths that were never generated."
+      ],
+      "links": {
+        "paper": "https://iribis.github.io/publication/2025_Stratified_Histogram_Resampling",
+        "pdf": "https://iribis.github.io/files/Stratified_Histogram_Resampling/paper.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://iribis.github.io/publication/2025_Stratified_Histogram_Resampling",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1145/3721238.3730723",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "Reviewed the abstract, relevant methods and limitations passages, and key references. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2025-histogram-stratification-for-reservoir-sampling.pdf",
+        "sha256": "18061f00d226512085ac0ad780d593464ce48b42be140e8382b37362d5a52d3b",
+        "version": "SIGGRAPH 2025 conference paper; author PDF",
+        "source_url": "https://iribis.github.io/files/Stratified_Histogram_Resampling/paper.pdf"
+      }
+    },
+    {
+      "paper_id": "pg2025",
+      "title": "ReSTIR PG: Path Guiding with Spatiotemporally Resampled Paths",
+      "short_title": "ReSTIR PG",
+      "authors": [
+        "Zheng Zeng",
+        "Markus Kettunen",
+        "Chris Wyman",
+        "Lifan Wu",
+        "Ravi Ramamoorthi",
+        "Ling-Qi Yan",
+        "Daqi Lin"
+      ],
+      "year": 2025,
+      "venue": "SIGGRAPH Asia Conference",
+      "publication_status": "published",
+      "doi": "10.1145/3757377.3763813",
+      "tags": [
+        "transport"
+      ],
+      "role": "branch",
+      "problem": "How can good resampled paths improve the next frame's initial candidates?",
+      "contributions": [
+        "Estimates local directional guiding distributions from ReSTIR paths.",
+        "Creates an iterative feedback loop between path guiding and spatiotemporal resampling."
+      ],
+      "changes": "Adds guiding to ReSTIR PT rather than only increasing the number of reuse steps.",
+      "limitations": [
+        "Guiding quality depends on observed paths; unexplored regions still require coverage from the original sampler.",
+        "Distribution fitting and updates add cost, and adaptation to scene changes takes time."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/zeng2025restirpg/",
+        "pdf": "https://cwyman.org/papers/siga25_ReSTIR_PG.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/zeng2025restirpg/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1145/3757377.3763813",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "Reviewed the abstract, relevant methods and limitations passages, and key references. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2025-restir-pg.pdf",
+        "sha256": "878f3e90deb05d7264b14a6039761a6782ab78c212b3d727dd5ea3c7143dba32",
+        "version": "SIGGRAPH Asia 2025 author PDF",
+        "source_url": "https://cwyman.org/papers/siga25_ReSTIR_PG.pdf"
+      }
+    },
+    {
+      "paper_id": "psms2025",
+      "title": "Sample Space Partitioning and Spatiotemporal Resampling for Specular Manifold Sampling",
+      "short_title": "Partitioned SMS",
+      "authors": [
+        "Pengpei Hong",
+        "Meng Duan",
+        "Beibei Wang",
+        "Cem Yuksel",
+        "Tizian Zeltner",
+        "Daqi Lin"
+      ],
+      "year": 2025,
+      "venue": "SIGGRAPH Asia Conference",
+      "publication_status": "published",
+      "doi": "10.1145/3757377.3763927",
+      "tags": [
+        "transport"
+      ],
+      "role": "branch",
+      "problem": "How can specular-manifold solving be made cheaper while reusing expensive caustic paths?",
+      "contributions": [
+        "Partitions sample space to restrict the Newton search region.",
+        "Places SMS paths in the GRIS framework to reuse manifold solutions across space and time."
+      ],
+      "changes": "Combines SMS candidate construction with GRIS resampling to improve caustics that unidirectional ReSTIR PT struggles to discover.",
+      "limitations": [
+        "The SMS derivation initially considers ideal specular chains; it does not establish a solution for every rough-caustic case.",
+        "Requires Newton solves and partition maintenance, and still depends on discovering useful candidates."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/hong2025partition/",
+        "pdf": "https://research.nvidia.com/labs/rtr/publication/hong2025partition/hong2025partition_paper.pdf",
+        "code": "https://github.com/Utah-Graphics-Lab/PSMS-ReSTIR"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/hong2025partition/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1145/3757377.3763927",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "Reviewed the abstract, relevant methods and limitations passages, and key references. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2025-sample-space-partitioning-and-spatiotemporal-resampling.pdf",
+        "sha256": "a99f8569878badd47f5cee4308ed46ef42fe7e51ec8fbbfeef268ec081ee3649",
+        "version": "SIGGRAPH Asia 2025 NVIDIA author PDF; alternative author copy retained only in historical provenance",
+        "source_url": "https://research.nvidia.com/labs/rtr/publication/hong2025partition/hong2025partition_paper.pdf"
+      }
+    },
+    {
+      "paper_id": "shadow_maps2025",
+      "title": "Many-Light Rendering Using ReSTIR-Sampled Shadow Maps",
+      "short_title": "ReSTIR Shadow Maps",
+      "authors": [
+        "Song Zhang",
+        "Daqi Lin",
+        "Chris Wyman",
+        "Cem Yuksel"
+      ],
+      "year": 2025,
+      "venue": "CGF / Eurographics",
+      "publication_status": "published",
+      "doi": "10.1111/cgf.70059",
+      "tags": [
+        "estimators"
+      ],
+      "role": "branch",
+      "problem": "How can a high-quality shadow-map budget be allocated across many lights without ray-tracing hardware?",
+      "contributions": [
+        "Uses ReSTIR to select the lights most important to the current view.",
+        "Assigns full shadow maps to important lights and imperfect shadow maps to the rest."
+      ],
+      "changes": "Uses DI sampling and coherence to allocate resources for rasterized shadows.",
+      "limitations": [
+        "Visibility must be amenable to shadow mapping; this is not an exact replacement for arbitrary area lights.",
+        "Lights without a full shadow map still use approximate shadows."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/zhang2025many-light/",
+        "pdf": "https://research.nvidia.com/labs/rtr/publication/zhang2025many-light/zhang2025many-light.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/zhang2025many-light/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1111/cgf.70059",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "Reviewed the abstract, relevant methods and limitations passages, and key references. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2025-restir-sampled-shadow-maps.pdf",
+        "sha256": "882afe0b928403e8cc92f7e46d6d15cce8ab55bdccedd6e194a6ead5cf1db2d7",
+        "version": "CGF 44(2), 2025 author PDF",
+        "source_url": "https://research.nvidia.com/labs/rtr/publication/zhang2025many-light/zhang2025many-light.pdf"
+      }
+    },
+    {
+      "paper_id": "splatting2025",
+      "title": "Reservoir Splatting for Temporal Path Resampling and Motion Blur",
+      "short_title": "Reservoir Splatting",
+      "authors": [
+        "Jeffrey Liu",
+        "Daqi Lin",
+        "Markus Kettunen",
+        "Chris Wyman",
+        "Ravi Ramamoorthi"
+      ],
+      "year": 2025,
+      "venue": "SIGGRAPH Conference",
+      "publication_status": "published",
+      "doi": "10.1145/3721238.3730646",
+      "tags": [
+        "camera_dynamics"
+      ],
+      "role": "branch",
+      "problem": "How can useful path history be recovered when motion and subpixel detail defeat backward reprojection?",
+      "contributions": [
+        "Forward-splats previous primary hits into the current frame.",
+        "Combines fallback backward-reprojected samples with support for motion blur and depth of field."
+      ],
+      "changes": "Redesigns temporal reuse around Area ReSTIR's area reservoirs.",
+      "limitations": [
+        "Newly disoccluded surfaces with no retained history still lack good samples.",
+        "Splatting can leave holes, requiring fallback sampling and merging."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/liu2025splatting/",
+        "pdf": "https://research.nvidia.com/labs/rtr/publication/liu2025splatting/liu2025splatting_paper.pdf",
+        "code": "https://github.com/Jebbly/Reservoir-Splatting"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/liu2025splatting/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1145/3721238.3730646",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "Reviewed the abstract, relevant methods and limitations passages, and key references. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2025-reservoir-splatting.pdf",
+        "sha256": "745a1b2d3dc9cf7b8d6d92e01cc985994042e06ba3156608912aefd656efdea5",
+        "version": "SIGGRAPH 2025 author-hosted paper",
+        "source_url": "https://research.nvidia.com/labs/rtr/publication/liu2025splatting/liu2025splatting_paper.pdf"
+      }
+    },
+    {
+      "paper_id": "blue_noise2026",
+      "title": "Blue Noise Dithering for Reservoir-Based Spatio-Temporal Importance Resampling",
+      "short_title": "Blue-noise RIS",
+      "authors": [
+        "Zhong Shi",
+        "Kun Xu"
+      ],
+      "year": 2026,
+      "venue": "IEEE TVCG 32(10): 8126–8138",
+      "publication_status": "published",
+      "doi": "10.1109/TVCG.2026.3708022",
+      "tags": [
+        "reuse_quality"
+      ],
+      "role": "optimization",
+      "problem": "How can random reservoir selection preserve the blue-noise structure of the error?",
+      "contributions": [
+        "Reorganizes ReSTIR resampling from a dithered-sampling perspective.",
+        "Drives spatiotemporal reuse with blue noise and evaluates perceptual error."
+      ],
+      "changes": "Focuses on changes to the error spectrum caused by resampling, a separate concern from candidate quality.",
+      "limitations": [
+        "Only the publisher's abstract has been checked; method details and specific limitations await the full text.",
+        "This map does not infer specific inheritance or citation edges from the abstract."
+      ],
+      "links": {
+        "paper": "https://ieeexplore.ieee.org/abstract/document/11589466",
+        "pdf": null,
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://ieeexplore.ieee.org/abstract/document/11589466",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, resource links and publisher's abstract. Technical summaries are based on the abstract only."
+        },
+        {
+          "url": "https://doi.org/10.1109/TVCG.2026.3708022",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        },
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/42384507/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Authors, volume and issue, pages, and formal publication status."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "abstract_only",
+        "notes": "IEEE confirms online publication on 2026-07-01 and the October 2026 issue. Authors were verified against the PubMed bibliographic record. No legal open full text was obtained, so no verified relationships are added."
+      },
+      "pdf": {
+        "status": "missing",
+        "local_file": null,
+        "sha256": null,
+        "version": "Full text not yet obtained.",
+        "source_url": null
+      }
+    },
+    {
+      "paper_id": "cgns2026",
+      "title": "Compatibility-Guided Neighbor Selection for ReSTIR",
+      "short_title": "CGNS",
+      "authors": [
+        "Orion Junkins",
+        "Markus Kettunen",
+        "Daqi Lin",
+        "Ravi Ramamoorthi",
+        "Chris Wyman"
+      ],
+      "year": 2026,
+      "venue": "PACMCGIT / HPG",
+      "publication_status": "published",
+      "doi": "10.1145/3820024",
+      "tags": [
+        "reuse_quality"
+      ],
+      "role": "optimization",
+      "problem": "How can spatial reuse spend a limited shift budget on more compatible neighbors?",
+      "contributions": [
+        "Constructs continuous selection weights from geometric compatibility.",
+        "Analyzes and controls the tradeoff between error and correlation."
+      ],
+      "changes": "Replaces uniform neighbor selection with stochastic, compatibility-weighted multi-tap selection, not deterministic top-k selection.",
+      "limitations": [
+        "Does not directly handle disocclusions or explicitly account for visibility.",
+        "Depth of field and motion blur weaken the G-buffer heuristics."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/",
+        "pdf": "https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/junkins2026compatibility.pdf",
+        "code": "https://github.com/orion-junkins/ReSTIR-CGNS"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1145/3820024",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "Reviewed the abstract, relevant methods and limitations passages, and key references. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2026-compatibility-guided-neighbor-selection-for-restir.pdf",
+        "sha256": "d5507c5ad81e0bf4950c0da25d1aaa330fa61c3d5668357eea8fb2c08e620cd5",
+        "version": "PACMCGIT 9(4), article 52, 16 pages",
+        "source_url": "https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/junkins2026compatibility.pdf"
+      }
+    },
+    {
+      "paper_id": "ghost2026",
+      "title": "Ghost ReSTIR: Volumetric Resampling with Ghost Vertices in Null-Scattering Space",
+      "short_title": "Ghost ReSTIR",
+      "authors": [
+        "Song Zhang",
+        "Daqi Lin",
+        "Pengpei Hong",
+        "Markus Kettunen",
+        "Cem Yuksel",
+        "Chris Wyman"
+      ],
+      "year": 2026,
+      "venue": "SIGGRAPH Posters 2026",
+      "publication_status": "abstract",
+      "doi": "10.1145/3799825.3818719",
+      "tags": [
+        "transport"
+      ],
+      "role": "branch",
+      "problem": "How do transmittance approximations and varying null-vertex counts affect volumetric ReSTIR reuse?",
+      "contributions": [
+        "Defines a consistent target in null-scattering primary sample space.",
+        "Uses ghost vertices to support reconnection in dynamic volumes."
+      ],
+      "changes": "Reformulates the sampling space and target evaluation of Volumetric ReSTIR.",
+      "limitations": [
+        "The included work is a three-page poster extended abstract, not a full technical paper.",
+        "Evidence is limited to that abstract's text and references."
+      ],
+      "links": {
+        "paper": "https://s2026.conference-schedule.org/presentation/?id=pos_225&sess=sess438",
+        "pdf": "https://cwyman.org/abstracts/sig2026_ghostReSTIR.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://s2026.conference-schedule.org/presentation/?id=pos_225&sess=sess438",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1145/3799825.3818719",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "Reviewed the entire three-page poster abstract. The full_text status refers to this document itself, not to a full-length research paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2026-ghost-restir.pdf",
+        "sha256": "dc65e493e70562dcfab8a53374c6248d35bbc66fbddb9ae54dca9a664b0e9813",
+        "version": "SIGGRAPH Posters 2026, 3-page extended abstract",
+        "source_url": "https://cwyman.org/abstracts/sig2026_ghostReSTIR.pdf"
+      }
+    },
+    {
+      "paper_id": "gradient2026",
+      "title": "Gradient-Domain ReSTIR Path Tracing",
+      "short_title": "Gradient ReSTIR",
+      "authors": [
+        "Yu-Chen Wang",
+        "Markus Kettunen",
+        "Daqi Lin",
+        "Chris Wyman",
+        "Lifan Wu",
+        "Shuang Zhao"
+      ],
+      "year": 2026,
+      "venue": "CGF / Eurographics",
+      "publication_status": "published",
+      "doi": "10.1111/cgf.70328",
+      "tags": [
+        "estimators"
+      ],
+      "role": "branch",
+      "problem": "How can pixel colors and pixel differences both be reused within a real-time budget?",
+      "contributions": [
+        "Constructs an extended path space for gradient images.",
+        "Combines pixel-pair temporal reuse, selective spatial reuse, and positivization."
+      ],
+      "changes": "Extends difference estimation using GRIS and explicitly uses Area ReSTIR for temporal reuse.",
+      "limitations": [
+        "Still requires gradient reconstruction; advanced real-time reconstruction is left to future work.",
+        "Image gradients are not derivatives with respect to scene parameters; this is distinct from differentiable rendering."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/wang2026gradient/",
+        "pdf": "https://research.nvidia.com/labs/rtr/publication/wang2026gradient/wang2026gradient.pdf",
+        "code": "https://github.com/elite-sheep/gradient-restir"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/wang2026gradient/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1111/cgf.70328",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "Author order follows the paper's first page and Wiley's how-to-cite entry, which differ from the Eurographics index."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2026-gradient-domain-restir.pdf",
+        "sha256": "1a42361531a4d72567cf4425d37f3b7307ec3044d1ab790fdf66b98429baabb1",
+        "version": "CGF 45(2), 2026 author PDF",
+        "source_url": "https://research.nvidia.com/labs/rtr/publication/wang2026gradient/wang2026gradient.pdf"
+      }
+    },
+    {
+      "paper_id": "guided_fg2026",
+      "title": "Guided ReSTIR FG+ Photon Resampling for Large Scenes and Many Lights",
+      "short_title": "Guided FG+",
+      "authors": [
+        "René Kern",
+        "Felix Brüll",
+        "Jonas Kastning",
+        "Thorsten Grosch"
+      ],
+      "year": 2026,
+      "venue": "EGSR Symposium Track",
+      "publication_status": "published",
+      "doi": "10.2312/sr.20261001",
+      "tags": [
+        "transport"
+      ],
+      "role": "branch",
+      "problem": "How can useful candidate density be increased when large scenes and many lights send most photons outside the current view?",
+      "contributions": [
+        "Uses histograms to guide photon emission on the GPU.",
+        "Combines backward reprojection and random replay in FG to improve caustic stability and specular handling."
+      ],
+      "changes": "Follows ReSTIR FG while improving both candidate generation and final-gather reuse.",
+      "limitations": [
+        "FG+ uses biased photon density estimation; consistency requires the gathering radius to shrink over frames.",
+        "Reduces to ReSTIR PT in purely specular scenes. Guiding with very large numbers of lights and rapid camera motion toward caustics remain challenging."
+      ],
+      "links": {
+        "paper": "https://diglib.eg.org/items/f4bbd38a-fda9-4c43-afc9-dd31e3c5eec1",
+        "pdf": "https://diglib.eg.org/bitstreams/4ffcd14e-872b-4440-9749-c3548875389c/download",
+        "code": "https://github.com/TU-Clausthal-Rendering/Guided-ReSTIR-FG-Plus"
+      },
+      "sources": [
+        {
+          "url": "https://diglib.eg.org/items/f4bbd38a-fda9-4c43-afc9-dd31e3c5eec1",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.2312/sr.20261001",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        },
+        {
+          "url": "https://diglib.eg.org/server/api/core/bitstreams/a01e94bb-61c1-458b-9bfa-cba04e06f43e/content",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "The publisher's extracted full text belongs to the same entry as sr20261001.pdf and was used to verify the method, limitations, and references."
+        },
+        {
+          "url": "https://github.com/TU-Clausthal-Rendering/Guided-ReSTIR-FG-Plus",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Author implementation and supported features."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "Reviewed §4.2, §7, and References in the Eurographics publisher's extracted full text. The public PDF link is valid, but the local download was interrupted. The incomplete file was isolated and is not marked as an available PDF."
+      },
+      "pdf": {
+        "status": "missing",
+        "local_file": null,
+        "sha256": null,
+        "version": "Eurographics published PDF located; local download interrupted; publisher full-text extraction reviewed",
+        "source_url": "https://diglib.eg.org/bitstreams/4ffcd14e-872b-4440-9749-c3548875389c/download"
+      }
+    },
+    {
+      "paper_id": "lod2026",
+      "title": "Real-Time Level-of-Detail Rendering with ReSTIR",
+      "short_title": "ReSTIR LoD",
+      "authors": [
+        "Yu-Chen Wang",
+        "Markus Kettunen",
+        "Daqi Lin",
+        "Chris Wyman",
+        "Lifan Wu",
+        "Shuang Zhao"
+      ],
+      "year": 2026,
+      "venue": "SIGGRAPH Conference",
+      "publication_status": "published",
+      "doi": "10.1145/3799902.3811100",
+      "tags": [
+        "camera_dynamics"
+      ],
+      "role": "branch",
+      "problem": "How can paths be reused when geometry LoD transitions change mesh topology?",
+      "contributions": [
+        "Uses consistent UV parameterization to map surface points across different topologies.",
+        "Derives the mapping's Jacobian and integrates it into LoD-aware ReSTIR."
+      ],
+      "changes": "Replaces vertex mapping based on fixed triangle indices within the Reservoir Splatting framework.",
+      "limitations": [
+        "Requires consistent texture parameterization across LoDs.",
+        "Objects without UVs or with inconsistent UVs are outside the current method's scope."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/wang2026levelofdetail/",
+        "pdf": "https://research.nvidia.com/labs/rtr/publication/wang2026levelOfDetail/wang2026levelOfDetail.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/wang2026levelofdetail/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1145/3799902.3811100",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "The NVIDIA webpage omits Lifan Wu from its author list. Author order follows the PDF's first page and ACM Reference Format."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2026-level-of-detail-rendering-with-restir.pdf",
+        "sha256": "228e5724402032c1c4ca1685e12b94dc09f9f7d7e2845261b2242cc3ecf7192a",
+        "version": "SIGGRAPH 2026 author-hosted final-form PDF",
+        "source_url": "https://research.nvidia.com/labs/rtr/publication/wang2026levelOfDetail/wang2026levelOfDetail.pdf"
+      }
+    },
+    {
+      "paper_id": "multilayer2026",
+      "title": "Multi-Layer Reservoir Splatting for Temporal Reuse under Disocclusion",
+      "short_title": "Multi-layer Splatting",
+      "authors": [
+        "Pengpei Hong",
+        "Song Zhang",
+        "Daqi Lin",
+        "Markus Kettunen",
+        "Chris Wyman",
+        "Cem Yuksel"
+      ],
+      "year": 2026,
+      "venue": "SIGGRAPH Conference",
+      "publication_status": "published",
+      "doi": "10.1145/3799902.3811232",
+      "tags": [
+        "camera_dynamics"
+      ],
+      "role": "branch",
+      "problem": "How can previously occluded path history be reused after disocclusion?",
+      "contributions": [
+        "Retains occluded history in multiple screen-space layers.",
+        "Uses inter-layer splatting, depth ranges, and active domains to reduce maintenance costs."
+      ],
+      "changes": "Extends single-layer Reservoir Splatting to retain and transfer history across multiple layers.",
+      "limitations": [
+        "A screen-space method cannot recover history outside the image or from surfaces never seen.",
+        "Active-domain prediction and a limited layer count can miss reusable regions."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/hong2026multilayer/",
+        "pdf": "https://research.nvidia.com/labs/rtr/publication/hong2026multilayer/hong2026multilayer.pdf",
+        "code": null
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/hong2026multilayer/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1145/3799902.3811232",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "The local author manuscript still has a placeholder Vol. 1 header. Publication status follows NVIDIA's formal entry and the DOI; the manuscript header is not treated as the final volume and issue."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2026-multi-layer-reservoir-splatting.pdf",
+        "sha256": "253f2e1304a292fbe0d147b1a3233751bdcbaeb01f12c53ff8967b6285b57c9d",
+        "version": "Author manuscript, May 2026 header; publication status/DOI from official July 2026 record",
+        "source_url": "https://research.nvidia.com/labs/rtr/publication/hong2026multilayer/hong2026multilayer.pdf"
+      }
+    },
+    {
+      "paper_id": "pt_enhanced2026",
+      "title": "ReSTIR PT Enhanced: Algorithmic Advances for Faster and More Robust ReSTIR Path Tracing",
+      "short_title": "PT Enhanced",
+      "authors": [
+        "Daqi Lin",
+        "Markus Kettunen",
+        "Chris Wyman"
+      ],
+      "year": 2026,
+      "venue": "PACMCGIT / I3D",
+      "publication_status": "published",
+      "doi": "10.1145/3804494",
+      "tags": [
+        "reuse_quality",
+        "foundations"
+      ],
+      "role": "optimization",
+      "problem": "How can ReSTIR PT reduce shift costs and improve reconnection and duplicate-sample handling?",
+      "contributions": [
+        "Introduces reciprocal neighbor selection, a footprint-based reconnection criterion, and a duplication map.",
+        "Merges DI and GI reservoirs and consolidates implementation optimizations."
+      ],
+      "changes": "Directly improves the GRIS paper's ReSTIR PT application while retaining its main path-reuse framework.",
+      "limitations": [
+        "Performance gains depend on materials, scenes, and implementation; reported results are not guarantees for every scene.",
+        "Still depends on useful candidates and viable shift mappings."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/lin2026restirptenhanced/",
+        "pdf": "https://research.nvidia.com/labs/rtr/publication/lin2026restirptenhanced/lin2026restirptenhanced.pdf",
+        "code": "https://github.com/NVIDIA-RTX/RTXDI"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/lin2026restirptenhanced/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1145/3804494",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        },
+        {
+          "url": "https://github.com/NVIDIA-RTX/RTXDI/blob/main/Doc/RestirPT.md",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "ReSTIR PT implementation documentation. The implementation integrates methods from several papers and is not the experimental code for a single paper."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "The code link points to the integrated RTXDI library, not a frozen snapshot of this paper's experiments. Sections 2–6 and References were reviewed."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2026-restir-pt-enhanced.pdf",
+        "sha256": "7af70f6c1b768bff3ebe3e8d0a8739d011d650451b266e1f217bfbbb8c648591",
+        "version": "PACMCGIT / I3D 2026 author PDF",
+        "source_url": "https://research.nvidia.com/labs/rtr/publication/lin2026restirptenhanced/lin2026restirptenhanced.pdf"
+      }
+    },
+    {
+      "paper_id": "restcv2026",
+      "title": "Spatio-Temporal Control Variates with ReSTIR for Real-Time Rendering",
+      "short_title": "ReSTCV",
+      "authors": [
+        "Zhong Shi",
+        "Cunhao Wu",
+        "Lifan Wu",
+        "Kun Xu"
+      ],
+      "year": 2026,
+      "venue": "SIGGRAPH Conference",
+      "publication_status": "published",
+      "doi": "10.1145/3799902.3811113",
+      "tags": [
+        "estimators"
+      ],
+      "role": "branch",
+      "problem": "How can residual color noise be reduced when a luminance target distribution cannot match all RGB channels?",
+      "contributions": [
+        "Reuses spatiotemporal control variates and pixel-difference estimates.",
+        "Extends shading of a single final path to accumulated contribution estimation."
+      ],
+      "changes": "Retains the ReSTIR PT sampling framework and adds auxiliary color estimates and difference corrections.",
+      "limitations": [
+        "The additional benefit is smaller in weakly colored or nearly grayscale scenes.",
+        "Auxiliary estimates and spatial updates increase storage and computation."
+      ],
+      "links": {
+        "paper": "https://hercier.github.io/restcv/",
+        "pdf": "https://hercier.github.io/restcv/assets/pdfs/paper.pdf",
+        "code": "https://github.com/Hercier/ReSTCV"
+      },
+      "sources": [
+        {
+          "url": "https://hercier.github.io/restcv/",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1145/3799902.3811113",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "The author's homepage BibTeX still says to appear. The local PDF uses the formal SIGGRAPH 2026 layout and includes the license and DOI, so the work is included as a published conference paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2026-spatio-temporal-control-variates-with-restir.pdf",
+        "sha256": "c11336e3e85f0e0ac7b8c337b12644e012b893b973e8c166f9fc759e3e77f279",
+        "version": "SIGGRAPH Conference Papers 2026 author PDF with final DOI",
+        "source_url": "https://hercier.github.io/restcv/assets/pdfs/paper.pdf"
+      }
+    },
+    {
+      "paper_id": "rgb2026",
+      "title": "RGB ReSTIR: Decorrelating Spatiotemporal Importance Resampling with Per-Channel Reservoirs",
+      "short_title": "RGB ReSTIR",
+      "authors": [
+        "Markku Mäkitalo",
+        "Saku Haikio",
+        "Julius Ikkala",
+        "Alessandro Foi",
+        "Pekka Jääskeläinen"
+      ],
+      "year": 2026,
+      "venue": "GRAPP 2026",
+      "publication_status": "published",
+      "doi": "10.5220/0014415100004728",
+      "tags": [
+        "reuse_quality"
+      ],
+      "role": "optimization",
+      "problem": "Can per-channel sampling reduce color correlation left by a single luminance reservoir?",
+      "contributions": [
+        "Maintains separate reservoirs and target functions for RGB.",
+        "Experimentally analyzes color noise and correlation in long temporal histories."
+      ],
+      "changes": "Extends ReSTIR PT's scalar-target sampling to independent reuse for each color channel.",
+      "limitations": [
+        "Three reservoirs make the implementation slower; the paper reports approximately 1.5–2.3 times the runtime.",
+        "Benefits are limited in low-confidence real-time configurations, and white-light scenes can gain visible color noise."
+      ],
+      "links": {
+        "paper": "https://webpages.tuni.fi/vga/publications/RGB_ReSTIR.html",
+        "pdf": "https://webpages.tuni.fi/vga/publications/RGB_ReSTIR_GRIVAPP2026_preprint.pdf",
+        "code": "https://github.com/vga-group/tauray/tree/rgb-restir"
+      },
+      "sources": [
+        {
+          "url": "https://webpages.tuni.fi/vga/publications/RGB_ReSTIR.html",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. An independent review confirmed that the author's Proof-of-concept code link points to tauray's rgb-restir branch. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.5220/0014415100004728",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        },
+        {
+          "url": "https://www.scitepress.org/Papers/2026/144151/144151.pdf",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Checked the published DOI, pages, and authors; the title has a spelling discrepancy."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "The existing PDF filename includes preprint, but it corresponds to the published GRAPP 2026 paper. The final SCITEPRESS PDF title contains the typo Decorrelationg. The map uses the author's correctly spelled title and does not create a second node."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2026-rgb-restir.pdf",
+        "sha256": "76c48ccc0bc97118a8ce629d73dc1be20176b585d30c9fb1377168f89c31345b",
+        "version": "Author preprint; corresponding formal GRAPP 2026 paper pp.339–346",
+        "source_url": "https://webpages.tuni.fi/vga/publications/RGB_ReSTIR_GRIVAPP2026_preprint.pdf"
+      },
+      "versions": [
+        {
+          "label": "Author version",
+          "url": "https://webpages.tuni.fi/vga/publications/RGB_ReSTIR_GRIVAPP2026_preprint.pdf"
+        },
+        {
+          "label": "Published GRAPP version",
+          "url": "https://www.scitepress.org/Papers/2026/144151/144151.pdf"
+        }
+      ]
+    },
+    {
+      "paper_id": "spmis2026",
+      "title": "Stochastic Pairwise MIS for Unbiased Large-Kernel Reuse in Real-Time",
+      "short_title": "Stochastic MIS",
+      "authors": [
+        "Trevor Hedstrom",
+        "Markus Kettunen",
+        "Daqi Lin",
+        "Chris Wyman",
+        "Tzu-Mao Li"
+      ],
+      "year": 2026,
+      "venue": "CGF / Eurographics",
+      "publication_status": "published",
+      "doi": "10.1111/cgf.70391",
+      "tags": [
+        "reuse_quality"
+      ],
+      "role": "optimization",
+      "problem": "How can useful reuse samples be selected from a large neighborhood within a limited real-time budget?",
+      "contributions": [
+        "Constructs randomized pairwise MIS weights.",
+        "Uses screen-space cells to sample large candidate pools."
+      ],
+      "changes": "Replaces deterministic MIS-weight sums in GRIS with unbiased stochastic estimates to reduce the number of shifts performed.",
+      "limitations": [
+        "A small number of stochastic MIS samples can still produce dark speckle noise.",
+        "Sampling a large neighborhood does not automatically remove correlation in the input paths."
+      ],
+      "links": {
+        "paper": "https://research.nvidia.com/labs/rtr/publication/hedstrom2026stochastic/",
+        "pdf": "https://research.nvidia.com/labs/rtr/publication/hedstrom2026stochastic/hedstrom2026stochastic.pdf",
+        "code": "https://research.nvidia.com/labs/rtr/publication/hedstrom2026stochastic/hedstrom2026stochastic.zip"
+      },
+      "sources": [
+        {
+          "url": "https://research.nvidia.com/labs/rtr/publication/hedstrom2026stochastic/",
+          "kind": "institution",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1111/cgf.70391",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "Reviewed the abstract, relevant methods and limitations passages, and key references. This does not indicate that the user has read the full paper."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2026-stochastic-pairwise-mis.pdf",
+        "sha256": "f94ba31a43b4f87800c1c6e9db94f9ecd50dc0ec3823c173dcac1b90d021c17e",
+        "version": "Author PDF; CGF 45(2), 2026",
+        "source_url": "https://research.nvidia.com/labs/rtr/publication/hedstrom2026stochastic/hedstrom2026stochastic.pdf"
+      }
+    },
+    {
+      "paper_id": "tof2026",
+      "title": "ToF ReSTIR: Time-of-Flight Rendering with Spatio-temporal Reservoir Resampling",
+      "short_title": "ToF ReSTIR",
+      "authors": [
+        "Juhyeon Kim",
+        "Wojciech Jarosz",
+        "Adithya Pediredla"
+      ],
+      "year": 2026,
+      "venue": "TOG / SIGGRAPH",
+      "publication_status": "published",
+      "doi": "10.1145/3811299",
+      "tags": [
+        "estimators"
+      ],
+      "role": "branch",
+      "problem": "How can path reuse support transient transport when steady-state reuse violates a time gate's path-length constraint?",
+      "contributions": [
+        "Adjusts the reconnection point after a hybrid shift to match the required optical path length.",
+        "Supports spatiotemporal reuse for time-gated images and transient histograms."
+      ],
+      "changes": "Adds path-length-aware mapping to ReSTIR PT's steady-state reconnection.",
+      "limitations": [
+        "Currently adjusts an existing reconnection vertex; more general path deformation remains future work.",
+        "Satisfying the path-length constraint does not guarantee efficient reuse for every complex material."
+      ],
+      "links": {
+        "paper": "https://juhyeonkim95.github.io/project-pages/tof_restir/",
+        "pdf": "https://arxiv.org/pdf/2605.11536v2",
+        "code": "https://github.com/juhyeonkim95/FalcorComp"
+      },
+      "sources": [
+        {
+          "url": "https://juhyeonkim95.github.io/project-pages/tof_restir/",
+          "kind": "author",
+          "checked": "2026-10-30",
+          "note": "Checked the bibliographic details, publication type, and resource links. Technical summaries draw on the relevant sections of the paper."
+        },
+        {
+          "url": "https://doi.org/10.1145/3811299",
+          "kind": "publisher",
+          "checked": "2026-10-30",
+          "note": "Verified the DOI against the paper's first page or the publisher's or author's bibliography. The DOI landing page may not provide anonymous full-text access."
+        }
+      ],
+      "verification": {
+        "metadata": "verified",
+        "content": "full_text",
+        "notes": "The original v2 bytes were preserved. The v1, v2, and SIGGRAPH publication versions are not represented as separate nodes."
+      },
+      "pdf": {
+        "status": "available",
+        "local_file": "2026-tof-restir-v2.pdf",
+        "sha256": "244d55fad9d187790042078d093fcc55bbb1f9ace3f91899fc6cd151591c6c54",
+        "version": "arXiv:2605.11536 v2, revised 2026-10-07; same work as TOG 45(4) article 89",
+        "source_url": "https://arxiv.org/pdf/2605.11536v2"
+      },
+      "versions": [
+        {
+          "label": "arXiv v2",
+          "url": "https://arxiv.org/abs/2605.11536v2",
+          "date": "2026-10-07"
+        },
+        {
+          "label": "TOG publication",
+          "url": "https://doi.org/10.1145/3811299",
+          "date": "2026-07"
+        }
+      ]
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 # ReSTIR literature review
 
-**Updated: 2026-09-18.** An overview of ReSTIR foundations, research directions, and implementations to guide reading and experiments with RTXDI and Falcor.
+**Overview originally updated: 2026-09-18; bibliographic map verified through 2026-10-30.** An overview of ReSTIR foundations, research directions, and implementations to guide reading and experiments with RTXDI and Falcor.
 
-The [reading matrix](reading-matrix.csv) lists full titles, venues, primary sources, and code links for 31 papers and two supporting resources. `source_checked` indicates that metadata and contributions were checked against primary sources.
+The [ReSTIR works map](restir-map/README.md) now maintains the authoritative bibliography and evidence-backed relations for 44 records: 39 published research works plus a separately labeled book chapter, technical report, course, conference talk, and poster abstract. The [reading matrix](reading-matrix.csv) receives its bibliographic columns from that dataset and retains its existing reading and reproduction state. Legacy `source_checked` values are historical source-check markers, not a claim of full-paper or user reading. The topic summaries below remain an introductory reading guide; consult the map for current metadata, scope decisions and explicitly unresolved evidence.
 
 ## 1. Foundations: what is reused, and with which weights?
 

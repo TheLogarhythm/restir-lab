@@ -1,0 +1,1155 @@
+{
+  "schema_version": 1,
+  "checked_date": "2026-10-30",
+  "records": [
+    {
+      "paper_id": "ris2005",
+      "status": "available",
+      "images": [
+        {
+          "id": "ris2005-fig1",
+          "src": "figures/ris2005-fig1.webp",
+          "alt": "Plot showing how the distribution produced by importance resampling changes as the number of candidates increases.",
+          "caption": "RIS distributions for increasing candidate counts.",
+          "source_url": "https://diglib.eg.org/bitstream/handle/10.2312/EGWR.EGSR05.139-146/139-146.pdf",
+          "source_locator": "Figure 1, p. 141 (PDF p. 3)",
+          "credit": "© 2005 The Eurographics Association.",
+          "source_kind": "paper_figure",
+          "sha256": "124ef8f5c30ca520c03a2e0fd34f2d3fe092e821017c2b960c4c60f530ab6016",
+          "width": 1500,
+          "height": 1186
+        }
+      ]
+    },
+    {
+      "paper_id": "restir_di2020",
+      "status": "available",
+      "images": [
+        {
+          "id": "restir_di2020-fig1",
+          "src": "figures/restir_di2020-fig1.webp",
+          "alt": "Pipeline diagram comparing ordinary RIS, spatial reuse, and reuse of samples from the previous frame.",
+          "caption": "From RIS to spatial and temporal reservoir reuse.",
+          "source_url": "https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf",
+          "source_locator": "Figure 3, p. 148:4",
+          "credit": "© 2020 the owner/authors; publication rights licensed to ACM. Scene credits: Zero Day © beeple; Pirate Ship © sema edis.",
+          "source_kind": "paper_figure",
+          "sha256": "edfaa94ca627250924ed4c8ae4539e9af39b91455312f8313c2918986d074cf3",
+          "width": 1500,
+          "height": 430
+        },
+        {
+          "id": "restir_di2020-fig2",
+          "src": "figures/restir_di2020-fig2.webp",
+          "alt": "Side-by-side renderings and close-ups comparing previous sampling with unbiased and biased ReSTIR in two many-light scenes.",
+          "caption": "Many-light direct illumination with ReSTIR.",
+          "source_url": "https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf",
+          "source_locator": "Figure 1, p. 148:1",
+          "credit": "© 2020 the owner/authors; publication rights licensed to ACM. Scene credits: Zero Day © beeple; Pirate Ship © sema edis.",
+          "source_kind": "paper_figure",
+          "sha256": "a20edcb1b2b96523380ba0b32927fc3be12c3c2ebde58067e947138a6ac64e71",
+          "width": 1500,
+          "height": 613
+        }
+      ]
+    },
+    {
+      "paper_id": "production2021",
+      "status": "available",
+      "images": [
+        {
+          "id": "production2021-fig1",
+          "src": "figures/production2021-fig1.webp",
+          "alt": "Pipeline diagram showing initial candidate generation, temporal and spatial resampling, and final pixel shading.",
+          "caption": "The candidate, temporal, spatial, and shading stages.",
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/hpg21_rearchitectingReSTIR.pdf",
+          "source_locator": "Figure 2, PDF p. 2",
+          "credit": "© 2021 The Authors; proceedings © 2021 The Eurographics Association. Opera-house scene © GoldSmooth, TurboSquid.",
+          "source_kind": "paper_figure",
+          "sha256": "74246421f72133ea37b55f6fe91b6295f226c78263079e8ce98b2b5a76e15326",
+          "width": 1500,
+          "height": 245
+        },
+        {
+          "id": "production2021-fig2",
+          "src": "figures/production2021-fig2.webp",
+          "alt": "Rendered opera-house and city scenes used to illustrate the rearchitected ReSTIR implementation.",
+          "caption": "Production ReSTIR in large emissive-light scenes.",
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/hpg21_rearchitectingReSTIR.pdf",
+          "source_locator": "Figure 1, PDF p. 1",
+          "credit": "© 2021 The Authors; proceedings © 2021 The Eurographics Association. Opera-house scene © GoldSmooth, TurboSquid.",
+          "source_kind": "paper_figure",
+          "sha256": "fd561b15ac3a6e3c9ab94a737322b0c3672d347082b3de3dfa017a818f44e709",
+          "width": 1500,
+          "height": 375
+        }
+      ]
+    },
+    {
+      "paper_id": "regir2021",
+      "status": "available",
+      "images": [
+        {
+          "id": "regir2021-fig1",
+          "src": "figures/regir2021-fig1.webp",
+          "alt": "Diagram of a three-dimensional grid whose cells store multiple light-sample reservoirs.",
+          "caption": "World-space cells hold pools of light reservoirs.",
+          "source_url": "https://cwyman.org/papers/rtg2-manyLightReGIR.pdf",
+          "source_locator": "Figure 23-5, p. 356 (PDF p. 6)",
+          "credit": "© NVIDIA 2021. Published in Ray Tracing Gems II by Apress.",
+          "source_kind": "paper_figure",
+          "sha256": "fe19fadb163a2bf0c128d8d2ccd030c5780ea902b8e8b783d30606c7730b4568",
+          "width": 1500,
+          "height": 507
+        }
+      ]
+    },
+    {
+      "paper_id": "restir_gi2021",
+      "status": "available",
+      "images": [
+        {
+          "id": "restir_gi2021-fig1",
+          "src": "figures/restir_gi2021-fig1.webp",
+          "alt": "Algorithm diagram showing initial path samples, temporal reuse, and spatial reuse across pixel reservoirs.",
+          "caption": "ReSTIR GI's initial, temporal, and spatial sampling passes.",
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/ReSTIR%20GI.pdf",
+          "source_locator": "Figure 4, PDF p. 5",
+          "credit": "© 2021 The Authors; Computer Graphics Forum © 2021 The Eurographics Association and John Wiley & Sons Ltd.",
+          "source_kind": "paper_figure",
+          "sha256": "e28c548110760ede1573f697ac3069855e5534c8a72fdfd89768454eea71168b",
+          "width": 1500,
+          "height": 550
+        },
+        {
+          "id": "restir_gi2021-fig2",
+          "src": "figures/restir_gi2021-fig2.webp",
+          "alt": "Three images compare path tracing, ReSTIR GI, and a reference in an indirectly lit interior.",
+          "caption": "Equal-time indirect-lighting comparison.",
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/ReSTIR%20GI.pdf",
+          "source_locator": "Figure 1, PDF p. 1",
+          "credit": "© 2021 The Authors; Computer Graphics Forum © 2021 The Eurographics Association and John Wiley & Sons Ltd.",
+          "source_kind": "paper_figure",
+          "sha256": "c94c878cd51859f734a5fb089f9bb7fbde6a429bb500bf3d6074365c6ee892cb",
+          "width": 1500,
+          "height": 303
+        }
+      ]
+    },
+    {
+      "paper_id": "tiled_reservoir2021",
+      "status": "available",
+      "images": [
+        {
+          "id": "tiled_reservoir2021-fig1",
+          "src": "figures/tiled_reservoir2021-fig1.webp",
+          "alt": "Author-page teaser showing a scooter and surrounding Bistro surfaces rendered with tiled reservoir sampling.",
+          "caption": "Tiled reservoir sampling in the Bistro scene.",
+          "source_url": "https://yusuketokuyoshi.com/#Tiled_Reservoir_Sampling_for_Many-Light_Rendering",
+          "source_locator": "Project teaser",
+          "credit": "Image provided by Yusuke Tokuyoshi / AMD; no separate image license is stated.",
+          "source_kind": "project_teaser",
+          "sha256": "56801985fd6e203e52a7a1606ebe44636ae6f4473cadb6d799323072b22282e5",
+          "width": 384,
+          "height": 256
+        }
+      ]
+    },
+    {
+      "paper_id": "volume2021",
+      "status": "available",
+      "images": [
+        {
+          "id": "volume2021-fig1",
+          "src": "figures/volume2021-fig1.webp",
+          "alt": "Flowchart showing candidate generation and reuse of prior-frame and neighboring-pixel samples for participating media.",
+          "caption": "A reservoir pipeline adapted to volumetric transport.",
+          "source_url": "https://cwyman.org/papers/siga21_volumeReSTIR_small.pdf",
+          "source_locator": "Figure 2, p. 1:4",
+          "credit": "© 2021 the owner/authors; publication rights licensed to ACM.",
+          "source_kind": "paper_figure",
+          "sha256": "af2ead82edb5e3d60d8b922655d2e4c5d1cd2e66a98c15da7ed9eee9480a5132",
+          "width": 1500,
+          "height": 534
+        },
+        {
+          "id": "volume2021-fig2",
+          "src": "figures/volume2021-fig2.webp",
+          "alt": "Single- and multiple-scattering bunny renderings with close-up comparisons to the baseline and reference.",
+          "caption": "Volumetric ReSTIR on a participating-media bunny.",
+          "source_url": "https://cwyman.org/papers/siga21_volumeReSTIR_small.pdf",
+          "source_locator": "Figure 1, p. 1:1",
+          "credit": "© 2021 the owner/authors; publication rights licensed to ACM.",
+          "source_kind": "paper_figure",
+          "sha256": "e553a5ff2b1dd061fda686c9f58aea3fa221ad5dc614dd4fb55df4e6b0f26dfe",
+          "width": 1500,
+          "height": 593
+        }
+      ]
+    },
+    {
+      "paper_id": "world_space2021",
+      "status": "available",
+      "images": [
+        {
+          "id": "world_space2021-fig1",
+          "src": "figures/world_space2021-fig1.webp",
+          "alt": "A split Bistro rendering compares diffuse indirect lighting, world-space reservoir caching, and denoising.",
+          "caption": "World-space reservoir reuse in the Bistro scene.",
+          "source_url": "https://gpuopen.com/download/publications/SA2021_WorldSpace_ReSTIR.pdf",
+          "source_locator": "Figure 1, PDF p. 1",
+          "credit": "© 2021 the owner/authors; publication rights licensed to ACM.",
+          "source_kind": "paper_figure",
+          "sha256": "eca03e86c0ce7a1ed5696522bc9b25d92a0749c2dde903a00b7ddc5e347d8058",
+          "width": 1500,
+          "height": 766
+        }
+      ]
+    },
+    {
+      "paper_id": "ddgi_resampling2022",
+      "status": "available",
+      "images": [
+        {
+          "id": "ddgi_resampling2022-fig1",
+          "src": "figures/ddgi_resampling2022-fig1.webp",
+          "alt": "Two path diagrams show direct-light sampling and a DDGI lookup used within the same resampling estimator.",
+          "caption": "Joint resampling of direct light and cached indirect light.",
+          "source_url": "https://tom94.net/data/publications/majercik21dynamic/majercik21dynamic.pdf",
+          "source_locator": "Figure 2, PDF p. 4",
+          "credit": "Figure by Majercik et al.; original copyright notice applies as stated in the linked paper.",
+          "source_kind": "paper_figure",
+          "sha256": "97a70254e1484aaae5ef7a0222c8a16382a972b2ce437045fa979595f7927dec",
+          "width": 1500,
+          "height": 606
+        },
+        {
+          "id": "ddgi_resampling2022-fig2",
+          "src": "figures/ddgi_resampling2022-fig2.webp",
+          "alt": "Interior renderings and labeled close-ups compare path tracing with ReSTIR, DDGI variants, denoising, and the reference.",
+          "caption": "DDGI resampling in an indirectly lit villa.",
+          "source_url": "https://tom94.net/data/publications/majercik21dynamic/majercik21dynamic.pdf",
+          "source_locator": "Figure 1, PDF p. 1",
+          "credit": "Figure by Majercik et al.; original copyright notice applies as stated in the linked paper.",
+          "source_kind": "paper_figure",
+          "sha256": "71b18feb3779f191216b8e91fb31e0e5266a6237eb05bbdb64341fc361e4527b",
+          "width": 1500,
+          "height": 926
+        }
+      ]
+    },
+    {
+      "paper_id": "gris2022",
+      "status": "available",
+      "images": [
+        {
+          "id": "gris2022-fig1",
+          "src": "figures/gris2022-fig1.webp",
+          "alt": "A comparison table shows sample generation, contribution weights, resampling weights, and selection for RIS variants and GRIS.",
+          "caption": "How GRIS generalizes RIS assumptions and weights.",
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/sig22_GRIS.pdf",
+          "source_locator": "Figure 3, p. 75:4",
+          "credit": "© 2022 the owner/authors; publication rights licensed to ACM. Carousel © carousel_world; Paris Opera House courtesy © GoldSmooth, TurboSquid.",
+          "source_kind": "paper_figure",
+          "sha256": "48f3014130096d641a45cf1e00f3b30f51af75c1dc445abd74ce19e3ed18642e",
+          "width": 1500,
+          "height": 468
+        },
+        {
+          "id": "gris2022-fig2",
+          "src": "figures/gris2022-fig2.webp",
+          "alt": "Carousel and opera-house comparisons illustrate path tracing and ReSTIR PT, with magnified regions.",
+          "caption": "ReSTIR PT across complex lighting and materials.",
+          "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/sig22_GRIS.pdf",
+          "source_locator": "Figure 1, p. 75:1",
+          "credit": "© 2022 the owner/authors; publication rights licensed to ACM. Carousel © carousel_world; Paris Opera House courtesy © GoldSmooth, TurboSquid.",
+          "source_kind": "paper_figure",
+          "sha256": "ffd208d4b5f454dd9d731effae098cc85ef1f750ec1b6c2810405cc4ef86c0db",
+          "width": 1500,
+          "height": 418
+        }
+      ]
+    },
+    {
+      "paper_id": "conditional2023",
+      "status": "available",
+      "images": [
+        {
+          "id": "conditional2023-fig1",
+          "src": "figures/conditional2023-fig1.webp",
+          "alt": "Three path diagrams compare existing paths, ReSTIR PT reuse, and conditional suffix reuse with short integration prefixes.",
+          "caption": "Conditional reuse separates path prefixes and suffixes.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/kettunen2023conditional/kettunen2023conditional.pdf",
+          "source_locator": "Figure 2, PDF p. 6",
+          "credit": "© 2023 the owner/authors.",
+          "source_kind": "paper_figure",
+          "sha256": "9528d1247d1bff11728f71591c627a7ded4d383f13c91414557b3dd5120c34f3",
+          "width": 1500,
+          "height": 427
+        },
+        {
+          "id": "conditional2023-fig2",
+          "src": "figures/conditional2023-fig2.webp",
+          "alt": "A multi-panel comparison shows reference, prototype, marginal MIS, and ReSTIR PT renderings with error close-ups.",
+          "caption": "Suffix reuse and final gathering in the Tower Bridge scene.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/kettunen2023conditional/kettunen2023conditional.pdf",
+          "source_locator": "Figure 1, PDF p. 1",
+          "credit": "© 2023 the owner/authors.",
+          "source_kind": "paper_figure",
+          "sha256": "30b860ef8b908612ee67d289e800d1ecceb4d5922290b7e98df9b18f8e4337f0",
+          "width": 1500,
+          "height": 410
+        }
+      ]
+    },
+    {
+      "paper_id": "course2023",
+      "status": "available",
+      "images": [
+        {
+          "id": "course2023-fig1",
+          "src": "figures/course2023-fig1.webp",
+          "alt": "A path diagram marks replayed path segments and a reconnection between neighboring light transport paths.",
+          "caption": "The course's illustration of a hybrid shift mapping.",
+          "source_url": "https://intro-to-restir.cwyman.org/presentations/2023ReSTIR_Course_Notes.pdf",
+          "source_locator": "Figure 6.2, p. 30 (PDF p. 37)",
+          "credit": "© 2023 the owner/authors. Figure from the course notes updated March 4, 2024.",
+          "source_kind": "paper_figure",
+          "sha256": "f3c0fda3a479243284e5509b4180abd40ee695c67af0c49dc67b302e4779bd9d",
+          "width": 1500,
+          "height": 631
+        }
+      ]
+    },
+    {
+      "paper_id": "inverse2023",
+      "status": "available",
+      "images": [
+        {
+          "id": "inverse2023-fig1",
+          "src": "figures/inverse2023-fig1.webp",
+          "alt": "Two diagrams show a sampled light point before and after the scene changes between gradient steps.",
+          "caption": "Updating a reservoir sample across optimization steps.",
+          "source_url": "https://projects.shuangz.com/psdr-restir-sa23/psdr-restir-sa23.pdf",
+          "source_locator": "Figure 2, p. 214:7",
+          "credit": "© 2023 the owner/authors.",
+          "source_kind": "paper_figure",
+          "sha256": "03efe67dd88d75c7d418a65212da799e31b5efd23c7aaf2495b6884dc8ba918d",
+          "width": 1500,
+          "height": 672
+        },
+        {
+          "id": "inverse2023-fig2",
+          "src": "figures/inverse2023-fig2.webp",
+          "alt": "An inverse-rendering example compares target and optimized textures, reconstructed images, rendering loss, and albedo error.",
+          "caption": "ReSTIR sample reuse during texture reconstruction.",
+          "source_url": "https://projects.shuangz.com/psdr-restir-sa23/psdr-restir-sa23.pdf",
+          "source_locator": "Figure 1, p. 214:1",
+          "credit": "© 2023 the owner/authors.",
+          "source_kind": "paper_figure",
+          "sha256": "f2f2694697f9db98ef666d49cf3544dba0d3ae3aff1136d5d41841114871a907",
+          "width": 1500,
+          "height": 852
+        }
+      ]
+    },
+    {
+      "paper_id": "light_subpath2023",
+      "status": "available",
+      "images": [
+        {
+          "id": "light_subpath2023-fig1",
+          "src": "figures/light_subpath2023-fig1.webp",
+          "alt": "Pipeline diagram showing the history reservoir grid, geometry-grid generation, reservoir updates, and eye-path connections.",
+          "caption": "Updating light-subpath reservoirs and connecting eye paths.",
+          "source_url": "https://ars.els-cdn.com/content/image/1-s2.0-S0097849323000055-gr1.jpg",
+          "source_locator": "Figure 1 (publisher figure image)",
+          "credit": "Figure by Fuyan Liu and Junwen Gan, published in Computers & Graphics (Elsevier), 2023. Original copyright applies.",
+          "source_kind": "paper_figure",
+          "sha256": "85716fe21493021d039a6735d7273b1af96bb22619bc1c22e18ae8a564f2b546",
+          "width": 675,
+          "height": 299
+        }
+      ]
+    },
+    {
+      "paper_id": "multiview2023",
+      "status": "available",
+      "images": [
+        {
+          "id": "multiview2023-fig1",
+          "src": "figures/multiview2023-fig1.webp",
+          "alt": "Overhead interior scene with many marked cameras and viewing directions.",
+          "caption": "Shared scene caches for many viewers (author-page thumbnail).",
+          "source_url": "https://stadlbauer.solutions/en/publications",
+          "source_locator": "Project teaser",
+          "credit": "Image provided on Pascal Stadlbauer's publication page for Weinrauch et al.; no separate image license is stated.",
+          "source_kind": "project_teaser",
+          "sha256": "1e88cd94978219b56321fab07e1a55252e0533f728d298982147ca53c43f6b0e",
+          "width": 239,
+          "height": 177
+        }
+      ]
+    },
+    {
+      "paper_id": "parameter2023",
+      "status": "available",
+      "images": [
+        {
+          "id": "parameter2023-fig1",
+          "src": "figures/parameter2023-fig1.webp",
+          "alt": "Diagrams show multiple visible texels and reuse of differential light samples across parameter-optimization iterations.",
+          "caption": "Reservoirs attached to parameters rather than pixels.",
+          "source_url": "https://weschang.com/publications/restir-dr/restir-dr.pdf",
+          "source_locator": "Figure 2, PDF p. 3",
+          "credit": "© 2023 the owner/authors. Scene credits: Chalice, goblet, cup © SusanKing; Bistro © Amazon Lumberyard; Ballroom © Sergej Majboroda.",
+          "source_kind": "paper_figure",
+          "sha256": "b15c3499724a28261e597e4d8ac34cbc8b50adffba19ea8e9f4bb43eea7ce57c",
+          "width": 1500,
+          "height": 387
+        },
+        {
+          "id": "parameter2023-fig2",
+          "src": "figures/parameter2023-fig2.webp",
+          "alt": "Labeled panels compare texture derivatives, reconstructed chalice images, and convergence during roughness optimization.",
+          "caption": "Roughness-texture optimization of the Chalice.",
+          "source_url": "https://weschang.com/publications/restir-dr/restir-dr.pdf",
+          "source_locator": "Figure 1, PDF p. 1",
+          "credit": "© 2023 the owner/authors. Scene credits: Chalice, goblet, cup © SusanKing; Bistro © Amazon Lumberyard; Ballroom © Sergej Majboroda.",
+          "source_kind": "paper_figure",
+          "sha256": "514e40bbfed26925768302378bfad59ee0bfc1562a3a5f41788bb7fc6dd532f2",
+          "width": 1500,
+          "height": 952
+        }
+      ]
+    },
+    {
+      "paper_id": "pdf_similarity2023",
+      "status": "available",
+      "images": [
+        {
+          "id": "pdf_similarity2023-fig1",
+          "src": "figures/pdf_similarity2023-fig1.webp",
+          "alt": "Two diagrams contrast target PDFs at lit and shadowed pixels and their von Mises-Fisher approximations.",
+          "caption": "Comparing target distributions across a shadow boundary.",
+          "source_url": "https://yusuketokuyoshi.com/papers/2023/Efficient_Spatial_Resampling_Using_the_PDF_Similarity.pdf",
+          "source_locator": "Figure 2, p. 4:3",
+          "credit": "© 2023 the owner/authors; publication rights licensed to ACM. Author version is marked personal use, not for redistribution.",
+          "source_kind": "paper_figure",
+          "sha256": "fd6d8d23d29e603b5c88313e6a06a4cad9cbe19327929db719a5ebd473d5901c",
+          "width": 1500,
+          "height": 427
+        },
+        {
+          "id": "pdf_similarity2023-fig2",
+          "src": "figures/pdf_similarity2023-fig2.webp",
+          "alt": "A Bistro rendering and labeled doorway close-ups compare previous spatial-reuse settings, PDF-similarity rejection, and reference.",
+          "caption": "PDF-aware rejection preserves the shadowed doorway.",
+          "source_url": "https://yusuketokuyoshi.com/papers/2023/Efficient_Spatial_Resampling_Using_the_PDF_Similarity.pdf",
+          "source_locator": "Figure 1, p. 4:1",
+          "credit": "© 2023 the owner/authors; publication rights licensed to ACM. Author version is marked personal use, not for redistribution.",
+          "source_kind": "paper_figure",
+          "sha256": "4f44ab8ecb8f970ec5fff4beb0c6eb6d731dc252ac28e254df9e7ac72e484395",
+          "width": 1500,
+          "height": 1232
+        }
+      ]
+    },
+    {
+      "paper_id": "area2024",
+      "status": "available",
+      "images": [
+        {
+          "id": "area2024-fig1",
+          "src": "figures/area2024-fig1.webp",
+          "alt": "Diagram of current and previous pixel footprints, backward projection, and direct RIS sample selection.",
+          "caption": "A subpixel-aware temporal shift.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/zhang2024area/zhang2024area.pdf",
+          "source_locator": "Figure 3, p. 98:5",
+          "credit": "© 2024 the owner/authors.",
+          "source_kind": "paper_figure",
+          "sha256": "f749c2e8ca519c2235515a9eb3a10e109edccf8f988744d385dc3bca6b775baf",
+          "width": 1500,
+          "height": 513
+        },
+        {
+          "id": "area2024-fig2",
+          "src": "figures/area2024-fig2.webp",
+          "alt": "Labeled furry-model renderings compare path tracing, ReSTIR PT, Area ReSTIR, and ground truth.",
+          "caption": "Subpixel-detail comparison on a furry model.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/zhang2024area/zhang2024area.pdf",
+          "source_locator": "Figure 1, p. 98:1",
+          "credit": "© 2024 the owner/authors.",
+          "source_kind": "paper_figure",
+          "sha256": "bb958cdfbc4c400e1d573d3097f4587a9e7ff403ecdbdd5eb907b4b12fc192d8",
+          "width": 1500,
+          "height": 348
+        }
+      ]
+    },
+    {
+      "paper_id": "fg2024",
+      "status": "available",
+      "images": [
+        {
+          "id": "fg2024-fig1",
+          "src": "figures/fg2024-fig1.webp",
+          "alt": "Labeled cookie-jar comparisons show final gathering, ReSTIR GI, ReSTIR PT, Suffix ReSTIR, ReSTIR FG, and the reference.",
+          "caption": "ReSTIR FG recovers indirect lighting inside the cookie jar.",
+          "source_url": "https://github.com/TU-Clausthal-Rendering/ReSTIR-FG",
+          "source_locator": "Project teaser",
+          "credit": "Figure from the author repository of René Kern, Felix Brüll, and Thorsten Grosch; original figure credits and caption are retained.",
+          "source_kind": "project_teaser",
+          "sha256": "1a800f409be67fd491bbab2613f691cd207b19a7292e6804d7b7572e0021f00f",
+          "width": 1500,
+          "height": 434
+        }
+      ]
+    },
+    {
+      "paper_id": "mcmc2024",
+      "status": "available",
+      "images": [
+        {
+          "id": "mcmc2024-fig1",
+          "src": "figures/mcmc2024-fig1.webp",
+          "alt": "Flowchart showing an optional Metropolis-Hastings mutation block between temporal and spatial ReSTIR resampling.",
+          "caption": "MCMC mutations inserted between reuse stages.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/sawhney2024decorrelating/ReSTIRMCMC.pdf",
+          "source_locator": "Figure 5, PDF p. 6",
+          "credit": "© 2023 the owner/authors, as printed in this author manuscript.",
+          "source_kind": "paper_figure",
+          "sha256": "b16fc0aab51e90bd0abc5d0b25ed24bea8202cf866d4489852d2a2bca349985b",
+          "width": 1500,
+          "height": 561
+        },
+        {
+          "id": "mcmc2024-fig2",
+          "src": "figures/mcmc2024-fig2.webp",
+          "alt": "Kitchen renderings and magnified regions compare ReSTIR PT with and without mutations, including denoised results.",
+          "caption": "Mutations reduce correlated indirect-lighting artifacts.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/sawhney2024decorrelating/ReSTIRMCMC.pdf",
+          "source_locator": "Figure 1, PDF p. 1",
+          "credit": "© 2023 the owner/authors, as printed in this author manuscript.",
+          "source_kind": "paper_figure",
+          "sha256": "e8a3a4f6d1080bdf318cdde390cc76c987d4339aa946c1024b38e933931aab43",
+          "width": 1500,
+          "height": 419
+        }
+      ]
+    },
+    {
+      "paper_id": "mis_weight2024",
+      "status": "unavailable",
+      "images": [],
+      "reason": "No publicly accessible figure has been verified for this paper.",
+      "retrieval_notes": "The publisher's PDF content endpoint returned HTTP 401; the public item page and legacy PDF link returned HTTP 403 or HTML. Exact-title and author searches did not locate a suitable public author image. No placeholder is used."
+    },
+    {
+      "paper_id": "object_space2024",
+      "status": "available",
+      "images": [
+        {
+          "id": "object_space2024-fig1",
+          "src": "figures/object_space2024-fig1.webp",
+          "alt": "Flowchart of pre-Z visibility, memory allocation, mipmap bias, shading, and final gathering in the object-space system.",
+          "caption": "The object-space shading pipeline.",
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/f1264f05-ba89-4f21-81e7-7e7c77ec9115/content",
+          "source_locator": "Figure 2, PDF p. 2",
+          "credit": "© 2024 The Authors.",
+          "source_kind": "paper_figure",
+          "sha256": "94f0b56af02e495a58416b0a38040e319149782ab46ca9329122ff4b32e06a55",
+          "width": 1020,
+          "height": 651
+        },
+        {
+          "id": "object_space2024-fig2",
+          "src": "figures/object_space2024-fig2.webp",
+          "alt": "Indirectly lit tabletop scene with mug close-ups comparing screen-space and object-space methods, plus object-parameterization views.",
+          "caption": "Object-space ReSTIR GI at surface seams.",
+          "source_url": "https://diglib.eg.org/server/api/core/bitstreams/f1264f05-ba89-4f21-81e7-7e7c77ec9115/content",
+          "source_locator": "Figure 1, PDF p. 1",
+          "credit": "© 2024 The Authors.",
+          "source_kind": "paper_figure",
+          "sha256": "0f6710cd2f0f62ba0d3a56b81536f3f0ce1f3a7305c0149e16358acae370e160",
+          "width": 1500,
+          "height": 519
+        }
+      ]
+    },
+    {
+      "paper_id": "sample_space2024",
+      "status": "available",
+      "images": [
+        {
+          "id": "sample_space2024-fig1",
+          "src": "figures/sample_space2024-fig1.webp",
+          "alt": "An author-provided interior rendering teaser divides a table-and-teapot scene into panels with different noise levels.",
+          "caption": "Author teaser for sample-space filtering in ReSTIR GI.",
+          "source_url": "https://xuxiang440.github.io/",
+          "source_locator": "Publication teaser for A ReSTIR GI Method Using the Sample-Space Filtering",
+          "credit": "Figure: Jie Jiang, Xiang Xu, Beibei Wang (2024). Copyright remains with the original rights holders.",
+          "source_kind": "project_teaser",
+          "sha256": "31d34901f199ac598f54171854e7712473955f2403e4f8db4df97fb4f9315a9c",
+          "width": 747,
+          "height": 400
+        }
+      ]
+    },
+    {
+      "paper_id": "shape_splatting2024",
+      "status": "available",
+      "images": [
+        {
+          "id": "shape_splatting2024-fig1",
+          "src": "figures/shape_splatting2024-fig1.webp",
+          "alt": "A labeled composite compares path tracing, resampled path tracing and ReSTIR PT with and without shape splatting, including error maps and interior details.",
+          "caption": "Shape splatting combined with several Monte Carlo estimators.",
+          "source_url": "https://github.com/LuisaGroup/Efficient-Image-Shape-Splatting",
+          "source_locator": "Project teaser, comparison panels",
+          "credit": "Figure: Xiaochun Tong, Toshiya Hachisuka (2024). Copyright remains with the original rights holders.",
+          "source_kind": "project_teaser",
+          "sha256": "49865921fb5e6189d4896e9a0d1b080f9647138b1f02145c02924899876e44f1",
+          "width": 1500,
+          "height": 267
+        },
+        {
+          "id": "shape_splatting2024-fig2",
+          "src": "figures/shape_splatting2024-fig2.webp",
+          "alt": "Diagrams show a shape around a sampled pixel, flattening to one dimension and a debiased interpolation of path contributions.",
+          "caption": "Shape construction and debiased interpolation.",
+          "source_url": "https://github.com/LuisaGroup/Efficient-Image-Shape-Splatting",
+          "source_locator": "Project teaser, method panels A–C",
+          "credit": "Figure: Xiaochun Tong, Toshiya Hachisuka (2024). Copyright remains with the original rights holders.",
+          "source_kind": "project_teaser",
+          "sha256": "f8492d21a98aa901fb3c0d09747996de85e5c461e5c4e6f1a3701bdebe5e29ce",
+          "width": 1500,
+          "height": 227
+        }
+      ]
+    },
+    {
+      "paper_id": "sss2024",
+      "status": "available",
+      "images": [
+        {
+          "id": "sss2024-fig1",
+          "src": "figures/sss2024-fig1.webp",
+          "alt": "Subsurface scattering in a translucent dragon, comparing path tracing and ReSTIR SSS with inset and denoised views.",
+          "caption": "ReSTIR SSS reduces noise in translucent materials.",
+          "source_url": "https://cg.ivd.kit.edu/publications/2024/restir-sss/restir-sss.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Mirco Werner, Vincent Schüßler, Carsten Dachsbacher (2024). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "feac4ad97bc0a24c6c7500ddc34d92203b20d73cdee2f73a84ddc1673a2e87d5",
+          "width": 1211,
+          "height": 508
+        },
+        {
+          "id": "sss2024-fig3",
+          "src": "figures/sss2024-fig3.webp",
+          "alt": "Two path diagrams show reconnection through a translucent object and delayed reconnection after replay.",
+          "caption": "Subsurface-specific reconnection and delayed reconnection.",
+          "source_url": "https://cg.ivd.kit.edu/publications/2024/restir-sss/restir-sss.pdf",
+          "source_locator": "Figure 3, p. 7",
+          "credit": "Figure: Mirco Werner, Vincent Schüßler, Carsten Dachsbacher (2024). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "729ff9ba52e86b1fefe4e8fd11277649af75f35656658db7b99265f11795f18b",
+          "width": 395,
+          "height": 379
+        }
+      ]
+    },
+    {
+      "paper_id": "visibility_reuse2024",
+      "status": "available",
+      "images": [
+        {
+          "id": "visibility_reuse2024-fig1",
+          "src": "figures/visibility_reuse2024-fig1.webp",
+          "alt": "Two Bistro renderings and color-outlined close-ups compare previous visibility reuse with the proposed method.",
+          "caption": "Visibility reuse comparison with matched scene details.",
+          "source_url": "https://gpuopen.com/download/publications/Efficient_Visibility_Reuse_for_Real-time_ReSTIR.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Yusuke Tokuyoshi (2024). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "fe19343c8ca113e4022b49fa4b37ee32aba1c02de535bb2739ca5ba7f83e4719",
+          "width": 1500,
+          "height": 664
+        }
+      ]
+    },
+    {
+      "paper_id": "bdpt2025",
+      "status": "available",
+      "images": [
+        {
+          "id": "bdpt2025-fig1",
+          "src": "figures/bdpt2025-fig1.webp",
+          "alt": "A dim room illuminated by glass bulbs, split between ReSTIR PT and bidirectional ReSTIR with magnified bulb comparisons.",
+          "caption": "Bidirectional reuse improves hard-to-reach lighting.",
+          "source_url": "https://cwyman.org/papers/tog25_ReSTIR_BDPT.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Trevor Hedstrom, Markus Kettunen, Daqi Lin, Chris Wyman, Tzu-Mao Li (2025). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "d5e24109c580e0ca96a8d28950b7489943d133d5daf7ac55c1ceeedf5f3bef38",
+          "width": 1500,
+          "height": 795
+        },
+        {
+          "id": "bdpt2025-fig3",
+          "src": "figures/bdpt2025-fig3.webp",
+          "alt": "Colored camera and light subpaths illustrate a bidirectional shift mapping from a base path to a new primary hit.",
+          "caption": "Shifting a bidirectional path while retaining its sampling technique.",
+          "source_url": "https://cwyman.org/papers/tog25_ReSTIR_BDPT.pdf",
+          "source_locator": "Figure 3, p. 6",
+          "credit": "Figure: Trevor Hedstrom, Markus Kettunen, Daqi Lin, Chris Wyman, Tzu-Mao Li (2025). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "0ce5e8101c5c3293b6c2df73c4ec584c6cdc601ff3a2908bbea5122388fbfff2",
+          "width": 748,
+          "height": 303
+        }
+      ]
+    },
+    {
+      "paper_id": "histogram2025",
+      "status": "available",
+      "images": [
+        {
+          "id": "histogram2025-fig1",
+          "src": "figures/histogram2025-fig1.webp",
+          "alt": "A green car rendered with path tracing, ReSTIR and histogram stratification, alongside error maps and detail crops.",
+          "caption": "Histogram stratification improves candidate sampling.",
+          "source_url": "https://iribis.github.io/files/Stratified_Histogram_Resampling/paper.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Corentin Salaün, Martin Bálint, Laurent Belcour, Eric Heitz, Gurprit Singh, Karol Myszkowski (2025). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "6a10419dc0a69337879535ba290aec077784a6324cefe2311031091cdfef8c9e",
+          "width": 1500,
+          "height": 593
+        },
+        {
+          "id": "histogram2025-fig2",
+          "src": "figures/histogram2025-fig2.webp",
+          "alt": "A flow diagram contrasts ReSTIR candidate resampling with sorted histogram candidates and antithetic selection.",
+          "caption": "Histogram sorting and stratified candidate selection.",
+          "source_url": "https://iribis.github.io/files/Stratified_Histogram_Resampling/paper.pdf",
+          "source_locator": "Figure 2, p. 3",
+          "credit": "Figure: Corentin Salaün, Martin Bálint, Laurent Belcour, Eric Heitz, Gurprit Singh, Karol Myszkowski (2025). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "0db3a0e80598217ea6e65f5791d33eae86fe31f52fb4a4b591b2bd6a776a9533",
+          "width": 767,
+          "height": 453
+        }
+      ]
+    },
+    {
+      "paper_id": "pg2025",
+      "status": "available",
+      "images": [
+        {
+          "id": "pg2025-fig1",
+          "src": "figures/pg2025-fig1.webp",
+          "alt": "Two interior scenes compare conventional guiding with ReSTIR path guiding, including detailed crops with and without guiding.",
+          "caption": "Learning guiding distributions from resampled paths.",
+          "source_url": "https://cwyman.org/papers/siga25_ReSTIR_PG.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Zheng Zeng, Markus Kettunen, Chris Wyman, Lifan Wu, Ravi Ramamoorthi, Ling-Qi Yan, Daqi Lin (2025). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "075c6bfecf02678f96bf5b61e99a3017ab3e6deeb6c9bd84e0ce6897c160cf5c",
+          "width": 1500,
+          "height": 655
+        },
+        {
+          "id": "pg2025-fig3",
+          "src": "figures/pg2025-fig3.webp",
+          "alt": "A pipeline connects ReSTIR PT stages with sample splatting, distribution fitting and guided sampling for the next frame.",
+          "caption": "A feedback loop between path reuse and guiding.",
+          "source_url": "https://cwyman.org/papers/siga25_ReSTIR_PG.pdf",
+          "source_locator": "Figure 3, p. 7",
+          "credit": "Figure: Zheng Zeng, Markus Kettunen, Chris Wyman, Lifan Wu, Ravi Ramamoorthi, Ling-Qi Yan, Daqi Lin (2025). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "bede06580d576ff0f9e21f51fe6ebc48ce0990d8b848a17f4b5a60bb2a2163a9",
+          "width": 1130,
+          "height": 355
+        }
+      ]
+    },
+    {
+      "paper_id": "psms2025",
+      "status": "available",
+      "images": [
+        {
+          "id": "psms2025-fig1",
+          "src": "figures/psms2025-fig1.webp",
+          "alt": "A scene lit through reflective and refractive objects compares path tracing, specular manifold sampling, and the proposed method with ReSTIR.",
+          "caption": "Specular paths found through partitioning and resampling.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/hong2025partition/hong2025partition_paper.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Pengpei Hong, Meng Duan, Beibei Wang, Cem Yuksel, Tizian Zeltner, Daqi Lin (2025). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "1747fff6982e11a5878906c51bd7ad379130a7f1931ef55e8da18d3ce8314290",
+          "width": 1500,
+          "height": 474
+        }
+      ]
+    },
+    {
+      "paper_id": "shadow_maps2025",
+      "status": "available",
+      "images": [
+        {
+          "id": "shadow_maps2025-fig1",
+          "src": "figures/shadow_maps2025-fig1.webp",
+          "alt": "Bistro comparisons show different shadow-map selection strategies before and after denoising.",
+          "caption": "ReSTIR selects which lights receive full-resolution shadow maps.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/zhang2025many-light/zhang2025many-light.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Song Zhang, Daqi Lin, Chris Wyman, Cem Yuksel (2025). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "3676176cab30de44e9a95f34261cf9e57656e9d1c302a6f8b5535e467a1f188b",
+          "width": 1500,
+          "height": 636
+        },
+        {
+          "id": "shadow_maps2025-fig2",
+          "src": "figures/shadow_maps2025-fig2.webp",
+          "alt": "A flowchart ranks lights with ReSTIR, generates shadow maps and combines them with imperfect shadow maps.",
+          "caption": "The ReSTIR-sampled shadow-map pipeline.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/zhang2025many-light/zhang2025many-light.pdf",
+          "source_locator": "Figure 2, p. 3",
+          "credit": "Figure: Song Zhang, Daqi Lin, Chris Wyman, Cem Yuksel (2025). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "217e6c5a9061f633ea08e386ac316d81535f6a3441c52e5dbf7a2f3442b13c1d",
+          "width": 1500,
+          "height": 501
+        }
+      ]
+    },
+    {
+      "paper_id": "splatting2025",
+      "status": "available",
+      "images": [
+        {
+          "id": "splatting2025-fig1",
+          "src": "figures/splatting2025-fig1.webp",
+          "alt": "Fur and a subway scene compare Area ReSTIR with reservoir splatting during camera motion and motion blur.",
+          "caption": "Forward splatting preserves useful temporal samples.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/liu2025splatting/liu2025splatting_paper.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Jeffrey Liu, Daqi Lin, Markus Kettunen, Chris Wyman, Ravi Ramamoorthi (2025). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "6a137989dffa162a6a8db9ac040ab05134e8080a6245e37667d35c369a800a61",
+          "width": 1500,
+          "height": 546
+        },
+        {
+          "id": "splatting2025-fig4",
+          "src": "figures/splatting2025-fig4.webp",
+          "alt": "Four camera-and-flower diagrams compare motion-vector construction, lens-coordinate reuse, primary-hit reconnection and splatting.",
+          "caption": "How forward splatting differs from Area ReSTIR temporal shifts.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/liu2025splatting/liu2025splatting_paper.pdf",
+          "source_locator": "Figure 4, p. 7",
+          "credit": "Figure: Jeffrey Liu, Daqi Lin, Markus Kettunen, Chris Wyman, Ravi Ramamoorthi (2025). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "9a308fb7db39c4613108fac9bb5dd948f2153be3faf6be29c784345fe33fc4ac",
+          "width": 1500,
+          "height": 241
+        }
+      ]
+    },
+    {
+      "paper_id": "blue_noise2026",
+      "status": "available",
+      "images": [
+        {
+          "id": "blue_noise2026-fig1",
+          "src": "figures/blue_noise2026-fig1.webp",
+          "alt": "An author-provided bathroom rendering is divided diagonally, with green and blue boxes marking sink and counter details.",
+          "caption": "Author teaser for blue-noise ReSTIR.",
+          "source_url": "https://xukun85.github.io/publications.html",
+          "source_locator": "Publication teaser for Blue Noise Dithering for Reservoir-based Spatio-temporal Importance Resampling",
+          "credit": "Figure: Zhong Shi, Kun Xu (2026). Copyright remains with the original rights holders.",
+          "source_kind": "project_teaser",
+          "sha256": "100332aa806941e301393393390bb14d0e9356fc9c70663dbfe585fbb982fa2c",
+          "width": 800,
+          "height": 600
+        }
+      ]
+    },
+    {
+      "paper_id": "cgns2026",
+      "status": "available",
+      "images": [
+        {
+          "id": "cgns2026-fig1",
+          "src": "figures/cgns2026-fig1.webp",
+          "alt": "An outdoor scene and magnified foliage details compare path tracing, ReSTIR, compatibility-guided reuse and reference.",
+          "caption": "Compatibility-guided selection reduces correlation and noise.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/junkins2026compatibility.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Orion Junkins, Markus Kettunen, Daqi Lin, Ravi Ramamoorthi, Chris Wyman (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "599063acd90937434dfd8d1e512945730273d42e9e9196ebab6cb906279f6d9a",
+          "width": 1211,
+          "height": 444
+        }
+      ]
+    },
+    {
+      "paper_id": "ghost2026",
+      "status": "available",
+      "images": [
+        {
+          "id": "ghost2026-fig1",
+          "src": "figures/ghost2026-fig1.webp",
+          "alt": "An explosion volume and a colored smoke plume compare null-scattering, volume ReSTIR and Ghost ReSTIR with close-up views.",
+          "caption": "Volumetric reuse through ghost vertices.",
+          "source_url": "https://cwyman.org/abstracts/sig2026_ghostReSTIR.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Song Zhang, Daqi Lin, Pengpei Hong, Markus Kettunen, Cem Yuksel, Chris Wyman (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "49efa4795723689c1cc784ab7fd0100c9d38974f62e6fff1384ad5c8bb7c0519",
+          "width": 1500,
+          "height": 853
+        }
+      ]
+    },
+    {
+      "paper_id": "gradient2026",
+      "status": "available",
+      "images": [
+        {
+          "id": "gradient2026-fig1",
+          "src": "figures/gradient2026-fig1.webp",
+          "alt": "A still life compares gradient-domain path tracing, Area ReSTIR and gradient-domain ReSTIR with magnified material details.",
+          "caption": "Gradient-domain reconstruction with ReSTIR samples.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/wang2026gradient/wang2026gradient.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Yu-Chen Wang, Markus Kettunen, Daqi Lin, Chris Wyman, Lifan Wu, Shuang Zhao (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "7f1b0a7ffcbcc63fce28aeba3ac1fcabbb6f6732d5ac6c69bab72ac1e149a877",
+          "width": 1500,
+          "height": 557
+        },
+        {
+          "id": "gradient2026-fig2",
+          "src": "figures/gradient2026-fig2.webp",
+          "alt": "Two path diagrams contrast computing gradients after ReSTIR with resampling pixel-pair gradient samples directly.",
+          "caption": "Gradient after ReSTIR versus Gradient with ReSTIR.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/wang2026gradient/wang2026gradient.pdf",
+          "source_locator": "Figure 2, p. 4",
+          "credit": "Figure: Yu-Chen Wang, Markus Kettunen, Daqi Lin, Chris Wyman, Lifan Wu, Shuang Zhao (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "9c789c7fb213676f27924412c388940b054bbe3b4ba43cfdd324a93c6e09b6a3",
+          "width": 745,
+          "height": 387
+        }
+      ]
+    },
+    {
+      "paper_id": "guided_fg2026",
+      "status": "available",
+      "images": [
+        {
+          "id": "guided_fg2026-fig1",
+          "src": "figures/guided_fg2026-fig1.webp",
+          "alt": "A restaurant scene and labeled close-ups compare ReSTIR PT, ReSTIR FG, guided FG, guided FG+ and reference for caustics and indirect lighting.",
+          "caption": "Guided photon resampling in a scene with many lights.",
+          "source_url": "https://github.com/TU-Clausthal-Rendering/Guided-ReSTIR-FG-Plus",
+          "source_locator": "Project teaser (Figure 1)",
+          "credit": "Figure: René Kern, Felix Brüll, Jonas Kastning, Thorsten Grosch (2026). Copyright remains with the original rights holders.",
+          "source_kind": "project_teaser",
+          "sha256": "1f789d468af8edd8a51dd085fb26f2bf957568e38a4d1aa9068b813f349f21d2",
+          "width": 1500,
+          "height": 851
+        }
+      ]
+    },
+    {
+      "paper_id": "lod2026",
+      "status": "available",
+      "images": [
+        {
+          "id": "lod2026-fig1",
+          "src": "figures/lod2026-fig1.webp",
+          "alt": "A coastal cliff scene and rock-detail crops compare reference, LoD-aware ReSTIR and baseline ReSTIR.",
+          "caption": "Sample reuse remains effective across geometry detail changes.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/wang2026levelOfDetail/wang2026levelOfDetail.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Yu-Chen Wang, Markus Kettunen, Daqi Lin, Chris Wyman, Lifan Wu, Shuang Zhao (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "cb106908d9de9a88eef8f8115f9b1ec4460413b450f194bdd5d44d1662e8126a",
+          "width": 1500,
+          "height": 465
+        },
+        {
+          "id": "lod2026-fig4",
+          "src": "figures/lod2026-fig4.webp",
+          "alt": "Camera and light rays around two teapot meshes illustrate primary reprojection and path reconnection.",
+          "caption": "Vertex correspondence connects temporal reuse across meshes.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/wang2026levelOfDetail/wang2026levelOfDetail.pdf",
+          "source_locator": "Figure 4, p. 4",
+          "credit": "Figure: Yu-Chen Wang, Markus Kettunen, Daqi Lin, Chris Wyman, Lifan Wu, Shuang Zhao (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "21c99ffacc08bcb5b6757a33c53c2729ea8cf29d6e56fd15d69cc24dcabf6770",
+          "width": 769,
+          "height": 415
+        }
+      ]
+    },
+    {
+      "paper_id": "multilayer2026",
+      "status": "available",
+      "images": [
+        {
+          "id": "multilayer2026-fig1",
+          "src": "figures/multilayer2026-fig1.webp",
+          "alt": "A carousel scene compares reservoir splatting and multilayer reuse with detail crops of disoccluded regions.",
+          "caption": "Multiple reservoir layers preserve temporarily occluded history.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/hong2026multilayer/hong2026multilayer.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Pengpei Hong, Song Zhang, Daqi Lin, Markus Kettunen, Chris Wyman, Cem Yuksel (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "3ca6738912ffe769888ec03cc0cef945288791e67dd685ecba1704743ad02bf8",
+          "width": 1500,
+          "height": 525
+        },
+        {
+          "id": "multilayer2026-fig3",
+          "src": "figures/multilayer2026-fig3.webp",
+          "alt": "A camera diagram assigns samples to first and second depth layers and marks a sample outside the valid depth ranges.",
+          "caption": "Depth ranges identify the destination reservoir layer.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/hong2026multilayer/hong2026multilayer.pdf",
+          "source_locator": "Figure 3, p. 4",
+          "credit": "Figure: Pengpei Hong, Song Zhang, Daqi Lin, Markus Kettunen, Chris Wyman, Cem Yuksel (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "04a4af476508c56bf86acfd48636bd79c110c26fcdabe8a3f58ece30993c703b",
+          "width": 533,
+          "height": 479
+        }
+      ]
+    },
+    {
+      "paper_id": "pt_enhanced2026",
+      "status": "available",
+      "images": [
+        {
+          "id": "pt_enhanced2026-fig1",
+          "src": "figures/pt_enhanced2026-fig1.webp",
+          "alt": "A spacecraft interior compares original ReSTIR PT with the enhanced method, with labeled color-noise and reflection details.",
+          "caption": "Faster, more robust ReSTIR path tracing.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/lin2026restirptenhanced/lin2026restirptenhanced.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Daqi Lin, Markus Kettunen, Chris Wyman (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "fb667ad9360ed14acad4b687b44e39fe4d429caf75752a5cf5c1aeec1a9466da",
+          "width": 1211,
+          "height": 365
+        },
+        {
+          "id": "pt_enhanced2026-fig2",
+          "src": "figures/pt_enhanced2026-fig2.webp",
+          "alt": "Two pixel-grid diagrams illustrate reciprocal path shifts between a current pixel and neighboring pixels.",
+          "caption": "Reciprocal neighbor reuse avoids repeating shift evaluations.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/lin2026restirptenhanced/lin2026restirptenhanced.pdf",
+          "source_locator": "Figure 2, p. 5",
+          "credit": "Figure: Daqi Lin, Markus Kettunen, Chris Wyman (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "429c2d9f07a7d9477f4575deb884674168687b7bc63058e88f7e6c52c6d3c983",
+          "width": 631,
+          "height": 299
+        }
+      ]
+    },
+    {
+      "paper_id": "restcv2026",
+      "status": "available",
+      "images": [
+        {
+          "id": "restcv2026-fig1",
+          "src": "figures/restcv2026-fig1.webp",
+          "alt": "Bistro and a futuristic interior compare ReSTIR PT with ReSTCV and reference, including color-noise close-ups.",
+          "caption": "Control variates reduce color noise in ReSTIR.",
+          "source_url": "https://hercier.github.io/restcv/assets/pdfs/paper.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Zhong Shi, Cunhao Wu, Lifan Wu, Kun Xu (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "269a9cda25e009574c239375cd1757ce9f0640a9f3276161ae9d3078d0cdcd13",
+          "width": 1500,
+          "height": 825
+        }
+      ]
+    },
+    {
+      "paper_id": "rgb2026",
+      "status": "available",
+      "images": [
+        {
+          "id": "rgb2026-fig4",
+          "src": "figures/rgb2026-fig4.webp",
+          "alt": "Sponza, Bistro and Victorian House compare ReSTIR PT, per-channel RGB ReSTIR and a high-sample reference.",
+          "caption": "Per-channel reservoirs improve temporal convergence.",
+          "source_url": "https://webpages.tuni.fi/vga/publications/RGB_ReSTIR_GRIVAPP2026_preprint.pdf",
+          "source_locator": "Figure 4, p. 7",
+          "credit": "Figure: Markku Mäkitalo, Saku Haikio, Julius Ikkala, Alessandro Foi, Pekka Jääskeläinen (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "a0ee9736aa271bf81a71ef7b6a32d5c38b02ae188f7e58cd879de137cb273e2e",
+          "width": 1358,
+          "height": 665
+        }
+      ]
+    },
+    {
+      "paper_id": "spmis2026",
+      "status": "available",
+      "images": [
+        {
+          "id": "spmis2026-fig1",
+          "src": "figures/spmis2026-fig1.webp",
+          "alt": "A Bistro scene compares ReSTIR and stochastic pairwise MIS after camera motion, with a highlighted disocclusion region.",
+          "caption": "Large-kernel reuse finds contributing samples after disocclusion.",
+          "source_url": "https://research.nvidia.com/labs/rtr/publication/hedstrom2026stochastic/hedstrom2026stochastic.pdf",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Trevor Hedstrom, Markus Kettunen, Daqi Lin, Chris Wyman, Tzu-Mao Li (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "d2142bad1b6bbd9b1f5d9820b227aa5e6d8072fa8949e4cc2f94b26d0739d0d4",
+          "width": 1500,
+          "height": 685
+        }
+      ]
+    },
+    {
+      "paper_id": "tof2026",
+      "status": "available",
+      "images": [
+        {
+          "id": "tof2026-fig1",
+          "src": "figures/tof2026-fig1.webp",
+          "alt": "A panel combines time-gated and transient rendering comparisons with non-line-of-sight reconstruction and navigation examples.",
+          "caption": "Time-of-flight rendering and downstream applications.",
+          "source_url": "https://arxiv.org/pdf/2605.11536v2",
+          "source_locator": "Figure 1, p. 1",
+          "credit": "Figure: Juhyeon Kim, Wojciech Jarosz, Adithya Pediredla (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "cf979b706b4f4c6326694ce0e405e8ad9bae27fbf22185ba14f3b184fa1688c7",
+          "width": 1500,
+          "height": 427
+        },
+        {
+          "id": "tof2026-fig2",
+          "src": "figures/tof2026-fig2.webp",
+          "alt": "A time-gate diagram and paired paths contrast naïve reuse with path-length-aware shift mapping.",
+          "caption": "Path-length-aware reuse for transient rendering.",
+          "source_url": "https://arxiv.org/pdf/2605.11536v2",
+          "source_locator": "Figure 2, p. 2",
+          "credit": "Figure: Juhyeon Kim, Wojciech Jarosz, Adithya Pediredla (2026). Copyright remains with the original rights holders.",
+          "source_kind": "paper_figure",
+          "sha256": "6f584ce646a163190d98899b8f112e514c317e14d27a3ea20a7b600eb7039150",
+          "width": 759,
+          "height": 234
+        }
+      ]
+    }
+  ]
+}
