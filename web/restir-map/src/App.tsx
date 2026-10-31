@@ -5,17 +5,21 @@ import {
   relations as sourceRelations,
   cutoffDate,
 } from "./data/load";
-import { directions } from "./data/labels";
+import { GraphLegend } from "./components/GraphLegend";
+import { methodConnectionCounts } from "./graph/nodeMetrics";
 import type {
   EdgeMode,
   Filters,
   GraphEdge,
+  LegendHighlight,
   Paper,
   Relation,
 } from "./data/types";
 import {
   coalesceRelations,
   filterPapers,
+  matchesLegend,
+  legendReadingSelection,
   readSelection,
   shareHash,
 } from "./graph/selection";
@@ -23,7 +27,8 @@ import { PaperList } from "./components/PaperList";
 import { PaperGraph } from "./components/PaperGraph";
 import { PaperDetails } from "./components/PaperDetails";
 import { GraphControls } from "./components/GraphControls";
-import { Modal } from "./components/Modal";
+import { AboutDialog } from "./components/AboutDialog";
+import { ConnectionDialog } from "./components/ConnectionDialog";
 import { detailsPanelWidth } from "./graph/panelWidth";
 import "./styles/graph-interactions.css";
 
@@ -41,6 +46,8 @@ export default function App({
   relations?: Relation[];
 }) {
   const workspace = useRef<HTMLDivElement>(null);
+  const detailsHeading = useRef<HTMLHeadingElement>(null);
+  const focusReading = useRef(false);
   const [detailsWidth, setDetailsWidth] = useState<number | null>(null);
   const [filters, setFilters] = useState<Filters>(emptyFilters);
   const [selected, setSelected] = useState<string | null>(() =>
@@ -48,9 +55,7 @@ export default function App({
   );
   const [hovered, setHovered] = useState<string | null>(null),
     [mode, setMode] = useState<EdgeMode>("inheritance");
-  const [resetToken, setResetToken] = useState(0),
-    [zoom, setZoom] = useState(1),
-    [zoomAction, setZoomAction] = useState({ factor: 1, token: 0 });
+  const [legendHighlight, setLegendHighlight] = useState<LegendHighlight>(null);
   const [notice, setNotice] = useState(""),
     [about, setAbout] = useState(false),
     [edgeDetail, setEdgeDetail] = useState<GraphEdge | null>(null);
@@ -62,6 +67,10 @@ export default function App({
     () => coalesceRelations(relations, mode),
     [relations, mode],
   );
+  const connectionCounts = useMemo(() => methodConnectionCounts(papers, relations), [papers, relations]);
+  const highlightedIds = useMemo(() => legendHighlight ? new Set(papers.filter(paper =>
+    matchesLegend(paper, legendHighlight)
+  ).map(paper => paper.paper_id)) : null, [papers, legendHighlight]);
   const selectedPaper = papers.find((paper) => paper.paper_id === selected);
   useLayoutEffect(() => {
     const sidebar = workspace.current?.querySelector<HTMLElement>(".paper-sidebar");
@@ -78,36 +87,54 @@ export default function App({
       window.removeEventListener("resize", update);
     };
   }, []);
-  const onSelect = useCallback(
+  const selectForReading = useCallback(
     (id: string) => {
       setSelected(id);
       setEdgeDetail(null);
       setHovered(null);
-      if (!visible.some((p) => p.paper_id === id)) {
-        setFilters(emptyFilters);
-        setNotice("Filters cleared to show the related paper.");
-      }
       window.history.pushState(
         null,
         "",
         `${window.location.pathname}${window.location.search}${shareHash(id)}`,
       );
     },
-    [visible],
+    [],
   );
-  const clear = useCallback(() => {
-    setSelected(null);
-    setHovered(null);
-    setEdgeDetail(null);
-    window.history.pushState(
-      null,
-      "",
-      `${window.location.pathname}${window.location.search}`,
-    );
-  }, []);
+  const onSelect = useCallback(
+    (id: string) => {
+      const paper = papers.find(p => p.paper_id === id);
+      if (!paper) return;
+      selectForReading(id);
+      setLegendHighlight(current => matchesLegend(paper, current) ? current : null);
+      if (!visible.some(p => p.paper_id === id)) {
+        setFilters(emptyFilters);
+        setNotice("Filters cleared to show the related paper.");
+      }
+    },
+    [papers, visible, selectForReading],
+  );
+  function onReadRelated(id: string) {
+    if (!papers.some(paper => paper.paper_id === id)) return;
+    focusReading.current = true;
+    onSelect(id);
+  }
+  useEffect(() => {
+    if (!focusReading.current) return;
+    focusReading.current = false;
+    // Run after dialog cleanup restores its trigger, then continue in the paper.
+    detailsHeading.current?.focus({ preventScroll: true });
+  }, [selected, edgeDetail]);
+  function onLegendChange(highlight: LegendHighlight) {
+    setLegendHighlight(highlight);
+    const next = legendReadingSelection(papers, selected, highlight);
+    if (next && next !== selected) selectForReading(next);
+  }
   useEffect(() => {
     const sync = () => {
-      setSelected(readSelection(window.location.hash, papers));
+      const next = readSelection(window.location.hash, papers);
+      const paper = papers.find(p => p.paper_id === next);
+      setSelected(next);
+      setLegendHighlight(current => paper && matchesLegend(paper, current) ? current : null);
       setFilters(emptyFilters);
       setHovered(null);
       setEdgeDetail(null);
@@ -123,11 +150,6 @@ export default function App({
     const keyboard = (event: KeyboardEvent) => {
       if (about || edgeDetail) return;
       const target = event.target as HTMLElement;
-      if (event.key === "Escape") {
-        setAbout(false);
-        if (edgeDetail) setEdgeDetail(null);
-        else clear();
-      }
       if (
         event.key === "/" &&
         !["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName)
@@ -140,15 +162,18 @@ export default function App({
     };
     window.addEventListener("keydown", keyboard);
     return () => window.removeEventListener("keydown", keyboard);
-  }, [clear, edgeDetail, about]);
+  }, [edgeDetail, about]);
   useEffect(() => {
     if (!notice) return;
     const timer = window.setTimeout(() => setNotice(""), 5000);
     return () => clearTimeout(timer);
   }, [notice]);
   async function share() {
+    const url = new URL(window.location.href);
+    url.hash = shareHash(selected);
+    window.history.replaceState(null, "", url.href);
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(url.href);
       setNotice("Paper link copied.");
     } catch {
       setNotice("Copy the URL in your address bar to share this paper.");
@@ -156,7 +181,7 @@ export default function App({
   }
   return (
     <div className="app-shell">
-      <a className="skip-link" href="#explore">
+      <a className="skip-link" href="#explore" onClick={(event) => { event.preventDefault(); document.getElementById("explore")?.focus(); }}>
         Skip to research network
       </a>
       <header className="site-header">
@@ -165,15 +190,16 @@ export default function App({
           href={import.meta.env.BASE_URL}
           aria-label="ReSTIR Atlas home"
         >
-          <svg viewBox="0 0 36 36" aria-hidden="true">
-            <path d="M7 27 18 7 29 26" />
-            <circle cx="7" cy="27" r="3" />
-            <circle cx="18" cy="7" r="4" />
-            <circle cx="29" cy="26" r="3" />
+          {/* Tabler prism-light, MIT; license bundled under public/licenses. */}
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4.731 19h11.539a1 1 0 0 0 .866 -1.5l-5.769 -10a1 1 0 0 0 -1.732 0l-5.769 10a1 1 0 0 0 .865 1.5" />
+            <path d="M2 13h4.45" /><path d="M18 5l-4.5 6" />
+            <path d="M22 9l-7.75 3.25" /><path d="M22 15l-7 -1.5" />
           </svg>
           <strong>
             ReSTIR <span>Atlas</span>
           </strong>
+          <span className="brand-count">({papers.length} papers)</span>
         </a>
         <div className="header-right">
           <span className="cutoff">Literature through {cutoffDate}</span>
@@ -196,23 +222,11 @@ export default function App({
           hovered={hovered}
           onSelect={onSelect}
           onHover={setHovered}
+          highlightedIds={highlightedIds}
         />
-        <main className="exploration" id="explore">
+        <main className="exploration" id="explore" tabIndex={-1}>
           <h1 className="sr-only">ReSTIR research network</h1>
-          <GraphControls
-            mode={mode}
-            onMode={setMode}
-            onReset={() => {
-              setResetToken((n) => n + 1);
-              setNotice("View and node positions reset.");
-            }}
-            onClear={clear}
-            selected={!!selected}
-            zoom={zoom}
-            onZoom={(factor) =>
-              setZoomAction((v) => ({ factor, token: v.token + 1 }))
-            }
-          />
+          <GraphControls mode={mode} onMode={setMode} />
           {selectedPaper && !visible.some((p) => p.paper_id === selected) && (
             <div className="selection-filter-note">
               The selected paper is hidden by your filters.
@@ -234,41 +248,19 @@ export default function App({
                 onSelect={onSelect}
                 onHover={setHovered}
                 onEdge={setEdgeDetail}
-                resetToken={resetToken}
-                zoomAction={zoomAction}
-                onZoomChange={setZoom}
+                connectionCounts={connectionCounts}
+                highlightedIds={highlightedIds}
               />
-              <div className="graph-legend">
-                <div className="direction-legend">
-                  {Object.entries(directions).map(([id, d]) => (
-                    <span key={id}>
-                      <i style={{ background: d.color }} />
-                      {d.label}
-                    </span>
-                  ))}
-                </div>
-                <div className="relationship-legend">
-                  <span>
-                    <i className="legend-line" /> Method lineage
-                  </span>
-                  <span>
-                    <i className="legend-line dashed" /> Citation
-                  </span>
-                  <span className="arrow-explanation">Earlier work → later work</span>
-                  <span className="shape-legend">
-                    ◎ Mainline · ○ Branch · ◇ Optimization · □ Resource
-                  </span>
-                </div>
-              </div>
+              <GraphLegend active={legendHighlight} onChange={onLegendChange} />
             </div>
             {selectedPaper && (
               <PaperDetails
                 key={selectedPaper.paper_id}
+                headingRef={detailsHeading}
                 paper={selectedPaper}
                 papers={papers}
                 relations={relations}
-                onSelect={onSelect}
-                onClear={clear}
+                onSelect={onReadRelated}
                 onShare={share}
               />
             )}
@@ -283,83 +275,15 @@ export default function App({
         {notice}
       </div>
       {about && (
-        <Modal titleId="about-title" onClose={() => setAbout(false)}>
-          <button
-            className="dialog-close icon-button"
-            aria-label="Close about dialog"
-            onClick={() => setAbout(false)}
-          >
-            ×
-          </button>
-          <span className="eyebrow">ABOUT THE ATLAS</span>
-          <h2 id="about-title">Follow the evidence.</h2>
-          <p>
-            ReSTIR Atlas
-            maps documented connections between research papers. It covers published work directly related to ReSTIR and a few essential foundations, with preprints, abstracts, courses and implementation resources labeled separately.
-          </p>
-          <p>
-            <strong>Arrows point from earlier work to later work.</strong>{" "}
-            A solid line means the later paper explicitly adopts, extends or improves the earlier method. A dashed line means it cites the earlier paper. The All connections view merges the two into one edge where both apply, while keeping their evidence separate.
-          </p>
-          <p>
-            Mainline, branch and optimization are editorial groupings, not quality rankings or a prescribed reading order. Papers can span several research areas. Only verified connections are shown; a missing edge does not establish that no connection exists.
-          </p>
-          <p>
-            The default Method lineage view follows how methods develop. Switch to All connections to include verified citations. Select a paper and use its share button to copy a link. Your browser’s Back and Forward buttons restore previous selections.
-          </p>
-          <div className="about-meta">
-            Literature through {cutoffDate}
-            <br />
-            Keyboard: / to search · Tab to navigate · Enter to select · Esc to clear
-            <br />
-            With the network focused: arrow keys to pan, + / − to zoom
-          </div>
-          <button className="primary-button" onClick={() => setAbout(false)}>
-            Start exploring
-          </button>
-        </Modal>
+        <AboutDialog cutoffDate={cutoffDate} onClose={() => setAbout(false)} />
       )}
       {edgeDetail && (
-        <Modal titleId="edge-title" onClose={() => setEdgeDetail(null)}>
-          <button
-            className="dialog-close icon-button"
-            aria-label="Close connection evidence"
-            onClick={() => setEdgeDetail(null)}
-          >
-            ×
-          </button>
-          <span className="eyebrow">VERIFIED RELATION</span>
-          <h2 id="edge-title">
-            {papers.find((p) => p.paper_id === edgeDetail.source)?.short_title}{" "}
-            →{" "}
-            {papers.find((p) => p.paper_id === edgeDetail.target)?.short_title}
-          </h2>
-          {edgeDetail.relations.map((relation) => (
-            <section key={relation.id}>
-              <h3>{relation.type === "inheritance" ? "Method lineage" : "Citation"}</h3>
-              {relation.evidence.map((e, i) => (
-                <div className="evidence" key={i}>
-                  <p>{e.explanation}</p>
-                  <a href={e.source_url} target="_blank" rel="noreferrer">
-                    {e.locator} ↗
-                  </a>
-                  <small>
-                    {e.method === "reference_list_review"
-                      ? "Reference list checked"
-                      : "Paper text checked"}{" "}
-                    · {e.checked}
-                  </small>
-                </div>
-              ))}
-            </section>
-          ))}
-          <button
-            className="primary-button"
-            onClick={() => onSelect(edgeDetail.target)}
-          >
-            Read later paper
-          </button>
-        </Modal>
+        <ConnectionDialog
+          edge={edgeDetail}
+          papers={papers}
+          onClose={() => setEdgeDetail(null)}
+          onRead={onReadRelated}
+        />
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, type Ref } from "react";
 import { colorFor, directions, roleNames, statusNames } from "../data/labels";
 import type { Paper, Relation } from "../data/types";
 import { RelationDetails } from "./RelationDetails";
@@ -10,30 +10,21 @@ export function PaperDetails({
   papers,
   relations,
   onSelect,
-  onClear,
   onShare,
+  headingRef,
 }: {
   paper: Paper;
   papers: Paper[];
   relations: Relation[];
   onSelect: (id: string) => void;
-  onClear: () => void;
   onShare: () => void;
+  headingRef?: Ref<HTMLHeadingElement>;
 }) {
-  const panel = useRef<HTMLElement>(null);
   const [tab, setTab] = useState<"overview" | "relations" | "sources">(
     "overview",
   );
-  useEffect(() => {
-    // On stacked layouts, selecting a paper should reveal the reading pane.
-    // No animated scrolling, including for readers who prefer reduced motion.
-    if (window.matchMedia?.("(max-width: 1000px)").matches) {
-      panel.current?.scrollIntoView({ block: "start", behavior: "auto" });
-    }
-  }, [paper.paper_id]);
   return (
     <aside
-      ref={panel}
       className="paper-details"
       aria-label="Paper details"
       style={{ "--direction": colorFor(paper.tags) } as React.CSSProperties}
@@ -49,13 +40,6 @@ export function PaperDetails({
           >
             ↗
           </button>
-          <button
-            className="icon-button"
-            aria-label="Close paper details"
-            onClick={onClear}
-          >
-            ×
-          </button>
         </div>
       </div>
       <div className="detail-scroll">
@@ -66,7 +50,7 @@ export function PaperDetails({
           <span>{roleNames[paper.role]}</span>
           <span>{paper.year}</span>
         </div>
-        <h2>{paper.short_title}</h2>
+        <h2 ref={headingRef} tabIndex={-1}>{paper.short_title}</h2>
         <p className="detail-full-title">{paper.title}</p>
         <p className="authors">
           {paper.authors.length ? paper.authors.join(" · ") : "Author information not yet verified"}

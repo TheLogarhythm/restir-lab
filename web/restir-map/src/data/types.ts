@@ -7,6 +7,14 @@ export type PublicationStatus =
   | "technical_report"
   | "talk"
   | "unverified";
+export type ResearchDirection =
+  | "foundations"
+  | "reuse_quality"
+  | "camera_dynamics"
+  | "transport"
+  | "estimators"
+  | "supporting";
+export type PaperRole = "mainline" | "branch" | "optimization" | "resource";
 export type Paper = {
   paper_id: string;
   title: string;
@@ -17,7 +25,7 @@ export type Paper = {
   publication_status: PublicationStatus;
   doi: string | null;
   tags: string[];
-  role: "mainline" | "branch" | "optimization" | "resource";
+  role: PaperRole;
   problem: string;
   contributions: string[];
   changes: string;
@@ -55,6 +63,10 @@ export type Relation = {
   }[];
 };
 export type EdgeMode = "inheritance" | "all" | "citation";
+export type LegendHighlight =
+  | { kind: "direction"; value: ResearchDirection }
+  | { kind: "role"; value: PaperRole }
+  | null;
 export type GraphEdge = {
   id: string;
   source: string;

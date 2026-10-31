@@ -1,5 +1,6 @@
 import { colorFor, roleNames, graphLabelLines } from "../data/labels";
 import type { Paper, Point } from "../data/types";
+import { nodeLabelOffset, nodeOuterRadius, nodeRadius } from "../graph/nodeMetrics";
 
 export function PaperNode({
   paper,
@@ -8,6 +9,8 @@ export function PaperNode({
   highlighted,
   dimmed,
   scale,
+  connectionCount,
+  hitRadiusLimit,
   showLabel,
   onSelect,
   onHover,
@@ -19,6 +22,8 @@ export function PaperNode({
   highlighted: boolean;
   dimmed: boolean;
   scale: number;
+  connectionCount: number;
+  hitRadiusLimit: number;
   showLabel: boolean;
   onSelect: () => void;
   onHover: (id: string | null) => void;
@@ -26,6 +31,9 @@ export function PaperNode({
 }) {
   const lines = graphLabelLines(paper);
   const fontSize = Math.max(12, 11.5 / scale);
+  const radius = nodeRadius(connectionCount);
+  const outerRadius = nodeOuterRadius(radius, paper.role);
+  const labelOffset = nodeLabelOffset(paper.role === "optimization" ? outerRadius : radius, scale);
   return (
     <g
       className={`paper-node ${selected ? "selected" : ""} ${highlighted ? "highlighted" : ""} ${dimmed ? "dimmed" : ""}`}
@@ -52,34 +60,38 @@ export function PaperNode({
       <title>
         {paper.title} · {paper.year}
       </title>
-      <circle className="node-hit" r="29" fill="transparent" />
-      <circle className="node-halo" r="26" />
+      <circle className="node-hit" r={Math.min(hitRadiusLimit, Math.max(outerRadius + 7 / scale, 22 / scale))} fill="transparent" />
+      <circle className="node-halo" r={outerRadius + 5 / scale} vectorEffect="non-scaling-stroke" pointerEvents="none" />
+      {selected && <circle className="node-selection-ring" r={outerRadius + 5 / scale} fill="none" stroke="var(--node-color)" strokeWidth={2} vectorEffect="non-scaling-stroke" pointerEvents="none" />}
       {paper.role === "optimization" ? (
         <rect
           className="node-shape"
-          x="-13"
-          y="-13"
-          width="26"
-          height="26"
+          x={-radius * 0.85}
+          y={-radius * 0.85}
+          width={radius * 1.7}
+          height={radius * 1.7}
           rx="3"
           transform="rotate(45)"
+          vectorEffect="non-scaling-stroke"
         />
       ) : paper.role === "resource" ? (
         <rect
           className="node-shape"
-          x="-15"
-          y="-15"
-          width="30"
-          height="30"
+          x={-radius}
+          y={-radius}
+          width={radius * 2}
+          height={radius * 2}
           rx="4"
+          vectorEffect="non-scaling-stroke"
         />
       ) : (
         <circle
           className="node-shape"
-          r={paper.role === "mainline" ? 20 : 15}
+          r={radius}
+          vectorEffect="non-scaling-stroke"
         />
       )}
-      {paper.role === "mainline" && <circle className="node-inner" r="11" />}
+      {paper.role === "mainline" && <circle className="node-inner" r={radius * 0.55} vectorEffect="non-scaling-stroke" />}
       {paper.publication_status !== "published" && (
         <text className="node-resource-mark" textAnchor="middle" y="4">
           {paper.publication_status === "preprint"
@@ -91,7 +103,7 @@ export function PaperNode({
       )}
       {showLabel && <><text className="node-label" textAnchor="middle" style={{ fontSize }}>
         {lines.map((line, index) => (
-          <tspan key={index} x="0" y={40 + index * fontSize * 1.15}>
+          <tspan key={index} x="0" y={labelOffset + index * fontSize * 1.15}>
             {line}
           </tspan>
         ))}
@@ -99,7 +111,7 @@ export function PaperNode({
       <text
         className="node-year"
         textAnchor="middle"
-        y={43 + lines.length * fontSize * 1.15}
+        y={labelOffset + 3 + lines.length * fontSize * 1.15}
         style={{ fontSize: Math.max(9, 10 / scale) }}
       >
         {paper.year}

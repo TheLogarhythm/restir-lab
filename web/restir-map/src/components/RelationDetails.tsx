@@ -1,4 +1,5 @@
 import type { Paper, Relation } from "../data/types";
+import { RelationEvidence } from "./RelationEvidence";
 
 export function RelationDetails({
   relations,
@@ -63,24 +64,7 @@ export function RelationDetails({
                       ? "Evidence of method reuse"
                       : "Citation evidence"}
                   </div>
-                  {relation.evidence.map((evidence, index) => (
-                    <div className="evidence" key={index}>
-                      <p>{evidence.explanation}</p>
-                      <a
-                        href={evidence.source_url}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {evidence.locator} ↗
-                      </a>
-                      <small>
-                        {evidence.method === "reference_list_review"
-                          ? "Reference list checked"
-                          : "Paper text checked"}{" "}
-                        · {evidence.checked}
-                      </small>
-                    </div>
-                  ))}
+                  <RelationEvidence evidence={relation.evidence} />
                 </div>
               ))}
             </div>

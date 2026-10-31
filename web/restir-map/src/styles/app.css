@@ -120,7 +120,7 @@ svg {
   flex-direction: column;
 }
 .site-header {
-  height: 76px;
+  height: 52px;
   flex-shrink: 0;
   border-bottom: 1px solid var(--line);
   display: flex;
@@ -132,7 +132,8 @@ svg {
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  min-height: 44px;
   color: var(--ink);
   white-space: nowrap;
 }
@@ -140,17 +141,19 @@ svg {
   text-decoration: none;
 }
 .brand svg {
-  width: 33px;
-  height: 33px;
-  stroke: #477465;
-  fill: #477465;
-  stroke-width: 1.5;
+  width: 30px;
+  height: 30px;
+  stroke: #245e4e;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .brand svg path {
   fill: none;
 }
 .brand strong {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 650;
   letter-spacing: -1px;
 }
@@ -204,26 +207,8 @@ svg {
   display: flex;
   flex-direction: column;
 }
-.sidebar-intro {
-  padding: 25px 24px 17px;
-}
-.sidebar-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.sidebar-heading h2 {
-  font-size: 18px;
-  font-weight: 550;
-  letter-spacing: 1px;
-}
-.sidebar-heading > span {
-  font-size: 13px;
-  font-weight: 500;
-  color: #929b94;
-}
 .search-and-filters {
-  padding: 0 20px 14px;
+  padding: 16px 20px 14px;
   border-bottom: 1px solid var(--line);
 }
 .search-box {
@@ -402,7 +387,7 @@ svg {
   background: #f8f9f6;
 }
 .graph-toolbar {
-  height: 57px;
+  height: 46px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -431,17 +416,6 @@ svg {
   background: #fff;
   box-shadow: 0 1px 3px #29462812;
 }
-.view-actions {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.view-actions > button:not(.icon-button) {
-  font-size: 10px;
-  padding: 6px 9px;
-  color: #73836d;
-  white-space: nowrap;
-}
 .icon-button {
   height: 29px;
   min-width: 29px;
@@ -450,13 +424,6 @@ svg {
   justify-content: center;
   font-size: 18px;
   line-height: 1;
-}
-.zoom-label {
-  font-size: 9px;
-  color: #86957d;
-  font-variant-numeric: tabular-nums;
-  min-width: 29px;
-  text-align: center;
 }
 .graph-and-details {
   display: flex;
@@ -481,24 +448,6 @@ svg {
   background-image: radial-gradient(#9bac941b 0.7px, transparent 0.7px);
   background-size: 15px 15px;
 }
-.graph-corner {
-  position: absolute;
-  left: 30px;
-  top: 25px;
-  pointer-events: none;
-  z-index: 1;
-}
-.graph-corner .eyebrow {
-  font-size: 8px;
-  letter-spacing: 1.6px;
-  color: #8c9c85;
-}
-.graph-corner p {
-  font-size: 11px;
-  color: #9ca790;
-  margin-top: 7px;
-  letter-spacing: 0.4px;
-}
 .network-svg {
   position: absolute;
   inset: 0;
@@ -509,18 +458,6 @@ svg {
 .network-svg:active {
   cursor: grabbing;
 }
-.graph-hint {
-  position: absolute;
-  bottom: 15px;
-  left: 30px;
-  pointer-events: none;
-  font-size: 9px;
-  color: #9ea991;
-  letter-spacing: 0.2px;
-}
-.graph-hint span {
-  margin-left: 12px;
-}
 .paper-node {
   cursor: pointer;
   outline: none;
@@ -530,7 +467,7 @@ svg {
   stroke: var(--node-color);
   stroke-width: 1.8;
   fill: var(--node-color);
-  fill-opacity: 0.25;
+  fill-opacity: 0.42;
   transition:
     fill-opacity 0.16s ease,
     stroke-width 0.16s ease;
@@ -596,7 +533,7 @@ svg {
   font-size: 10px;
 }
 .paper-node.dimmed {
-  opacity: 0.24;
+  opacity: 0.38;
 }
 .paper-node:focus-visible .node-halo {
   stroke: #345f58;
@@ -680,10 +617,10 @@ svg {
 }
 .direction-legend {
   display: flex;
-  gap: 16px;
+  gap: 4px 8px;
   flex-wrap: wrap;
 }
-.direction-legend > span,
+.direction-legend > button,
 .relationship-legend > span {
   display: inline-flex;
   align-items: center;
@@ -693,10 +630,10 @@ svg {
 }
 .direction-legend i {
   display: inline-block;
-  height: 6px;
-  width: 6px;
+  height: 8px;
+  width: 8px;
   border-radius: 50%;
-  opacity: 0.75;
+  opacity: 1;
 }
 .relationship-legend {
   display: flex;
@@ -725,8 +662,11 @@ svg {
   border-top-style: dashed;
 }
 .shape-legend {
-  margin-left: auto;
-  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin-top: 5px;
 }
 .paper-details {
   width: var(--paper-details-width, 270px);
@@ -735,7 +675,6 @@ svg {
   flex-direction: column;
   background: #fff;
   border-left: 1px solid var(--line);
-  animation: detail-enter 0.18s ease;
 }
 .detail-header {
   height: 49px;
@@ -1072,23 +1011,10 @@ svg {
 .about-dialog > .primary-button {
   margin-top: 12px;
 }
-@keyframes detail-enter {
-  from {
-    opacity: 0;
-    transform: translateX(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
 @media (min-width: 1600px) {
   .paper-item {
     padding-top: 18px;
     padding-bottom: 18px;
-  }
-  .graph-corner {
-    top: 30px;
   }
   .node-label {
     font-size: 13px;
@@ -1105,23 +1031,11 @@ svg {
   .segmented button {
     padding: 7px 8px;
   }
-  .view-actions {
-    gap: 1px;
-  }
-  .view-actions > button:not(.icon-button) {
-    padding: 6px;
-  }
-  .graph-hint span {
-    display: none;
-  }
   .graph-legend {
     padding: 13px 18px;
   }
   .shape-legend {
     margin-left: 0;
-  }
-  .graph-and-details.has-selection .graph-corner {
-    display: none;
   }
   .direction-legend {
     gap: 10px;
@@ -1130,7 +1044,7 @@ svg {
 @media (max-width: 1000px) {
   .site-header {
     padding: 0 22px;
-    height: 65px;
+    height: 52px;
   }
   .header-right {
     gap: 14px;
@@ -1153,21 +1067,12 @@ svg {
   .graph-and-details.has-selection .graph-region {
     margin-right: 0;
   }
-  .view-actions .zoom-label {
-    display: none;
-  }
-  .graph-corner {
-    left: 22px;
-  }
   .graph-toolbar {
     height: auto;
-    min-height: 57px;
+    min-height: 46px;
     flex-wrap: wrap;
     padding-top: 8px;
     padding-bottom: 8px;
-  }
-  .graph-and-details.has-selection .graph-corner {
-    display: block;
   }
 }
 @media (max-width: 740px) {
@@ -1176,7 +1081,7 @@ svg {
     min-height: 100dvh;
   }
   .site-header {
-    height: 60px;
+    height: 52px;
     padding: 0 17px;
     gap: 15px;
   }
@@ -1206,17 +1111,11 @@ svg {
     border-bottom: 1px solid var(--line);
     max-height: 360px;
   }
-  .sidebar-intro {
-    padding: 18px 19px 12px;
-  }
-  .sidebar-heading h2 {
-    font-size: 16px;
-  }
   .search-and-filters {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 7px;
-    padding: 0 16px 12px;
+    padding: 12px 16px;
   }
   .search-box {
     grid-column: 1/-1;
@@ -1273,18 +1172,11 @@ svg {
   }
   .graph-toolbar {
     padding: 9px 12px;
-    min-height: 54px;
+    min-height: 46px;
   }
   .segmented button {
     font-size: 9px;
     padding: 6px 8px;
-  }
-  .view-actions > button:not(.icon-button) {
-    font-size: 9px;
-  }
-  .view-actions .icon-button {
-    min-width: 25px;
-    font-size: 16px;
   }
   .graph-and-details {
     flex-direction: column;
@@ -1297,13 +1189,6 @@ svg {
   .graph-canvas {
     min-height: 390px;
   }
-  .graph-corner {
-    top: 20px;
-    left: 20px;
-  }
-  .graph-corner p {
-    font-size: 10px;
-  }
   .graph-legend {
     padding: 13px 18px;
   }
@@ -1312,11 +1197,6 @@ svg {
   }
   .relationship-legend {
     gap: 10px 15px;
-  }
-  .graph-hint {
-    left: 20px;
-    font-size: 8px;
-    bottom: 14px;
   }
   .paper-details {
     position: relative;
@@ -1473,20 +1353,12 @@ svg {
 .muted {
   font-size: 11px !important;
 }
-.segmented button,
-.view-actions > button:not(.icon-button),
-.zoom-label {
+.segmented button {
   font-size: 12px;
 }
-.direction-legend > span,
+.direction-legend > button,
 .relationship-legend > span {
   font-size: 11px;
-}
-.graph-hint {
-  font-size: 11px;
-}
-.graph-hint span {
-  display: none;
 }
 .node-tooltip p {
   font-size: 12px;
@@ -1494,9 +1366,6 @@ svg {
 .node-tooltip > span,
 .node-tooltip small {
   font-size: 11px;
-}
-.graph-corner p {
-  font-size: 12px;
 }
 .graph-legend {
   padding-top: 12px;
@@ -1506,12 +1375,9 @@ svg {
   .graph-toolbar {
     flex-wrap: wrap;
     height: auto;
-    min-height: 57px;
+    min-height: 46px;
     padding-top: 8px;
     padding-bottom: 8px;
-  }
-  .graph-corner {
-    display: none;
   }
   .shape-legend {
     font-size: 10px !important;
@@ -1565,8 +1431,7 @@ svg {
   .graph-toolbar {
     gap: 5px;
   }
-  .view-actions > button:not(.icon-button),
-  .segmented button {
+.segmented button {
     font-size: 12px;
   }
   .detail-content p,
@@ -1597,14 +1462,11 @@ svg {
   .node-tooltip p {
     font-size: 12px;
   }
-  .graph-hint {
-    font-size: 11px;
-  }
   .graph-legend {
     padding-left: 14px;
     padding-right: 14px;
   }
-  .direction-legend > span,
+  .direction-legend > button,
   .relationship-legend > span {
     font-size: 11px;
   }
@@ -1631,9 +1493,8 @@ svg {
 .list-meta,
 .authors,
 .venue,
-.direction-legend > span,
-.relationship-legend > span,
-.graph-hint {
+.direction-legend > button,
+.relationship-legend > span {
   color: #68775e;
 }
 .node-year {
@@ -1665,4 +1526,27 @@ svg {
     border-top: 1px solid var(--line);
     box-shadow: none;
   }
+}
+
+.brand-count { font-size: 12px; color: #65766c; }
+.graph-legend button { min-height: 30px; padding: 4px 6px; font-size: 11px; border: 1px solid transparent; }
+.graph-legend button[aria-pressed="true"] { background: #e0eee5; border-color: #477465; color: #245e4e; box-shadow: inset 0 -2px #477465; }
+.paper-item.legend-dimmed { opacity: 0.48; }
+.paper-item.legend-match { background: #eaf2e9; }
+.paper-item.selected { opacity: 1; }
+.paper-node.selected.dimmed { opacity: 0.8; }
+.graph-center-control { position: absolute; right: 14px; top: 14px; z-index: 3; }
+.graph-center { width: 40px; height: 40px; color: #245e4e; background: #fcfdfb; border: 1px solid #ccd9cc; box-shadow: 0 2px 7px #263c3610; }
+.graph-center svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.7; }
+.graph-center-tooltip { position: absolute; right: 47px; top: 8px; background: #294b3e; color: white; font-size: 12px; padding: 4px 8px; border-radius: 4px; opacity: 0; pointer-events: none; }
+.graph-center-control:has(:hover) .graph-center-tooltip,
+.graph-center-control:has(:focus-visible) .graph-center-tooltip { opacity: 1; }
+@media (max-width: 740px) {
+  .site-header { padding: 0 12px; gap: 8px; }
+  .brand { gap: 5px; }
+  .brand strong { font-size: 18px; }
+  .brand-count { font-size: 11px; }
+  .about-button { min-height: 36px; padding: 6px; }
+  .about-button span { display: none; }
+  .graph-legend button { min-height: 36px; }
 }

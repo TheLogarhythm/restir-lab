@@ -1,17 +1,19 @@
+import type { PaperRole, ResearchDirection } from "./types";
+
 export const directions: Record<string, { label: string; color: string }> = {
-  foundations: { label: "Foundations", color: "#35776d" },
-  reuse_quality: { label: "Reuse quality", color: "#b17935" },
-  camera_dynamics: { label: "Cameras & motion", color: "#5c83a2" },
-  transport: { label: "Light transport", color: "#987198" },
-  estimators: { label: "Estimator extensions", color: "#a66459" },
-  supporting: { label: "Learning & implementation", color: "#7f8586" },
-};
+  foundations: { label: "Foundations", color: "#167466" },
+  reuse_quality: { label: "Reuse quality", color: "#ae690d" },
+  camera_dynamics: { label: "Cameras & motion", color: "#286bad" },
+  transport: { label: "Light transport", color: "#9357a9" },
+  estimators: { label: "Estimator extensions", color: "#bd4b48" },
+  supporting: { label: "Learning & implementation", color: "#526775" },
+} satisfies Record<ResearchDirection, { label: string; color: string }>;
 export const roleNames = {
   mainline: "Mainline",
   branch: "Branch",
   optimization: "Optimization",
   resource: "Resource",
-};
+} satisfies Record<PaperRole, string>;
 export const statusNames = {
   published: "Published",
   preprint: "Preprint",
@@ -23,7 +25,7 @@ export const statusNames = {
   unverified: "Publication unverified",
 };
 export const colorFor = (tags: string[]) =>
-  directions[tags[0]]?.color ?? "#7f8586";
+  directions[tags[0]]?.color ?? "#526775";
 
 const graphLabels: Record<string, string> = {
   conditional2023: "Conditional RIS",

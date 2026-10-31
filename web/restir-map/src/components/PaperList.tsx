@@ -11,7 +11,9 @@ export function PaperList({
   hovered,
   onSelect,
   onHover,
+  highlightedIds,
 }: {
+  highlightedIds: Set<string> | null;
   papers: Paper[];
   allPapers: Paper[];
   filters: Filters;
@@ -23,11 +25,17 @@ export function PaperList({
 }) {
   const selectedRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
-    selectedRef.current?.scrollIntoView?.({
-      block: "nearest",
-      behavior: "auto",
-    });
-  }, [selected]);
+    const item = selectedRef.current;
+    const list = item?.closest(".paper-list");
+    if (!item || !list) return;
+    // Keep the selected row visible inside the list without scrolling the page
+    // away from the map on stacked layouts.
+    const row = item.getBoundingClientRect(), box = list.getBoundingClientRect();
+    if (row.top < box.top) list.scrollTop += row.top - box.top;
+    else if (row.bottom > box.bottom) list.scrollTop += row.bottom - box.bottom;
+    if (row.left < box.left) list.scrollLeft += row.left - box.left;
+    else if (row.right > box.right) list.scrollLeft += row.right - box.right;
+  }, [selected, papers]);
   const years = [...new Set(allPapers.map((p) => p.year))].sort(
     (a, b) => b - a,
   );
@@ -40,12 +48,6 @@ export function PaperList({
     filters.status !== "all";
   return (
     <aside className="paper-sidebar" aria-label="Paper collection">
-      <div className="sidebar-intro">
-        <div className="sidebar-heading">
-          <h2>Paper collection</h2>
-          <span>{allPapers.length.toString().padStart(2, "0")}</span>
-        </div>
-      </div>
       <div className="search-and-filters">
         <label className="search-box">
           <svg aria-hidden="true" viewBox="0 0 24 24">
@@ -122,7 +124,7 @@ export function PaperList({
               ref={selected === paper.paper_id ? selectedRef : undefined}
               data-paper-id={paper.paper_id}
               aria-pressed={selected === paper.paper_id}
-              className={`paper-item ${selected === paper.paper_id ? "selected" : ""} ${hovered === paper.paper_id ? "hovered" : ""}`}
+              className={`paper-item ${highlightedIds ? highlightedIds.has(paper.paper_id) ? "legend-match" : "legend-dimmed" : ""} ${selected === paper.paper_id ? "selected" : ""} ${hovered === paper.paper_id ? "hovered" : ""}`}
               onClick={() => onSelect(paper.paper_id)}
               onMouseEnter={() => onHover(paper.paper_id)}
               onMouseLeave={() => onHover(null)}

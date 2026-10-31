@@ -5,6 +5,7 @@ import {
   readSelection,
   shareHash,
   relatedIds,
+  legendReadingSelection,
 } from "../src/graph/selection";
 import type { Paper, Relation } from "../src/data/types";
 import { fitView, visibleLabelIds, zoomAt } from "../src/graph/layout";
@@ -42,6 +43,22 @@ const relation = (
 });
 
 describe("research exploration", () => {
+  it("uses a stable matching fallback when a curated entry is absent from a reduced collection", () => {
+    const collection = [
+      paper("z", "Later", ["transport"], 2024),
+      paper("b", "Earlier B", ["transport"], 2021),
+      paper("a", "Earlier A", ["transport"], 2021),
+      paper("outside", "Outside", ["foundations"], 2005),
+    ];
+    expect(legendReadingSelection(collection, "outside", { kind: "direction", value: "transport" })).toBe("a");
+    expect(legendReadingSelection([...collection].reverse(), "outside", { kind: "direction", value: "transport" })).toBe("a");
+    expect(collection.map(p => p.paper_id)).toEqual(["z", "b", "a", "outside"]);
+  });
+  it("keeps the reading selection when a facet has no papers or is toggled off", () => {
+    expect(legendReadingSelection(papers, "a", { kind: "direction", value: "supporting" })).toBe("a");
+    expect(legendReadingSelection(papers, "b", null)).toBe("b");
+    expect(legendReadingSelection([], null, { kind: "role", value: "mainline" })).toBeNull();
+  });
   it.each([
     [1440, 400, 400],
     [1599, 500, 500],
@@ -50,17 +67,29 @@ describe("research exploration", () => {
     [2560, 700, 700],
     [1001, 270, 270],
     [1200, 270, 270],
-  ])("sizes details at viewport %i from the measured %ipx collection", (viewport, sidebar, expected) => {
-    expect(detailsPanelWidth(viewport, sidebar)).toBe(expected);
-  });
-  it.each([375, 740, 800, 999, 1000])("leaves the existing %ipx stacked layout unchanged", (viewport) => {
-    expect(detailsPanelWidth(viewport, 800)).toBeNull();
-  });
+  ])(
+    "sizes details at viewport %i from the measured %ipx collection",
+    (viewport, sidebar, expected) => {
+      expect(detailsPanelWidth(viewport, sidebar)).toBe(expected);
+    },
+  );
+  it.each([375, 740, 800, 999, 1000])(
+    "leaves the existing %ipx stacked layout unchanged",
+    (viewport) => {
+      expect(detailsPanelWidth(viewport, 800)).toBeNull();
+    },
+  );
   it("never enlarges a fitted mobile overview when zooming out", () => {
-    const view = fitView({ a: { x: -200, y: 0 }, b: { x: 1400, y: 800 } }, 375, 440);
+    const view = fitView(
+      { a: { x: -200, y: 0 }, b: { x: 1400, y: 800 } },
+      375,
+      440,
+    );
     const smaller = zoomAt(view, 1 / 1.2, { x: 187.5, y: 220 });
     expect(smaller.scale).toBeLessThan(view.scale);
-    expect(zoomAt({ x: 0, y: 0, scale: 0.04 }, 0.5, { x: 0, y: 0 }).scale).toBeLessThanOrEqual(0.04);
+    expect(
+      zoomAt({ x: 0, y: 0, scale: 0.04 }, 0.5, { x: 0, y: 0 }).scale,
+    ).toBeLessThanOrEqual(0.04);
   });
   it("keeps readable edge labels inside a narrow overview", () => {
     const points = { a: { x: -200, y: 0 }, b: { x: 1400, y: 800 } };
@@ -75,7 +104,15 @@ describe("research exploration", () => {
     const points = { a: { x: 0, y: 0 }, b: { x: 10, y: 0 } };
     expect([...visibleLabelIds(papers, points, 0.2, "b")]).toEqual(["b"]);
     expect([...visibleLabelIds(papers, points, 0.2, "a")]).toEqual(["a"]);
-    expect(visibleLabelIds(papers, points, 0.8, null).size).toBe(2);
+    expect(visibleLabelIds(papers, points, 0.8, null).size).toBe(1);
+    expect(
+      visibleLabelIds(
+        papers,
+        { a: { x: 0, y: 0 }, b: { x: 400, y: 0 } },
+        0.8,
+        null,
+      ).size,
+    ).toBe(2);
   });
   it("combines text, direction, publication and year filters", () => {
     expect(
@@ -120,10 +157,22 @@ describe("research exploration", () => {
     expect(edges[0].target).toBe("b");
     expect([...relatedIds("b", edges)]).toEqual(["b", "a"]);
   });
-  it("round trips sharing and ignores unknown or malformed selections", () => {
+  it("round trips sharing and keeps a persistent fallback for missing or invalid selections", () => {
     expect(readSelection(shareHash("a"), papers)).toBe("a");
-    expect(readSelection("#paper=missing", papers)).toBeNull();
-    expect(readSelection("#paper=%E0%A4%A", papers)).toBeNull();
+    expect(readSelection(shareHash("b"), papers)).toBe("b");
+    expect(readSelection("", papers)).toBe("a");
+    expect(readSelection("#paper=missing", papers)).toBe("a");
+    expect(readSelection("#paper=%E0%A4%A", papers)).toBe("a");
     expect(shareHash(null)).toBe("");
+  });
+  it("prefers ReSTIR DI as the default regardless of collection order", () => {
+    const collection = [
+      ...papers,
+      paper("restir_di2020", "Original ReSTIR", ["foundations"], 2020),
+    ];
+    expect(readSelection("", collection)).toBe("restir_di2020");
+    expect(readSelection("#paper=unknown", collection)).toBe("restir_di2020");
+    expect(readSelection("#paper=b", collection)).toBe("b");
+    expect(readSelection("", [])).toBeNull();
   });
 });

@@ -2,10 +2,32 @@ import type {
   EdgeMode,
   Filters,
   GraphEdge,
+  LegendHighlight,
   Paper,
   Relation,
 } from "../data/types";
 import { directions } from "../data/labels";
+import { readingEntries } from "../data/readingEntries";
+
+export function matchesLegend(paper: Paper, highlight: LegendHighlight): boolean {
+  return !highlight || (highlight.kind === "direction"
+    ? paper.tags.includes(highlight.value)
+    : paper.role === highlight.value);
+}
+
+export function legendReadingSelection(
+  papers: Paper[], selected: string | null, highlight: LegendHighlight,
+): string | null {
+  if (!highlight || papers.some(paper => paper.paper_id === selected && matchesLegend(paper, highlight))) return selected;
+  const candidates = papers.filter(paper => matchesLegend(paper, highlight));
+  const entry = highlight.kind === "direction"
+    ? readingEntries.direction[highlight.value]
+    : readingEntries.role[highlight.value];
+  // Reduced collections still work; fallback order is independent of array order.
+  return candidates.find(paper => paper.paper_id === entry)?.paper_id
+    ?? candidates.sort((a, b) => a.year - b.year || a.paper_id.localeCompare(b.paper_id))[0]?.paper_id
+    ?? selected;
+}
 
 export function filterPapers(papers: Paper[], filters: Filters): Paper[] {
   const terms = filters.query
@@ -64,7 +86,8 @@ export function coalesceRelations(
 }
 export function readSelection(hash: string, papers: Paper[]): string | null {
   const value = new URLSearchParams(hash.replace(/^#/, "")).get("paper");
-  return papers.some((paper) => paper.paper_id === value) ? value : null;
+  return papers.some((paper) => paper.paper_id === value) ? value :
+    papers.find(paper => paper.paper_id === "restir_di2020")?.paper_id ?? papers[0]?.paper_id ?? null;
 }
 export function shareHash(id: string | null): string {
   return id ? `#paper=${encodeURIComponent(id)}` : "";

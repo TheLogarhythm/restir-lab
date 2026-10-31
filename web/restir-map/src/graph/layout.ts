@@ -1,11 +1,11 @@
 import savedLayout from "./layout.json";
 import type { Paper, Point, View } from "../data/types";
 import { graphLabelLines } from "../data/labels";
+import { nodeLabelOffset, nodeOuterRadius, nodeRadius } from "./nodeMetrics";
 
 // Low zoom keeps readable labels instead of shrinking them into overlapping text.
 // This affects presentation only: every node remains visible and keyboard accessible.
-export function visibleLabelIds(papers: Paper[], positions: Record<string, Point>, scale: number, active: string | null): Set<string> {
-  if (scale >= 0.46) return new Set(papers.map(p => p.paper_id));
+export function visibleLabelIds(papers: Paper[], positions: Record<string, Point>, scale: number, active: string | null, connectionCounts: Record<string, number> = {}): Set<string> {
   const priority = (p: Paper) => p.paper_id === active ? 0 : p.role === "mainline" ? 1 : 2;
   const ordered = [...papers].sort((a, b) => priority(a) - priority(b));
   const occupied: {left: number; right: number; top: number; bottom: number}[] = [];
@@ -14,10 +14,13 @@ export function visibleLabelIds(papers: Paper[], positions: Record<string, Point
     const point = positions[paper.paper_id];
     if (!point) continue;
     const lines = graphLabelLines(paper), font = Math.max(12 * scale, 11.5);
+    const radius = nodeRadius(connectionCounts[paper.paper_id] ?? 0);
+    const extent = paper.role === "optimization" ? nodeOuterRadius(radius, paper.role) : radius;
+    const labelOffset = nodeLabelOffset(extent, scale) * scale;
     const width = Math.max(...lines.map(line => line.length)) * font * 0.64 + 8;
     const box = {left: point.x * scale - width / 2, right: point.x * scale + width / 2,
-      top: point.y * scale + 40 * scale - font - 3,
-      bottom: point.y * scale + 43 * scale + lines.length * font * 1.15 + 5};
+      top: point.y * scale + labelOffset - font - 3,
+      bottom: point.y * scale + labelOffset + 3 * scale + lines.length * font * 1.15 + 5};
     if (occupied.some(b => box.left < b.right && box.right > b.left && box.top < b.bottom && box.bottom > b.top)) continue;
     occupied.push(box);
     visible.add(paper.paper_id);
@@ -71,14 +74,16 @@ export function zoomAt(view: View, factor: number, point: Point): View {
     y: point.y - (point.y - view.y) * ratio,
   };
 }
-export function edgePath(from: Point, to: Point): string {
+export function edgePath(from: Point, to: Point, sourceRadius = 18, targetRadius = 18, scale = 1): string {
   const dx = to.x - from.x,
     dy = to.y - from.y,
     length = Math.hypot(dx, dy) || 1;
-  const ax = from.x + (dx / length) * 21,
-    ay = from.y + (dy / length) * 21;
-  const bx = to.x - (dx / length) * 25,
-    by = to.y - (dy / length) * 25;
+  const start = sourceRadius + 2 / scale, end = targetRadius + 4 / scale;
+  const clearanceScale = Math.min(1, Math.max(0, length - 1) / (start + end));
+  const ax = from.x + (dx / length) * start * clearanceScale,
+    ay = from.y + (dy / length) * start * clearanceScale;
+  const bx = to.x - (dx / length) * end * clearanceScale,
+    by = to.y - (dy / length) * end * clearanceScale;
   const curve = Math.min(length * 0.1, 28);
   return `M ${ax} ${ay} Q ${(ax + bx) / 2 - (dy / length) * curve} ${(ay + by) / 2 + (dx / length) * curve} ${bx} ${by}`;
 }

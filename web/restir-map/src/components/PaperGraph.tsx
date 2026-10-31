@@ -3,7 +3,9 @@ import { colorFor, directions, roleNames } from "../data/labels";
 import type { GraphEdge, Paper, Point, View } from "../data/types";
 import { edgePath, fitView, initialLayout, visibleLabelIds, zoomAt } from "../graph/layout";
 import { relatedIds } from "../graph/selection";
+import { nodeOuterRadius, nodeRadius } from "../graph/nodeMetrics";
 import { PaperNode } from "./PaperNode";
+import { useGraphGestures } from "../graph/useGraphGestures";
 
 type Props = {
   papers: Paper[];
@@ -14,9 +16,8 @@ type Props = {
   onSelect: (id: string) => void;
   onHover: (id: string | null) => void;
   onEdge: (edge: GraphEdge) => void;
-  resetToken: number;
-  zoomAction: { factor: number; token: number };
-  onZoomChange: (zoom: number) => void;
+  connectionCounts: Record<string, number>;
+  highlightedIds: Set<string> | null;
 };
 export function PaperGraph({
   papers,
@@ -27,36 +28,36 @@ export function PaperGraph({
   onSelect,
   onHover,
   onEdge,
-  resetToken,
-  zoomAction,
-  onZoomChange,
+  connectionCounts,
+  highlightedIds,
 }: Props) {
   const markerPrefix = useId();
   const container = useRef<HTMLDivElement>(null),
     svg = useRef<SVGSVGElement>(null);
   const [size, setSize] = useState({ width: 900, height: 660 });
-  const sizeRef = useRef(size);
-  sizeRef.current = size;
-  const [positions, setPositions] = useState(() => initialLayout(allPapers));
+  const [storedPositions, setPositions] = useState(() => initialLayout(allPapers));
+  // New papers need coordinates in this render, before the retention effect runs.
+  const positions = useMemo(() => ({ ...initialLayout(allPapers), ...storedPositions }), [allPapers, storedPositions]);
   const positionsRef = useRef(positions);
   positionsRef.current = positions;
   const [view, setView] = useState<View>({ x: 0, y: 0, scale: 1 });
-  const [fitted, setFitted] = useState(false);
-  const gesture = useRef<{
-    id: string | null;
-    start: Point;
-    origin: Point;
-    pointer: number;
-    moved: boolean;
-  } | null>(null);
-  const suppressClick = useRef(false);
+  const initiallyFitted = useRef(false);
+  const { startGesture, moveGesture, stopGesture, cancelGesture, suppressClick } = useGraphGestures({
+    svg, positionsRef, view, setPositions, setView, initiallyFitted,
+  });
   const active = hovered || selected;
-  const labels = useMemo(() => visibleLabelIds(papers, positions, view.scale, active), [papers, positions, view.scale, active]);
+  const labels = useMemo(() => visibleLabelIds(papers, positions, view.scale, active, connectionCounts), [papers, positions, view.scale, active, connectionCounts]);
   const connected = useMemo(
     () => (active ? relatedIds(active, edges) : null),
     [active, edges],
   );
   const visible = new Set(papers.map((p) => p.paper_id));
+  const hitRadiusLimits = useMemo(() => Object.fromEntries(papers.map(paper => {
+    const point = positions[paper.paper_id];
+    const distances = papers.filter(other => other.paper_id !== paper.paper_id && positions[other.paper_id]).map(other => Math.hypot(point.x - positions[other.paper_id].x, point.y - positions[other.paper_id].y));
+    return [paper.paper_id, Math.min(...distances) * 0.45];
+  })), [papers, positions]);
+  const outerRadii = Object.fromEntries(allPapers.map(paper => [paper.paper_id, nodeOuterRadius(nodeRadius(connectionCounts[paper.paper_id] ?? 0), paper.role)]));
   const activePaper = hovered
     ? allPapers.find((p) => p.paper_id === hovered)
     : null;
@@ -64,71 +65,28 @@ export function PaperGraph({
     const element = container.current;
     if (!element) return;
     const update = () => {
-      setSize({
-        width: element.clientWidth || 900,
-        height: element.clientHeight || 660,
-      });
-      setFitted(false);
+      const width = element.clientWidth, height = element.clientHeight;
+      if (!width || !height) return;
+      setSize({ width, height });
+      if (!initiallyFitted.current) {
+        setView(fitView(positionsRef.current, width, height));
+        initiallyFitted.current = true;
+      }
     };
-    update();
     const observer = new ResizeObserver(update);
     observer.observe(element);
     return () => observer.disconnect();
   }, []);
   useEffect(() => {
-    setPositions(initialLayout(allPapers));
-    setFitted(false);
+    const initial = initialLayout(allPapers);
+    setPositions(current => ({ ...initial, ...current }));
   }, [allPapers]);
-  useEffect(() => {
-    if (!fitted) {
-      setView(
-        fitView(
-          Object.fromEntries(
-            papers
-              .map((p) => [p.paper_id, positions[p.paper_id]])
-              .filter(([, p]) => p),
-          ),
-          size.width,
-          size.height,
-        ),
-      );
-      setFitted(true);
-    }
-  }, [fitted, papers, positions, size]);
-  useEffect(() => {
-    if (!selected) return;
-    const point = positionsRef.current[selected];
-    if (!point) return;
-    setView((current) => {
-      const scale = Math.max(0.65, current.scale);
-      return {
-        scale,
-        x: size.width / 2 - point.x * scale,
-        y: size.height / 2 - point.y * scale,
-      };
-    });
-  }, [selected, size, allPapers]);
-  useEffect(() => {
-    setPositions(initialLayout(allPapers));
-    setFitted(false);
-  }, [resetToken, allPapers]);
-  useEffect(() => {
-    if (!zoomAction.token) return;
-    setView((current) =>
-      zoomAt(current, zoomAction.factor, {
-        x: sizeRef.current.width / 2,
-        y: sizeRef.current.height / 2,
-      }),
-    );
-  }, [zoomAction]);
-  useEffect(() => {
-    onZoomChange(view.scale);
-  }, [view.scale, onZoomChange]);
   useEffect(() => {
     const element = svg.current;
     if (!element) return;
     const wheel = (event: WheelEvent) => {
       event.preventDefault();
+      initiallyFitted.current = true;
       const box = element.getBoundingClientRect();
       setView((current) =>
         zoomAt(current, Math.exp(-event.deltaY * 0.0015), {
@@ -140,57 +98,26 @@ export function PaperGraph({
     element.addEventListener("wheel", wheel, { passive: false });
     return () => element.removeEventListener("wheel", wheel);
   }, []);
-  function startGesture(event: React.PointerEvent, id: string | null) {
-    if (event.button !== 0) return;
-    event.stopPropagation();
-    gesture.current = {
-      id,
-      start: { x: event.clientX, y: event.clientY },
-      origin: id ? positions[id] : { x: view.x, y: view.y },
-      pointer: event.pointerId,
-      moved: false,
-    };
-  }
-  function moveGesture(event: React.PointerEvent) {
-    const drag = gesture.current;
-    if (!drag || drag.pointer !== event.pointerId) return;
-    const dx = event.clientX - drag.start.x,
-      dy = event.clientY - drag.start.y;
-    if (Math.hypot(dx, dy) > 4 && !drag.moved) {
-      drag.moved = true;
-      svg.current?.setPointerCapture?.(event.pointerId);
-    }
-    if (!drag.moved) return;
-    if (drag.id)
-      setPositions((current) => ({
-        ...current,
-        [drag.id!]: {
-          x: drag.origin.x + dx / view.scale,
-          y: drag.origin.y + dy / view.scale,
-        },
-      }));
-    else
-      setView((current) => ({
-        ...current,
-        x: drag.origin.x + dx,
-        y: drag.origin.y + dy,
-      }));
-  }
-  function stopGesture(event: React.PointerEvent) {
-    if (gesture.current?.pointer !== event.pointerId) return;
-    suppressClick.current = gesture.current.moved;
-    gesture.current = null;
-    if (svg.current?.hasPointerCapture?.(event.pointerId))
-      svg.current.releasePointerCapture(event.pointerId);
-    window.setTimeout(() => {
-      suppressClick.current = false;
-    }, 0);
+  function center() {
+    initiallyFitted.current = true;
+    const visiblePositions = Object.fromEntries(papers.filter(paper => positions[paper.paper_id]).map(paper => [paper.paper_id, positions[paper.paper_id]]));
+    setView(fitView(visiblePositions, size.width, size.height));
   }
   return (
     <div className="graph-canvas" ref={container}>
-      <div className="graph-corner">
-        <span className="eyebrow">RESEARCH NETWORK</span>
-        <p>Follow how ideas develop.</p>
+      <p className="sr-only" id={`${markerPrefix}-instructions`}>
+        Scroll or pinch with two fingers to zoom. Drag the background to pan or a paper to move it.
+        With the network focused, use arrow keys to pan and + or - to zoom.
+        Tab to a paper or connection and press Enter or Space to select it or open its evidence.
+        Use Center to fit the visible papers without resetting their positions.
+      </p>
+      <div className="graph-center-control">
+        <button className="icon-button graph-center" aria-label="Center" title="Center" onClick={center}>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8 3H3v5M16 3h5v5M21 16v5h-5M3 16v5h5M8 12h8M12 8v8" />
+          </svg>
+          <span className="graph-center-tooltip" aria-hidden="true">Center</span>
+        </button>
       </div>
       <svg
         ref={svg}
@@ -198,12 +125,17 @@ export function PaperGraph({
         width="100%"
         height="100%"
         aria-label="ReSTIR research network"
+        aria-describedby={`${markerPrefix}-instructions`}
         role="group"
         tabIndex={0}
         onPointerDown={(e) => startGesture(e, null)}
         onPointerMove={moveGesture}
         onPointerUp={stopGesture}
-        onPointerCancel={stopGesture}
+        onPointerCancel={cancelGesture}
+        onLostPointerCapture={(event) => {
+          // Touch capture transfers from a node to the SVG when dragging starts.
+          if (event.target === event.currentTarget) cancelGesture(event);
+        }}
         onKeyDown={(e) => {
           if (e.target !== e.currentTarget) return;
           const steps: Record<string, Point> = {
@@ -214,6 +146,7 @@ export function PaperGraph({
           };
           if (steps[e.key]) {
             e.preventDefault();
+            initiallyFitted.current = true;
             setView((v) => ({
               ...v,
               x: v.x + steps[e.key].x,
@@ -222,12 +155,14 @@ export function PaperGraph({
           }
           if (e.key === "+" || e.key === "=") {
             e.preventDefault();
+            initiallyFitted.current = true;
             setView((v) =>
               zoomAt(v, 1.2, { x: size.width / 2, y: size.height / 2 }),
             );
           }
           if (e.key === "-") {
             e.preventDefault();
+            initiallyFitted.current = true;
             setView((v) =>
               zoomAt(v, 1 / 1.2, { x: size.width / 2, y: size.height / 2 }),
             );
@@ -244,8 +179,10 @@ export function PaperGraph({
                 positions[edge.target],
             )
             .map((edge, index) => {
-              const highlighted =
-                !!active && (edge.source === active || edge.target === active);
+              const highlighted = highlightedIds
+                ? highlightedIds.has(edge.source) || highlightedIds.has(edge.target)
+                : !!active && (edge.source === active || edge.target === active);
+              const path = edgePath(positions[edge.source], positions[edge.target], outerRadii[edge.source], outerRadii[edge.target], view.scale);
               const markerId = `${markerPrefix}-arrow-${index}`;
               const sourceTitle = allPapers.find((paper) => paper.paper_id === edge.source)?.short_title;
               const targetTitle = allPapers.find((paper) => paper.paper_id === edge.target)?.short_title;
@@ -253,12 +190,12 @@ export function PaperGraph({
               return (
                 <g
                   key={edge.id}
-                  className={`graph-edge ${edge.type} ${highlighted ? "highlighted" : ""} ${active && !highlighted ? "dimmed" : ""}`}
+                  className={`graph-edge ${edge.type} ${highlighted ? "highlighted" : ""} ${(highlightedIds || active) && !highlighted ? "dimmed" : ""}`}
                   role="button"
                   tabIndex={0}
                   aria-label={label}
-                  onPointerDown={(event) => event.stopPropagation()}
-                  onClick={() => onEdge(edge)}
+                  onPointerDown={(event) => event.pointerType === "touch" ? startGesture(event, null) : event.stopPropagation()}
+                  onClick={() => { if (!suppressClick.current) onEdge(edge); }}
                   onKeyDown={(event) => {
                     if (event.key === "Enter" || event.key === " ") {
                       event.preventDefault();
@@ -284,13 +221,13 @@ export function PaperGraph({
                   <path
                     className="edge-line"
                     vectorEffect="non-scaling-stroke"
-                    d={edgePath(positions[edge.source], positions[edge.target])}
+                    d={path}
                     markerEnd={`url(#${markerId})`}
                   />
                   <path
                     className="edge-hit"
                     vectorEffect="non-scaling-stroke"
-                    d={edgePath(positions[edge.source], positions[edge.target])}
+                    d={path}
                   >
                     <title>{label}</title>
                   </path>
@@ -303,10 +240,12 @@ export function PaperGraph({
               paper={paper}
               point={positions[paper.paper_id] || { x: 0, y: 0 }}
               scale={view.scale}
+              connectionCount={connectionCounts[paper.paper_id] ?? 0}
+              hitRadiusLimit={hitRadiusLimits[paper.paper_id]}
               showLabel={labels.has(paper.paper_id)}
               selected={selected === paper.paper_id}
-              highlighted={!!connected?.has(paper.paper_id)}
-              dimmed={!!active && !connected?.has(paper.paper_id)}
+              highlighted={highlightedIds ? highlightedIds.has(paper.paper_id) : !!connected?.has(paper.paper_id)}
+              dimmed={highlightedIds ? !highlightedIds.has(paper.paper_id) : !!active && !connected?.has(paper.paper_id)}
               onSelect={() => {
                 if (!suppressClick.current) onSelect(paper.paper_id);
               }}
@@ -334,9 +273,6 @@ export function PaperGraph({
           <small>Select to keep details open</small>
         </div>
       )}
-      <div className="graph-hint">
-        {view.scale < 0.46 ? "Fewer labels at this scale · Zoom in or select a paper" : "Drag nodes or the background · Scroll to zoom"} <span>Tab to focus · Enter to read</span>
-      </div>
     </div>
   );
 }

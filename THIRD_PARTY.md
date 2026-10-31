@@ -45,3 +45,7 @@ Original notices remain in ignored `assets/prepared/<scene>/`; archive hashes an
 adaptations are in [the scene manifest](scenes/manifest.yaml). The Tungsten converter
 follows the documented WO3 layout and transform conventions in
 [Tungsten](https://github.com/tunabrain/tungsten); it is a local implementation.
+
+## ReSTIR Atlas icon
+
+The Atlas header embeds the [Tabler Prism Light icon](https://tabler.io/icons/icon/prism-light), from [Tabler Icons](https://github.com/tabler/tabler-icons/blob/main/icons/outline/prism-light.svg), retrieved 2026-10-31. Copyright (c) 2020-2026 Paweł Kuna, MIT. The [full license](web/restir-map/public/licenses/tabler-icons-LICENSE.txt) ships with the static site. Only SVG presentation attributes were adapted; no icon library dependency was added.
