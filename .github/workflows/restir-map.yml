@@ -1,0 +1,89 @@
+name: ReSTIR literature map
+
+on:
+  pull_request:
+    paths:
+      - 'web/restir-map/**'
+      - 'docs/literature/**'
+      - 'scripts/check_literature.py'
+      - 'tests/workflows/test_literature_data.py'
+      - '.github/workflows/restir-map.yml'
+  push:
+    paths:
+      - 'web/restir-map/**'
+      - 'docs/literature/**'
+      - 'scripts/check_literature.py'
+      - 'tests/workflows/test_literature_data.py'
+      - '.github/workflows/restir-map.yml'
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Publish the checked build to GitHub Pages (explicit opt-in)'
+        type: boolean
+        default: false
+      base_path:
+        description: 'Project path, including leading/trailing slashes'
+        type: string
+        default: '/restir-lab/'
+
+permissions:
+  contents: read
+
+jobs:
+  check-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: web/restir-map/package-lock.json
+      - name: Check scaffold and literature data
+        run: |
+          python -B scripts/check_scaffold.py
+          python -B scripts/check_literature.py
+          python -B -m unittest tests.workflows.test_literature_data -v
+      - name: Install web-only dependencies
+        working-directory: web/restir-map
+        run: npm ci
+      - name: Test and build static web app
+        working-directory: web/restir-map
+        env:
+          VITE_BASE_PATH: ${{ inputs.base_path || '/restir-lab/' }}
+        run: |
+          npm test
+          npm run build
+      - name: Save reviewable build
+        uses: actions/upload-artifact@v4
+        with:
+          name: restir-map
+          path: build/web/restir-map
+      - name: Package Pages artifact only when explicitly requested
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: build/web/restir-map
+
+  deploy:
+    if: github.event_name == 'workflow_dispatch' && inputs.deploy
+    needs: check-and-build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: restir-map-pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy approved artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
