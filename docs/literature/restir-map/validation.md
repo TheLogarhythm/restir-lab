@@ -1,6 +1,51 @@
 # 本地验证与独立评审 · 2026-10-30
 
-本次只实现本地网页与发布准备。未 commit、push、启用 Pages 或实际发布。真实浏览器为 Chrome；检索截止和验证日期均为香港时间 2026-10-30。
+本文件按修订记录当时的实现、验证和发布边界；下方早期章节中的未提交说明仅对应当时的修订。文献检索截止为香港时间 2026-10-30，后续界面验证日期见各节。
+
+## Code review and branch delivery · 2026-10-31
+
+The user authorized reviewed Atlas commits and a push to `restir-research-map`, without merging `main` or publishing Pages. Three independent review passes covered graph geometry/gestures, reading state/accessibility, and data/build/maintenance. Cross-review of the fixes found and resolved an asynchronous sharing race; no substantive findings remain from these passes.
+
+Fixed issues:
+
+- Releasing a pointer outside the SVG, losing capture, canceling a pinch or switching windows could leave stale gesture state. `graph/useGraphGestures.ts` now owns interruption and capture cleanup. Regressions cover mouse/touch taps, StrictMode keyboard selection, child-to-SVG capture transfer and genuine SVG capture loss.
+- Adding a paper through updated component props could read undefined coordinates before an effect ran. Positions are now available synchronously while preserving dragged nodes and the manual view.
+- Reading related work could leave keyboard focus on the document body or the old edge. Details now receive focus on their heading without scrolling the page or map.
+- A failed clipboard request could leave the address bar pointing at an invalid default-paper hash. Canonicalizing the share URL before awaiting clipboard access also prevents delayed rejection from overwriting a later selection.
+- Clearing filters could restore a selected list row outside the list viewport. The row is now revealed inside the list when results change.
+- `--sync-matrix` could silently retain only the last duplicate CSV row, losing reading/reproduction notes. Duplicate IDs now fail before any write; valid metadata synchronization retains workflow fields.
+
+Organization: About and connection dialogs are separate components; evidence rendering is shared. Direction/classification types and complete reading-entry maps catch missing configuration during compilation. Package engine metadata now matches the pinned test stack (Node 22.12+ within 22.x, 24.x, or 26+); no dependency versions changed. The existing `THIRD_PARTY.md` bytes are preserved, with only the MIT icon notice appended. Historical provenance records were not rewritten.
+
+Fresh checks: 94 frontend tests across six files; TypeScript/Vite production build; 18 literature tests; literature validation (44 entries, 130 verified relations); scaffold validation (40 required paths and 182 Markdown links); patch whitespace check. No tests were skipped or weakened. New failure regressions were observed failing before their fixes.
+
+The production preview was checked in the real in-app browser at 1440×960, 1100×850 and 390×844. Equal desktop panel widths (345.59px / 270px), stacked mobile details, all 44 nodes, deep-link refresh, legend entry selection, background and node dragging, Center preserving dragged positions, related-paper and dialog focus handoff, image Escape/focus return, and no horizontal overflow were verified. Mobile related-paper activation preserved both scrollY (810px in the exercised state) and the exact SVG transform. Browser logs contained no warnings or errors. Pointer cancellation/capture-transfer edge cases are automated event regressions; no physical touchscreen test is claimed.
+
+Research metadata, relationship evidence, representative images and saved layout coordinates are unchanged. All unrelated dirty files are protected by a fresh hash baseline. Validation uses no renderer submodules, GPU, local PDFs or Zotero.
+
+## Legend reading entries · 2026-10-31
+
+This revision supersedes the earlier rule that legend highlights never change the selected paper. A matching current paper stays selected, including matches through secondary direction tags. Otherwise the legend opens its curated reading entry. Toggling off keeps the paper. Explicitly choosing an outside paper, or restoring one through browser history, clears an incompatible highlight. Legend activation preserves search filters, node positions and the camera; a hidden entry uses the existing filter notice. All six directions and four classifications have explicit entries in `web/restir-map/src/data/readingEntries.ts`, with rationale in the web README. These are editorial navigation choices, not inferred graph roots or changes to scholarly evidence.
+
+Fresh validation: 76 frontend tests passed, including all ten entries through the rendered app, copied share URLs, secondary-tag membership, keyboard toggles, all three manual selection paths, browser-history reconciliation, filter preservation, and exact map transforms after pan/zoom. Configuration checks validate the actual mapping's keys, IDs and membership; reduced-collection fallback is deterministic and does not mutate the source array. The 16 literature tests, literature validator, scaffold check and TypeScript/Vite production build passed. No checks were skipped or relaxed.
+
+Real in-app-browser checks used the production preview at `/restir-lab/`, at 1440×960, 1100×850 and 390×844. Reuse quality opens Production ReSTIR; switching to Foundations retains it through its matching tag; toggling off retains the same paper. Keyboard selection opens Area ReSTIR, explicit list selection clears an incompatible highlight, Branch opens Volumetric ReSTIR, and Back/Forward restore paper selection without moving the view. Refreshing the Volumetric share hash preserves the paper and starts with all 44 nodes fitted. The resource facet opens/retains the course. Search remains intact when the chosen entry is outside the results. Desktop panels remain equal (270px each at 1100px); mobile details remain stacked without horizontal overflow. Image loading and Escape focus return passed; browser logs contained no errors or warnings. This revision adds no animation or gesture logic.
+
+Independent read-only review found no substantive implementation defect. Its suggested mapping-integrity test was added and the full frontend suite/build were rerun successfully. All pre-existing changes outside the scoped frontend/documentation files were hash-checked against a fresh baseline; research metadata, evidence, figures and saved layout coordinates remain unchanged. HEAD remains `960f1c6`; no commit, push, merge or Pages publication was performed.
+
+## Persistent reading and stable-map revision · 2026-10-31
+
+This local-only revision keeps details open, defaults to ReSTIR DI for absent/invalid paper hashes, and gives valid share links priority. Escape closes dialogs only. The 52px header uses the full dataset count and the licensed inline Tabler Prism Light icon. The sidebar heading, graph introduction/hints, zoom toolbar and Reset/Clear controls are removed.
+
+Node radii are 18/22/26 world units for 0–2/3–7/8+ distinct verified inheritance neighbors in the full dataset. Citations and pending relations never affect size. Legend buttons match all direction tags or editorial roles without hiding nodes or changing the selected paper, layout or view. Initial fitting waits for actual canvas dimensions and includes all papers. Only explicit Center fits the currently visible, potentially dragged positions; selection, filtering, mode changes and later resize preserve the view.
+
+Independent review caught two issues that were fixed: list auto-scrolling could move the entire mobile page, and expanded transparent hit circles could capture neighboring marker centers. List scrolling is now confined to its own container; hit radii are bounded by nearest visible neighbors and decorative rings do not intercept input. The old panel entrance animation was removed to prevent transient overflow during persistent content changes.
+
+Validation: 57 frontend tests passed, covering fallback/default/deep-link selection, modal/selection separation, stable views through selection and legend/filter changes, distinct-neighbor counting, size tiers, pinch gestures, Center preserving dragged positions, and real-layout mobile hit geometry. Literature tests (16), literature validation and scaffold checks passed; TypeScript/Vite build passed. Independent review found no remaining substantive defects.
+
+Real in-app-browser checks at 1440×960, 1100×850 and 390×844 confirmed equal desktop side panels, stacked mobile details, loaded representative images, no settled horizontal overflow, and all initial node shapes inside the canvas. Paper and secondary-tag legend selection preserve the exact SVG view transform. Keyboard pan/zoom, real pointer background/node dragging, Center, valid share refresh, invalid-hash fallback and image/Escape focus return were exercised. Direct mobile marker taps select ReGIR and World-space correctly without changing page scroll or camera transform. Locator-driven test scrolling was distinguished from actual screen-coordinate taps. Reduced motion was verified by stylesheet rules; no OS preference was changed. Two-finger pinch is covered by pointer-event tests, not a physical touchscreen test.
+
+No new commit, push, merge or Pages publication was performed. Existing branch commits, the 40 unrelated working-tree files, literature metadata/evidence and representative images remain intact.
 
 ## Layout simplification · 2026-10-31
 
