@@ -1,0 +1,92 @@
+import type { Paper, Relation } from "../data/types";
+
+export function RelationDetails({
+  relations,
+  papers,
+  selected,
+  onSelect,
+}: {
+  relations: Relation[];
+  papers: Paper[];
+  selected: string;
+  onSelect: (id: string) => void;
+}) {
+  const verified = relations.filter(
+    (r) =>
+      r.verification === "verified" &&
+      (r.predecessor === selected || r.successor === selected),
+  );
+  const groups = new Map<string, Relation[]>();
+  for (const relation of verified) {
+    const key = `${relation.predecessor}--${relation.successor}`;
+    groups.set(key, [...(groups.get(key) || []), relation]);
+  }
+  return (
+    <section className="relation-details">
+      <h3>
+        Connections & evidence <span>{groups.size}</span>
+      </h3>
+      {!groups.size && (
+        <p className="muted">
+          No connections have been verified yet. Other connections may exist.
+        </p>
+      )}
+      {[...groups.entries()].map(([id, items]) => {
+        const first = items[0],
+          other =
+            first.predecessor === selected
+              ? first.successor
+              : first.predecessor,
+          paper = papers.find((p) => p.paper_id === other);
+        return (
+          <details key={id} className="relation-item">
+            <summary>
+              <span className="relation-direction">
+                {first.successor === selected ? "Earlier work" : "Later work"}
+              </span>
+              <span>{paper?.short_title || other}</span>
+              <span className="relation-kind">
+                {items.some((r) => r.type === "inheritance")
+                  ? "Method lineage"
+                  : "Citation"}
+                {items.length > 1 ? " + Citation" : ""}
+              </span>
+            </summary>
+            <div className="relation-body">
+              <button className="text-button" onClick={() => onSelect(other)}>
+                Read {paper?.short_title} <span aria-hidden="true">↗</span>
+              </button>
+              {items.map((relation) => (
+                <div key={relation.id}>
+                  <div className="evidence-type">
+                    {relation.type === "inheritance"
+                      ? "Evidence of method reuse"
+                      : "Citation evidence"}
+                  </div>
+                  {relation.evidence.map((evidence, index) => (
+                    <div className="evidence" key={index}>
+                      <p>{evidence.explanation}</p>
+                      <a
+                        href={evidence.source_url}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {evidence.locator} ↗
+                      </a>
+                      <small>
+                        {evidence.method === "reference_list_review"
+                          ? "Reference list checked"
+                          : "Paper text checked"}{" "}
+                        · {evidence.checked}
+                      </small>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </details>
+        );
+      })}
+    </section>
+  );
+}
