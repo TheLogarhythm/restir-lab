@@ -1,0 +1,219 @@
+{
+  "definition_file": "experiments/configs/di-reuse.json",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "seeds": [
+    1
+  ],
+  "preview_seed": 1,
+  "classification": {
+    "radius": 30,
+    "hard_percent": 10,
+    "regions": [
+      "all",
+      "hard"
+    ]
+  },
+  "views": {
+    "cornell-box": {
+      "label": "Cornell Box",
+      "scene": "cornell-box",
+      "camera_status": "Visually checked in 320x180 fixed-view preview on 2026-10-28, before formal comparison",
+      "camera_source": "scenes/configs/rtxdi/cornell-box.json"
+    },
+    "bistro-interior": {
+      "label": "Bistro interior",
+      "scene": "bistro",
+      "camera_status": "Visually checked in 320x180 fixed-view preview on 2026-10-28, before formal comparison",
+      "camera_source": "scenes/configs/rtxdi/bistro.json"
+    },
+    "bistro-exterior": {
+      "label": "Bistro exterior",
+      "scene": "bistro",
+      "camera": {
+        "position": [
+          -20,
+          1.8,
+          12
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "vertical_fov": 60
+      },
+      "camera_status": "Visually checked in 320x180 fixed-view preview on 2026-10-28, before formal comparison",
+      "camera_source": "experiments/configs/pdf-controlled.json: views.bistro-exterior"
+    },
+    "emerald-square": {
+      "label": "Emerald Square",
+      "scene": "emerald-square",
+      "camera_status": "Visually checked in 320x180 fixed-view preview on 2026-10-28, before formal comparison",
+      "camera_source": "scenes/configs/rtxdi/emerald-square.json"
+    },
+    "sun-temple": {
+      "label": "Sun Temple",
+      "scene": "sun-temple",
+      "camera_status": "Visually checked in 320x180 fixed-view preview on 2026-10-28, before formal comparison",
+      "camera_source": "scenes/configs/rtxdi/sun-temple.json"
+    }
+  },
+  "schema_version": 3,
+  "reuse_mode": "combined",
+  "acquisition": {
+    "protocol": "static",
+    "warmup_frames": 40,
+    "capture_frames": [
+      41
+    ]
+  },
+  "display": {
+    "delta_range_pp": 20,
+    "exposure_ev": {
+      "cornell-box": 0,
+      "bistro-interior": 5,
+      "bistro-exterior": 3,
+      "emerald-square": 6,
+      "sun-temple": 0
+    }
+  },
+  "groups": {
+    "DI": {
+      "original": "di-original",
+      "cgns": "di-cgns",
+      "reference": "direct"
+    },
+    "GI": {
+      "original": "gi-original",
+      "cgns": "gi-cgns",
+      "reference": "full"
+    },
+    "PT": {
+      "original": "pt-original",
+      "cgns": "pt-cgns",
+      "reference": "full"
+    }
+  },
+  "methods": {
+    "di-original": {
+      "label": "ReSTIR DI + original spatial reuse",
+      "algorithm": "DI",
+      "settings": {
+        "cgns": false,
+        "cgns_candidates": 32,
+        "cgns_early_stopping": true
+      },
+      "source": {
+        "kind": "comparison",
+        "index": "runs/cgns-rejection-1080p-20261103/methods/comparison.json",
+        "method": "baseline"
+      }
+    },
+    "di-cgns": {
+      "label": "ReSTIR DI + CGNS",
+      "algorithm": "DI",
+      "settings": {
+        "cgns": true,
+        "cgns_candidates": 32,
+        "cgns_early_stopping": true
+      },
+      "source": {
+        "kind": "comparison",
+        "index": "runs/cgns-rejection-1080p-20261103/methods/comparison.json",
+        "method": "cgns"
+      }
+    },
+    "gi-original": {
+      "label": "ReSTIR GI + original spatial reuse",
+      "algorithm": "GI",
+      "settings": {
+        "cgns": false,
+        "cgns_candidates": 32,
+        "cgns_early_stopping": true
+      },
+      "source": {
+        "kind": "render"
+      }
+    },
+    "gi-cgns": {
+      "label": "ReSTIR GI + CGNS",
+      "algorithm": "GI",
+      "settings": {
+        "cgns": true,
+        "cgns_candidates": 32,
+        "cgns_early_stopping": true
+      },
+      "source": {
+        "kind": "render"
+      }
+    },
+    "pt-original": {
+      "label": "ReSTIR PT + original spatial reuse",
+      "algorithm": "PT",
+      "settings": {
+        "cgns": false,
+        "cgns_candidates": 32,
+        "cgns_early_stopping": true
+      },
+      "source": {
+        "kind": "render"
+      }
+    },
+    "pt-cgns": {
+      "label": "ReSTIR PT + CGNS",
+      "algorithm": "PT",
+      "settings": {
+        "cgns": true,
+        "cgns_candidates": 32,
+        "cgns_early_stopping": true
+      },
+      "source": {
+        "kind": "render"
+      }
+    }
+  },
+  "references": {
+    "direct": {
+      "policy": {
+        "kind": "fixed_path_spp",
+        "schema_version": 1,
+        "component": "direct",
+        "seed": 1001,
+        "spp": 8192,
+        "checkpoints": [
+          4096,
+          8192
+        ],
+        "paths_per_iteration": 1
+      },
+      "source": {
+        "kind": "render"
+      }
+    },
+    "full": {
+      "policy": {
+        "kind": "fixed_path_spp",
+        "schema_version": 1,
+        "component": "full",
+        "seed": 1001,
+        "spp": 8192,
+        "checkpoints": [
+          4096,
+          8192
+        ],
+        "paths_per_iteration": 1
+      },
+      "source": {
+        "kind": "render"
+      }
+    }
+  }
+}

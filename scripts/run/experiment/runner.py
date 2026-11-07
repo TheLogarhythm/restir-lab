@@ -27,7 +27,10 @@ def output_directory(name, root=ROOT):
 
 
 def query(*args, cwd=ROOT):
-    return subprocess.check_output(args, cwd=cwd, text=True, encoding="utf-8", errors="replace").strip()
+    # A detached worker does not propagate console suppression to its children.
+    return subprocess.check_output(
+        args, cwd=cwd, text=True, encoding="utf-8", errors="replace",
+        creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0).strip()
 
 
 def relative_path(path, base):
@@ -53,6 +56,12 @@ def preflight(definition, executable=None):
     if not executable.is_file():
         raise RuntimeError("Run python scripts/run/build_rtxdi_experiments.py first")
     build = json.loads(executable.with_suffix(".build.json").read_text())
+    if definition.get("path_reference_schema") is not None and (
+            definition["path_reference_schema"] != 1 or build.get("path_reference_schema") != 1):
+        raise RuntimeError("Path-spp references require build_rtxdi_path_reference.py")
+    if definition.get("transport_schema") is not None and (
+            definition["transport_schema"] != 1 or build.get("transport_schema") != 1):
+        raise RuntimeError("Transport methods require build_rtxdi_transport.py")
     if definition.get("pdf_similarity", False) and not build.get("pdf_similarity", False):
         raise RuntimeError("PDF similarity requires build_rtxdi_pdf.py")
     if definition.get("cgns", False) and build.get("cgns") is not True:
@@ -73,7 +82,20 @@ def preflight(definition, executable=None):
     return build
 
 
-def run_one(config, output, build, scene, timeout=600, *, executable=None, resume_rgb=None):
+def frozen_input_guard(config, executable, build, assets, extra=None):
+    """Recheck actual inputs around each process, including gaps between checkpoints."""
+    def validate():
+        from .scenes import load_scene, validate_assets
+        if extra:
+            extra()
+        if preflight(config["definition"],executable) != build:
+            raise ValueError("Frozen executable/shaders changed during the batch")
+        if validate_assets(load_scene(config["scene_id"])) != assets:
+            raise ValueError("Frozen scene assets changed during the batch")
+    return validate
+
+
+def run_one(config, output, build, scene, timeout=600, *, executable=None, resume_rgb=None, input_guard=None):
     executable = executable or EXE
     output.mkdir(parents=True, exist_ok=False)
     config = copy.deepcopy(config)
@@ -93,6 +115,17 @@ def run_one(config, output, build, scene, timeout=600, *, executable=None, resum
             source = Path(resume).resolve()
             if sha(source) != config["reference"]["resume_image_sha256"]:
                 raise ValueError("Reference resume image was modified")
+            if config["reference"].get("estimator") == "conventional_path_tracing":
+                from .path_reference import validate_schedule
+                validate_schedule(config)
+                parent_path = source.parent / "config.json"
+                if sha(parent_path) != config["reference"].get("resume_config_sha256"):
+                    raise ValueError("Path reference parent config was modified")
+                parent = json.loads(parent_path.read_text())
+                validate_schedule(parent)
+                if (parent["seed"] != config["seed"] or parent["transport"] != config["transport"]
+                        or parent["reference"]["completed_spp"] != config["reference"]["resume_batches"]):
+                    raise ValueError("Path reference parent target/count differs")
             if config["reference"].get("allocation") is not None:
                 from .reference_allocation import allocation_totals
                 allocation_totals(config)
@@ -111,6 +144,11 @@ def run_one(config, output, build, scene, timeout=600, *, executable=None, resum
             rgba.tofile(output / "resume.rgba32f")
             config["reference"]["resume_image"] = relative_path(source, output)
         save_json(output / "config.json", config)
+        runtime = None
+        if config.get("reference", {}).get("estimator") == "conventional_path_tracing":
+            from .runtime_config import write_runtime_config
+            runtime = write_runtime_config(output, config)
+            record["runtime_config"] = runtime
         command = [relative_path(executable, output)]
         for key, value in config["arguments"].items():
             # cxxopts bool flags need '=0'; a separate '0' can leave the flag true.
@@ -130,7 +168,7 @@ def run_one(config, output, build, scene, timeout=600, *, executable=None, resum
                   "path_bases": {"command": "run directory", "scene_source_and_code_paths": "repository root",
                                  "scene.file_sha256": "config.scene.source.root",
                                  "build.shader_sha256": (executable.parent / build.get("shader_directory", "shaders/full-sample")).relative_to(ROOT).as_posix()},
-                  "environment": {"RTXDI_EXPERIMENT_CONFIG": "config.json"},
+                  "environment": {"RTXDI_EXPERIMENT_CONFIG": runtime["path"] if runtime else "config.json"},
                   "run_id": output.relative_to(ROOT / "runs").as_posix() if output.is_relative_to(ROOT / "runs") else output.name,
                   "python_source_sha256": {**{p.relative_to(ROOT).as_posix(): sha(p)
                       for p in [ROOT / "scripts/run/rtxdi_reuse.py", ROOT / "scripts/run/rtxdi_common.py",
@@ -141,23 +179,33 @@ def run_one(config, output, build, scene, timeout=600, *, executable=None, resum
                   "os": platform.platform(), "python": platform.python_version(),
                   "gpu": query("nvidia-smi", "--query-gpu=name,memory.total,driver_version", "--format=csv,noheader"),
                   "timing": "Synchronous GPU frames; excludes capture/readback, PNG conversion, present and UI. Not real-time FPS."})
+        if input_guard:
+            input_guard()
+            record["input_validation"] = {"before_render_utc":datetime.now(timezone.utc).isoformat()}
         record["stage"] = "rendering"
         save_json(manifest, record)
+        from .runtime_config import validate_runtime_config
+        validate_runtime_config(output, config)
         env = {key: value for key, value in os.environ.items() if not key.upper().startswith("RTXDI_")}
-        env["RTXDI_EXPERIMENT_CONFIG"] = "config.json"
+        env["RTXDI_EXPERIMENT_CONFIG"] = record["environment"]["RTXDI_EXPERIMENT_CONFIG"]
         print(output, flush=True)
         with (output / "renderer.log").open("w", encoding="utf-8") as log:
             # Windows resolves the executable before applying cwd; only the launch
             # override is absolute. The saved command stays relative to the run.
             launch_timeout = timeout() if callable(timeout) else timeout
             result = subprocess.run(command, executable=str(executable), cwd=output, env=env,
-                                    stdout=log, stderr=subprocess.STDOUT, timeout=launch_timeout)
+                                    stdout=log, stderr=subprocess.STDOUT, timeout=launch_timeout,
+                                    creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0)
         record["exit_code"] = result.returncode
+        validate_runtime_config(output, config)
         if result.returncode:
             raise RuntimeError(f"Renderer exited {result.returncode}; inspect renderer.log")
         record["stage"] = "finalizing"
         save_json(manifest, record)
         record["captures"] = finalize_outputs(output, config)
+        if input_guard:
+            input_guard()
+            record["input_validation"]["after_render_utc"] = datetime.now(timezone.utc).isoformat()
         record["status"] = "completed"
     except KeyboardInterrupt:
         record["status"] = "interrupted"

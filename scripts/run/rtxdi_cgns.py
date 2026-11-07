@@ -48,8 +48,12 @@ def adapt_spatial(text):
     change("                idx = RAB_ClampSamplePositionIntoView(idx, false);",
            """                if (LabCgnsEnabled() && !LabCgnsNeighbor(pixelPosition, i, idx)) continue;
                 idx = RAB_ClampSamplePositionIntoView(idx, false);""")
-    change("if (!RTXDI_IsValidNeighbor(", "if (!LabCgnsEnabled() && !RTXDI_IsValidNeighbor(")
-    change("if (sparams.enableMaterialSimilarityTest &&", "if (!LabCgnsEnabled() && sparams.enableMaterialSimilarityTest &&")
+    # CGNS changes coordinates only; retain upstream geometry/material rejection.
+    # cachedResult excludes rejected neighbors from the normalization loop too.
+    change("    uint cachedResult = 0;", "    uint cachedResult = 0;\n    uint labMergedNeighbors = 0;")
+    change("        if (RTXDI_CombineDIReservoirs(state, neighborSample,",
+           "        ++labMergedNeighbors;\n        if (RTXDI_CombineDIReservoirs(state, neighborSample,")
+    change("    return state;", "    LabRecordSpatialNeighbors(pixelPosition, labMergedNeighbors);\n    return state;")
     return prefix + marker + spatial
 
 
@@ -86,15 +90,17 @@ def configure(helper):
     void ApplySun(''')
     replace(helper, '        record["scene_id"] = config["scene_id"];',
             '        record["scene_id"] = config["scene_id"];\n'
-            '        record["cgns"] = bool(p.spatialResamplingParams.pad1);\n'
+            '        record["spatial_neighbor_counts"] = true;\n        record["cgns"] = bool(p.spatialResamplingParams.pad1);\n'
+            '        record["cgns_rejection_policy"] = "upstream";\n'
             '        record["cgns_candidates"] = p.spatialResamplingParams.pad2;\n'
             '        record["cgns_early_stopping"] = bool(p.spatialResamplingParams.pad3);\n'
             '        record["cgns_solid_angle"] = 0.05; record["cgns_normal_beta"] = 8;\n'
-            '        record["cgns_extra_bytes"] = uint64_t(di.GetStaticParameters().RenderWidth) * di.GetStaticParameters().RenderHeight * 4 + 8192 * 8;')
+            '        record["cgns_extra_bytes"] = uint64_t(di.GetStaticParameters().RenderWidth) * di.GetStaticParameters().RenderHeight * 8 + 8192 * 8;')
     replace(helper, '"temporal", "spatial",', '"temporal", "neighbor_selection", "spatial",')
-    replace(helper, '            if (config["diagnostics"].asBool())', '''            if (config["diagnostics"].asBool() && di.GetSpatialResamplingParameters().pad1)
+    replace(helper, '            if (config["diagnostics"].asBool())', '''            if (config["diagnostics"].asBool() && (di.GetResamplingMode() == rtxdi::ReSTIRDI_ResamplingMode::Spatial || di.GetResamplingMode() == rtxdi::ReSTIRDI_ResamplingMode::TemporalAndSpatial))
             {
-                const auto bytes = uint64_t(desc.width) * desc.height * sizeof(uint32_t);
+                const auto countBytes = uint64_t(desc.width) * desc.height * sizeof(uint32_t);
+                const auto bytes = countBytes * 2;
                 nvrhi::BufferDesc statsDesc;
                 statsDesc.byteSize = bytes;
                 statsDesc.cpuAccess = nvrhi::CpuAccessMode::Read;
@@ -107,7 +113,12 @@ def configure(helper):
                 device->waitForIdle();
                 auto data = static_cast<const char*>(device->mapBuffer(readback, nvrhi::CpuAccessMode::Read));
                 if (!data) throw std::runtime_error("Cannot map CGNS statistics");
-                try { auto stream = Open(stem.string() + ".cgns"); stream.write(data, bytes); }
+                try {
+                    if (di.GetSpatialResamplingParameters().pad1)
+                    { auto stream = Open(stem.string() + ".cgns"); stream.write(data, countBytes); }
+                    auto stream = Open(stem.string() + ".spatial-counts");
+                    stream.write(data + countBytes, countBytes);
+                }
                 catch (...) { device->unmapBuffer(readback); throw; }
                 device->unmapBuffer(readback);
             }
@@ -128,7 +139,7 @@ def resources(renderer):
     cgnsOffsets.debugName = "CgnsOffsets";
     CgnsOffsetsBuffer = device->createBuffer(cgnsOffsets);
     nvrhi::BufferDesc statistics;
-    statistics.byteSize = uint64_t(context.GetStaticParameters().RenderWidth) * context.GetStaticParameters().RenderHeight * 4;
+    statistics.byteSize = uint64_t(context.GetStaticParameters().RenderWidth) * context.GetStaticParameters().RenderHeight * 8;
     statistics.structStride = 4;
     statistics.canHaveUAVs = true;
     statistics.initialState = nvrhi::ResourceStates::UnorderedAccess;
@@ -190,5 +201,7 @@ def adapt(renderer, helper):
     passes(renderer)
     replace(renderer / DI / "SpatialResampling.hlsl", '#include <Rtxdi/DI/SpatialResampling.hlsli>',
             '#include "Cgns.hlsli"\n#include "CgnsSpatialResampling.hlsli"')
+    replace(renderer / DI / "SpatialResampling.hlsl", '    RAB_Surface surface =',
+            '    LabClearSpatialNeighbors(pixelPosition);\n\n    RAB_Surface surface =')
     spatial = renderer / "Libraries/Rtxdi/Include/Rtxdi/DI/SpatialResampling.hlsli"
     (renderer / DI / "CgnsSpatialResampling.hlsli").write_text(adapt_spatial(spatial.read_text(encoding="utf-8")), encoding="utf-8")

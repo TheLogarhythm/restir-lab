@@ -62,7 +62,33 @@ class RunLifecycleTests(unittest.TestCase):
             record = json.loads((output / "manifest.json").read_text())
             self.assertEqual(record["status"], "failed")
 
+    def test_input_drift_after_render_cannot_leave_a_completed_attempt(self):
+        with tempfile.TemporaryDirectory() as folder:
+            output=Path(folder)/"run"
+            guard=mock.Mock(side_effect=[None,ValueError("Frozen assets changed")])
+            with mock.patch.object(runner,"query",return_value="fixture"), \
+                 mock.patch.object(runner.platform,"platform",return_value="fixture"), \
+                 mock.patch.object(runner.subprocess,"run",return_value=mock.Mock(returncode=0)) as launch, \
+                 mock.patch.object(runner,"finalize_outputs",return_value=[]):
+                with self.assertRaisesRegex(ValueError,"Frozen assets"):
+                    runner.run_one(self.config(),output,{}, {},input_guard=guard)
+            launch.assert_called_once()
+            self.assertEqual(guard.call_count,2)
+            record=json.loads((output/"manifest.json").read_text())
+            self.assertEqual(record["status"],"failed")
+            self.assertIn("before_render_utc",record["input_validation"])
+            self.assertNotIn("after_render_utc",record["input_validation"])
 
+    def test_input_drift_before_render_launches_nothing(self):
+        with tempfile.TemporaryDirectory() as folder:
+            output=Path(folder)/"run"
+            with mock.patch.object(runner,"query",return_value="fixture"), \
+                 mock.patch.object(runner.platform,"platform",return_value="fixture"), \
+                 mock.patch.object(runner.subprocess,"run") as launch:
+                with self.assertRaisesRegex(ValueError,"changed"):
+                    runner.run_one(self.config(),output,{}, {},input_guard=mock.Mock(side_effect=ValueError("changed")))
+            launch.assert_not_called()
+            self.assertEqual(json.loads((output/"manifest.json").read_text())["status"],"failed")
 
     def test_invalid_timings_preserve_raw_outputs(self):
         with tempfile.TemporaryDirectory() as folder:

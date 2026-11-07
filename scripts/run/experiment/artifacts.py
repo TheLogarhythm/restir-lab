@@ -55,6 +55,22 @@ def cgns_stats(path, width, height, candidates, neighbors):
             "cgns_diagnostic_sha256": sha(path)}
 
 
+def spatial_neighbor_stats(path, width, height, neighbors):
+    """Count merge calls, including zero-weight reservoirs and repeated coordinates."""
+    path = Path(path)
+    if not path.is_file() or path.stat().st_size != width * height * 4:
+        raise RuntimeError("Missing or incorrectly sized spatial-neighbor diagnostics")
+    values = np.fromfile(path, dtype="<u4")
+    active = values >= 128
+    counts = values & 127
+    if np.any((values != 0) & ~active) or np.any(values > 128 + neighbors):
+        raise RuntimeError("Invalid spatial-neighbor diagnostic counts")
+    return {"spatial_neighbors": path.name, "spatial_neighbors_sha256":sha(path),
+            "spatial_neighbors_mean_surface":float(counts[active].mean()) if active.any() else None,
+            "spatial_neighbors_surface_pixels":int(active.sum()),
+            "spatial_neighbors_definition":"reservoirs reaching spatial merge; includes zero weights and repeated coordinates"}
+
+
 def finalize_outputs(output, config):
     validate_run_outputs(output, config)
     records = []
@@ -80,11 +96,20 @@ def finalize_outputs(output, config):
         reservoir = stem.with_suffix(".reservoir")
         if config["diagnostics"]:
             record.update(reservoir_stats(reservoir, config["width"], config["height"]))
+            if config.get("transport_method"):
+                record["reservoir_statistics_component"] = "shared direct-lighting DI reservoir, not GI/PT"
+                invalid = stem.with_suffix(".transport-invalid")
+                record["transport_invalid_contributions"] = int(np.fromfile(invalid, dtype="<u4")[0])
+                record["transport_invalid_sha256"] = sha(invalid)
             temporary_files.append(reservoir)
-            if config["definition"].get("cgns", False):
+            if config["definition"].get("cgns", False) or config.get("transport_method", {}).get("cgns", False):
                 record.update(cgns_stats(stem.with_suffix(".cgns"), config["width"], config["height"],
                                          config["definition"].get("cgns_candidates", 32),
                                          config["definition"]["spatial_neighbors"]))
+        neighbor_counts = stem.with_suffix(".spatial-counts")
+        if config["diagnostics"] and neighbor_counts.is_file():
+            record.update(spatial_neighbor_stats(neighbor_counts, config["width"], config["height"],
+                                                 config["definition"]["spatial_neighbors"]))
         if config.get("geometry_export", False):
             record.update(save_geometry(stem, config["width"], config["height"],
                                         config["scene"]["camera"]["vertical_fov"]))
@@ -98,7 +123,27 @@ def finalize_outputs(output, config):
 
 
 def validate_run_outputs(output, config):
-    """Check runtime settings and frame timings before converting or deleting captures."""
+    """Check runtime settings and raw outputs before converting or deleting captures."""
+    resolved, _ = validate_runtime_outputs(output, config)
+    if config.get("transport_method"):
+        for frame in config["frames"]:
+            if frame["capture"] and config["diagnostics"]:
+                path = output / f"frame-{frame['frame']:04d}.transport-invalid"
+                if not path.is_file() or path.stat().st_size != 4 or int(np.fromfile(path, dtype="<u4")[0]) != 0:
+                    raise RuntimeError("Missing or nonzero pre-sanitization transport diagnostics")
+    if (resolved.get("spatial_neighbor_counts") and config["diagnostics"]
+            and config["mode"] in ("spatial", "combined")):
+        for frame in config["frames"]:
+            if frame["capture"]:
+                spatial_neighbor_stats(output / f"frame-{frame['frame']:04d}.spatial-counts",
+                                       config["width"], config["height"], config["definition"]["spatial_neighbors"])
+    validate_geometry_outputs(output, config, resolved)
+
+
+def validate_runtime_outputs(output, config):
+    """Validate durable settings/timings without requiring temporary capture buffers."""
+    from .runtime_config import validate_runtime_config
+    validate_runtime_config(output, config)
     with (output / "timings.csv").open(newline="") as stream:
         timings = list(csv.DictReader(stream))
     if len(timings) != len(config["frames"]) or [int(r["frame"]) for r in timings] != [f["frame"] for f in config["frames"]]:
@@ -112,6 +157,17 @@ def validate_run_outputs(output, config):
            float(row["gpu_ms"]) <= 0 for row in timings):
         raise RuntimeError("Invalid GPU frame timing")
     resolved = json.loads((output / "resolved.json").read_text())
+    if (config.get("transport_method")
+            or config.get("reference", {}).get("estimator") == "conventional_path_tracing"):
+        if resolved.get("textures") != bool(config["arguments"]["postProcessing.textures"]):
+            raise RuntimeError("Resolved material textures differ from requested mode")
+    if config.get("transport_method"):
+        from .transport import validate_controls, validate_timings
+        validate_controls(config, resolved.get("transport_controls"))
+        validate_timings(config, timings)
+        if (resolved.get("shadingParams", {}).get("enableFinalVisibility")
+                != config["arguments"]["restirDI.shading.enableFinalVisibility"]):
+            raise RuntimeError("Resolved direct final visibility differs from requested mode")
     if bool(resolved.get("pdf_similarity", False)) != config["definition"].get("pdf_similarity", False):
         raise RuntimeError("Resolved PDF similarity differs from requested mode")
     expected_history = config["definition"].get("pdf_history_mode", 0)
@@ -137,8 +193,12 @@ def validate_run_outputs(output, config):
         if neighbor_ms > float(row["gpu_ms"]) + 1e-6:
             raise RuntimeError("CGNS neighbor selection timing exceeds the GPU frame")
     if config.get("reference"):
-        if resolved.get("estimator") != "conventional_light_sampling" or resolved.get("source_format") != "RGBA32_FLOAT accumulated reference":
+        estimator = config["reference"].get("estimator", "conventional_light_sampling")
+        if resolved.get("estimator") != estimator or resolved.get("source_format") != "RGBA32_FLOAT accumulated reference":
             raise RuntimeError("Reference estimator/precision differs from requested mode")
+        if estimator == "conventional_path_tracing":
+            from .path_reference import validate_runtime
+            validate_runtime(output, config, resolved)
         if any(float(row[key + "_ms"]) != 0 for row in timings for key in ("initial", "temporal", "spatial", "presample_lights", "presample_environment")):
             raise RuntimeError("Reference unexpectedly executed resampling/presampling")
     if resolved["mode"] != MODE_VALUES[config["mode"]]:
@@ -186,7 +246,7 @@ def validate_run_outputs(output, config):
         if not math.isclose(resolved[key], expected_scene["lighting"][key], rel_tol=1e-6, abs_tol=1e-6):
             raise RuntimeError(f"Renderer lighting differs from requested {key}")
     validate_frame_states(output, config)
-    validate_geometry_outputs(output, config, resolved)
+    return resolved, timings
 
 
 def validate_frame_states(output, config):

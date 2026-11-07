@@ -29,8 +29,10 @@ The CPU group runs on every push and pull request; it needs the Python packages 
 [pyproject.toml](../pyproject.toml), plus Git for isolated dependency fixtures, without downloaded scenes,
 Blender, MSVC, FFmpeg or a GPU. Native checks compile production shader functions with MSVC
 and need the pinned RTXDI/Donut sources. Media checks encode, probe and decode an actual
-video with FFmpeg/ffprobe. Windows checks run the PowerShell supervisor with CPU stand-ins
-and need an idle renderer/worker. An explicitly selected integration group fails when its
+video with FFmpeg/ffprobe. Windows checks run the PowerShell supervisor with CPU stand-ins,
+real OS locks, and a detached virtual-environment worker ownership handshake. They need an
+idle renderer/worker; portable scheduler tests mock only the OS process/lock boundary.
+An explicitly selected integration group fails when its
 required checks are skipped. Discovery/import errors fail every group before filtering,
 including `--list`. `--list` prints its test IDs; `--suite all` runs all groups.
 
@@ -95,3 +97,15 @@ checkout or GPU is required. The `exr` extra above supplies their HDR dependency
 also declared in [scripts/falcor/requirements.txt](../scripts/falcor/requirements.txt).
 The separate bounded native validation commands are in the
 [Falcor integration guide](../renderers/falcor/README.md).
+
+## Comparison checks
+
+Comparison tests cover group/config resolution, static schedules, reference
+budgets, historical readers, per-seed metrics, geometry masks, timing/neighbor
+statistics, frozen inputs, locks and recovery. Report tests bind PNG pixels,
+exposure and HTML to saved analysis. Fixed/path-reference tests retain checkpoint
+and corruption checks; `tests/fixtures/references.py` supplies small fixture budgets.
+
+Run the CPU suite, applicable native/Windows groups and scaffold check above.
+Saved-HDR numerical regression and actual report UI inspection are separate
+checks; test success alone establishes neither scientific results nor UI status.
