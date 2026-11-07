@@ -3,6 +3,8 @@ import importlib
 import json
 import ntpath
 import posixpath
+import os
+import subprocess
 from pathlib import Path, PurePosixPath, PureWindowsPath
 import sys
 import tempfile
@@ -33,6 +35,18 @@ class RunnerTests(unittest.TestCase):
                 with self.subTest(name=name), self.assertRaises(ValueError):
                     self.cli.output_directory(name, root=root)
 
+    @unittest.skipUnless(os.name == "nt", "Windows console regression")
+    def test_metadata_child_has_no_console_when_worker_has_no_console(self):
+        # A hidden parent does not automatically hide newly spawned consoles.
+        child = "import ctypes; print(ctypes.windll.kernel32.GetConsoleWindow())"
+        parent = (f"import sys; sys.path.insert(0, {str(ROOT / 'scripts/run')!r}); "
+                  "from experiment.runner import query; "
+                  f"print(query(sys.executable, '-B', '-c', {child!r}))")
+        result = subprocess.check_output(
+            [sys.executable, "-B", "-c", parent], text=True,
+            creationflags=(subprocess.CREATE_NO_WINDOW | subprocess.DETACHED_PROCESS |
+                           subprocess.CREATE_NEW_PROCESS_GROUP), timeout=30)
+        self.assertEqual(result.strip(), "0", "Metadata child allocated a console")
 
     def test_default_name_remains_timestamped(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -57,6 +71,8 @@ class RunnerTests(unittest.TestCase):
             def render(command, **kwargs):
                 self.assertEqual((kwargs["cwd"] / command[0]).resolve(), self.runner.EXE.resolve())
                 self.assertEqual(Path(kwargs["executable"]), self.runner.EXE)
+                self.assertEqual(kwargs.get("creationflags", 0),
+                                 subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0)
                 self.assertIn("--device.headless=1", command)
                 self.assertIn("--device.vk=0", command)
                 self.assertEqual(kwargs["env"]["RTXDI_EXPERIMENT_CONFIG"], "config.json")

@@ -58,7 +58,7 @@ def load_definition(path=DEFAULT_CONFIG):
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
-def validate_definition(definition, seed, resolution):
+def validate_definition(definition, seed, resolution, *, scenario=None):
     if type(definition.get("pdf_similarity", False)) is not bool:
         raise ValueError("pdf_similarity must be a boolean")
     for name, default in (("cgns", False), ("cgns_early_stopping", True), ("geometry_export", False)):
@@ -79,11 +79,11 @@ def validate_definition(definition, seed, resolution):
     for value in resolution:
         integer(value, 1, 16384, "resolution")
     count = definition["frames"]
-    integer(count, 2, 1048576, "frames")
-    integer(definition["reset_frame"], 2, count, "reset_frame")
+    integer(count, 1 if scenario == "static" else 2, 1048576, "frames")
+    integer(definition["reset_frame"], min(2, count), count, "reset_frame")
     motion = definition["motion"]
-    integer(motion["start_frame"], 1, count - 1, "motion.start_frame")
-    integer(motion["end_frame"], motion["start_frame"] + 1, count, "motion.end_frame")
+    integer(motion["start_frame"], 1, max(1, count - 1), "motion.start_frame")
+    integer(motion["end_frame"], min(count, motion["start_frame"] + 1), count, "motion.end_frame")
     if "logical_fps" in definition:
         fps = definition["logical_fps"]
         if type(fps) not in (int, float) or not math.isfinite(fps) or fps <= 0:
@@ -134,7 +134,7 @@ def make_config(scene, definition, mode, scenario, seed=None, resolution=None, d
     if scene["lighting"]["environment"] == "none":
         # There is no environment sampling domain; record the effective budget.
         definition["initial_environment_candidates"] = 0
-    validate_definition(definition, seed, (width, height))
+    validate_definition(definition, seed, (width, height), scenario=scenario)
     if mode not in MODES or scenario not in (*SCENARIOS, "lighting"):
         raise ValueError("Unknown reuse mode or scenario")
     if scenario == "lighting" and "lighting" not in definition:
