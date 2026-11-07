@@ -1,0 +1,310 @@
+{
+  "schema_version": 1,
+  "cutoff_date": "2026-10-30",
+  "review_method": "Agent review of primary-source metadata and identified full-text passages; no user reading attestations. Curated relations, not an exhaustive citation graph.",
+  "candidates": [
+    {
+      "title": "Dynamic Diffuse Global Illumination Resampling (SIGGRAPH 2021 Talks)",
+      "year": 2021,
+      "source_url": "https://doi.org/10.1145/3450623.3464635",
+      "decision": "merged_version",
+      "reason": "先行2页Talk与CGF正式长文关联，归并至ddgi_resampling2022；不作为独立研究节点。"
+    },
+    {
+      "title": "Importance Resampling for Global Illumination (Master’s thesis)",
+      "year": 2005,
+      "source_url": "http://hdl.lib.byu.edu/1877/etd1021",
+      "decision": "excluded",
+      "reason": "从Production ReSTIR参考文献[Tal05]发现。同名学位论文比EGSR版更长，但本图保留必要基础的正式EGSR论文，避免重复主线。"
+    },
+    {
+      "title": "Accelerating Path Tracing by Re-Using Paths",
+      "year": 2002,
+      "source_url": "https://d1qx31qr3h6wln.cloudfront.net/publications/ReSTIR%20GI.pdf",
+      "decision": "excluded",
+      "reason": "从GI正文§2及参考文献[BSH02]发现。是GI基础前作，但当前只选少量理解ReSTIR必需基础；暂不扩张为通用路径复用文献网络。"
+    },
+    {
+      "title": "RGB ReSTIR: per-channel sample reuse (2025 MSc thesis)",
+      "decision": "excluded_duplicate",
+      "source_url": "https://webpages.tuni.fi/vga/theses/RGB_ReSTIR.html",
+      "reason": "与2026正式RGB论文属于同一研究线；保留正式论文节点，不把学位论文另画成独立成果。"
+    },
+    {
+      "title": "Ghost ReSTIR",
+      "decision": "included_separate_status",
+      "paper_id": "ghost2026",
+      "source_url": "https://s2026.conference-schedule.org/presentation/?id=pos_225&sess=sess438",
+      "reason": "仅3页SIGGRAPH Posters摘要，单独标为abstract。"
+    },
+    {
+      "title": "ReSWD: ReSTIR’d, not shaken",
+      "decision": "excluded_scope",
+      "source_url": "https://reservoirswd.github.io/",
+      "reason": "将reservoir思想用于分布匹配与扩散引导；当前图聚焦光传输/ReSTIR渲染方法，记录邻近应用而不扩展为通用WRS图。"
+    },
+    {
+      "title": "World-Space Spatiotemporal Reservoir Reuse for Ray-Traced Global Illumination",
+      "decision": "included_after_review",
+      "source_url": "https://doi.org/10.1145/3478512.3488613",
+      "doi": "10.1145/3478512.3488613",
+      "reason": "Parallel source review resolved this candidate; see the canonical paper and relation evidence.",
+      "previous_screening": "SIGGRAPH Asia2021 Technical Communication，PG2025引为world-space reuse；待原文核验和完整书目。",
+      "paper_id": "world_space2021"
+    },
+    {
+      "title": "A ReSTIR GI Method Using the Sample-Space Filtering",
+      "year": 2024,
+      "source_url": "https://link.springer.com/chapter/10.1007/978-3-031-50078-7_7",
+      "decision": "included",
+      "paper_id": "sample_space2024",
+      "reason": "正式发表且直接改进 ReSTIR GI，纳入研究节点。以出版方正式引用年 2024 为准，保留 CGI 2023/在线首发 2023 的差异说明；全文缺失不影响元数据和公开 References 的核验，继承暂列待核验。"
+    },
+    {
+      "title": "Efficient Visibility Reuse for Real-time ReSTIR",
+      "year": 2024,
+      "source_url": "https://doi.org/10.1145/3641233.3664320",
+      "decision": "included",
+      "paper_id": "visibility_reuse2024",
+      "reason": "作者与机构来源核实为 2 页 SIGGRAPH Talks。直接改进 ReSTIR 的可见性复用，作为单独标识的 Talks 支持资源纳入；补充材料与正文合并，不另建节点。"
+    },
+    {
+      "title": "Tiled Reservoir Sampling for Many-Light Rendering",
+      "year": 2021,
+      "source_url": "https://yusuketokuyoshi.com/papers/2021/TiledReservoirSampling21-11-ecdc.pdf",
+      "decision": "included",
+      "paper_id": "tiled_reservoir2021",
+      "reason": "报告直接改进 ReSTIR 初始候选生成，技术相关性明确，作为 AMD 技术报告资源纳入。封面、作者与 AMD 目录均确认 2021；后续参考文献中的 2022 不构成另一独立作品。"
+    },
+    {
+      "title": "Real-time Seamless Object Space Shading",
+      "paper_id": "object_space2024",
+      "decision": "included",
+      "reason": "直接在物体空间实现并修改ReSTIR GI；短论文类型单列在venue，不因篇幅排除。",
+      "sources": [
+        "https://diglib.eg.org/server/api/core/bitstreams/f1264f05-ba89-4f21-81e7-7e7c77ec9115/content",
+        "https://github.com/WeakKnight/real-time-seamless-object-space-shading"
+      ]
+    },
+    {
+      "title": "Effect-based Multi-viewer Caching for Cloud-native Rendering",
+      "paper_id": "multiview2023",
+      "decision": "included",
+      "reason": "后作PG正文明确其surface-reservoir直接相关性；摘要可核实元数据和问题，全文缺失明确标注。",
+      "sources": [
+        "https://tugraz.elsevierpure.com/en/publications/effect-based-multi-viewer-caching-for-cloud-native-rendering/",
+        "https://stadlbauer.solutions/en/publications",
+        "https://cwyman.org/papers/siga25_ReSTIR_PG.pdf"
+      ]
+    },
+    {
+      "title": "Light subpath reservoir for interactive ray-traced global illumination",
+      "paper_id": "light_subpath2023",
+      "decision": "included",
+      "reason": "公开出版方引言明确RIS+BDPT光源子路径储存器，属于直接技术分支；不因C&G venue排除。",
+      "sources": [
+        "https://www.sciencedirect.com/science/article/pii/S0097849323000055",
+        "https://doi.org/10.1016/j.cag.2023.01.004"
+      ]
+    }
+  ],
+  "search_log": [
+    {
+      "date": "2026-10-30",
+      "query": "Existing reading-matrix rows <= 2024; author/institution publication pages; DOI/publisher records",
+      "sources": [
+        "https://research.nvidia.com/labs/rtr/",
+        "https://yusuketokuyoshi.com/",
+        "https://diglib.eg.org/",
+        "https://weschang.com/publications/restir-dr/"
+      ],
+      "note": "逐项核对原有15篇正式论文和2项支持资源；复用本地PDF及文本，未将原source_checked标记当作本次核验。"
+    },
+    {
+      "date": "2026-10-30",
+      "query": "References backward snowballing: ReSTIR GI / GRIS / PDF Similarity / Area ReSTIR; title-independent reservoir/path reuse",
+      "sources": [
+        "https://onlinelibrary.wiley.com/doi/10.1111/cgf.14427",
+        "https://cs.uwaterloo.ca/~thachisu/mcsplat.pdf",
+        "https://gpuopen.com/download/publications/SA2021_WorldSpace_ReSTIR.pdf"
+      ],
+      "note": "补充DDGI Resampling、Image-Space Shape Splatting和World-space ReSTIR；短文/技术报告/CGI候选单独记录，未声称穷尽全部邻接文献。"
+    },
+    {
+      "date": "2026-10-30",
+      "query": "Primary-source PDF retrieval and SHA-256 inventory",
+      "sources": [
+        "assets/papers/metadata/restir-map-early-downloads-20261030.json"
+      ],
+      "note": "新下载从作者/机构/出版方公开地址获取，不覆盖现有PDF。缺失下载和版本差异逐项标记；本地路径不作为网页链接。"
+    },
+    {
+      "date": "2026-10-30",
+      "query": "ReSTIR 2025 2026; per-title primary-source lookup; backward reference review of ReSTIR PG, CGNS, PT Enhanced and ToF",
+      "sources": [
+        "https://research.nvidia.com/labs/rtr/",
+        "https://diglib.eg.org/",
+        "https://ieeexplore.ieee.org/",
+        "https://www.scitepress.org/",
+        "https://s2026.conference-schedule.org/"
+      ],
+      "scope": "核对reading-matrix全部>=2025条目及既有ghost/rgb候选；不是穷尽式系统综述。",
+      "notes": "正文核验来自既有PDF缓存、4篇补齐作者公开PDF，以及Guided FG+的Eurographics官方全文文本。后者PDF下载中断并已隔离；Blue-noise未得全文。未调用文献API作为网页依赖。"
+    },
+    {
+      "date": "2026-10-30",
+      "query": "\"A ReSTIR GI Method Using the Sample-Space Filtering\"; DOI 10.1007/978-3-031-50078-7_7; author homepages; exact-title PDF/code",
+      "sources": [
+        "https://link.springer.com/chapter/10.1007/978-3-031-50078-7_7",
+        "https://xuxiang440.github.io/",
+        "https://wangningbei.github.io/"
+      ],
+      "note": "出版方元数据、摘要与参考文献已核验。正文订阅；搜索命中 WorldSpace ReSTIR GI 为不同作者和不同题名，排除错误全文匹配。"
+    },
+    {
+      "date": "2026-10-30",
+      "query": "\"Efficient Visibility Reuse for Real-time ReSTIR\" author PDF References",
+      "sources": [
+        "https://yusuketokuyoshi.com/",
+        "https://gpuopen.com/learn/publications/",
+        "https://gpuopen.com/download/publications/Efficient_Visibility_Reuse_for_Real-time_ReSTIR.pdf"
+      ],
+      "note": "已下载公开作者版，字节检查与 SHA-256 完成；定向阅读 §1–4 和 References，纳入独立标识的 Talks 资源。"
+    },
+    {
+      "date": "2026-10-30",
+      "query": "\"Tiled Reservoir Sampling for Many-Light Rendering\" author AMD report November 2021 References",
+      "sources": [
+        "https://yusuketokuyoshi.com/",
+        "https://gpuopen.com/learn/publications/",
+        "https://yusuketokuyoshi.com/papers/2021/TiledReservoirSampling21-11-ecdc.pdf"
+      ],
+      "note": "封面和作者/机构目录均支持 2021；定向阅读索引正文及参考文献，作为技术报告纳入，约93 MB公开PDF未缓存。"
+    },
+    {
+      "date": "2026-10-30",
+      "query": "Real-time Seamless Object Space Shading author publisher PDF",
+      "result": "EG开放正式短论文、作者代码与PDF全文均获取；核验ReSTIR GI实现及有偏限制。",
+      "sources": [
+        "https://diglib.eg.org/items/538ea8c6-183c-4c07-bf4c-73dd852a411a",
+        "https://diglib.eg.org/server/api/core/bitstreams/f1264f05-ba89-4f21-81e7-7e7c77ec9115/content"
+      ]
+    },
+    {
+      "date": "2026-10-30",
+      "query": "Effect-based Multi-viewer Caching DOI 10.1145/3592431 author institutional PDF",
+      "result": "机构与作者列表核实发表信息；一次作者全文补搜未找到公开PDF。以PG正文和参考文献确认直接相关性，保留摘要级内容。",
+      "sources": [
+        "https://tugraz.elsevierpure.com/en/publications/effect-based-multi-viewer-caching-for-cloud-native-rendering/",
+        "https://stadlbauer.solutions/en/publications",
+        "https://cwyman.org/papers/siga25_ReSTIR_PG.pdf"
+      ]
+    },
+    {
+      "date": "2026-10-30",
+      "query": "Light subpath reservoir for interactive ray-traced global illumination References DOI",
+      "result": "ScienceDirect公开摘要/引言/章节片段/References可检索，直接打开可能403；未获得公开PDF，只加入可核验引用。",
+      "sources": [
+        "https://www.sciencedirect.com/science/article/pii/S0097849323000055"
+      ]
+    }
+  ],
+  "matrix_corrections": [
+    {
+      "paper_id": "pdf_similarity2023",
+      "field": "source_url",
+      "old": "https://yusuketokuyoshi.com/",
+      "new": "https://yusuketokuyoshi.com/",
+      "reason": "论文公开作者入口可获取PDF，DOI仍保存在权威书目字段。"
+    },
+    {
+      "paper_id": "parameter2023",
+      "field": "code_url",
+      "old": "https://github.com/wchang22/ReSTIR_DR",
+      "new": "https://github.com/wchang22/ReSTIR_DR",
+      "reason": "本次从作者项目页Code链接核实。"
+    },
+    {
+      "paper_id": "inverse2023",
+      "field": "code_url",
+      "old": "https://projects.shuangz.com/psdr-restir-sa23/",
+      "new": "https://projects.shuangz.com/psdr-restir-sa23/",
+      "reason": "作者项目页提供Source code下载入口，使用项目页避免硬编码压缩包。"
+    },
+    {
+      "paper_id": "ris2005",
+      "field": "source_url",
+      "old": "https://doi.org/10.2312/EGWR/EGSR05/139-146",
+      "new": "https://doi.org/10.2312/EGWR/EGSR05/139-146",
+      "reason": "使用出版社DOI入口；原item访问有403，DOI保留稳定作品身份。"
+    },
+    {
+      "paper_id": "mis_weight2024",
+      "field": "source_url",
+      "old": "https://onlinelibrary.wiley.com/doi/10.1111/cgf.15049",
+      "new": "https://onlinelibrary.wiley.com/doi/10.1111/cgf.15049",
+      "reason": "使用本次可读的出版社元数据与参考文献页。"
+    },
+    {
+      "paper_id": "fg2024",
+      "field": "source_url",
+      "old": "https://diglib.eg.org/items/df98f89d-a0ca-4800-9bc4-74528feaf872",
+      "new": "https://diglib.eg.org/items/df98f89d-a0ca-4800-9bc4-74528feaf872",
+      "reason": "使用出版社记录页；DOI单独保留。"
+    },
+    {
+      "paper_id": "spmis2026",
+      "field": "title",
+      "value": "Stochastic Pairwise MIS for Unbiased Large-Kernel Reuse in Real-Time",
+      "reason": "正文/正式CGF题名使用Real-Time。"
+    },
+    {
+      "paper_id": "spmis2026",
+      "field": "code_url",
+      "value": "https://research.nvidia.com/labs/rtr/publication/hedstrom2026stochastic/hedstrom2026stochastic.zip",
+      "reason": "NVIDIA作者页Code指向此归档。"
+    },
+    {
+      "paper_id": "blue_noise2026",
+      "field": "venue",
+      "value": "IEEE TVCG 32(10): 8126–8138",
+      "reason": "已正式编入2026年10月卷期。"
+    },
+    {
+      "paper_id": "tof2026",
+      "field": "source_url",
+      "value": "https://juhyeonkim95.github.io/project-pages/tof_restir/",
+      "reason": "论文主页提供正式论文、代码和arXiv版本入口。"
+    },
+    {
+      "paper_id": "tof2026",
+      "field": "code_url",
+      "value": "https://github.com/juhyeonkim95/FalcorComp",
+      "reason": "作者主页公开代码入口。"
+    }
+  ],
+  "missing_local_pdfs": [
+    "tiled_reservoir2021",
+    "light_subpath2023",
+    "multiview2023",
+    "fg2024",
+    "mis_weight2024",
+    "sample_space2024",
+    "shape_splatting2024",
+    "blue_noise2026",
+    "guided_fg2026"
+  ],
+  "abstract_only": [
+    "light_subpath2023",
+    "multiview2023",
+    "fg2024",
+    "mis_weight2024",
+    "sample_space2024",
+    "blue_noise2026"
+  ],
+  "counts": {
+    "papers_and_resources": 44,
+    "verified_relations": 130,
+    "pending_relations": 4
+  }
+}
