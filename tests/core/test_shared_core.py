@@ -39,7 +39,7 @@ class SharedCoreTests(unittest.TestCase):
 
     def test_canonical_imports_do_not_load_renderer_or_legacy_packages(self):
         env = dict(os.environ, PYTHONPATH=str(ROOT / "src"))
-        code = "import sys; from metrics import sequence_metrics; from image_io import images; assert not any(n.startswith(('experiment', 'rtxdi_', 'falcor', 'scripts.')) for n in sys.modules)"
+        code = "import sys; from metrics import sequence_metrics, comparison_metrics; from image_io import images; assert not any(n.startswith(('experiment', 'rtxdi_', 'falcor', 'scripts.')) for n in sys.modules)"
         with tempfile.TemporaryDirectory() as d:
             child = subprocess.run(
                 [sys.executable, "-B", "-c", code],

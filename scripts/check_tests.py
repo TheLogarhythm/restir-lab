@@ -10,11 +10,14 @@ INTEGRATION_GROUPS = {
                "tests.backends.test_cgns_math.CgnsMathTests", "tests.backends.test_cgns_spatial.CgnsSpatialTests",
                "tests.backends.test_cgns_gi_spatial.CgnsGiSpatialTests",
                "tests.backends.test_cgns_pt_spatial.CgnsPtSpatialTests",
+               "tests.backends.test_transport_adapter.TransportAdapterTests",
                "tests.backends.test_transport_weights.TransportWeightTests",
                "tests.backends.test_transport_segments.TransportSegmentTests",
                "tests.backends.test_light_geometry_index.LightGeometryIndexTests"),
     "media": ("tests.workflows.test_pdf_artifacts.PdfArtifactTests.test_video_is_1080p_30fps_and_preserves_input_order",),
-    "windows": ("tests.workflows.test_pdf_supervisor.SupervisorTests",),
+    "windows": ("tests.workflows.test_pdf_supervisor.SupervisorTests",
+                "tests.workflows.test_comparison_batch.ComparisonBatchWindowsTests",
+                "tests.workflows.test_batch_process.RedirectedWorkerWindowsTests"),
 }
 
 

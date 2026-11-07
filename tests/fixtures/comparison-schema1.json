@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "definition_file": "experiments/configs/di-reuse.json",
+  "mode": "combined",
+  "warmup_frames": 40,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "seeds": [
+    1
+  ],
+  "preview_seed": 1,
+  "baseline": "baseline",
+  "comparison": "cgns",
+  "classification": {
+    "radius": 30,
+    "hard_percent": 10,
+    "regions": [
+      "all",
+      "hard"
+    ]
+  },
+  "delta_range_pp": 20,
+  "methods": {
+    "baseline": {
+      "label": "RTXDI original neighbors",
+      "settings": {
+        "cgns": false,
+        "cgns_candidates": 32,
+        "cgns_early_stopping": true
+      }
+    },
+    "cgns": {
+      "label": "CGNS DI adaptation",
+      "settings": {
+        "cgns": true,
+        "cgns_candidates": 32,
+        "cgns_early_stopping": true
+      }
+    }
+  },
+  "views": {
+    "cornell-box": {
+      "label": "Cornell Box",
+      "scene": "cornell-box",
+      "camera_status": "Visually checked in 320x180 fixed-view preview on 2026-10-28, before formal comparison",
+      "camera_source": "scenes/configs/rtxdi/cornell-box.json",
+      "reference_index": null
+    },
+    "bistro-interior": {
+      "label": "Bistro interior",
+      "scene": "bistro",
+      "camera_status": "Visually checked in 320x180 fixed-view preview on 2026-10-28, before formal comparison",
+      "camera_source": "scenes/configs/rtxdi/bistro.json",
+      "reference_index": null
+    },
+    "bistro-exterior": {
+      "label": "Bistro exterior",
+      "scene": "bistro",
+      "camera": {
+        "position": [
+          -20,
+          1.8,
+          12
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "vertical_fov": 60
+      },
+      "camera_status": "Visually checked in 320x180 fixed-view preview on 2026-10-28, before formal comparison",
+      "camera_source": "experiments/configs/pdf-controlled.json: views.bistro-exterior",
+      "reference_index": null
+    },
+    "emerald-square": {
+      "label": "Emerald Square",
+      "scene": "emerald-square",
+      "camera_status": "Visually checked in 320x180 fixed-view preview on 2026-10-28, before formal comparison",
+      "camera_source": "scenes/configs/rtxdi/emerald-square.json",
+      "reference_index": null
+    },
+    "sun-temple": {
+      "label": "Sun Temple",
+      "scene": "sun-temple",
+      "camera_status": "Visually checked in 320x180 fixed-view preview on 2026-10-28, before formal comparison",
+      "camera_source": "scenes/configs/rtxdi/sun-temple.json",
+      "reference_index": null
+    }
+  },
+  "reference_budget": {
+    "kind": "fixed_budget",
+    "seed": 1001,
+    "local_samples": 262144,
+    "max_local_samples": 262144,
+    "batch_counts": {
+      "local": 64,
+      "environment": 8,
+      "infinite": 4
+    },
+    "checkpoints": [
+      4096,
+      16384,
+      65536,
+      131072,
+      262144
+    ],
+    "local_sampling": "POWER_RIS"
+  }
+}

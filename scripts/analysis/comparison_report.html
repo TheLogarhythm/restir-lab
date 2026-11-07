@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ReSTIR · Comparison</title>
+<style>
+:root{color-scheme:light;color:#172538;background:#fff;font:15px/1.45 system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0}main{max-width:1280px;margin:auto;padding:24px clamp(12px,4vw,56px) 60px}
+header,.controls,.tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap}header{justify-content:space-between;border-bottom:1px solid #cbd1d6;padding-bottom:15px}
+h1,h2{font-family:Georgia,serif;margin:0}h1{font-size:25px}h2{font-size:clamp(21px,3vw,34px);margin:18px 0 4px}
+label,figcaption,.muted,.legend{font-size:13px;color:#48586b}select,input,button{font:inherit;background:white;color:#20334a;border:1px solid #aab5c2;border-radius:4px;padding:5px 8px}input{width:70px}button,summary{cursor:pointer}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 98px;gap:12px;align-items:stretch}.legend{display:grid;grid-template-columns:15px 1fr;gap:7px}.ticks{display:flex;flex-direction:column;justify-content:space-between;font-variant-numeric:tabular-nums;line-height:1}.ramp{width:100%}
+canvas{display:block;width:100%;aspect-ratio:16/9;background:#eff1f2;touch-action:none;cursor:grab}
+.tools{margin:12px 0}.tools button{font-size:13px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+figure{margin:0}figcaption{padding:5px 0}details{border-top:1px solid #cbd1d6;padding:12px 0}summary{font-weight:600}details>.grid{margin-top:10px}
+.table-scroll{overflow:auto}table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}td,th{text-align:right;padding:7px;border-bottom:1px solid #e0e4e7}td:first-child,th:first-child{text-align:left}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}#fatal{color:#9f172c}
+@media(max-width:650px){.hero{grid-template-columns:minmax(0,1fr) 63px;gap:6px}.legend{grid-template-columns:9px 1fr;font-size:10px}.grid{grid-template-columns:1fr}header{gap:6px}.controls{gap:6px}}
+</style></head><body><main>
+<header><h1>ReSTIR comparison</h1><div class="controls">
+<label>View <select id="view"></select></label><label>Algorithm <select id="group"></select></label><label>Frame <select id="frame"></select></label><label>Seed <select id="seed"></select></label>
+</div></header>
+<h2 id="figure-title"></h2><p class="muted">SMAPE change · comparison − baseline (percentage points) · blue improves, red worsens</p>
+<div class="hero"><canvas id="delta" aria-label="Spatial map of SMAPE change"></canvas><div class="legend"><div class="ramp" id="ramp"></div><div id="ticks" class="ticks"></div></div></div>
+<div class="tools"><label>Scale ± <input id="scale" type="number" min="0.1" max="100" step="0.1"> pp</label><button id="zoom-in">Zoom +</button><button id="zoom-out">Zoom −</button><button id="reset">Reset view</button><button id="export">Save Δ PNG</button></div>
+<div class="table-scroll"><table id="summary"></table></div><p id="quality" class="muted"></p>
+<details open><summary>Rendered images</summary><div class="grid">
+<figure><figcaption>Reference</figcaption><canvas id="reference"></canvas></figure>
+<figure><figcaption id="baseline-label"></figcaption><canvas id="baseline"></canvas></figure>
+<figure><figcaption id="comparison-label"></figcaption><canvas id="comparison"></canvas></figure></div></details>
+<details><summary>SMAPE maps · 0–100%</summary><div class="grid"><figure><figcaption>Baseline</figcaption><canvas id="base-error"></canvas></figure><figure><figcaption>Comparison</figcaption><canvas id="compare-error"></canvas></figure></div></details>
+<details><summary>Timing and neighbors</summary><div class="table-scroll"><table id="seeds"></table></div><p id="timing-scope"></p></details>
+<details><summary>Measurement and provenance</summary><p id="context"></p><p id="camera"></p><p id="sampling"></p><p id="clipping"></p><p id="roi"></p><p id="implementation"></p><pre id="metadata"></pre></details>
+<p id="fatal" role="alert"></p></main>
+<script id="data" type="application/json">__ANALYSIS_JSON__</script>
+<script>
+"use strict";
+const data=JSON.parse(document.getElementById("data").textContent);
+const $=id=>document.getElementById(id), state={zoom:1,x:.5,y:.5,images:{},generation:0};
+const canvases=["reference","baseline","comparison","base-error","compare-error","delta"];
+const fmt=x=>x===null||x===undefined?"—":Number(x).toFixed(3);
+const capture=()=>data.views[$("view").value].captures[$("frame").value];
+const group=()=>capture().groups[$("group").value], baseline=()=>group().original, choice=()=>group().cgns;
+function view(){const v=data.views[$("view").value],c=capture(),g=group();return {...c,label:v.label,camera_status:v.camera_status,methods:g.methods,reference:c.references[g.reference],deltas:{[g.cgns]:g.delta},target:c.references[g.reference].target,display:{exposure_ev:data.display.exposure_ev[$("view").value],transform:"exposure × 2^EV; Reinhard; sRGB"},warmup_frames:data.spec.acquisition.warmup_frames};}
+function options(element,items,selected){element.replaceChildren();for(const [value,label] of items){const o=document.createElement("option");o.value=value;o.textContent=label;element.append(o);}element.value=String(selected);}
+options($("view"),Object.entries(data.views).map(([id,v])=>[id,v.label]),Object.keys(data.views)[0]);
+function selectCapture(){const v=data.views[$("view").value];options($("frame"),Object.keys(v.captures).map(f=>[f,f]),Object.keys(v.captures)[0]);selectGroup();}
+function selectGroup(){options($("group"),Object.keys(capture().groups).map(g=>[g,g]),Object.keys(capture().groups)[0]);}
+selectCapture();
+$("scale").value=data.display.delta_range_pp;
+$("implementation").textContent=data.limitations.join(" ");
+function image(uri){if(!uri)return Promise.resolve(null);return new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=()=>reject(new Error("Cannot decode embedded preview"));i.src=uri;});}
+function bound(){state.zoom=Math.max(1,Math.min(32,state.zoom));let half=.5/state.zoom;state.x=Math.max(half,Math.min(1-half,state.x));state.y=Math.max(half,Math.min(1-half,state.y));}
+function draw(){
+ bound(); const [w,h]=view().target.resolution;
+ for(const id of canvases){const c=$(id);c.width=w;c.height=h;c.style.aspectRatio=w+"/"+h;const ctx=c.getContext("2d");ctx.fillStyle="#121923";ctx.fillRect(0,0,w,h);
+ const im=state.images[id];if(im){ctx.imageSmoothingEnabled=state.zoom<2;ctx.drawImage(im,(state.x-.5/state.zoom)*w,(state.y-.5/state.zoom)*h,w/state.zoom,h/state.zoom,0,0,w,h);}
+ else{ctx.fillStyle="#a5b5c6";ctx.textAlign="center";ctx.font=Math.max(2,w/28)+"px system-ui";ctx.fillText("Unavailable · preview only",w/2,h/2);}}
+ $("roi").textContent="Synchronized ROI · "+state.zoom.toFixed(2)+"× · x "+((state.x-.5/state.zoom)*w).toFixed(0)+"–"+((state.x+.5/state.zoom)*w).toFixed(0)+", y "+((state.y-.5/state.zoom)*h).toFixed(0)+"–"+((state.y+.5/state.zoom)*h).toFixed(0);
+}
+// RdBu, from negative error change (better) to positive (worse).
+const palette=["#053061","#2166ac","#4393c3","#92c5de","#d1e5f0","#f7f7f7","#fddbc7","#f4a582","#d6604d","#b2182b","#67001f"];
+const rgb=palette.map(hex=>[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)));
+$("ramp").style.background="linear-gradient(to top,"+palette.join(",")+")";
+function tickLabels(range){return Array.from({length:9},(_,i)=>Number((range*(1-i/4)).toFixed(3)).toString());}
+function colorDelta(){
+ let range=Number($("scale").value);if(!Number.isFinite(range))range=20;range=Math.max(.1,Math.min(100,Math.round(range*10)/10));$("scale").value=range;
+ $("ticks").replaceChildren(...tickLabels(range).map(t=>{const el=document.createElement("span");el.textContent=t;return el;}));
+ const d=view().deltas[choice()];if(!d||!state.encoded){state.images.delta=null;$("clipping").textContent="No reference: error maps and clipping statistics unavailable.";draw();return;}
+ const src=state.encoded,c=document.createElement("canvas");c.width=src.width;c.height=src.height;const ctx=c.getContext("2d");ctx.drawImage(src,0,0);const pixels=ctx.getImageData(0,0,c.width,c.height);
+ // Saved maps encode baseline minus comparison. Negate once for displayed error change.
+ for(let i=0;i<pixels.data.length;i+=4){
+   const change=(32768-(pixels.data[i]*256+pixels.data[i+1]))/327.67;
+   const x=(1+Math.max(-1,Math.min(1,change/range)))*5, j=Math.min(9,Math.floor(x)), t=x-j;
+   for(let k=0;k<3;k++)pixels.data[i+k]=Math.round(rgb[j][k]*(1-t)+rgb[j+1][k]*t);
+   pixels.data[i+3]=255;
+ }
+ ctx.putImageData(pixels,0,0);state.images.delta=c;
+ const clipped=d.clipped_pixels_by_tenth_pp[Math.round(range*10)-1];
+ $("clipping").textContent="Error maps use raw HDR; radiance EV does not apply. Global scale ±"+range+" pp · display-clipped: "+(100*clipped/d.pixels).toFixed(3)+"% ("+clipped+"/"+d.pixels+" pixels, whole view) · raw range "+fmt(-d.max_pp)+" to "+fmt(-d.min_pp)+" pp. Negative values are retained; raw maps are not clipped.";
+ draw();
+}
+function exportFigure(){
+ const map=state.images.delta;if(!map)return;
+ const c=document.createElement("canvas"),w=map.width,h=map.height,pad=24,top=75;
+ c.width=w+180;c.height=h+top+pad;
+ const ctx=c.getContext("2d");ctx.fillStyle="white";ctx.fillRect(0,0,c.width,c.height);
+ ctx.fillStyle="#172538";ctx.font="bold 30px Georgia";ctx.fillText(view().label+" · SMAPE change",pad,35);
+ ctx.font="18px sans-serif";ctx.fillText(view().methods[choice()].label+" − "+view().methods[baseline()].label+" (pp) · blue improves, red worsens",pad,61);
+ ctx.drawImage(map,pad,top);const x=w+pad+16,g=ctx.createLinearGradient(0,top+h,0,top);
+ palette.forEach((color,i)=>g.addColorStop(i/10,color));ctx.fillStyle=g;ctx.fillRect(x,top,22,h);
+ ctx.fillStyle="#172538";ctx.font="20px sans-serif";
+ tickLabels(Number($("scale").value)).forEach((t,i)=>ctx.fillText(t,x+30,top+12+(h-16)*i/8));
+ return c;
+}
+$("export").onclick=()=>{const c=exportFigure();if(!c)return;c.toBlob(blob=>{const url=URL.createObjectURL(blob),link=document.createElement("a");link.href=url;link.download=$("view").value+"-"+choice()+"-delta.png";link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});};
+function table(element,headers,rows){element.replaceChildren();const head=document.createElement("tr");for(const label of headers){const cell=document.createElement("th");cell.textContent=label;head.append(cell);}element.append(head);for(const row of rows){const tr=document.createElement("tr");for(const value of row){const td=document.createElement("td");td.textContent=value;tr.append(td);}element.append(tr);}}
+function texts(){
+ const v=view(),a=v.methods[baseline()],b=v.methods[choice()],d=v.deltas[choice()],seed=$("seed").value;
+ $("figure-title").textContent=v.label;
+ $("context").textContent=v.label+" · "+v.target.resolution.join(" × ")+" · "+data.spec.reuse_mode+" · warm-up "+v.warmup_frames+" frames → capture frame "+v.frame+" · preview seed "+seed+" · EV "+v.display.exposure_ev+" · "+v.display.transform;
+ $("camera").textContent="Camera: "+v.camera_status;
+ $("baseline-label").textContent=a.label+" · seed "+seed;$("comparison-label").textContent=b.label+" · seed "+seed;
+ const precision=v.reference.precision;
+ $("quality").textContent="Reference: "+group().reference+" · "+precision+" · Radiance previews EV "+v.display.exposure_ev+". Metrics and error maps use original linear HDR.";
+ table($("summary"),["Region","Original SMAPE (%)","CGNS SMAPE (%)","Change (pp)","Relative improvement (%)"],
+ Object.keys(v.regions).map(r=>[r,fmt(a.summary?.[r]),fmt(b.summary?.[r]),fmt(-group().comparison[r].improvement_pp),fmt(group().comparison[r].relative_improvement_percent)]));
+ const rows=[];for(const [method,m] of [[baseline(),a],[choice(),b]])for(const [s,item] of Object.entries(m.per_seed))for(const r of Object.keys(v.regions))
+ rows.push([m.label,s,item.frame,r,fmt(item.smape_percent?.[r]),fmt(item.timing_ms.gpu_ms),fmt(item.timing.gpu_ms_mean_run),fmt(item.timing.selection_ms_capture),fmt(item.timing.spatial_ms_capture),fmt(item.neighbors.mean_surface?.[r]),fmt(item.neighbors.cgns_preselected_mean_active)]);
+ table($("seeds"),["Method","Seed","Frame","Region","SMAPE %","Capture GPU ms","Run mean GPU ms","Selection ms","Group spatial ms","Merge neighbors","CGNS preselected (global)"],rows);
+ $("timing-scope").textContent="Capture frame "+v.frame+"; run mean covers "+a.per_seed[seed].timing.run_frames+" frames. Spatial/selection columns refer to the selected algorithm. Timings are descriptive, not a stable performance benchmark. "+a.per_seed[seed].timing_scope;
+ $("sampling").textContent=v.seeds.length===1?"One exploratory seed. No cross-run variance, confidence interval or covariance is reported.":"Error maps and tables average "+v.seeds.length+" per-seed errors; preview above shows only seed "+seed+". No covariance is estimated.";
+ $("metadata").textContent=JSON.stringify({view:v.label,target_key:v.target_key,target:v.target,common_settings:v.common_settings,methods:data.spec.methods,classification:data.spec.classification,shared_geometry:v.geometry,reference:v.reference,checkpoint_change:v.reference.change_4096_to_8192,old_di_evaluation:capture().old_di_evaluation,builds:data.builds,metric:data.metric,comparison:data.comparison,source:data.source,report:data.report_provenance,
+ measurement_sources:Object.fromEntries(Object.entries(v.methods).map(([id,m])=>[id,Object.fromEntries(Object.entries(m.per_seed).map(([s,r])=>[s,{source:r.source,hdr:r.hdr}]))]))},(key,value)=>key==="preview"?undefined:value,2);
+}
+async function refresh(reset=false){
+ const generation=++state.generation,v=view();$("export").disabled=true;if(reset){options($("seed"),v.seeds.map(s=>[s,"Seed "+s]),v.preview_seed);state.zoom=1;state.x=state.y=.5;}
+ texts(); const seed=$("seed").value,a=v.methods[baseline()],b=v.methods[choice()];
+ const uris={reference:v.reference.preview,baseline:a.per_seed[seed].preview,comparison:b.per_seed[seed].preview,"base-error":a.error_preview,"compare-error":b.error_preview};
+ const pairs=await Promise.all(Object.entries(uris).map(async([id,uri])=>[id,await image(uri)]));
+ const encoded=await image(v.deltas[choice()]?.display);if(generation!==state.generation)return;
+ state.images=Object.fromEntries(pairs);state.encoded=encoded;colorDelta();$("export").disabled=!encoded;
+}
+function run(promise){promise.catch(e=>{$("fatal").textContent=e.message;console.error(e);});}
+$("view").addEventListener("change",()=>{selectCapture();run(refresh(true));});
+$("frame").addEventListener("change",()=>{selectGroup();run(refresh(true));});
+$("group").addEventListener("change",()=>run(refresh(true)));
+$("seed").addEventListener("change",()=>run(refresh()));
+$("scale").addEventListener("change",colorDelta);
+$("zoom-in").onclick=()=>{state.zoom*=2;draw();};$("zoom-out").onclick=()=>{state.zoom/=2;draw();};$("reset").onclick=()=>{state.zoom=1;state.x=state.y=.5;draw();};
+for(const id of canvases){const c=$(id);let drag=null;
+ c.addEventListener("wheel",event=>{event.preventDefault();const r=c.getBoundingClientRect(),x=(event.clientX-r.left)/r.width-.5,y=(event.clientY-r.top)/r.height-.5,old=state.zoom;state.zoom=Math.max(1,Math.min(32,old*Math.exp(-event.deltaY*.001)));state.x+=x*(1/old-1/state.zoom);state.y+=y*(1/old-1/state.zoom);draw();},{passive:false});
+ c.addEventListener("pointerdown",e=>{drag=[e.clientX,e.clientY];c.setPointerCapture(e.pointerId);});
+ c.addEventListener("pointermove",e=>{if(!drag)return;const r=c.getBoundingClientRect();state.x-=(e.clientX-drag[0])/r.width/state.zoom;state.y-=(e.clientY-drag[1])/r.height/state.zoom;drag=[e.clientX,e.clientY];draw();});
+ for(const event of ["pointerup","pointercancel","lostpointercapture"])c.addEventListener(event,()=>{drag=null;});
+}
+run(refresh(true));
+</script></body></html>
