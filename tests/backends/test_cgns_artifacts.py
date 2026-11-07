@@ -70,6 +70,18 @@ class CgnsDiagnosticTests(unittest.TestCase):
             self.assertEqual(json.loads((output / "captures.json").read_text()), records)
 
 
+class SpatialNeighborDiagnosticTests(unittest.TestCase):
+    def test_common_counts_include_zero_weight_slots_and_reject_corruption(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/"frame.spatial-counts"
+            np.array([0,128,130,132],dtype="<u4").tofile(path)
+            value=artifacts.spatial_neighbor_stats(path,2,2,4)
+            self.assertEqual(value["spatial_neighbors_surface_pixels"],3)
+            self.assertEqual(value["spatial_neighbors_mean_surface"],2)
+            for words in ([0,128,130],[0,1,130,132],[0,128,130,133]):
+                np.array(words,dtype="<u4").tofile(path)
+                with self.assertRaises(RuntimeError):
+                    artifacts.spatial_neighbor_stats(path,2,2,4)
 
 
 class CgnsAnalysisTests(unittest.TestCase):

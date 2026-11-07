@@ -55,6 +55,22 @@ def cgns_stats(path, width, height, candidates, neighbors):
             "cgns_diagnostic_sha256": sha(path)}
 
 
+def spatial_neighbor_stats(path, width, height, neighbors):
+    """Count merge calls, including zero-weight reservoirs and repeated coordinates."""
+    path = Path(path)
+    if not path.is_file() or path.stat().st_size != width * height * 4:
+        raise RuntimeError("Missing or incorrectly sized spatial-neighbor diagnostics")
+    values = np.fromfile(path, dtype="<u4")
+    active = values >= 128
+    counts = values & 127
+    if np.any((values != 0) & ~active) or np.any(values > 128 + neighbors):
+        raise RuntimeError("Invalid spatial-neighbor diagnostic counts")
+    return {"spatial_neighbors": path.name, "spatial_neighbors_sha256":sha(path),
+            "spatial_neighbors_mean_surface":float(counts[active].mean()) if active.any() else None,
+            "spatial_neighbors_surface_pixels":int(active.sum()),
+            "spatial_neighbors_definition":"reservoirs reaching spatial merge; includes zero weights and repeated coordinates"}
+
+
 def finalize_outputs(output, config):
     validate_run_outputs(output, config)
     records = []
@@ -85,6 +101,10 @@ def finalize_outputs(output, config):
                 record.update(cgns_stats(stem.with_suffix(".cgns"), config["width"], config["height"],
                                          config["definition"].get("cgns_candidates", 32),
                                          config["definition"]["spatial_neighbors"]))
+        neighbor_counts = stem.with_suffix(".spatial-counts")
+        if config["diagnostics"] and neighbor_counts.is_file():
+            record.update(spatial_neighbor_stats(neighbor_counts, config["width"], config["height"],
+                                                 config["definition"]["spatial_neighbors"]))
         if config.get("geometry_export", False):
             record.update(save_geometry(stem, config["width"], config["height"],
                                         config["scene"]["camera"]["vertical_fov"]))
@@ -186,6 +206,12 @@ def validate_run_outputs(output, config):
         if not math.isclose(resolved[key], expected_scene["lighting"][key], rel_tol=1e-6, abs_tol=1e-6):
             raise RuntimeError(f"Renderer lighting differs from requested {key}")
     validate_frame_states(output, config)
+    if (resolved.get("spatial_neighbor_counts") and config["diagnostics"]
+            and config["mode"] in ("spatial", "combined")):
+        for frame in config["frames"]:
+            if frame["capture"]:
+                spatial_neighbor_stats(output / f"frame-{frame['frame']:04d}.spatial-counts",
+                                       config["width"], config["height"], config["definition"]["spatial_neighbors"])
     validate_geometry_outputs(output, config, resolved)
 
 

@@ -43,9 +43,11 @@ struct Offset { float2 xy; } RTXDI_NEIGHBOR_OFFSETS_BUFFER[] = {{{1,0}},{{2,0}},
 RTXDI_DIReservoir reservoirs[5];
 float randomValues[5] = {0, .99f, .99f, .99f, .99f};
 bool enabled, geometryAccepted, materialAccepted, hiddenThird;
+int geometryRejectedPixel=-1, materialRejectedPixel=-1;
 int picks[4] = {4,-1,3,-1};
 std::vector<int> surfaceLoads, reservoirLoads;
-uint neighborCallbacks;
+uint neighborCallbacks, mergedNeighbors=999;
+void LabRecordSpatialNeighbors(uint2, uint count) { mergedNeighbors=count; }
 RTXDI_DIReservoir RTXDI_EmptyDIReservoir() { return {}; }
 bool RTXDI_IsValidDIReservoir(RTXDI_DIReservoir r) { return r.lightData != 0; }
 uint RTXDI_GetDIReservoirLightIndex(RTXDI_DIReservoir r) { return r.lightData; }
@@ -66,11 +68,13 @@ int2 RAB_ClampSamplePositionIntoView(int2 p, bool) { return p; }
 void RTXDI_ActivateCheckerboardPixel(int2&, bool, uint) {}
 RAB_Surface RAB_GetGBufferSurface(int2 p, bool) { surfaceLoads.push_back(p.x); return {p.x}; }
 bool RAB_IsSurfaceValid(RAB_Surface s) { return s.id >= 0 && s.id <= 4; }
-float RAB_GetSurfaceNormal(RAB_Surface) { return 0; }
+float RAB_GetSurfaceNormal(RAB_Surface s) { return float(s.id); }
 float RAB_GetSurfaceLinearDepth(RAB_Surface) { return 0; }
-bool RTXDI_IsValidNeighbor(float, float, float, float, float, float) { return geometryAccepted; }
-int RAB_GetMaterial(RAB_Surface) { return 0; }
-bool RAB_AreMaterialsSimilar(int, int) { return materialAccepted; }
+bool RTXDI_IsValidNeighbor(float, float neighbor, float, float, float, float) {
+    return geometryAccepted && int(neighbor) != geometryRejectedPixel;
+}
+int RAB_GetMaterial(RAB_Surface s) { return s.id; }
+bool RAB_AreMaterialsSimilar(int, int neighbor) { return materialAccepted && neighbor != materialRejectedPixel; }
 uint2 RTXDI_PixelPosToReservoirPos(int2 p, uint) { return uint2(p); }
 RTXDI_DIReservoir RTXDI_LoadDIReservoir(RTXDI_ReservoirBufferParameters, uint2 p, uint) {
     assert(p.x < 5); reservoirLoads.push_back(p.x); return reservoirs[p.x];
@@ -110,7 +114,7 @@ int main() {
         {0,.99f,3,5,284.75f/640.f,284.75f/475.f,4},
         {.99f,0,2,3,117.25f/276.f,0,3}
     };
-    enabled=true; geometryAccepted=false; materialAccepted=false;
+    enabled=true; geometryAccepted=true; materialAccepted=true;
     for (const auto& c : cases) for (bool hidden : {false,true}) {
         hiddenThird=hidden; randomValues[1]=c.first; randomValues[2]=c.second;
         clearReads(); RTXDI_RandomSamplerState rng; RAB_LightSample light{};
@@ -119,15 +123,50 @@ int main() {
         close(r.M,10); close(r.targetPdf,c.target); close(r.weightSum,hidden ? c.occluded : c.full);
         assert(surfaceLoads==std::vector<int>({4,3,4,3}));
         assert(reservoirLoads==std::vector<int>({4,3,4,3}));
+        assert(mergedNeighbors==2);
         assert(rng.calls==3); // One start index, then only the two actual neighbors.
     }
+
+    // Rejected CGNS neighbors must not reach merging or the normalization denominator.
+    hiddenThird=false;
+    for (bool rejectGeometry : {false,true}) {
+        geometryAccepted=!rejectGeometry; materialAccepted=rejectGeometry;
+        clearReads(); RTXDI_RandomSamplerState rng; RAB_LightSample light{};
+        auto rejected=RTXDI_DISpatialResampling({}, {0}, center, rng, {}, {}, 0, {}, light);
+        equal(rejected,center);
+        assert(surfaceLoads==std::vector<int>({4,3}) && reservoirLoads.empty());
+        assert(mergedNeighbors==0 && rng.calls==1);
+    }
+    geometryAccepted=materialAccepted=true;
+    for (bool rejectGeometry : {false,true}) for (float random : {0.f,.99f}) {
+        geometryRejectedPixel=rejectGeometry ? 4 : -1;
+        materialRejectedPixel=rejectGeometry ? -1 : 4;
+        randomValues[1]=random;
+        clearReads(); RTXDI_RandomSamplerState rng; RAB_LightSample light{};
+        auto mixed=RTXDI_DISpatialResampling({}, {0}, center, rng, {}, {}, 0, {}, light);
+        close(mixed.M,5);
+        assert(mixed.lightData==(random==0.f ? 2u : 1u));
+        close(mixed.targetPdf,random==0.f ? 3.f : 2.f);
+        close(mixed.weightSum,random==0.f ? 73.5f/81.f : 10.5f/16.f);
+        assert(surfaceLoads==std::vector<int>({4,3,3}));
+        assert(reservoirLoads==std::vector<int>({3,3}));
+        assert(mergedNeighbors==1 && rng.calls==2);
+    }
+    geometryRejectedPixel=materialRejectedPixel=-1;
+    // Preserve the upstream material-test switch rather than forcing rejection on.
+    materialAccepted=false;
+    RTXDI_DISpatialResamplingParameters noMaterialTest; noMaterialTest.enableMaterialSimilarityTest=false;
+    clearReads(); RTXDI_RandomSamplerState materialRng; RAB_LightSample materialLight{};
+    auto materialOff=RTXDI_DISpatialResampling({}, {0}, center, materialRng, {}, {}, 0, noMaterialTest, materialLight);
+    close(materialOff.M,10); assert(mergedNeighbors==2);
+    materialAccepted=true;
 
     // No valid selected neighbor retains the center exactly, including its M and weight.
     for (auto& pick : picks) pick=-1;
     clearReads(); RTXDI_RandomSamplerState emptyRng; RAB_LightSample emptyLight{};
     auto empty=RTXDI_DISpatialResampling({}, {0}, center, emptyRng, {}, {}, 0, {}, emptyLight);
     equal(empty,center); assert(surfaceLoads.empty() && reservoirLoads.empty());
-    assert(emptyRng.calls==1);
+    assert(emptyRng.calls==1 && mergedNeighbors==0);
 
     // Disabled integration must execute the original coordinates, rejection and random stream.
     enabled=false;
@@ -142,6 +181,7 @@ int main() {
         auto adapted=RTXDI_DISpatialResampling({}, {0}, center, adaptedRng, {}, {}, 0, {}, adaptedLight);
         equal(original,adapted); assert(originalLight.id==adaptedLight.id);
         assert(originalRng.calls==adaptedRng.calls && neighborCallbacks==0);
+        assert(mergedNeighbors==((geometry && material) ? 4u : 0u));
         assert(surfaceLoads==originalSurfaces && reservoirLoads==originalReservoirs);
     }
 }
