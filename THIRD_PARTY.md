@@ -33,6 +33,12 @@ The [PDF Similarity extension](docs/reproductions/pdf-similarity.md) is an indep
 
 The [CGNS extension](docs/reproductions/cgns.md) is an independent DI adaptation developed with Codex from Junkins et al. (2026), with [author code `f28d553`](https://github.com/orion-junkins/ReSTIR-CGNS/tree/f28d553f3b2552b1be829feffea6d1abb1945e1d) as an algorithm reference. Its generated spatial shader preserves the pinned RTXDI source notice; implementation differences are recorded in the reproduction note.
 
+The [spatial-reuse comparison](docs/reproductions/spatial-reuse.md), common
+transport corrections and conventional path reference are project integration
+code developed with Codex. They use pinned NVIDIA sampling/ray/material interfaces
+and preserve upstream notices. The local visible-GGX PDF follows Heitz (2018),
+*Sampling the GGX Distribution of Visible Normals*, JCGT 7(4).
+
 The local progress presentation reproduces Figure 2 from Yusuke Tokuyoshi, *Efficient Spatial Resampling Using the PDF Similarity* (2023), [DOI: 10.1145/3585501](https://doi.org/10.1145/3585501), with attribution on slide 4. The source paper and generated figure crop are Git-ignored; [extraction provenance](writing/progress/data/paper-figure.json) records the source hash and crop. Copyright remains with the owner/author(s), with publication rights licensed to ACM; no open license is asserted for this figure.
 
 ## Additional scene imports
