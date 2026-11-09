@@ -312,7 +312,7 @@ describe("reading workflow", () => {
       name: "ReSTIR DI, 2020, Mainline",
     });
     const view = di.parentElement!.getAttribute("transform");
-    const brand = screen.getByRole("link", { name: "ReSTIR Atlas home" });
+    const brand = screen.getByRole("link", { name: "ReSTIR Explorer home" });
     expect(brand.textContent).toContain("2 papers");
     await user.type(
       screen.getByRole("searchbox", { name: "Search papers" }),
@@ -678,4 +678,30 @@ describe("reading workflow", () => {
       expect(y).toBeLessThan(660);
     }
   });
+});
+
+it("shows the original ReSTIR DI pipeline in an accessible dialog only for that paper", async () => {
+  window.history.replaceState(null, "", "/restir-lab/#paper=restir_di2020");
+  const user = userEvent.setup();
+  render(<App />);
+  const trigger = screen.getByRole("button", { name: "View ReSTIR DI pipeline" });
+  await user.click(trigger);
+  const dialog = screen.getByRole("dialog", { name: "ReSTIR DI pipeline" });
+  expect(within(dialog).getByRole("heading", { name: /Initial sampling/i })).toBeTruthy();
+  expect(within(dialog).getByRole("heading", { name: "Temporal reuse" })).toBeTruthy();
+  expect(within(dialog).getByRole("heading", { name: "Spatial reuse" })).toBeTruthy();
+  const chart = within(dialog).getByRole("img", { name: "ReSTIR DI flowchart" });
+  const viewBox = chart.getAttribute("viewBox")!.split(/\s+/).map(Number);
+  expect(viewBox[2] / viewBox[3]).toBeGreaterThan(1.8);
+  expect(chart.textContent).toContain("Selected sample visible?");
+  expect(chart.textContent).toContain("Is the history valid for reuse?");
+  expect(chart.textContent).toContain("More spatial reuse passes?");
+  expect(chart.textContent).toContain("Previous frame's final reservoir buffer");
+  expect(chart.textContent).toContain("Used by the next frame");
+  expect(within(dialog).getByRole("link", { name: /original paper/i })).toBeTruthy();
+  await user.keyboard("{Escape}");
+  expect(screen.queryByRole("dialog")).toBeNull();
+  expect(document.activeElement).toBe(trigger);
+  await user.click(screen.getByRole("button", { name: /ReSTIR GI, 2021/ }));
+  expect(screen.queryByRole("button", { name: "View ReSTIR DI pipeline" })).toBeNull();
 });

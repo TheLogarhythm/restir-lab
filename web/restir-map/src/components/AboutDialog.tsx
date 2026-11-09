@@ -13,10 +13,10 @@ export function AboutDialog({ cutoffDate, onClose }: {
       >
         ×
       </button>
-      <span className="eyebrow">ABOUT THE ATLAS</span>
+      <span className="eyebrow">ABOUT THE EXPLORER</span>
       <h2 id="about-title">Follow the evidence.</h2>
       <p>
-        ReSTIR Atlas
+        ReSTIR Explorer
         maps documented connections between research papers. It covers published work directly related to ReSTIR and a few essential foundations, with preprints, abstracts, courses and implementation resources labeled separately.
       </p>
       <p>

@@ -188,7 +188,7 @@ export default function App({
         <a
           className="brand"
           href={import.meta.env.BASE_URL}
-          aria-label="ReSTIR Atlas home"
+          aria-label="ReSTIR Explorer home"
         >
           {/* Tabler prism-light, MIT; license bundled under public/licenses. */}
           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -197,7 +197,7 @@ export default function App({
             <path d="M22 9l-7.75 3.25" /><path d="M22 15l-7 -1.5" />
           </svg>
           <strong>
-            ReSTIR <span>Atlas</span>
+            ReSTIR <span>Explorer</span>
           </strong>
           <span className="brand-count">({papers.length} papers)</span>
         </a>

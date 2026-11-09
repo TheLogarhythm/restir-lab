@@ -1,12 +1,12 @@
-# ReSTIR Atlas
+# ReSTIR Explorer
 
-本地静态研究探索网页。React + TypeScript + Vite；论文数据与界面分离，访问者无需 PDF、GPU、Zotero 或实时文献 API。
+A local, static research explorer built with React, TypeScript and Vite. Paper data is maintained separately from the interface. Visitors do not need PDFs, a GPU, Zotero or a live literature API.
 
-The public interface and all paper summaries, evidence explanations and source notes are written in English. Keep new user-facing copy in natural English, including accessibility labels. The compact header shows `ReSTIR Atlas (44 papers)` with the count derived from the full dataset, unaffected by filtering. The inline Tabler Prism Light SVG is attributed in About; its full MIT license ships in `public/licenses/`. The sidebar begins with search; the graph begins with relationship-mode controls.
+The public interface and all paper summaries, evidence explanations and source notes are written in English. Keep new user-facing copy in natural English, including accessibility labels. The compact header shows `ReSTIR Explorer (44 papers)` with the count derived from the full dataset, unaffected by filtering. The inline Tabler Prism Light SVG is attributed in About; its full MIT license ships in `public/licenses/`. The sidebar begins with search; the graph begins with relationship-mode controls.
 
-## 本地运行
+## Running locally
 
-需要 Node.js 22.12+（22.x）、24.x 或 26+，与锁定的测试依赖兼容；建议使用 CI 同款 Node 24。从仓库根目录运行：
+Use Node.js 22.12 or later within the 22.x series, 24.x, or 26 and later, as required by the pinned test dependencies. Node 24 is recommended to match CI. From the repository root, run:
 
 ```powershell
 cd web/restir-map
@@ -14,7 +14,7 @@ npm ci
 npm run dev
 ```
 
-访问终端显示的地址，默认 `http://127.0.0.1:5173/restir-lab/`。
+Open the address printed in the terminal, normally `http://127.0.0.1:5173/restir-lab/`.
 
 ```powershell
 npm test
@@ -22,18 +22,18 @@ npm run build
 npm run preview
 ```
 
-生产预览默认 `http://127.0.0.1:4173/restir-lab/`；生成目录是忽略的 `build/web/restir-map/`。所有依赖锁定在 `package-lock.json`。只需安装网页依赖，不会初始化 renderer submodule。
+The production preview normally runs at `http://127.0.0.1:4173/restir-lab/`. Build output goes to the ignored `build/web/restir-map/` directory. All dependencies are pinned in `package-lock.json`. Installing the web dependencies does not initialize renderer submodules.
 
-## 使用
+## Using the explorer
 
-- 左侧搜索支持题名、简称、作者、研究问题、venue 和方向关键词，多个词取交集；方向、年份和发表状态筛选同时影响目录和网络。
-- 详情常驻；默认选择 ReSTIR DI，有效 `#paper=paper_id` 优先，缺失或无效参数回退到 DI。节点、目录和关联论文点击只更新阅读内容及分享状态，不移动视图。
-- 默认显示已核验技术继承；“全部关系”合并同一对论文的继承与引用，详情保留两类证据；“仅引用”单独展示引用。
-- 箭头从前作指向引用或继承它的后续论文。颜色对应主要研究方向，形状对应编辑分类；详情列出全部标签。
-- 初始视图展示完整数据集。拖动空白平移、拖动节点整理布局，滚轮或双指捏合缩放。角落的 Center 按钮只将当前可见节点适配画布，保留拖动坐标、筛选和当前论文；没有 Reset 或缩放按钮。选择、筛选、关系模式和图例操作均不自动恢复手动视图。缩小概览时自动避让文字，保留全部节点；悬停或聚焦节点优先显示标签。
-- 选中状态保存在 `#paper=paper_id`。分享按钮复制当前链接；浏览器刷新、前进与后退均可恢复选择。
-- `/` 聚焦搜索，Tab 遍历可操作元素，Enter/空格选中节点。图区域聚焦后方向键平移，`+` / `-` 缩放。Esc 只关闭模态，不清空当前论文。模态限制焦点，关闭后返回原触发控件。
-- 窄屏目录改为水平卡片列表，平板与窄屏详情排在网络下方；选择论文不自动滚动页面。无持续动画，并遵循 `prefers-reduced-motion`。
+- Search matches titles, short titles, authors, research questions, venues and research-area keywords. Multiple search terms must all match. Research area, year and publication-type filters affect both the collection and the network.
+- Paper details remain open. ReSTIR DI is selected by default; a valid `#paper=paper_id` takes precedence, while a missing or invalid ID falls back to DI. Selecting a node, collection entry or related paper updates the reading content and share state without moving the graph view.
+- The default Method lineage view shows verified technical inheritance. All connections combines inheritance and citation edges for the same pair of papers, while retaining both kinds of evidence in the details. Citations only shows citation edges separately.
+- Arrows point from earlier work to later work that cites or builds on it. Color represents the primary research area, and shape represents the editorial classification. Paper details list all tags.
+- The initial view includes the full dataset. Drag the background to pan, drag nodes to rearrange them, and use the mouse wheel or a two-finger pinch to zoom. Center fits the visible nodes to the canvas while preserving dragged positions, filters and the selected paper. There are no Reset or zoom buttons. Selection, filters, connection modes and legend actions do not reset the manual view. Zoomed-out views avoid overlapping labels while retaining every node; hovered or focused nodes receive label priority.
+- The selected paper is stored in `#paper=paper_id`. Share copies the current link. Refresh, Back and Forward restore the selection.
+- Press `/` to focus search, Tab to move between controls, and Enter or Space to select a node. With the graph focused, use arrow keys to pan and `+` / `-` to zoom. Esc closes a modal without clearing the selected paper. Modals contain keyboard focus and return it to the trigger when closed.
+- On narrow screens, the collection becomes a horizontal card list. On tablets and narrow screens, details appear below the network. Selecting a paper does not automatically scroll the page. There is no continuous animation, and the interface respects `prefers-reduced-motion`.
 
 ### Arrow interaction and desktop reading width
 
@@ -74,45 +74,51 @@ The details gallery contains 68 WebP images for 43 of the 44 entries, with one o
 
 Select an image to open an accessible enlarged view. Captions, source links with figure/page locators, and credits remain available in the gallery and enlarged view. If a preview cannot load, the gallery offers a link to the source. Image URLs use Vite's `BASE_URL`, including the default `/restir-lab/` Pages subpath.
 
-## 结构与维护
+### ReSTIR DI pipeline
 
-权威研究内容位于 [论文数据](../../docs/literature/restir-map/papers.json)、[关系证据](../../docs/literature/restir-map/relations.json) 和 [收录说明](../../docs/literature/restir-map/README.md)。前端通过 `src/data/load.ts` 在构建时导入，不复制书目，不请求实时 API；本机 PDF 缓存不进入构建。
+The ReSTIR DI overview includes a compact English SVG flowchart in an accessible modal. Three equal-width stages cover initial RIS, temporal reuse and spatial reuse, with visibility decisions, historical and neighboring reservoir inputs, a spatial reuse loop, final shading and feedback to the next frame. Candidate weights use mathematical subscripts and a hat accent.
 
-`src/components/` 分别负责目录、SVG 网络、节点、论文详情、关系证据、控制和可访问模态。`AboutDialog` 和 `ConnectionDialog` 管理各自的展示内容，`RelationEvidence` 统一详情与弹窗的证据显示，`App` 负责阅读状态和组件联动。`src/graph/selection.ts` 维护筛选、已核验关系合并和分享语义；`data/types.ts` 的方向与分类类型约束默认阅读入口的完整性。布局是独立的 `src/graph/layout.json`；新增节点应添加坐标，拖动仅修改浏览器内存，绝不修改论文标签或关系。
+The diagram fits within a desktop dialog and supports horizontal scrolling on narrow screens. It follows the original 2020 paper at a conceptual level; implementation-specific validity checks and estimator bias correction are not expanded. A source link opens the original paper.
+
+## Structure and maintenance
+
+The authoritative research content is maintained in the [paper dataset](../../docs/literature/restir-map/papers.json), [relationship evidence](../../docs/literature/restir-map/relations.json) and [collection documentation](../../docs/literature/restir-map/README.md). The frontend imports these files at build time through `src/data/load.ts`. It does not duplicate bibliography data or query a live API. Local PDF caches are excluded from the build.
+
+Components in `src/components/` handle the collection, SVG network, nodes, paper details, relationship evidence, controls and accessible modals. `AboutDialog` and `ConnectionDialog` manage their respective content, `RelationEvidence` shares evidence rendering between details and dialogs, and `App` coordinates reading state and component interactions. `src/graph/selection.ts` handles filtering, verified-edge merging and share behavior. Research-area and classification types in `data/types.ts` enforce complete default reading-entry coverage. Layout coordinates are maintained separately in `src/graph/layout.json`; add coordinates for new nodes. Dragging updates browser memory only and never changes paper tags or relationships.
 
 `graph/useGraphGestures.ts` owns drag/pinch tracking, outside releases, cancellation and pointer-capture cleanup; `PaperGraph` owns rendering, viewport sizing and explicit navigation. Delayed pointer capture preserves ordinary node/edge clicks. New collection entries receive coordinates synchronously without resetting the view or existing dragged positions.
 
 Reading a related paper transfers keyboard focus to its heading with `preventScroll`. Graph, list and legend selections retain their normal focus behavior. Sharing canonicalizes the selected-paper URL before the asynchronous clipboard request, so a delayed rejection cannot overwrite a newer selection. Clearing filters reveals the selected list row by scrolling only the list container. The literature `--sync-matrix` command rejects duplicate IDs before writing, preserving ambiguous reading notes for manual resolution.
 
-约 40 个节点采用原生 SVG：无需图形运行时或持续力导向计算，节点和连线可直接检查，键盘可操作，重现同一布局，产物较小。固定布局避免每次打开都重新排列；节点可自由拖动。图上长简称可以显示排版用缩写，完整书目信息仍见详情。
+The network uses native SVG for its roughly 40 nodes. This avoids a graph runtime or continuous force-directed simulation, keeps nodes and edges directly inspectable and keyboard-accessible, reproduces the same layout, and keeps the build small. The fixed layout avoids rearranging the network on each visit, while nodes remain draggable. Long short titles may use display abbreviations in the graph; full bibliographic details remain in the reading panel.
 
-`tests/selection.test.ts` 验证组合筛选、继承与引用合并、方向和分享状态；`tests/app.test.tsx` 验证真实 React 流程：列表/图联动、键盘、分享、深链接恢复、筛选、证据展开和模态焦点。浏览器中的实际平移、缩放、拖拽与断点布局需在更新后复查，单元测试不代替浏览器检查。
+`tests/selection.test.ts` covers combined filters, inheritance/citation merging, directions and share state. `tests/app.test.tsx` exercises React workflows: collection/graph coordination, keyboard navigation, sharing, deep-link restoration, filtering, evidence expansion and modal focus. Recheck actual panning, zooming, dragging and breakpoint layouts in a browser after updates; unit tests do not replace browser inspection.
 
 Figure metadata has its own [figures.json manifest](../../docs/literature/restir-map/figures.json), separate from bibliography and relationship evidence. Its `paper_id` records cover every entry and either contain one or two images or declare `status: "unavailable"`, an empty `images` array, and a `reason`. Each image maintains `id`, `src`, `alt`, `caption`, `source_url`, `source_locator`, `credit`, `source_kind` (`paper_figure` or `project_teaser`), `sha256`, `width`, and `height`.
 
 The selected images in `public/figures/` are bundled static assets. Full PDFs are not republished; raw source PDFs and working crops stay under ignored `assets/`. When replacing an image, update its metadata, dimensions, and SHA-256 together. `scripts/check_literature.py` validates manifest coverage, image hashes, public source URLs, safe local asset paths, and required attribution. `tests/figures.test.tsx` covers the gallery, enlarged view, source fallback, unavailable state, and Pages base path; the selection and app tests also cover panel-width boundaries and edge keyboard activation.
 
-## GitHub Pages 准备
+## Preparing for GitHub Pages
 
-默认 Vite `base` 为 `/restir-lab/`。其他仓库名、根域名或自定义部署路径应设置 `VITE_BASE_PATH`，例如 PowerShell：
+The default Vite `base` is `/restir-lab/`. For a different repository name, a root-domain deployment or a custom deployment path, set `VITE_BASE_PATH`. For example, in PowerShell:
 
 ```powershell
 $env:VITE_BASE_PATH = '/another-repository/'
 npm run build
 ```
 
-不要使用路径路由；hash 选择状态让 GitHub Pages 刷新深链接无需服务器重写。静态资源、favicon 均由 Vite 的 base 处理。
+Use hash-based selection rather than path routing so GitHub Pages can refresh deep links without server rewrites. Vite's base path handles static assets and the favicon.
 
-仓库的 [独立网页工作流](../../.github/workflows/restir-map.yml) 提供校验和发布准备，与 renderer CI 分离。实际发布前，需用户在当前会话明确授权提交/推送及发布；授权后只选择本次文件提交，设置仓库 Settings → Pages → Source 为 GitHub Actions，再按工作流说明手动启用发布选项。2026-10-31 用户已授权将此次工作提交并推送到 `restir-research-map` 分支；`main` 不接收本次提交。Pages 启用和实际发布仍需另行授权。
+The repository's [dedicated web workflow](../../.github/workflows/restir-map.yml) provides validation and publication preparation separately from renderer CI. Before publication, obtain explicit authorization in the current session for commits/pushes and deployment. After authorization, select only the relevant files for the commit, set Settings → Pages → Source to GitHub Actions, and manually enable deployment as described by the workflow. On 2026-10-31, the user authorized committing and pushing this work to `restir-research-map`; `main` is excluded. Enabling Pages and publishing the site still require separate authorization.
 
-获得授权后的操作：
+After authorization:
 
-1. 仅提交并推送此次文献、网页、校验测试及工作流文件；保留无关工作区改动，不提交 `assets/`、`node_modules` 或构建目录。
-2. 在仓库 Settings → Pages 选择 GitHub Actions；进入 Actions → **ReSTIR literature map** → Run workflow。
-3. 确认 `base_path` 为 `/restir-lab/`，勾选 `deploy` 后运行。只有这次显式手动运行会发布；普通 push/PR 仅检查并保存可下载构建产物。
-4. 打开部署任务返回的 Pages 地址，检查首页、`#paper=gris2022` 刷新及 JS/CSS/favicon。若仓库名或站点路径变化，先调整 `base_path` 再构建。
+1. Commit and push only the relevant literature, web, validation-test and workflow files. Preserve unrelated working-tree changes and exclude `assets/`, `node_modules` and build directories.
+2. Select GitHub Actions under repository Settings → Pages, then open Actions → **ReSTIR literature map** → Run workflow.
+3. Confirm `base_path` is `/restir-lab/`, enable `deploy` and run the workflow. Only this explicit manual run publishes the site. Ordinary pushes and pull requests run checks and retain downloadable build artifacts.
+4. Open the Pages URL returned by the deployment job. Check the home page, refresh `#paper=gris2022`, and verify JavaScript, CSS and the favicon. If the repository name or site path changes, update `base_path` before rebuilding.
 
-Vite 的项目路径部署要求见 [官方静态部署说明](https://vite.dev/guide/static-deploy.html#github-pages)。
+See Vite's [official static deployment guide](https://vite.dev/guide/static-deploy.html#github-pages) for project-path deployment requirements.
 
 ## Branch and publication boundary
 

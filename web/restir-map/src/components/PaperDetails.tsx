@@ -3,6 +3,7 @@ import { colorFor, directions, roleNames, statusNames } from "../data/labels";
 import type { Paper, Relation } from "../data/types";
 import { RelationDetails } from "./RelationDetails";
 import { PaperFigures } from "./PaperFigures";
+import { RestirPipeline } from "./RestirPipeline";
 import { figureRecords } from "../data/load";
 
 export function PaperDetails({
@@ -111,6 +112,7 @@ export function PaperDetails({
         </div>
         {tab === "overview" && (
           <div className="detail-content">
+            {paper.paper_id === "restir_di2020" && <RestirPipeline />}
             <PaperFigures title={paper.short_title} record={figureRecords[paper.paper_id]} />
             <section>
               <h3>Research question</h3>
