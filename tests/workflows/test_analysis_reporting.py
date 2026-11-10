@@ -1,6 +1,7 @@
 """Report aggregation, timing weighting and image reuse checks."""
 from collections import Counter
 import importlib
+import importlib.util
 import csv
 import json
 from pathlib import Path

@@ -149,7 +149,7 @@ def validate_checkpoint(directory, base, component, spp, build, assets, *, previ
     return image
 
 
-def ensure_reference(root, base, component, build, assets, *, input_guard=None, progress=None):
+def ensure_reference(root, base, component, build, assets, *, input_guard=None, progress=None, asset_scene=None):
     """Exact 4096 -> 8192 chain, using the existing durable run/guard mechanism."""
     from .artifacts import save_json
     from .fixed_reference import reference_timeout
@@ -173,7 +173,7 @@ def ensure_reference(root, base, component, build, assets, *, input_guard=None, 
             if progress:
                 progress({"component": component, "target": key, "spp_target": spp,
                           "completed_spp": previous_count, "directory": str(directory), "status": "rendering"})
-            guard = frozen_input_guard(config, EXE, build, assets, input_guard)
+            guard = frozen_input_guard(config, EXE, build, assets, input_guard, asset_scene=asset_scene)
             run_one(config, directory, build, assets,
                     reference_timeout(spp, previous_count, observed), executable=EXE, input_guard=guard)
         image = validate_checkpoint(directory, base, component, spp, build, assets, previous=previous)

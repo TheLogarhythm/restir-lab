@@ -96,23 +96,23 @@ function PipelineChart() {
         <text className="flow-feedback-label" x="875" y="18">Used by the next frame</text>
       </g>
 
-      <FlowNode x={80} y={70} w={240} h={44} title="Generate M light candidates" lines={["pixel q, proposal p(xᵢ)"]} variant="input" />
+      <FlowNode x={80} y={70} w={240} h={44} title="Generate M light candidates" lines={[<>pixel q, proposal p(<MathSub base="x" sub="i" />)</>]} variant="input" />
       <FlowNode x={80} y={150} w={240} h={44} title="Compute candidate weights" lines={[<CandidateWeightFormula key="weight-formula" />]} />
       <FlowNode x={80} y={230} w={240} h={44} title="Weighted reservoir sampling" />
-      <FlowNode x={80} y={310} w={240} h={44} title="Initial reservoir R₀" lines={["sample y, weights, count M"]} variant="result" />
+      <FlowNode x={80} y={310} w={240} h={44} title={<>Initial reservoir <MathSub base="R" sub="0" /></>} lines={["sample y, weights, count M"]} variant="result" />
       <Decision x={200} y={380} title="Selected sample" lines={[" visible?"]} />
 
       <FlowNode x={480} y={70} w={240} h={44} title="Previous frame's final" lines={[" reservoir buffer"]} variant="input" />
       <FlowNode x={480} y={150} w={240} h={44} title="Reproject pixel" />
       <Decision x={600} y={220} title="Is the history" lines={[" valid for reuse?"]} />
       <FlowNode x={480} y={310} w={240} h={44} title="Reweight & merge reservoirs" />
-      <FlowNode x={480} y={390} w={240} h={44} title="Temporal reservoir Rₜ" variant="result" />
+      <FlowNode x={480} y={390} w={240} h={44} title={<>Temporal reservoir <MathSub base="R" sub="t" /></>} variant="result" />
 
       <FlowNode x={880} y={70} w={240} h={44} title="Neighboring reservoirs" variant="input" />
       <FlowNode x={880} y={150} w={240} h={44} title="Select valid neighbors" />
       <FlowNode x={880} y={230} w={240} h={44} title="Reweight & merge reservoirs" />
       <Decision x={1000} y={300} title="More spatial" lines={[" reuse passes?"]} />
-      <FlowNode x={880} y={390} w={240} h={44} title="Final reservoir Rfinal" variant="result" />
+      <FlowNode x={880} y={390} w={240} h={44} title={<>Final reservoir <MathSub base="R" sub="final" /></>} variant="result" />
       <FlowNode x={880} y={470} w={240} h={44} title="Visibility & shading" lines={["direct lighting output"]} variant="result" />
     </svg>
   </div>;
@@ -229,7 +229,7 @@ export function RestirPipeline({ method = "di" }: { method?: "di" | "gi" }) {
               ? "Trace an indirect ray from the primary surface to a secondary point, estimate radiance by path tracing, and initialize a GI reservoir. DI instead samples light sources."
               : "Generate and weight candidates, then select one with weighted reservoir sampling. Test its visibility and set the reuse weight to zero if occluded."}</p>
             <h3>Temporal reuse</h3>
-            <p>{isGI ? "Reproject to the previous frame. When history is valid, combine the fresh and historical samples; otherwise keep the current sample." : "Reproject to the previous frame. When history is valid, re-evaluate its sample at the current pixel and merge the historical and current reservoirs; otherwise skip history."}</p>
+            <p>Reproject to the previous frame. When history is valid, combine the fresh and historical samples; otherwise keep the current sample.</p>
             <h3>Spatial reuse</h3>
             <p>{isGI
               ? "Normally reuse nearby temporal reservoirs. When sample count is low, spatial reservoirs can also be reused to reduce noise, though repeated spatial reuse can accumulate bias. Reconnect to secondary points, check surface compatibility and connection visibility, apply the solid-angle Jacobian correction, and resample. Use the spatial result for indirect lighting and retain the temporal result for next-frame history."

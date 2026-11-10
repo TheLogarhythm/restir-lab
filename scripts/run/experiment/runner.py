@@ -82,7 +82,7 @@ def preflight(definition, executable=None):
     return build
 
 
-def frozen_input_guard(config, executable, build, assets, extra=None):
+def frozen_input_guard(config, executable, build, assets, extra=None, *, asset_scene=None):
     """Recheck actual inputs around each process, including gaps between checkpoints."""
     def validate():
         from .scenes import load_scene, validate_assets
@@ -90,12 +90,15 @@ def frozen_input_guard(config, executable, build, assets, extra=None):
             extra()
         if preflight(config["definition"],executable) != build:
             raise ValueError("Frozen executable/shaders changed during the batch")
-        if validate_assets(load_scene(config["scene_id"])) != assets:
+        scene = load_scene(config["scene_id"]) if asset_scene is None else asset_scene
+        if asset_scene is not None and (scene["scene_id"] != config["scene_id"] or scene["source"] != config["scene"]["source"]):
+            raise ValueError("Run-local asset registration differs from renderer input")
+        if validate_assets(scene) != assets:
             raise ValueError("Frozen scene assets changed during the batch")
     return validate
 
 
-def run_one(config, output, build, scene, timeout=600, *, executable=None, resume_rgb=None, input_guard=None):
+def run_one(config, output, build, scene, timeout=600, *, executable=None, resume_rgb=None, input_guard=None, canonical_mount=False):
     executable = executable or EXE
     output.mkdir(parents=True, exist_ok=False)
     config = copy.deepcopy(config)
@@ -145,7 +148,7 @@ def run_one(config, output, build, scene, timeout=600, *, executable=None, resum
             config["reference"]["resume_image"] = relative_path(source, output)
         save_json(output / "config.json", config)
         runtime = None
-        if config.get("reference", {}).get("estimator") == "conventional_path_tracing":
+        if canonical_mount or config.get("reference", {}).get("estimator") == "conventional_path_tracing":
             from .runtime_config import write_runtime_config
             runtime = write_runtime_config(output, config)
             record["runtime_config"] = runtime
