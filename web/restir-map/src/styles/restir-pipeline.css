@@ -21,13 +21,14 @@
 .flow-node-input rect { fill: #edf6f1; stroke: #80b69a; }
 .flow-node-result rect { fill: #e8f3ec; stroke: #7db493; }
 .flow-node text, .flow-decision text { fill: #40564a; font-size: 14px; }
-.flow-node .flow-formula { font-family: 'Cambria Math', 'STIX Two Math', serif; font-size: 16px; }
+.flow-node .flow-formula, .flow-node .flow-math { font-family: 'Cambria Math', 'STIX Two Math', serif; font-size: 16px; }
 .flow-node-title { fill: #243f32; font-size: 15px; font-weight: 700; }
 .flow-decision text, .flow-decision .flow-node-title { fill: #243f32; font-size: 14px; font-weight: 600; }
 .flow-decision path { fill: #fffefa; stroke: #bf9a58; stroke-width: 1.5; }
 .flow-edges path { fill: none; stroke: #729484; stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; }
-.flow-edges marker path, #pipeline-arrowhead path { fill: #729484; stroke: none; }
+.flow-marker path, #pipeline-arrowhead path { fill: #729484; stroke: none; }
 .flow-edges .flow-edge-feedback { stroke-dasharray: 7 5; }
+.flow-edges .flow-edge-optional { stroke: #a76e35; stroke-width: 2; stroke-dasharray: 4 3; }
 .flow-junction { fill: #729484; }
 .flow-edge-labels text { fill: #4d6b5a; font-size: 13px; font-weight: 700; paint-order: stroke; stroke: #f9fbf9; stroke-width: 4px; stroke-linejoin: round; }
 .flow-edge-labels .flow-feedback-label { font-size: 18px; fill: #365746; }
@@ -48,3 +49,13 @@
 @media (min-width: 1000px) {
   .pipeline-chart { max-height: calc(88dvh - 145px); }
 }
+.flow-node-changed rect { fill: #f3eef9; stroke: #9478b8; stroke-width: 2; }
+.flow-node-changed .flow-node-title { fill: #594071; }
+.about-dialog .pipeline-comparison { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; color: #664b80; font-size: 12px; line-height: 1.5; }
+.pipeline-change-key { display: inline-block; flex: 0 0 11px; width: 11px; height: 11px; border: 2px solid #9478b8; border-radius: 3px; background: #f3eef9; }
+@media (min-width: 1000px) {
+  .pipeline-dialog-gi .pipeline-chart { max-height: calc(88dvh - 170px); }
+}
+
+.about-dialog .pipeline-gi-reuse-note { margin: 7px 0 0; color: #665a45; font-size: 12px; line-height: 1.4; }
+#gi-optional-arrowhead path { fill: #a76e35; stroke: none; }

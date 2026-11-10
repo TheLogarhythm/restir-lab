@@ -113,6 +113,7 @@ export function PaperDetails({
         {tab === "overview" && (
           <div className="detail-content">
             {paper.paper_id === "restir_di2020" && <RestirPipeline />}
+            {paper.paper_id === "restir_gi2021" && <RestirPipeline method="gi" />}
             <PaperFigures title={paper.short_title} record={figureRecords[paper.paper_id]} />
             <section>
               <h3>Research question</h3>

@@ -705,3 +705,28 @@ it("shows the original ReSTIR DI pipeline in an accessible dialog only for that 
   await user.click(screen.getByRole("button", { name: /ReSTIR GI, 2021/ }));
   expect(screen.queryByRole("button", { name: "View ReSTIR DI pipeline" })).toBeNull();
 });
+
+it("opens the GI walkthrough with GI-specific content and source, and restores focus on close", async () => {
+  window.history.replaceState(null, "", "/restir-lab/#paper=restir_gi2021");
+  const user = userEvent.setup();
+  render(<App />);
+  const trigger = screen.getByRole("button", { name: "View ReSTIR GI pipeline" });
+  await user.click(trigger);
+  const dialog = screen.getByRole("dialog", { name: "ReSTIR GI pipeline" });
+  const chart = within(dialog).getByRole("img", { name: "ReSTIR GI flowchart" });
+  expect(chart.textContent).toMatch(/secondary/i);
+  expect(chart.textContent).toMatch(/Jacobian/i);
+  expect(chart.textContent).toMatch(/Reconnect/i);
+  expect(chart.textContent).toMatch(/indirect lighting/i);
+  expect(within(dialog).getByRole("link", { name: /original paper/i }).getAttribute("href"))
+    .toBe("https://d1qx31qr3h6wln.cloudfront.net/publications/ReSTIR%20GI.pdf");
+  expect(screen.queryByRole("img", { name: "ReSTIR DI flowchart" })).toBeNull();
+  await user.keyboard("{Escape}");
+  expect(screen.queryByRole("dialog")).toBeNull();
+  expect(document.activeElement).toBe(trigger);
+  await user.click(screen.getByRole("button", { name: "ReSTIR DI, 2020, Mainline" }));
+  expect(screen.queryByRole("button", { name: "View ReSTIR GI pipeline" })).toBeNull();
+  expect(screen.getByRole("button", { name: "View ReSTIR DI pipeline" })).toBeTruthy();
+  await user.click(screen.getByRole("button", { name: "RIS, 2005, Mainline" }));
+  expect(screen.queryByRole("button", { name: /View ReSTIR (DI|GI) pipeline/ })).toBeNull();
+});

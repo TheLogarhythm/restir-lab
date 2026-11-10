@@ -74,12 +74,15 @@ The details gallery contains 68 WebP images for 43 of the 44 entries, with one o
 
 Select an image to open an accessible enlarged view. Captions, source links with figure/page locators, and credits remain available in the gallery and enlarged view. If a preview cannot load, the gallery offers a link to the source. Image URLs use Vite's `BASE_URL`, including the default `/restir-lab/` Pages subpath.
 
-### ReSTIR DI pipeline
+### Algorithm pipelines
 
 The ReSTIR DI overview includes a compact English SVG flowchart in an accessible modal. Three equal-width stages cover initial RIS, temporal reuse and spatial reuse, with visibility decisions, historical and neighboring reservoir inputs, a spatial reuse loop, final shading and feedback to the next frame. Candidate weights use mathematical subscripts and a hat accent.
 
 The diagram fits within a desktop dialog and supports horizontal scrolling on narrow screens. It follows the original 2020 paper at a conceptual level; implementation-specific validity checks and estimator bias correction are not expanded. A source link opens the original paper.
 
+The ReSTIR GI overview provides a matching three-column flowchart. Purple nodes highlight changes from DI: indirect-ray sampling, secondary-surface geometry and radiance, path reconnection, Jacobian correction and indirect shading. In the original GI workflow, temporal reservoirs provide next-frame history while spatial reservoirs provide the shading result. Spatial reuse normally reads neighboring temporal reservoirs; when sample counts are low, it may also read neighboring spatial reservoirs to reduce noise, at the risk of accumulated bias. The source link points to Figure 4 and Algorithms 2–4 of the GI paper.
+
+Both diagrams are conceptual walkthroughs. The basic GI representation uses a diffuse approximation at the secondary reuse point; it does not describe arbitrary glossy path reuse. The matching paper's scope and limitations remain in the overview.
 ## Structure and maintenance
 
 The authoritative research content is maintained in the [paper dataset](../../docs/literature/restir-map/papers.json), [relationship evidence](../../docs/literature/restir-map/relations.json) and [collection documentation](../../docs/literature/restir-map/README.md). The frontend imports these files at build time through `src/data/load.ts`. It does not duplicate bibliography data or query a live API. Local PDF caches are excluded from the build.
