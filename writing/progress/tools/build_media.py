@@ -26,6 +26,30 @@ def probe(path):
         '-of', 'json', str(path)], text=True))['streams'][0]
 
 
+def record_command(command):
+    """Store ffmpeg input/output paths relative to the repository root."""
+    recorded = list(command)
+    indexes = [i + 1 for i, arg in enumerate(command[:-1]) if arg == '-i'] + [len(command) - 1]
+    for index in indexes:
+        path = Path(command[index]).resolve()
+        try:
+            recorded[index] = path.relative_to(REPO.resolve()).as_posix()
+        except ValueError as exc:
+            raise ValueError(f'ffmpeg path outside repository: {path}') from exc
+    return recorded
+
+
+def commands_match(command, previous, path_base):
+    try:
+        if path_base is None:  # Original receipts recorded native absolute paths.
+            previous = record_command(previous)
+        elif path_base != 'repository_root':
+            return False
+        return record_command(command) == previous
+    except (ValueError, OSError):
+        return False
+
+
 def encode(condition, kind, force=False):
     output = ROOT / 'assets/videos' / condition / (kind + '.mp4')
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -61,7 +85,7 @@ def encode(condition, kind, force=False):
     source_records=[dict(path=f.relative_to(REPO).as_posix(), sha256=digest(f)) for f in files]
     receipt=ROOT/'data/media.json'
     previous=next((e for e in json.loads(receipt.read_text())['entries'] if e['path']==output.relative_to(ROOT).as_posix()),None) if receipt.exists() else None
-    reusable=output.is_file() and previous and previous['command']==command and previous['sources']==source_records and previous['sha256']==digest(output)
+    reusable=output.is_file() and previous and commands_match(command, previous['command'], previous.get('command_path_base')) and previous['sources']==source_records and previous['sha256']==digest(output)
     if force or not reusable:
         print(f'Encoding {condition}/{kind}', flush=True)
         subprocess.run(command, check=True)
@@ -71,7 +95,7 @@ def encode(condition, kind, force=False):
     return dict(path=output.relative_to(ROOT).as_posix(), condition=condition, kind=kind,
                 sha256=digest(output), bytes=output.stat().st_size, probe=info,
                 sources=source_records,
-                command=command)
+                command=record_command(command), command_path_base='repository_root')
 
 
 def main():

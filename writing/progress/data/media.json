@@ -426,7 +426,7 @@
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\arcade-motion\\frames\\pdf-off\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/arcade-motion/frames/pdf-off/frame-%04d.png",
         "-vf",
         "scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p",
         "-frames:v",
@@ -454,8 +454,9 @@
         "iec61966-2-1",
         "-movflags",
         "+faststart",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\writing\\progress\\assets\\videos\\arcade-motion\\pdf-off.mp4"
-      ]
+        "writing/progress/assets/videos/arcade-motion/pdf-off.mp4"
+      ],
+      "command_path_base": "repository_root"
     },
     {
       "path": "assets/videos/arcade-motion/pdf-on.mp4",
@@ -869,7 +870,7 @@
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\arcade-motion\\frames\\pdf-on\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/arcade-motion/frames/pdf-on/frame-%04d.png",
         "-vf",
         "scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p",
         "-frames:v",
@@ -897,8 +898,9 @@
         "iec61966-2-1",
         "-movflags",
         "+faststart",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\writing\\progress\\assets\\videos\\arcade-motion\\pdf-on.mp4"
-      ]
+        "writing/progress/assets/videos/arcade-motion/pdf-on.mp4"
+      ],
+      "command_path_base": "repository_root"
     },
     {
       "path": "assets/videos/arcade-motion/comparison.mp4",
@@ -1696,13 +1698,13 @@
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\arcade-motion\\frames\\pdf-on\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/arcade-motion/frames/pdf-on/frame-%04d.png",
         "-framerate",
         "30",
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\arcade-motion\\frames\\pdf-off\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/arcade-motion/frames/pdf-off/frame-%04d.png",
         "-filter_complex",
         "[0:v]format=gbrp[on];[1:v]format=gbrp[off];[on][off]blend=all_expr='if(lt(abs(X-((-0.01+1.26*T/(95/30)-0.24*Y/H)*W)),1.6*W/1920),255,if(lt(X,((-0.01+1.26*T/(95/30)-0.24*Y/H)*W)),A,B))',drawtext=fontfile='C\\:/Windows/Fonts/segoeui.ttf':text='PDF ON':x=32:y=28:fontsize=28:fontcolor=white:box=1:boxcolor=black@0.60:boxborderw=10:enable='gte(t,0.34)',drawtext=fontfile='C\\:/Windows/Fonts/segoeui.ttf':text='PDF OFF':x=w-tw-32:y=28:fontsize=28:fontcolor=white:box=1:boxcolor=black@0.60:boxborderw=10:enable='lte(t,2.33)',scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p[out]",
         "-map",
@@ -1732,8 +1734,9 @@
         "iec61966-2-1",
         "-movflags",
         "+faststart",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\writing\\progress\\assets\\videos\\arcade-motion\\comparison.mp4"
-      ]
+        "writing/progress/assets/videos/arcade-motion/comparison.mp4"
+      ],
+      "command_path_base": "repository_root"
     },
     {
       "path": "assets/videos/bistro-interior-motion/pdf-off.mp4",
@@ -2147,7 +2150,7 @@
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\bistro-interior-motion\\frames\\pdf-off\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/bistro-interior-motion/frames/pdf-off/frame-%04d.png",
         "-vf",
         "scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p",
         "-frames:v",
@@ -2175,8 +2178,9 @@
         "iec61966-2-1",
         "-movflags",
         "+faststart",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\writing\\progress\\assets\\videos\\bistro-interior-motion\\pdf-off.mp4"
-      ]
+        "writing/progress/assets/videos/bistro-interior-motion/pdf-off.mp4"
+      ],
+      "command_path_base": "repository_root"
     },
     {
       "path": "assets/videos/bistro-interior-motion/pdf-on.mp4",
@@ -2590,7 +2594,7 @@
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\bistro-interior-motion\\frames\\pdf-on\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/bistro-interior-motion/frames/pdf-on/frame-%04d.png",
         "-vf",
         "scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p",
         "-frames:v",
@@ -2618,8 +2622,9 @@
         "iec61966-2-1",
         "-movflags",
         "+faststart",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\writing\\progress\\assets\\videos\\bistro-interior-motion\\pdf-on.mp4"
-      ]
+        "writing/progress/assets/videos/bistro-interior-motion/pdf-on.mp4"
+      ],
+      "command_path_base": "repository_root"
     },
     {
       "path": "assets/videos/bistro-interior-motion/comparison.mp4",
@@ -3417,13 +3422,13 @@
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\bistro-interior-motion\\frames\\pdf-on\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/bistro-interior-motion/frames/pdf-on/frame-%04d.png",
         "-framerate",
         "30",
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\bistro-interior-motion\\frames\\pdf-off\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/bistro-interior-motion/frames/pdf-off/frame-%04d.png",
         "-filter_complex",
         "[0:v]format=gbrp[on];[1:v]format=gbrp[off];[on][off]blend=all_expr='if(lt(abs(X-((-0.01+1.26*T/(95/30)-0.24*Y/H)*W)),1.6*W/1920),255,if(lt(X,((-0.01+1.26*T/(95/30)-0.24*Y/H)*W)),A,B))',drawtext=fontfile='C\\:/Windows/Fonts/segoeui.ttf':text='PDF ON':x=32:y=28:fontsize=28:fontcolor=white:box=1:boxcolor=black@0.60:boxborderw=10:enable='gte(t,0.34)',drawtext=fontfile='C\\:/Windows/Fonts/segoeui.ttf':text='PDF OFF':x=w-tw-32:y=28:fontsize=28:fontcolor=white:box=1:boxcolor=black@0.60:boxborderw=10:enable='lte(t,2.33)',scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p[out]",
         "-map",
@@ -3453,8 +3458,9 @@
         "iec61966-2-1",
         "-movflags",
         "+faststart",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\writing\\progress\\assets\\videos\\bistro-interior-motion\\comparison.mp4"
-      ]
+        "writing/progress/assets/videos/bistro-interior-motion/comparison.mp4"
+      ],
+      "command_path_base": "repository_root"
     },
     {
       "path": "assets/videos/bistro-exterior-motion/pdf-off.mp4",
@@ -3868,7 +3874,7 @@
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\bistro-exterior-motion\\frames\\pdf-off\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/bistro-exterior-motion/frames/pdf-off/frame-%04d.png",
         "-vf",
         "scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p",
         "-frames:v",
@@ -3896,8 +3902,9 @@
         "iec61966-2-1",
         "-movflags",
         "+faststart",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\writing\\progress\\assets\\videos\\bistro-exterior-motion\\pdf-off.mp4"
-      ]
+        "writing/progress/assets/videos/bistro-exterior-motion/pdf-off.mp4"
+      ],
+      "command_path_base": "repository_root"
     },
     {
       "path": "assets/videos/bistro-exterior-motion/pdf-on.mp4",
@@ -4311,7 +4318,7 @@
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\bistro-exterior-motion\\frames\\pdf-on\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/bistro-exterior-motion/frames/pdf-on/frame-%04d.png",
         "-vf",
         "scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p",
         "-frames:v",
@@ -4339,8 +4346,9 @@
         "iec61966-2-1",
         "-movflags",
         "+faststart",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\writing\\progress\\assets\\videos\\bistro-exterior-motion\\pdf-on.mp4"
-      ]
+        "writing/progress/assets/videos/bistro-exterior-motion/pdf-on.mp4"
+      ],
+      "command_path_base": "repository_root"
     },
     {
       "path": "assets/videos/bistro-exterior-motion/comparison.mp4",
@@ -5138,13 +5146,13 @@
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\bistro-exterior-motion\\frames\\pdf-on\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/bistro-exterior-motion/frames/pdf-on/frame-%04d.png",
         "-framerate",
         "30",
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\bistro-exterior-motion\\frames\\pdf-off\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/bistro-exterior-motion/frames/pdf-off/frame-%04d.png",
         "-filter_complex",
         "[0:v]format=gbrp[on];[1:v]format=gbrp[off];[on][off]blend=all_expr='if(lt(abs(X-((-0.01+1.26*T/(95/30)-0.24*Y/H)*W)),1.6*W/1920),255,if(lt(X,((-0.01+1.26*T/(95/30)-0.24*Y/H)*W)),A,B))',drawtext=fontfile='C\\:/Windows/Fonts/segoeui.ttf':text='PDF ON':x=32:y=28:fontsize=28:fontcolor=white:box=1:boxcolor=black@0.60:boxborderw=10:enable='gte(t,0.34)',drawtext=fontfile='C\\:/Windows/Fonts/segoeui.ttf':text='PDF OFF':x=w-tw-32:y=28:fontsize=28:fontcolor=white:box=1:boxcolor=black@0.60:boxborderw=10:enable='lte(t,2.33)',scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p[out]",
         "-map",
@@ -5174,8 +5182,9 @@
         "iec61966-2-1",
         "-movflags",
         "+faststart",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\writing\\progress\\assets\\videos\\bistro-exterior-motion\\comparison.mp4"
-      ]
+        "writing/progress/assets/videos/bistro-exterior-motion/comparison.mp4"
+      ],
+      "command_path_base": "repository_root"
     },
     {
       "path": "assets/videos/bistro-lighting/pdf-off.mp4",
@@ -5589,7 +5598,7 @@
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\bistro-lighting\\frames\\pdf-off\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/bistro-lighting/frames/pdf-off/frame-%04d.png",
         "-vf",
         "scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p",
         "-frames:v",
@@ -5617,8 +5626,9 @@
         "iec61966-2-1",
         "-movflags",
         "+faststart",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\writing\\progress\\assets\\videos\\bistro-lighting\\pdf-off.mp4"
-      ]
+        "writing/progress/assets/videos/bistro-lighting/pdf-off.mp4"
+      ],
+      "command_path_base": "repository_root"
     },
     {
       "path": "assets/videos/bistro-lighting/pdf-on.mp4",
@@ -6032,7 +6042,7 @@
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\bistro-lighting\\frames\\pdf-on\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/bistro-lighting/frames/pdf-on/frame-%04d.png",
         "-vf",
         "scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p",
         "-frames:v",
@@ -6060,8 +6070,9 @@
         "iec61966-2-1",
         "-movflags",
         "+faststart",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\writing\\progress\\assets\\videos\\bistro-lighting\\pdf-on.mp4"
-      ]
+        "writing/progress/assets/videos/bistro-lighting/pdf-on.mp4"
+      ],
+      "command_path_base": "repository_root"
     },
     {
       "path": "assets/videos/bistro-lighting/comparison.mp4",
@@ -6859,13 +6870,13 @@
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\bistro-lighting\\frames\\pdf-on\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/bistro-lighting/frames/pdf-on/frame-%04d.png",
         "-framerate",
         "30",
         "-start_number",
         "1",
         "-i",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-similarity-archive\\artifacts\\raw\\bistro-lighting\\frames\\pdf-off\\frame-%04d.png",
+        "runs/pdf-similarity-archive/artifacts/raw/bistro-lighting/frames/pdf-off/frame-%04d.png",
         "-filter_complex",
         "[0:v]format=gbrp[on];[1:v]format=gbrp[off];[on][off]blend=all_expr='if(lt(abs(X-((-0.01+1.26*T/(95/30)-0.24*Y/H)*W)),1.6*W/1920),255,if(lt(X,((-0.01+1.26*T/(95/30)-0.24*Y/H)*W)),A,B))',drawtext=fontfile='C\\:/Windows/Fonts/segoeui.ttf':text='PDF ON':x=32:y=28:fontsize=28:fontcolor=white:box=1:boxcolor=black@0.60:boxborderw=10:enable='gte(t,0.34)',drawtext=fontfile='C\\:/Windows/Fonts/segoeui.ttf':text='PDF OFF':x=w-tw-32:y=28:fontsize=28:fontcolor=white:box=1:boxcolor=black@0.60:boxborderw=10:enable='lte(t,2.33)',scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p[out]",
         "-map",
@@ -6895,8 +6906,15 @@
         "iec61966-2-1",
         "-movflags",
         "+faststart",
-        "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\writing\\progress\\assets\\videos\\bistro-lighting\\comparison.mp4"
-      ]
+        "writing/progress/assets/videos/bistro-lighting/comparison.mp4"
+      ],
+      "command_path_base": "repository_root"
     }
-  ]
+  ],
+  "path_normalization": {
+    "kind": "path_normalized_derived_receipt",
+    "original_worktree_sha256": "8985608d1d992f041ebb54488c5166403040d2825e31e63b127c977873957cae",
+    "original_git_blob_sha256": "54b7ddc323dff076693f31f344957b1dae699461d20791223fee4fbb6787469c",
+    "note": "Only repository-local paths in historical ffmpeg commands were normalized. Video, source and poster records are unchanged."
+  }
 }
