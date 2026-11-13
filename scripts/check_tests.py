@@ -1,5 +1,6 @@
-"""Run portable regressions or explicit native/media/Windows integration groups."""
+"""Run portable regressions or explicit source/native/media/Windows checks."""
 import argparse
+import ast
 from pathlib import Path
 import sys
 import unittest
@@ -13,7 +14,17 @@ INTEGRATION_GROUPS = {
                "tests.backends.test_transport_adapter.TransportAdapterTests",
                "tests.backends.test_transport_weights.TransportWeightTests",
                "tests.backends.test_transport_segments.TransportSegmentTests",
-               "tests.backends.test_light_geometry_index.LightGeometryIndexTests"),
+               "tests.backends.test_light_geometry_index.LightGeometryIndexTests",
+               "tests.backends.test_falcor_cgns_single.SingleNeighborTests.test_a_chao_shared_math_and_probability"),
+    "source": ("tests.test_falcor_cgns_shader_overlay.CgnsOverlayTests",
+               "tests.test_gltf_factor_shader_patch.GltfFactorShaderPatchTests",
+               "tests.test_gltf_specgloss_sampling.SpecGlossSamplingTests.test_only_regular_marked_specgloss_uses_safe_weight",
+               "tests.test_gltf_specgloss_sampling.SpecGlossSamplingTests.test_source_mismatch_fails_closed",
+               "tests.test_gltf_transmission_tint.TransmissionTintTests",
+               "tests.backends.test_falcor_cgns_single.SingleNeighborTests.test_selector_wired_to_all_consumers_and_distinct_marker",
+               "tests.backends.test_falcor_cgns_single_diagnostic.SingleDiagnosticTests.test_stage_capture_fault_and_production_isolation",
+               "tests.backends.test_falcor_cgns_shader_parameters.CgnsShaderParameterTests.test_different_parameters_produce_different_integrated_shader",
+               "tests.backends.test_falcor_portable_runtime_receipts.PortableRuntimeReceiptTests"),
     "media": ("tests.workflows.test_pdf_artifacts.PdfArtifactTests.test_video_is_1080p_30fps_and_preserves_input_order",),
     "windows": ("tests.workflows.test_pdf_supervisor.SupervisorTests",
                 "tests.workflows.test_comparison_batch.ComparisonBatchWindowsTests",
@@ -37,6 +48,17 @@ def group_for(test):
     return "cpu"
 
 
+def uncollected_tests(root):
+    """Find module-level test functions omitted by unittest discovery."""
+    errors = []
+    for path in sorted((root / 'tests').rglob('test_*.py')):
+        tree = ast.parse(path.read_text(encoding='utf-8-sig'), filename=str(path))
+        for node in tree.body:
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name.startswith('test_'):
+                errors.append(f'{path.relative_to(root)}:{node.lineno}: {node.name} is not a unittest method')
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--suite", choices=("cpu", "all", *INTEGRATION_GROUPS), default="cpu")
@@ -45,9 +67,10 @@ def main():
     sys.path[:0] = [str(ROOT), str(ROOT / "src")]
     loader = unittest.TestLoader()
     tests = list(flatten(loader.discover(str(ROOT / "tests"), top_level_dir=str(ROOT))))
-    if loader.errors:
+    collection_errors = uncollected_tests(ROOT)
+    if loader.errors or collection_errors:
         print("Test discovery failed; no filtered run can be reported as passing.", file=sys.stderr)
-        for error in loader.errors:
+        for error in [*loader.errors, *collection_errors]:
             print(error, file=sys.stderr)
         return 1
     selected = [test for test in tests if args.suite == "all" or group_for(test) == args.suite]

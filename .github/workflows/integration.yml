@@ -7,7 +7,7 @@ on:
         required: true
         type: choice
         default: native
-        options: [native, windows, media, blender]
+        options: [native, source, windows, media, blender]
 permissions:
   contents: read
 jobs:
@@ -23,12 +23,15 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install analysis dependencies
-        run: python -m pip install -r scripts/run/requirements.txt
+        run: python -m pip install -e ".[exr]" -r scripts/run/requirements.txt
       - name: Fetch pinned shader sources without scene assets
         if: inputs.suite == 'native'
         run: |
           git submodule update --init renderers/rtxdi
           git -C renderers/rtxdi submodule update --init External/donut Libraries/Rtxdi
+      - name: Fetch pinned Falcor shader sources without assets or nested dependencies
+        if: inputs.suite == 'source'
+        run: git submodule update --init renderers/falcor/upstream
       - name: Locate the installed MSVC compiler
         if: inputs.suite == 'native'
         shell: pwsh

@@ -20,25 +20,39 @@ For a dependency-specific run, use:
 ```powershell
 python -B scripts/check_tests.py --suite cpu
 python -B scripts/check_tests.py --suite native
+python -B scripts/check_tests.py --suite source
 python -B scripts/check_tests.py --suite media
 python -B scripts/check_tests.py --suite windows
 ```
 
 The CPU group runs on every push and pull request; it needs the Python packages in
 [scripts/run/requirements.txt](../scripts/run/requirements.txt) and the `exr` extra in
-[pyproject.toml](../pyproject.toml), plus Git for isolated dependency fixtures, without downloaded scenes,
-Blender, MSVC, FFmpeg or a GPU. Native checks compile production shader functions with MSVC
+[pyproject.toml](../pyproject.toml), plus Git for isolated dependency fixtures, without
+Blender, MSVC, FFmpeg, renderer submodules, historical archives, downloaded assets,
+built runtimes or a GPU. The `source` group checks transformations of pinned Falcor
+shader sources. Initialize only `renderers/falcor/upstream` with
+`git submodule update --init renderers/falcor/upstream` and
+`GIT_LFS_SKIP_SMUDGE=1`; this group performs no rendering.
+Shader variant identity tests use synthetic runtime receipts. Historical scene
+migration tests use synthetic, hash-bound snapshots and a prepared-sky placeholder.
+Native checks compile production shader functions with MSVC
 and need the pinned RTXDI/Donut sources. Media checks encode, probe and decode an actual
 video with FFmpeg/ffprobe. Windows checks run the PowerShell supervisor with CPU stand-ins,
 real OS locks, and a detached virtual-environment worker ownership handshake. They need an
 idle renderer/worker; portable scheduler tests mock only the OS process/lock boundary.
 An explicitly selected integration group fails when its
 required checks are skipped. Discovery/import errors fail every group before filtering,
-including `--list`. `--list` prints its test IDs; `--suite all` runs all groups.
+including `--list`. Module-level `test_*` functions fail collection instead of
+being silently omitted; all ordinary tests use unittest, with no pytest dependency.
+`--list` prints its test IDs; `--suite all` runs all groups.
 
 The manually dispatched [integration workflow](../.github/workflows/integration.yml) keeps
-native, Windows, media and Blender dependencies separate from the portable job.
+native, source, Windows, media and Blender dependencies separate from the portable job.
 The three Blender commands above remain the local integration entry points.
+
+The eight- and sixteen-seed averaging contracts share
+`core/test_reference_average.py`, including FLOAT32 storage, FLOAT64 cancellation,
+input alias rejection and no-overwrite publication checks.
 
 Shared fixtures live in `tests/fixtures/`: isolated worker imports, controlled capture records,
 equal-time data and the MSVC/shader extraction harness. Assertions stay in their respective

@@ -60,6 +60,16 @@ class TestGroupDiscoveryTests(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertIn("tests.backends.test_ci_fixture_native.NativeChecks.test_native", output)
 
+    def test_top_level_test_functions_cannot_be_silently_omitted(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            tests = root / 'tests'
+            tests.mkdir()
+            (tests / 'test_omitted.py').write_text('def test_omitted(): pass\n', encoding='utf8')
+            errors = check_tests.uncollected_tests(root)
+            self.assertEqual(len(errors), 1)
+            self.assertIn('test_omitted is not a unittest method', errors[0])
+
     def test_explicit_group_cannot_pass_with_a_skipped_dependency(self):
         code, output = self.run_fixture(skipped=True)
         self.assertNotEqual(code, 0)
