@@ -1,8 +1,8 @@
 {
   "files": {
     "analysis.json": {
-      "bytes": 61619,
-      "sha256": "d97d71625730b09f0e78a22f683933683e96cb507958ad3665bf283a78dd913b"
+      "bytes": 61633,
+      "sha256": "65ba0cfcbeb4f720ff21e5134d84f173bdeb3dbe014c6571518d86d067708e98"
     },
     "frame-metrics.csv": {
       "bytes": 2187,
@@ -24,38 +24,38 @@
       "bytes": 1940,
       "sha256": "f7378b52a1423d31c41ab9523a289a32088989dbba9b9a254df0fa636bc4ef5a"
     },
-    "summary.md": {
+    "summary.md.source.txt": {
       "bytes": 1619,
       "sha256": "f78a321af75891f7c335889d4b747fc9bdc78aaa13b7c6e2c92ec60f2d771283"
     }
   },
   "identity": {
     "inputs": {
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\captures.json": "0b039a1e3b74505bf7a6097da66dc7ec48fe4a5db88a81a4af26f18adf9b832f",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\config.json": "205952eb11bb0123e5dd2e3096556b2106d34375fae1a14086f2a3bb223fd6ef",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\manifest.json": "4318fafd5f32ac0e659f983b8a4d62f11495227d5119629266109ac9cb697bac",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\timings.csv": "533b0d50c0fbee67ec8e9123be47f1baa11cb1804c6a1dc1fdca4cab3269a54c",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\captures.json": "636e0e15858175b9942506eeac8f9d38ffc88d418a01dbfa788abb885651d51a",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\config.json": "b93f39ba37ce9d211208db55e87372fb9dc061c8eedaa715d3056d14fd966bb5",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\manifest.json": "de671cad944834bb066a5c645f85f14a239fc0e2c0a0d4845ab8df4f67bb4c74",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\timings.csv": "f77098dc730da44aae8901d1adc8e0a94953b99b0458e517632edd1869ac7985",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\captures.json": "3431d488938c0f82e19e9de1cc24ece8595d87846904647096d038902b1e5548",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\config.json": "1fbb646f4ca609bc027680388aeb0c0928e9ed8ca8ac35e1a1e33da3d5ddfff3",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\manifest.json": "c7b4b48ef5c0e9a8beaef754eb586fa1bc1be9a1df4eb8990339f41fd53901d1",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\timings.csv": "9ffa1a906b943e85674abe3992d653869afcdabdfe9aa8e1015609c2d1e77d10",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\captures.json": "6b7472d20988830e268091d4bf3819859f51737ef1bfb05b5d9adffd7e11ec69",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\config.json": "bbf20b1169403c03a8e7efc4abb9720048a21aba9b7df62df1cd46f0d028b7a7",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\manifest.json": "4e0c1bd54061c06853c91e3e18fb04c31168464a601729ba3194369a766ce067",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\timings.csv": "814e97fc058d8e2dd3a22747afabff9ada8a2c37306899b0481607b2435ef81a",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\captures.json": "de2376b2be259d3d75dc24e7d2082cb7a3f4d4dfe23b19e992a80c8530492f50",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\config.json": "71bf2c2cdd859dd62a1a97cb4bcc164582471464085b7e1fa3a97249c5d72109",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\manifest.json": "b1c1568a73d3cf8bb546457277be2441eeea3eee7052639ef24779dd7225c7a7",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\timings.csv": "6f1c8c48e61e46337653414f08e2156cf5ab1335b4f2aee8ee8c54a65382772a",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\captures.json": "3551fc43e9e360aa1587b936822316f910f3987cb3c0c3396970245ba080e073",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\config.json": "95e5ea7c7a7be78e93b6d0c88c77c8060bb0e2d41e4bd5cf07e4491fb8341ac2",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\manifest.json": "1c58650ac902e46cf081afe081536b1c680c88e243d5ab0166c4ee571fe50d27",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\timings.csv": "4e26ee8613c100d8d9163eed02a75cada674b3783f7ef5504986662218313708",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\cornell-box\\ed4ae7321530079d0b517eb1\\accepted-16384-2d451e6c9021\\reference.pfm.gz": "932b1507307fdb20c56e03e16620c2971fd41816f453ba60b80ca87ac33ae9a7"
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-1/off/attempt-0/captures.json": "0b039a1e3b74505bf7a6097da66dc7ec48fe4a5db88a81a4af26f18adf9b832f",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-1/off/attempt-0/config.json": "205952eb11bb0123e5dd2e3096556b2106d34375fae1a14086f2a3bb223fd6ef",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-1/off/attempt-0/manifest.json": "4318fafd5f32ac0e659f983b8a4d62f11495227d5119629266109ac9cb697bac",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-1/off/attempt-0/timings.csv": "533b0d50c0fbee67ec8e9123be47f1baa11cb1804c6a1dc1fdca4cab3269a54c",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-1/on/attempt-0/captures.json": "636e0e15858175b9942506eeac8f9d38ffc88d418a01dbfa788abb885651d51a",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-1/on/attempt-0/config.json": "b93f39ba37ce9d211208db55e87372fb9dc061c8eedaa715d3056d14fd966bb5",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-1/on/attempt-0/manifest.json": "de671cad944834bb066a5c645f85f14a239fc0e2c0a0d4845ab8df4f67bb4c74",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-1/on/attempt-0/timings.csv": "f77098dc730da44aae8901d1adc8e0a94953b99b0458e517632edd1869ac7985",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-2/off/attempt-0/captures.json": "3431d488938c0f82e19e9de1cc24ece8595d87846904647096d038902b1e5548",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-2/off/attempt-0/config.json": "1fbb646f4ca609bc027680388aeb0c0928e9ed8ca8ac35e1a1e33da3d5ddfff3",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-2/off/attempt-0/manifest.json": "c7b4b48ef5c0e9a8beaef754eb586fa1bc1be9a1df4eb8990339f41fd53901d1",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-2/off/attempt-0/timings.csv": "9ffa1a906b943e85674abe3992d653869afcdabdfe9aa8e1015609c2d1e77d10",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-2/on/attempt-0/captures.json": "6b7472d20988830e268091d4bf3819859f51737ef1bfb05b5d9adffd7e11ec69",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-2/on/attempt-0/config.json": "bbf20b1169403c03a8e7efc4abb9720048a21aba9b7df62df1cd46f0d028b7a7",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-2/on/attempt-0/manifest.json": "4e0c1bd54061c06853c91e3e18fb04c31168464a601729ba3194369a766ce067",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-2/on/attempt-0/timings.csv": "814e97fc058d8e2dd3a22747afabff9ada8a2c37306899b0481607b2435ef81a",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-3/off/attempt-0/captures.json": "de2376b2be259d3d75dc24e7d2082cb7a3f4d4dfe23b19e992a80c8530492f50",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-3/off/attempt-0/config.json": "71bf2c2cdd859dd62a1a97cb4bcc164582471464085b7e1fa3a97249c5d72109",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-3/off/attempt-0/manifest.json": "b1c1568a73d3cf8bb546457277be2441eeea3eee7052639ef24779dd7225c7a7",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-3/off/attempt-0/timings.csv": "6f1c8c48e61e46337653414f08e2156cf5ab1335b4f2aee8ee8c54a65382772a",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-3/on/attempt-0/captures.json": "3551fc43e9e360aa1587b936822316f910f3987cb3c0c3396970245ba080e073",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-3/on/attempt-0/config.json": "95e5ea7c7a7be78e93b6d0c88c77c8060bb0e2d41e4bd5cf07e4491fb8341ac2",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-3/on/attempt-0/manifest.json": "1c58650ac902e46cf081afe081536b1c680c88e243d5ab0166c4ee571fe50d27",
+      "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-3/on/attempt-0/timings.csv": "4e26ee8613c100d8d9163eed02a75cada674b3783f7ef5504986662218313708",
+      "runs/pdf-controlled-20261018/references/cornell-box/ed4ae7321530079d0b517eb1/accepted-16384-2d451e6c9021/reference.pfm.gz": "932b1507307fdb20c56e03e16620c2971fd41816f453ba60b80ca87ac33ae9a7"
     },
     "reports": [
       {
@@ -700,7 +700,7 @@
           }
         },
         "references": {
-          "128": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\cornell-box\\ed4ae7321530079d0b517eb1\\accepted-16384-2d451e6c9021\\reference.pfm.gz"
+          "128": "runs/pdf-controlled-20261018/references/cornell-box/ed4ae7321530079d0b517eb1/accepted-16384-2d451e6c9021/reference.pfm.gz"
         },
         "rois": [
           {
@@ -720,18 +720,18 @@
         ],
         "runs": [
           {
-            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0",
-            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0",
+            "off_dir": "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-1/off/attempt-0",
+            "on_dir": "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-1/on/attempt-0",
             "seed": 1
           },
           {
-            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0",
-            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0",
+            "off_dir": "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-2/off/attempt-0",
+            "on_dir": "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-2/on/attempt-0",
             "seed": 2
           },
           {
-            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0",
-            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0",
+            "off_dir": "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-3/off/attempt-0",
+            "on_dir": "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-3/on/attempt-0",
             "seed": 3
           }
         ],
@@ -766,7 +766,17 @@
       "scripts/run/rtxdi_pdf_controlled.py": "4f24d7fa9cc7f78962cc121e67fa368e60e1703c992f3cba5e690b053182f428"
     }
   },
-  "identity_sha256": "80ee109bf782416fc514a4e1e9a3554b8f4a52b1ebf9de133938296daf02d7cf",
+  "identity_sha256": "72ead87cb71582d8113d01419de4071dad108aa9c8276984347661219a3114bb",
   "schema_version": 2,
-  "status": "completed"
+  "status": "derived",
+  "path_normalization": {
+    "kind": "path_normalized_derived_receipt",
+    "path_base": "repository_root",
+    "original_archive_path": "runs/pdf-similarity-archive/analysis/cornell-static-80ee109bf782/.controlled-output.json",
+    "original_sha256": "23a41e434054440a975ad8846a13da54ccb08e38994d11e1d8f90b20179f6fa0",
+    "original_identity_sha256": "80ee109bf782416fc514a4e1e9a3554b8f4a52b1ebf9de133938296daf02d7cf",
+    "original_status": "completed",
+    "non_resumable": true,
+    "note": "Derived reporting copy, not the original controlled-output receipt."
+  }
 }

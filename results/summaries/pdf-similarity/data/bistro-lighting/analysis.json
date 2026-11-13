@@ -65,27 +65,27 @@
       "inputs": {
         "references": {
           "31": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\0f97cfbccd0c3a3599db38a2\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/bistro/0f97cfbccd0c3a3599db38a2/seed-1001/checkpoint-262144/attempt-0/frame-4096.pfm.gz",
             "sha256": "aa8be8c52b8f7d64e8a72cdb89cdddb3037ffafd5e8471f3819ce0f8888493c5"
           },
           "32": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\0f97cfbccd0c3a3599db38a2\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/bistro/0f97cfbccd0c3a3599db38a2/seed-1001/checkpoint-262144/attempt-0/frame-4096.pfm.gz",
             "sha256": "aa8be8c52b8f7d64e8a72cdb89cdddb3037ffafd5e8471f3819ce0f8888493c5"
           },
           "47": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\80f1b0ac449f0519e9a20db4\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/bistro/80f1b0ac449f0519e9a20db4/seed-1001/checkpoint-262144/attempt-0/frame-4096.pfm.gz",
             "sha256": "15df95ad06d23766bb308524c9cee6790b693f9c38acddd4b8ce6fea03d18a7f"
           },
           "48": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\5337d630a750977f8c98d56d\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/bistro/5337d630a750977f8c98d56d/seed-1001/checkpoint-262144/attempt-0/frame-4096.pfm.gz",
             "sha256": "aa9226686f78bf9577fdf8fb58a7a992c9a4066aec7b8dab29d652a69b5e6bc5"
           },
           "95": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\0f97cfbccd0c3a3599db38a2\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/bistro/0f97cfbccd0c3a3599db38a2/seed-1001/checkpoint-262144/attempt-0/frame-4096.pfm.gz",
             "sha256": "aa8be8c52b8f7d64e8a72cdb89cdddb3037ffafd5e8471f3819ce0f8888493c5"
           },
           "96": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\0f97cfbccd0c3a3599db38a2\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/bistro/0f97cfbccd0c3a3599db38a2/seed-1001/checkpoint-262144/attempt-0/frame-4096.pfm.gz",
             "sha256": "aa8be8c52b8f7d64e8a72cdb89cdddb3037ffafd5e8471f3819ce0f8888493c5"
           }
         },
@@ -93,7 +93,7 @@
           {
             "seed": 1,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-1\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/bistro-lighting/combined/neighbors-4/seed-1/off/attempt-0",
             "timings_sha256": "8c5afc3ef63e86e89138cdc9c5756c83ceccb11272228c8067e81c62b29c2079",
             "images": {
               "31": "e52b61498ea9ac36c6dfc815a93277c3378b09fdf09de3a69062a617c023d06f",
@@ -107,7 +107,7 @@
           {
             "seed": 1,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-1\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/bistro-lighting/combined/neighbors-4/seed-1/on/attempt-0",
             "timings_sha256": "08ae665949812b66d1a8d067da54a3d542e348a03bbbbebc014ce59c74fbb2e6",
             "images": {
               "31": "0ee7065caab3ba3b4cbd4d8db6f4a6984e489848ec4631f41ed3304037d4f3bc",
@@ -121,7 +121,7 @@
           {
             "seed": 2,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-2\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/bistro-lighting/combined/neighbors-4/seed-2/off/attempt-0",
             "timings_sha256": "cc14c05aec48c895f867f7681b968858b740cc81cb651f5483171f18af874473",
             "images": {
               "31": "c3d06b25a1916667e51330f8f10fc19ccdc5753a09aed3b4fcfb3b6a367cfd47",
@@ -135,7 +135,7 @@
           {
             "seed": 2,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-2\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/bistro-lighting/combined/neighbors-4/seed-2/on/attempt-0",
             "timings_sha256": "673bd3db2d575e848a11f4362665a662f9672bb703f1f0561f6109e22bdf1247",
             "images": {
               "31": "b9f192f839e7b5df5a9c968c0f61d18f9b21f3c5ff7097bc49a0a17d3559a154",
@@ -149,7 +149,7 @@
           {
             "seed": 3,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-3\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/bistro-lighting/combined/neighbors-4/seed-3/off/attempt-0",
             "timings_sha256": "8ad7afb25892933beba7c6072f02a9850b0225072f787192bbf8852c526754a6",
             "images": {
               "31": "9d3f68b5de3e6c2c04a9da1a5449e86b27a65234d36019c231cda3fdaa449d25",
@@ -163,7 +163,7 @@
           {
             "seed": 3,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-lighting\\combined\\neighbors-4\\seed-3\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/bistro-lighting/combined/neighbors-4/seed-3/on/attempt-0",
             "timings_sha256": "fe9e411df91bda85802598249cf45ec5190bb1762c3bdf1422c6a18f58aa1b87",
             "images": {
               "31": "d28a26dd87f5dec6507d1dcccd2bef3dea6a148939f960a00b350fdbccf08058",
@@ -195,8 +195,8 @@
           "reason": "User-authorized fixed-sample single-stream Bistro reference; uncertainty not evaluated under original dual-stream standard",
           "policy_id": "user_fixed_single_stream_262144_v1",
           "reference_inputs": {
-            "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\0f97cfbccd0c3a3599db38a2\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz": "aa8be8c52b8f7d64e8a72cdb89cdddb3037ffafd5e8471f3819ce0f8888493c5",
-            "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\5337d630a750977f8c98d56d\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz": "aa9226686f78bf9577fdf8fb58a7a992c9a4066aec7b8dab29d652a69b5e6bc5"
+            "runs/pdf-controlled-20261018/references/bistro/0f97cfbccd0c3a3599db38a2/seed-1001/checkpoint-262144/attempt-0/frame-4096.pfm.gz": "aa8be8c52b8f7d64e8a72cdb89cdddb3037ffafd5e8471f3819ce0f8888493c5",
+            "runs/pdf-controlled-20261018/references/bistro/5337d630a750977f8c98d56d/seed-1001/checkpoint-262144/attempt-0/frame-4096.pfm.gz": "aa9226686f78bf9577fdf8fb58a7a992c9a4066aec7b8dab29d652a69b5e6bc5"
           }
         }
       },
@@ -2889,5 +2889,13 @@
     }
   },
   "reference_precision_verified": false,
-  "reference_precision_scope": "Per-condition policy and assessment; fixed-policy uncertainty is NOT EVALUATED"
+  "reference_precision_scope": "Per-condition policy and assessment; fixed-policy uncertainty is NOT EVALUATED",
+  "path_normalization": {
+    "kind": "path_normalized_derived_copy",
+    "path_base": "repository_root",
+    "original_archive_path": "runs/pdf-similarity-archive/analysis/bistro-lighting/analysis.json",
+    "original_sha256": "b3bf30d3086d4f5f8b8f1d2a506731fa95f301c60d29a3946d2c0a0e31e666d1",
+    "historical_input_paths_may_be_unavailable": true,
+    "statistics_recomputed": false
+  }
 }

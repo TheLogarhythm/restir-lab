@@ -65,7 +65,7 @@
       "inputs": {
         "references": {
           "128": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\3cea35b572d61b17fceacc87\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/bistro/3cea35b572d61b17fceacc87/seed-1001/checkpoint-262144/attempt-0/frame-4096.pfm.gz",
             "sha256": "7edc10e5d19f08f6dfb5e9afd5d17da80c9ce0021b0870a9483419c6b9e5f5a0"
           }
         },
@@ -73,7 +73,7 @@
           {
             "seed": 1,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\equal-time\\bistro-interior-static-neighbors-2\\combined\\neighbors-2\\seed-1\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/equal-time/bistro-interior-static-neighbors-2/combined/neighbors-2/seed-1/off/attempt-0",
             "timings_sha256": "844d0266b0e0f44d3b9fca86059a2206073dc042ed59f215a8bd7d71db56b00e",
             "images": {
               "128": "ff29edd18060d2eb49cdefd3d9daca14aeaba112373df285417dcdbc104bb9a1"
@@ -82,7 +82,7 @@
           {
             "seed": 1,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\equal-time\\bistro-interior-static-neighbors-2\\combined\\neighbors-2\\seed-1\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/equal-time/bistro-interior-static-neighbors-2/combined/neighbors-2/seed-1/on/attempt-0",
             "timings_sha256": "6b8a8f0e5ca991986ea4b0f7688b808b85ffa1b9e602778f8652c84e97958228",
             "images": {
               "128": "ad3ca5425aded61ec779f5df9eaaf1a1657cbb5bff72797c6570c46e6dbaeca2"
@@ -91,7 +91,7 @@
           {
             "seed": 2,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\equal-time\\bistro-interior-static-neighbors-2\\combined\\neighbors-2\\seed-2\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/equal-time/bistro-interior-static-neighbors-2/combined/neighbors-2/seed-2/off/attempt-0",
             "timings_sha256": "306fc64e5f9698d20d094f6b63d862d9d4f036c3ba1e9210da8bd48b464fb267",
             "images": {
               "128": "5a656dd026308d0fe1aa4656a63ffde7b635f2b04b02a74bfffd4683d9836a40"
@@ -100,7 +100,7 @@
           {
             "seed": 2,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\equal-time\\bistro-interior-static-neighbors-2\\combined\\neighbors-2\\seed-2\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/equal-time/bistro-interior-static-neighbors-2/combined/neighbors-2/seed-2/on/attempt-0",
             "timings_sha256": "b82f00e1c4026d0ea7c9911f497d8202eae4ab536b230313fcd9c57673e2feb3",
             "images": {
               "128": "436a037fc9ee0f45eddb0ac0fc25365134053f27f58f4a71a307f6c553161da1"
@@ -109,7 +109,7 @@
           {
             "seed": 3,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\equal-time\\bistro-interior-static-neighbors-2\\combined\\neighbors-2\\seed-3\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/equal-time/bistro-interior-static-neighbors-2/combined/neighbors-2/seed-3/off/attempt-0",
             "timings_sha256": "3fa22575d27b543950a8808d6c4b6ffc585450598d8c4db167f77333d71fb2cb",
             "images": {
               "128": "4b09923ce025d7cc42d9dc9b9341f39a2e2fcb68587b4c1a75cde79a165470a5"
@@ -118,7 +118,7 @@
           {
             "seed": 3,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\equal-time\\bistro-interior-static-neighbors-2\\combined\\neighbors-2\\seed-3\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/equal-time/bistro-interior-static-neighbors-2/combined/neighbors-2/seed-3/on/attempt-0",
             "timings_sha256": "7ec7577bdf5a8eba6a8c1246b31ec4a484c5c61cfc419867f26d0834e38eb2d2",
             "images": {
               "128": "d771050a7fd15675c3329f6c0dcf997c3a602655c631fe2a3d7750d06bf179c0"
@@ -1071,5 +1071,13 @@
     }
   },
   "reference_precision_verified": false,
-  "reference_precision_scope": "Per-condition policy and assessment; fixed-policy uncertainty is NOT EVALUATED"
+  "reference_precision_scope": "Per-condition policy and assessment; fixed-policy uncertainty is NOT EVALUATED",
+  "path_normalization": {
+    "kind": "path_normalized_derived_copy",
+    "path_base": "repository_root",
+    "original_archive_path": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-2/analysis.json",
+    "original_sha256": "f5603eb0532ede21be1e35415a6842f2bf7487463ade1f1c833208ca631dca26",
+    "historical_input_paths_may_be_unavailable": true,
+    "statistics_recomputed": false
+  }
 }

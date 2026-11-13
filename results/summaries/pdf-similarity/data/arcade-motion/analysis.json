@@ -65,27 +65,27 @@
       "inputs": {
         "references": {
           "31": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\9e65290c8bd00f4f3904cfb7\\accepted-16384-ae2efe6eee85\\reference.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/arcade/9e65290c8bd00f4f3904cfb7/accepted-16384-ae2efe6eee85/reference.pfm.gz",
             "sha256": "2104b72fa6b11fc5b08c73b0697c30b7e0d8be0b8bbc08e88f95cff1d491d07f"
           },
           "32": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\9e65290c8bd00f4f3904cfb7\\accepted-16384-ae2efe6eee85\\reference.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/arcade/9e65290c8bd00f4f3904cfb7/accepted-16384-ae2efe6eee85/reference.pfm.gz",
             "sha256": "2104b72fa6b11fc5b08c73b0697c30b7e0d8be0b8bbc08e88f95cff1d491d07f"
           },
           "47": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\56c3b1dd87a7a7925c7ab768\\accepted-16384-c36b645090d6\\reference.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/arcade/56c3b1dd87a7a7925c7ab768/accepted-16384-c36b645090d6/reference.pfm.gz",
             "sha256": "2bef163db36af0bcc7e940c459ef25c1a4ae70e5c1bb22d88c4aab128c2270da"
           },
           "48": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\9fb2ff44cf20dd0771da4c0d\\accepted-16384-04d06f51da11\\reference.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/arcade/9fb2ff44cf20dd0771da4c0d/accepted-16384-04d06f51da11/reference.pfm.gz",
             "sha256": "5c75311e4190d6df818d1623e17a553a3ab81bbc5582b9725695f950ada6812b"
           },
           "95": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\ba8fb7a0d70c0c68548cae7e\\accepted-16384-9135be2698b3\\reference.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/arcade/ba8fb7a0d70c0c68548cae7e/accepted-16384-9135be2698b3/reference.pfm.gz",
             "sha256": "2308efc991553ed4773163d08e6be130140ddd7fb368a72acbcd616a593c0b7e"
           },
           "96": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\ba8fb7a0d70c0c68548cae7e\\accepted-16384-9135be2698b3\\reference.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/arcade/ba8fb7a0d70c0c68548cae7e/accepted-16384-9135be2698b3/reference.pfm.gz",
             "sha256": "2308efc991553ed4773163d08e6be130140ddd7fb368a72acbcd616a593c0b7e"
           }
         },
@@ -93,7 +93,7 @@
           {
             "seed": 1,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-1\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-1/off/attempt-0",
             "timings_sha256": "61427881185976921c5267a12f8bfe2d89e5b1f6a39bc9996dfad2bfd67707fe",
             "images": {
               "31": "19f11f6e9e0c85ac66b241bd29158d55a003d7b4590ac4e037f4bbde41c83d98",
@@ -107,7 +107,7 @@
           {
             "seed": 1,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-1\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-1/on/attempt-0",
             "timings_sha256": "a5ca5af13f11b2f4cacdb0fad68c23cbd551f357e3d4f5f30e4529c0a5115b52",
             "images": {
               "31": "4a3452decf54438d429adce909b103e83725b972a87b5085abea5698473d900e",
@@ -121,7 +121,7 @@
           {
             "seed": 2,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-2\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-2/off/attempt-0",
             "timings_sha256": "32f8d5b6b373307fed47a4b92585f299da6c70755a1ca5acb5dcbe7e353eb03e",
             "images": {
               "31": "eb0225ed0e1acd38b0b8d3ba4a0c5f327ea7917b8742be919e408af0778ededb",
@@ -135,7 +135,7 @@
           {
             "seed": 2,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-2\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-2/on/attempt-0",
             "timings_sha256": "0fa86202e439385f44c42ec3805153f4e5075404e6cdd4a60a2579879df7b696",
             "images": {
               "31": "fadfe97df638ec9109b86f59fc6efe873009194baa27be53e79b1724f16c3a11",
@@ -149,7 +149,7 @@
           {
             "seed": 3,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-3\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-3/off/attempt-0",
             "timings_sha256": "11af2ba501abda1b3d2fe7bfa8550796e736b3d23527e66b5a9c5a6b35c44f14",
             "images": {
               "31": "14660083cc7decc7d30f408cdcb66fe4bf6a3576f55ad4708f5e90918695590f",
@@ -163,7 +163,7 @@
           {
             "seed": 3,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-3\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-3/on/attempt-0",
             "timings_sha256": "55e88451e4b691f971e0f767285f0acbbc442c88ed09051d4b62186869e76ac9",
             "images": {
               "31": "3022349e65eb9ae57376f5e880c836d54205cd0c4880a58f7695f6a104340ec7",
@@ -5561,5 +5561,13 @@
       "trmae_direction": "improves",
       "trmae_reference_max_change": 1.1102230246251565e-16
     }
-  ]
+  ],
+  "path_normalization": {
+    "kind": "path_normalized_derived_copy",
+    "path_base": "repository_root",
+    "original_archive_path": "runs/pdf-similarity-archive/analysis/arcade-motion/analysis.json",
+    "original_sha256": "38379c4890c537bd8077a8feccd44e9ff1a1d35a25bf55c9de2330c3443d9073",
+    "historical_input_paths_may_be_unavailable": true,
+    "statistics_recomputed": false
+  }
 }

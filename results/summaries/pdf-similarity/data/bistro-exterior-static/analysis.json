@@ -65,7 +65,7 @@
       "inputs": {
         "references": {
           "128": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\0f97cfbccd0c3a3599db38a2\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/bistro/0f97cfbccd0c3a3599db38a2/seed-1001/checkpoint-262144/attempt-0/frame-4096.pfm.gz",
             "sha256": "aa8be8c52b8f7d64e8a72cdb89cdddb3037ffafd5e8471f3819ce0f8888493c5"
           }
         },
@@ -73,7 +73,7 @@
           {
             "seed": 1,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-exterior-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/bistro-exterior-static/combined/neighbors-4/seed-1/off/attempt-0",
             "timings_sha256": "06922c18c3e279f5825356b55cbc72c168cf2b0c4a63d3d03e82cbad207dcfb1",
             "images": {
               "128": "34b3696fe3b9923861822e2b93c56138939ca0af28889aee2d59fd31fdfa7689"
@@ -82,7 +82,7 @@
           {
             "seed": 1,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-exterior-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/bistro-exterior-static/combined/neighbors-4/seed-1/on/attempt-0",
             "timings_sha256": "342b79bd3c4efabb18691b146a02ce7eae46e6a720a022491b39600f5da75101",
             "images": {
               "128": "d32dc99713ed69ee7d082ebf68041d3ba899dbb3b40e577a1543fc7d59b833f2"
@@ -91,7 +91,7 @@
           {
             "seed": 2,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-exterior-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/bistro-exterior-static/combined/neighbors-4/seed-2/off/attempt-0",
             "timings_sha256": "ec4602e1bd6cf2a8c5379c1b03b465f4dd6bf850c7463fd2533f50eec1663d7d",
             "images": {
               "128": "30f50e5bca5c0cd3b6680af3dc5e3f0a3ae3521199bafdec458451a888893ec6"
@@ -100,7 +100,7 @@
           {
             "seed": 2,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-exterior-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/bistro-exterior-static/combined/neighbors-4/seed-2/on/attempt-0",
             "timings_sha256": "26e73736dccffc11c7173602ea2866210a3f85c44abd0f76dba2455d044362f3",
             "images": {
               "128": "dcf305b5c996bf969f0bd4a7e3b32850b289a1ac80a7faba2675da65a67620e9"
@@ -109,7 +109,7 @@
           {
             "seed": 3,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-exterior-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/bistro-exterior-static/combined/neighbors-4/seed-3/off/attempt-0",
             "timings_sha256": "e5b4a25ac35319b5857b2b42e7eec0f7092fff7ca8278205fd849b78696e2a61",
             "images": {
               "128": "7d3f6899bdf67629956f83c773d7be7a71c2a103e73353bd8ce0ec94c0695ba3"
@@ -118,7 +118,7 @@
           {
             "seed": 3,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\bistro-exterior-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/bistro-exterior-static/combined/neighbors-4/seed-3/on/attempt-0",
             "timings_sha256": "88d3d67d71a2a691d6e4ad6817323c7427f0c3787d6aa8e20aeb3896e5840d46",
             "images": {
               "128": "8bbf6b00959d57b7d668cd231285489fc2ae236a25abf295683cfad7f38efd62"
@@ -1071,5 +1071,13 @@
     }
   },
   "reference_precision_verified": false,
-  "reference_precision_scope": "Per-condition policy and assessment; fixed-policy uncertainty is NOT EVALUATED"
+  "reference_precision_scope": "Per-condition policy and assessment; fixed-policy uncertainty is NOT EVALUATED",
+  "path_normalization": {
+    "kind": "path_normalized_derived_copy",
+    "path_base": "repository_root",
+    "original_archive_path": "runs/pdf-similarity-archive/analysis/bistro-exterior-static/analysis.json",
+    "original_sha256": "8a357481a5967eeca385710f296c710113aa299e8aa72aa323ce5f1a88659b12",
+    "historical_input_paths_may_be_unavailable": true,
+    "statistics_recomputed": false
+  }
 }

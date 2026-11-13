@@ -917,9 +917,9 @@
     }
   ],
   "source": {
-    "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\analysis\\equal-time",
+    "directory": "results/summaries/pdf-similarity/data/equal-time",
     "sha256": {
-      "analysis.json": "5693c15023d4e7a44927d99e8e9527762e894f85f306504fc6130d3471123a32",
+      "analysis.json": "429a79d3e65694d339850118939af9a733af100ee47dcd1e5c0a97943f397556",
       "seed-metrics.csv": "8f58488970acb42450b7bd6fe0be22b9b4f26721b0d3781c4d56ea5150b97f71"
     },
     "reference_assessments": {
@@ -1126,5 +1126,20 @@
     }
   },
   "reference_precision_verified": false,
-  "reference_precision_scope": "Per-condition policy and assessment; fixed-policy uncertainty is NOT EVALUATED"
+  "reference_precision_scope": "Per-condition policy and assessment; fixed-policy uncertainty is NOT EVALUATED",
+  "path_normalization": {
+    "kind": "path_normalized_derived_copy",
+    "path_base": "repository_root",
+    "original_archive_path": "runs/pdf-similarity-archive/analysis/equal-time-comparison/analysis.json",
+    "original_sha256": "cd9c0a39768d9dc71dd9f1765b5837258acff1e11388db832da4ddf5a1b6e784",
+    "historical_input_paths_may_be_unavailable": true,
+    "statistics_recomputed": false,
+    "equivalent_upstream_rebinding": {
+      "original_directory": "runs/pdf-controlled-20261018/analysis/equal-time",
+      "original_analysis_sha256": "5693c15023d4e7a44927d99e8e9527762e894f85f306504fc6130d3471123a32",
+      "derived_directory": "results/summaries/pdf-similarity/data/equal-time",
+      "derived_analysis_sha256": "429a79d3e65694d339850118939af9a733af100ee47dcd1e5c0a97943f397556",
+      "note": "Path-normalized equivalent source; metrics were not recomputed."
+    }
+  }
 }

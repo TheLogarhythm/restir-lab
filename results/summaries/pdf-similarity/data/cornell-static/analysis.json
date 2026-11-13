@@ -65,7 +65,7 @@
       "inputs": {
         "references": {
           "128": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\cornell-box\\ed4ae7321530079d0b517eb1\\accepted-16384-2d451e6c9021\\reference.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/cornell-box/ed4ae7321530079d0b517eb1/accepted-16384-2d451e6c9021/reference.pfm.gz",
             "sha256": "932b1507307fdb20c56e03e16620c2971fd41816f453ba60b80ca87ac33ae9a7"
           }
         },
@@ -73,7 +73,7 @@
           {
             "seed": 1,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-1/off/attempt-0",
             "timings_sha256": "533b0d50c0fbee67ec8e9123be47f1baa11cb1804c6a1dc1fdca4cab3269a54c",
             "images": {
               "128": "a9f250fa8a9a1a53e808f112f817b74ab50b5b4c6a97640a9fcd3c8920b0bc7f"
@@ -82,7 +82,7 @@
           {
             "seed": 1,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-1/on/attempt-0",
             "timings_sha256": "f77098dc730da44aae8901d1adc8e0a94953b99b0458e517632edd1869ac7985",
             "images": {
               "128": "2df4b0384fe1556b6c02b3ddbb4aa5650550859535ab287cb25605b1ce8d0270"
@@ -91,7 +91,7 @@
           {
             "seed": 2,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-2/off/attempt-0",
             "timings_sha256": "9ffa1a906b943e85674abe3992d653869afcdabdfe9aa8e1015609c2d1e77d10",
             "images": {
               "128": "6b677a03b1e360d36dc4518ad4f89f18e2258006ee2ae0b60112a30d6e1353a6"
@@ -100,7 +100,7 @@
           {
             "seed": 2,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-2/on/attempt-0",
             "timings_sha256": "814e97fc058d8e2dd3a22747afabff9ada8a2c37306899b0481607b2435ef81a",
             "images": {
               "128": "568eb3189142a6c7c3c80f194b5839231980e1bfd9cf24fdacc85d6968b601cd"
@@ -109,7 +109,7 @@
           {
             "seed": 3,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-3/off/attempt-0",
             "timings_sha256": "6f1c8c48e61e46337653414f08e2156cf5ab1335b4f2aee8ee8c54a65382772a",
             "images": {
               "128": "48c948fb16f9b134dde2702b3fba34823a4cec64dc170035578b91241f3f849d"
@@ -118,7 +118,7 @@
           {
             "seed": 3,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\cornell-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/cornell-static/combined/neighbors-4/seed-3/on/attempt-0",
             "timings_sha256": "4e26ee8613c100d8d9163eed02a75cada674b3783f7ef5504986662218313708",
             "images": {
               "128": "58f09d1bca124d5b5e1794a1a01e4036d8aae4cbe1fe32c1d1730baf5b25b716"
@@ -1641,5 +1641,13 @@
       "trmae_direction": "not applicable",
       "trmae_reference_max_change": null
     }
-  ]
+  ],
+  "path_normalization": {
+    "kind": "path_normalized_derived_copy",
+    "path_base": "repository_root",
+    "original_archive_path": "runs/pdf-similarity-archive/analysis/cornell-static-80ee109bf782/analysis.json",
+    "original_sha256": "d97d71625730b09f0e78a22f683933683e96cb507958ad3665bf283a78dd913b",
+    "historical_input_paths_may_be_unavailable": true,
+    "statistics_recomputed": false
+  }
 }

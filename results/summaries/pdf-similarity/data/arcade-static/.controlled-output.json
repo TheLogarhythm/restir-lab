@@ -1,8 +1,8 @@
 {
   "files": {
     "analysis.json": {
-      "bytes": 61514,
-      "sha256": "70aadd04989ad279a7671e99ad42f6ec1f8f9b73b1c3592cf6d6d9f2c2537c7b"
+      "bytes": 61527,
+      "sha256": "7ebe466cedb7c3a107589d2b9aed2e9aba78e152980e56b401bc1ae242be28c3"
     },
     "frame-metrics.csv": {
       "bytes": 2156,
@@ -24,38 +24,38 @@
       "bytes": 1935,
       "sha256": "0bac5bd9bc0f683c0db2943daac87c63612c5f2baf8245b4a580c6ca3b59787d"
     },
-    "summary.md": {
+    "summary.md.source.txt": {
       "bytes": 1618,
       "sha256": "d140fa66c0cec73201e9db16e64abd75b46d358dabda05753a1a9b05717c209d"
     }
   },
   "identity": {
     "inputs": {
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\captures.json": "a49b8e1f6f0aa497407ffcd16ac9a72bae18354bf4e90f0a307bf4492c5e7e5b",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\config.json": "97a7630d938f46d553122586358f041a8e7b6e184b0e65fcf7a7cb8f9839599a",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\manifest.json": "e6d4897bea7073380a8055d54190895dee55ee87f7b77d8bd3e829673d7ca2d9",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\timings.csv": "573a80cbffd07989705e37391e34f3ac88e7642b0047b2b75df00151c5b49b34",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\captures.json": "d759048e3c5e5ebe3d918d8dc68cdc6841b815a05484f4b6d29b1c6d0ecca997",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\config.json": "aaa3a4d1b6166158966de5bc81af7a9abc82e2f4cd19978b4ff519094458c80f",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\manifest.json": "1bed9a2c9e8943ce22334d6b1c0ef3fa8ef0fa9a10ad78346ef966d93f1310cb",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\timings.csv": "814e637ef7fdab50b12009e868804b364d7a1a7c698c5e340c6ab924c5391dd9",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\captures.json": "e017fb27395a9716613403d3da05d1b66e80af9eaffe37810398f400d8171307",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\config.json": "5281ac70d355cac966d3dda170256e55689492899dc2d31c33b16859a250cd06",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\manifest.json": "af543f482cb707240a92958596243d50516db9e312c6ace490289fdc87b45623",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\timings.csv": "abca2957393a8bfeb0dbc516d6b4aac571ca737d141132178258ce62252c3e13",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\captures.json": "5a134ab0467fb3b5b88babd77a8015625f2d04f8e0ce5e99f975f323cacb7c2b",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\config.json": "a2ea0ecfb3806afc33ae12d837a0829409e4000e0f492e312c7c18e77319b9a1",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\manifest.json": "30e31eb1d5fbd36d72c9c01ff1953397a975fc802b0ade219001b6d4dc0afa56",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\timings.csv": "cced0a58db971683c4e8b336c42cf3c09fedde780868306048c3b41af10a367f",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\captures.json": "a6c25eb4764d4e2efa97256079e4a646bcc3094c8e7374f3c41f2c06ffae46ab",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\config.json": "8dbcde2952be238329286dde7725bac561ccbea5683d13b715d19d6868f7cf27",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\manifest.json": "658fb7599c166d48c839e76f9998d2e91ceb7ed75cd5320ec0457a7f345fede7",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\timings.csv": "33ee1e719f109c58a8acbde6df7785f1e73bd8e5f741b54f5832ac2294dd69e6",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\captures.json": "ea88f7ecdf34a8dcfb92811c4e6080580091bd2a1780187b4c4282de7aa8053b",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\config.json": "35428a872218c1951a6c1deba35804986c8462bf85d74d327e6917e6711807d4",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\manifest.json": "bacc9bb2dc4d4c52aef50a0bef37ce246bbec683dc8e6d4e079da6b089f8896b",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\timings.csv": "506af3bc0aa922a3761acf04a654d590fb8b90b24646a2457cd70dfc1ba866f4",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\9e65290c8bd00f4f3904cfb7\\accepted-16384-ae2efe6eee85\\reference.pfm.gz": "2104b72fa6b11fc5b08c73b0697c30b7e0d8be0b8bbc08e88f95cff1d491d07f"
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-1/off/attempt-0/captures.json": "a49b8e1f6f0aa497407ffcd16ac9a72bae18354bf4e90f0a307bf4492c5e7e5b",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-1/off/attempt-0/config.json": "97a7630d938f46d553122586358f041a8e7b6e184b0e65fcf7a7cb8f9839599a",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-1/off/attempt-0/manifest.json": "e6d4897bea7073380a8055d54190895dee55ee87f7b77d8bd3e829673d7ca2d9",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-1/off/attempt-0/timings.csv": "573a80cbffd07989705e37391e34f3ac88e7642b0047b2b75df00151c5b49b34",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-1/on/attempt-0/captures.json": "d759048e3c5e5ebe3d918d8dc68cdc6841b815a05484f4b6d29b1c6d0ecca997",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-1/on/attempt-0/config.json": "aaa3a4d1b6166158966de5bc81af7a9abc82e2f4cd19978b4ff519094458c80f",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-1/on/attempt-0/manifest.json": "1bed9a2c9e8943ce22334d6b1c0ef3fa8ef0fa9a10ad78346ef966d93f1310cb",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-1/on/attempt-0/timings.csv": "814e637ef7fdab50b12009e868804b364d7a1a7c698c5e340c6ab924c5391dd9",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-2/off/attempt-0/captures.json": "e017fb27395a9716613403d3da05d1b66e80af9eaffe37810398f400d8171307",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-2/off/attempt-0/config.json": "5281ac70d355cac966d3dda170256e55689492899dc2d31c33b16859a250cd06",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-2/off/attempt-0/manifest.json": "af543f482cb707240a92958596243d50516db9e312c6ace490289fdc87b45623",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-2/off/attempt-0/timings.csv": "abca2957393a8bfeb0dbc516d6b4aac571ca737d141132178258ce62252c3e13",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-2/on/attempt-0/captures.json": "5a134ab0467fb3b5b88babd77a8015625f2d04f8e0ce5e99f975f323cacb7c2b",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-2/on/attempt-0/config.json": "a2ea0ecfb3806afc33ae12d837a0829409e4000e0f492e312c7c18e77319b9a1",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-2/on/attempt-0/manifest.json": "30e31eb1d5fbd36d72c9c01ff1953397a975fc802b0ade219001b6d4dc0afa56",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-2/on/attempt-0/timings.csv": "cced0a58db971683c4e8b336c42cf3c09fedde780868306048c3b41af10a367f",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-3/off/attempt-0/captures.json": "a6c25eb4764d4e2efa97256079e4a646bcc3094c8e7374f3c41f2c06ffae46ab",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-3/off/attempt-0/config.json": "8dbcde2952be238329286dde7725bac561ccbea5683d13b715d19d6868f7cf27",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-3/off/attempt-0/manifest.json": "658fb7599c166d48c839e76f9998d2e91ceb7ed75cd5320ec0457a7f345fede7",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-3/off/attempt-0/timings.csv": "33ee1e719f109c58a8acbde6df7785f1e73bd8e5f741b54f5832ac2294dd69e6",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-3/on/attempt-0/captures.json": "ea88f7ecdf34a8dcfb92811c4e6080580091bd2a1780187b4c4282de7aa8053b",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-3/on/attempt-0/config.json": "35428a872218c1951a6c1deba35804986c8462bf85d74d327e6917e6711807d4",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-3/on/attempt-0/manifest.json": "bacc9bb2dc4d4c52aef50a0bef37ce246bbec683dc8e6d4e079da6b089f8896b",
+      "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-3/on/attempt-0/timings.csv": "506af3bc0aa922a3761acf04a654d590fb8b90b24646a2457cd70dfc1ba866f4",
+      "runs/pdf-controlled-20261018/references/arcade/9e65290c8bd00f4f3904cfb7/accepted-16384-ae2efe6eee85/reference.pfm.gz": "2104b72fa6b11fc5b08c73b0697c30b7e0d8be0b8bbc08e88f95cff1d491d07f"
     },
     "reports": [
       {
@@ -700,7 +700,7 @@
           }
         },
         "references": {
-          "128": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\9e65290c8bd00f4f3904cfb7\\accepted-16384-ae2efe6eee85\\reference.pfm.gz"
+          "128": "runs/pdf-controlled-20261018/references/arcade/9e65290c8bd00f4f3904cfb7/accepted-16384-ae2efe6eee85/reference.pfm.gz"
         },
         "rois": [
           {
@@ -720,18 +720,18 @@
         ],
         "runs": [
           {
-            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0",
-            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0",
+            "off_dir": "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-1/off/attempt-0",
+            "on_dir": "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-1/on/attempt-0",
             "seed": 1
           },
           {
-            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0",
-            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0",
+            "off_dir": "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-2/off/attempt-0",
+            "on_dir": "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-2/on/attempt-0",
             "seed": 2
           },
           {
-            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0",
-            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0",
+            "off_dir": "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-3/off/attempt-0",
+            "on_dir": "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-3/on/attempt-0",
             "seed": 3
           }
         ],
@@ -766,7 +766,17 @@
       "scripts/run/rtxdi_pdf_controlled.py": "4f24d7fa9cc7f78962cc121e67fa368e60e1703c992f3cba5e690b053182f428"
     }
   },
-  "identity_sha256": "1a701b3c06768247ce3370592e07c5c83d6a4d5f677ab4d9f285a7bdb481fe37",
+  "identity_sha256": "0e3e810ba175879e40767ff7710cc7552e261c0caa5003dde5b3a1d168af6cac",
   "schema_version": 2,
-  "status": "completed"
+  "status": "derived",
+  "path_normalization": {
+    "kind": "path_normalized_derived_receipt",
+    "path_base": "repository_root",
+    "original_archive_path": "runs/pdf-similarity-archive/analysis/arcade-static-1a701b3c0676/.controlled-output.json",
+    "original_sha256": "bb89eb4834fd4d349df090e7d38ca9f1ba50970f61e7d1281ad5b1b3133efcd8",
+    "original_identity_sha256": "1a701b3c06768247ce3370592e07c5c83d6a4d5f677ab4d9f285a7bdb481fe37",
+    "original_status": "completed",
+    "non_resumable": true,
+    "note": "Derived reporting copy, not the original controlled-output receipt."
+  }
 }

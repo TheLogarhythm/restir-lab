@@ -1,8 +1,8 @@
 {
   "files": {
     "analysis.json": {
-      "bytes": 36048,
-      "sha256": "d74a4539eb1f40248d044c16a65f8dadf40e4d47382c3244ecd31c0166581efc"
+      "bytes": 36068,
+      "sha256": "d339d6de74465935dae1d4528f628530b4beb4c2ffc08a744e059fd06fe783a5"
     },
     "frame-metrics.csv": {
       "bytes": 2553,
@@ -24,38 +24,38 @@
       "bytes": 2066,
       "sha256": "6fbaf20164a3e604e9b811a4410a57755528acb0365b4855fda5b5ca679279e3"
     },
-    "summary.md": {
+    "summary.md.source.txt": {
       "bytes": 2039,
       "sha256": "4f00bcea1adb3ddd1582b46cf06ef686c926946c0c088289054c244a6ab15afb"
     }
   },
   "identity": {
     "inputs": {
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\off\\attempt-0\\captures.json": "03ba3cf03157333617e2fe53f77c52a5b56b404c05d2ca0d9dd10505780f029b",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\off\\attempt-0\\config.json": "08d253849f855034dbb1cca184b63a517e3ceaceda6ecea4d631caf18d5d786c",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\off\\attempt-0\\manifest.json": "d903a9bedf7a9abce11119b5c0f6ab8daa0a082ec5aad8c10870734df1f25236",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\off\\attempt-0\\timings.csv": "1b83b7b9cadb439fb4d154ec6d94617aac95d4aa1d9ed2627048ed8749127af9",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\on\\attempt-0\\captures.json": "e2947e1bc5f7112bffda9e5a1997cf4ff445255d3bbf459a64daedc174793acb",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\on\\attempt-0\\config.json": "c771af7e10d7848a6b957e72b595f6979681fc3b4f1798c21aa75bf8a016a153",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\on\\attempt-0\\manifest.json": "2d8f3eacd66120c33392bcc9a5072968cd8534beb03f7238215400ef49914d2e",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\on\\attempt-0\\timings.csv": "91e15c327df6d69d31cb8fbba743720ddb86d91b296b788fe8ae4a42cf94dd57",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\off\\attempt-0\\captures.json": "d84df5c4e22786aac131cbd439903ffebb655e0b3832d0bbdb5f769304c4fc9a",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\off\\attempt-0\\config.json": "a7c93421963a2da3a52ce9de557a3caa7d0c5ea281ff543e4ff8baec0d9a9629",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\off\\attempt-0\\manifest.json": "b1573711cd16b1b7366ba2db0e8a71aa261f94cbdf02acbf23d226b45cdc8c0c",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\off\\attempt-0\\timings.csv": "9e41e77b29a3ac3956ef42758232de55583d9d7ee2c49702e8889ca7b2d76be4",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\on\\attempt-0\\captures.json": "37df7b4386fb243a8a5d16a0b99a5435dd53c6fa4f1fa77db8aacdd0f7dab4ac",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\on\\attempt-0\\config.json": "0b0fc788fba25a2f7453e1787b8c92cb8d99f8bf0147a5efe2509ebe9cc99844",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\on\\attempt-0\\manifest.json": "e4dfae58185f134fc12f855ac726dfcfc7149386d483baea2f8e65e247d7cbc3",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\on\\attempt-0\\timings.csv": "3cf76d6ed0bb79f48cec9ea18c5df591cac121c126120d674517d2369d4b117a",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\off\\attempt-0\\captures.json": "e6fb94a1c12177e4e46a90cbd87f878aede21e491dd02da53d5abbf755dc580a",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\off\\attempt-0\\config.json": "be21f6695b00a804a800d3908fda4ca7ee0149830452de243abe21fe872a6b69",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\off\\attempt-0\\manifest.json": "f48d0f55c36dca359989c7cae1b5c18cb18158eee2ddab968d3ea879b0299ec6",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\off\\attempt-0\\timings.csv": "96ed98a9ee54b326bc54ad5b894f5369c9e753285b4229e6da85108cc387e42c",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\on\\attempt-0\\captures.json": "643337bb7d4c1fd65438beaa4058d539609586a0d134c012e7c970e7fe59064a",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\on\\attempt-0\\config.json": "299a00a1c92a5ee82f158d59bef546607ef16b9543044ca4b3989d24f2353161",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\on\\attempt-0\\manifest.json": "92c507772a4217d7131d10dd03c414774d2caf8b1b7d6a303e531b641b26c76d",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\on\\attempt-0\\timings.csv": "d5e213b342a9d48bd96fba624c10d662946c07e6add5b7e9df8e0bfb265c0f40",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\3cea35b572d61b17fceacc87\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz": "7edc10e5d19f08f6dfb5e9afd5d17da80c9ce0021b0870a9483419c6b9e5f5a0"
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-1/off/attempt-0/captures.json": "03ba3cf03157333617e2fe53f77c52a5b56b404c05d2ca0d9dd10505780f029b",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-1/off/attempt-0/config.json": "08d253849f855034dbb1cca184b63a517e3ceaceda6ecea4d631caf18d5d786c",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-1/off/attempt-0/manifest.json": "d903a9bedf7a9abce11119b5c0f6ab8daa0a082ec5aad8c10870734df1f25236",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-1/off/attempt-0/timings.csv": "1b83b7b9cadb439fb4d154ec6d94617aac95d4aa1d9ed2627048ed8749127af9",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-1/on/attempt-0/captures.json": "e2947e1bc5f7112bffda9e5a1997cf4ff445255d3bbf459a64daedc174793acb",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-1/on/attempt-0/config.json": "c771af7e10d7848a6b957e72b595f6979681fc3b4f1798c21aa75bf8a016a153",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-1/on/attempt-0/manifest.json": "2d8f3eacd66120c33392bcc9a5072968cd8534beb03f7238215400ef49914d2e",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-1/on/attempt-0/timings.csv": "91e15c327df6d69d31cb8fbba743720ddb86d91b296b788fe8ae4a42cf94dd57",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-2/off/attempt-0/captures.json": "d84df5c4e22786aac131cbd439903ffebb655e0b3832d0bbdb5f769304c4fc9a",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-2/off/attempt-0/config.json": "a7c93421963a2da3a52ce9de557a3caa7d0c5ea281ff543e4ff8baec0d9a9629",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-2/off/attempt-0/manifest.json": "b1573711cd16b1b7366ba2db0e8a71aa261f94cbdf02acbf23d226b45cdc8c0c",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-2/off/attempt-0/timings.csv": "9e41e77b29a3ac3956ef42758232de55583d9d7ee2c49702e8889ca7b2d76be4",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-2/on/attempt-0/captures.json": "37df7b4386fb243a8a5d16a0b99a5435dd53c6fa4f1fa77db8aacdd0f7dab4ac",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-2/on/attempt-0/config.json": "0b0fc788fba25a2f7453e1787b8c92cb8d99f8bf0147a5efe2509ebe9cc99844",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-2/on/attempt-0/manifest.json": "e4dfae58185f134fc12f855ac726dfcfc7149386d483baea2f8e65e247d7cbc3",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-2/on/attempt-0/timings.csv": "3cf76d6ed0bb79f48cec9ea18c5df591cac121c126120d674517d2369d4b117a",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-3/off/attempt-0/captures.json": "e6fb94a1c12177e4e46a90cbd87f878aede21e491dd02da53d5abbf755dc580a",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-3/off/attempt-0/config.json": "be21f6695b00a804a800d3908fda4ca7ee0149830452de243abe21fe872a6b69",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-3/off/attempt-0/manifest.json": "f48d0f55c36dca359989c7cae1b5c18cb18158eee2ddab968d3ea879b0299ec6",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-3/off/attempt-0/timings.csv": "96ed98a9ee54b326bc54ad5b894f5369c9e753285b4229e6da85108cc387e42c",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-3/on/attempt-0/captures.json": "643337bb7d4c1fd65438beaa4058d539609586a0d134c012e7c970e7fe59064a",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-3/on/attempt-0/config.json": "299a00a1c92a5ee82f158d59bef546607ef16b9543044ca4b3989d24f2353161",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-3/on/attempt-0/manifest.json": "92c507772a4217d7131d10dd03c414774d2caf8b1b7d6a303e531b641b26c76d",
+      "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-3/on/attempt-0/timings.csv": "d5e213b342a9d48bd96fba624c10d662946c07e6add5b7e9df8e0bfb265c0f40",
+      "runs/pdf-controlled-20261018/references/bistro/3cea35b572d61b17fceacc87/seed-1001/checkpoint-262144/attempt-0/frame-4096.pfm.gz": "7edc10e5d19f08f6dfb5e9afd5d17da80c9ce0021b0870a9483419c6b9e5f5a0"
     },
     "reports": [
       {
@@ -105,7 +105,7 @@
           ]
         },
         "references": {
-          "128": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\bistro\\3cea35b572d61b17fceacc87\\seed-1001\\checkpoint-262144\\attempt-0\\frame-4096.pfm.gz"
+          "128": "runs/pdf-controlled-20261018/references/bistro/3cea35b572d61b17fceacc87/seed-1001/checkpoint-262144/attempt-0/frame-4096.pfm.gz"
         },
         "rois": [
           {
@@ -125,18 +125,18 @@
         ],
         "runs": [
           {
-            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\off\\attempt-0",
-            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-1\\on\\attempt-0",
+            "off_dir": "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-1/off/attempt-0",
+            "on_dir": "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-1/on/attempt-0",
             "seed": 1
           },
           {
-            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\off\\attempt-0",
-            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-2\\on\\attempt-0",
+            "off_dir": "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-2/off/attempt-0",
+            "on_dir": "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-2/on/attempt-0",
             "seed": 2
           },
           {
-            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\off\\attempt-0",
-            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\ablation\\bistro-interior-static-spatial-only\\spatial\\neighbors-4\\seed-3\\on\\attempt-0",
+            "off_dir": "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-3/off/attempt-0",
+            "on_dir": "runs/pdf-controlled-20261018/ablation/bistro-interior-static-spatial-only/spatial/neighbors-4/seed-3/on/attempt-0",
             "seed": 3
           }
         ],
@@ -173,7 +173,17 @@
       "scripts/run/rtxdi_pdf_controlled.py": "8e36a041b8ae4864ce8b5e1024a768c93d2d0a6fc93b2e224ba2d0d32e6a4ca3"
     }
   },
-  "identity_sha256": "1864b16377191229f7af7f1c6bb7b8cf3fe76d2f124f0ece9a596a273d4d1bf7",
+  "identity_sha256": "418dc7ef883939409932f4e5489d05c892abb9659198153e809336fdcf88b92f",
   "schema_version": 2,
-  "status": "completed"
+  "status": "derived",
+  "path_normalization": {
+    "kind": "path_normalized_derived_receipt",
+    "path_base": "repository_root",
+    "original_archive_path": "runs/pdf-similarity-archive/analysis/bistro-interior-static-spatial-only/.controlled-output.json",
+    "original_sha256": "9e93e194275ccd02fa3d36e14a938192d2e3b596978b82794200ec8d168be41b",
+    "original_identity_sha256": "1864b16377191229f7af7f1c6bb7b8cf3fe76d2f124f0ece9a596a273d4d1bf7",
+    "original_status": "completed",
+    "non_resumable": true,
+    "note": "Derived reporting copy, not the original controlled-output receipt."
+  }
 }

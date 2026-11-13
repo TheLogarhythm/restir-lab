@@ -1,8 +1,8 @@
 {
   "files": {
     "analysis.json": {
-      "bytes": 217902,
-      "sha256": "38379c4890c537bd8077a8feccd44e9ff1a1d35a25bf55c9de2330c3443d9073"
+      "bytes": 217627,
+      "sha256": "41ecaa2bdc0b9ba373f9f9960077ac4c06dd844f1216795c7b44bc1161b6afd3"
     },
     "frame-metrics.csv": {
       "bytes": 7121,
@@ -24,41 +24,41 @@
       "bytes": 5904,
       "sha256": "9aa06af227f7a4c152e1bc3a1f01cd1cd7956b22748370e03149aff66e867009"
     },
-    "summary.md": {
+    "summary.md.source.txt": {
       "bytes": 2077,
       "sha256": "d8e602097c51b325d0ecacbb337f1fe5143810cbe78b6bdf05a1eae795772113"
     }
   },
   "identity": {
     "inputs": {
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\captures.json": "fab5521a7f4eceb64feb1419fe78595309a2215911c376a246fb6c2726c069f0",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\config.json": "a296cc250c5a9a0030d25d7eef15202b0ad6c2f03997570b803ff84aeafaa79f",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\manifest.json": "b2ed4c02a953942f341baff6617da1aac5dd0c1f6bbcf8677e3393891a3034ab",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-1\\off\\attempt-0\\timings.csv": "61427881185976921c5267a12f8bfe2d89e5b1f6a39bc9996dfad2bfd67707fe",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\captures.json": "6e7fb4ed611992fe7d5a2edf9bed4bf12504ce14856a5ea9c79f3a1b28ac1cad",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\config.json": "52f0b30cb6888edcced31405481b3641a5a9b961bd166e47c919e5e9b42552c7",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\manifest.json": "2ab204bc1c28f92bfae9f028ad59e1afe24b48233c472db97e3e7853580ba8ea",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-1\\on\\attempt-0\\timings.csv": "a5ca5af13f11b2f4cacdb0fad68c23cbd551f357e3d4f5f30e4529c0a5115b52",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\captures.json": "c5a12a29e1c957d7c70fdd1b2a200cb5cdd5fcc19a35c1511a2e582374901c8a",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\config.json": "4c8ed85a3d723959771fa9cd1921d9c4135ab72075a6926ea7083745a0c52250",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\manifest.json": "a7f2d32a577451131c210c113de8680c30fe35810aadab6cc36c2bc31786372b",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-2\\off\\attempt-0\\timings.csv": "32f8d5b6b373307fed47a4b92585f299da6c70755a1ca5acb5dcbe7e353eb03e",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\captures.json": "eca62af71f51493f5f237ba57df90921e9505a0c71c40a49fdfa4d0c0e3d6f98",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\config.json": "ccb77f2c11fd09eb7ff543dbef3dcce8194925e32a11b0c74d8bb948d9aa855e",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\manifest.json": "3b0d05821547380c77a8f5036d37eef0d469e46e3c3934e1f8cef549f47360fe",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-2\\on\\attempt-0\\timings.csv": "0fa86202e439385f44c42ec3805153f4e5075404e6cdd4a60a2579879df7b696",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\captures.json": "f91c3051fef5e50701a95448a3cd28a9e3e3ca713a5e21c6f92fd9f56dd05342",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\config.json": "b96620c1fb3044651e0e28253995b1f72944d314ba6275bdc074b5245245d2a9",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\manifest.json": "9c31ad3561572dc0201bb8c3e35a79568facbad1b67e397cd868e08e0c8328e2",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-3\\off\\attempt-0\\timings.csv": "11af2ba501abda1b3d2fe7bfa8550796e736b3d23527e66b5a9c5a6b35c44f14",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\captures.json": "4b3f6311ff5509d4c305ecc22c4ebbbf23bbb77fd80b380b945a98e3ac3a999e",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\config.json": "a141eed953e95c2821d065d09cbc2883fe04fc94b41c5537cc1bab3b324333d2",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\manifest.json": "663df11dd0b2da671d4930ae06137b01184f29dcf7172c283771ee355169117f",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-3\\on\\attempt-0\\timings.csv": "55e88451e4b691f971e0f767285f0acbbc442c88ed09051d4b62186869e76ac9",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\56c3b1dd87a7a7925c7ab768\\accepted-16384-c36b645090d6\\reference.pfm.gz": "2bef163db36af0bcc7e940c459ef25c1a4ae70e5c1bb22d88c4aab128c2270da",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\9e65290c8bd00f4f3904cfb7\\accepted-16384-ae2efe6eee85\\reference.pfm.gz": "2104b72fa6b11fc5b08c73b0697c30b7e0d8be0b8bbc08e88f95cff1d491d07f",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\9fb2ff44cf20dd0771da4c0d\\accepted-16384-04d06f51da11\\reference.pfm.gz": "5c75311e4190d6df818d1623e17a553a3ab81bbc5582b9725695f950ada6812b",
-      "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\ba8fb7a0d70c0c68548cae7e\\accepted-16384-9135be2698b3\\reference.pfm.gz": "2308efc991553ed4773163d08e6be130140ddd7fb368a72acbcd616a593c0b7e"
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-1/off/attempt-0/captures.json": "fab5521a7f4eceb64feb1419fe78595309a2215911c376a246fb6c2726c069f0",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-1/off/attempt-0/config.json": "a296cc250c5a9a0030d25d7eef15202b0ad6c2f03997570b803ff84aeafaa79f",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-1/off/attempt-0/manifest.json": "b2ed4c02a953942f341baff6617da1aac5dd0c1f6bbcf8677e3393891a3034ab",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-1/off/attempt-0/timings.csv": "61427881185976921c5267a12f8bfe2d89e5b1f6a39bc9996dfad2bfd67707fe",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-1/on/attempt-0/captures.json": "6e7fb4ed611992fe7d5a2edf9bed4bf12504ce14856a5ea9c79f3a1b28ac1cad",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-1/on/attempt-0/config.json": "52f0b30cb6888edcced31405481b3641a5a9b961bd166e47c919e5e9b42552c7",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-1/on/attempt-0/manifest.json": "2ab204bc1c28f92bfae9f028ad59e1afe24b48233c472db97e3e7853580ba8ea",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-1/on/attempt-0/timings.csv": "a5ca5af13f11b2f4cacdb0fad68c23cbd551f357e3d4f5f30e4529c0a5115b52",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-2/off/attempt-0/captures.json": "c5a12a29e1c957d7c70fdd1b2a200cb5cdd5fcc19a35c1511a2e582374901c8a",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-2/off/attempt-0/config.json": "4c8ed85a3d723959771fa9cd1921d9c4135ab72075a6926ea7083745a0c52250",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-2/off/attempt-0/manifest.json": "a7f2d32a577451131c210c113de8680c30fe35810aadab6cc36c2bc31786372b",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-2/off/attempt-0/timings.csv": "32f8d5b6b373307fed47a4b92585f299da6c70755a1ca5acb5dcbe7e353eb03e",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-2/on/attempt-0/captures.json": "eca62af71f51493f5f237ba57df90921e9505a0c71c40a49fdfa4d0c0e3d6f98",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-2/on/attempt-0/config.json": "ccb77f2c11fd09eb7ff543dbef3dcce8194925e32a11b0c74d8bb948d9aa855e",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-2/on/attempt-0/manifest.json": "3b0d05821547380c77a8f5036d37eef0d469e46e3c3934e1f8cef549f47360fe",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-2/on/attempt-0/timings.csv": "0fa86202e439385f44c42ec3805153f4e5075404e6cdd4a60a2579879df7b696",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-3/off/attempt-0/captures.json": "f91c3051fef5e50701a95448a3cd28a9e3e3ca713a5e21c6f92fd9f56dd05342",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-3/off/attempt-0/config.json": "b96620c1fb3044651e0e28253995b1f72944d314ba6275bdc074b5245245d2a9",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-3/off/attempt-0/manifest.json": "9c31ad3561572dc0201bb8c3e35a79568facbad1b67e397cd868e08e0c8328e2",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-3/off/attempt-0/timings.csv": "11af2ba501abda1b3d2fe7bfa8550796e736b3d23527e66b5a9c5a6b35c44f14",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-3/on/attempt-0/captures.json": "4b3f6311ff5509d4c305ecc22c4ebbbf23bbb77fd80b380b945a98e3ac3a999e",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-3/on/attempt-0/config.json": "a141eed953e95c2821d065d09cbc2883fe04fc94b41c5537cc1bab3b324333d2",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-3/on/attempt-0/manifest.json": "663df11dd0b2da671d4930ae06137b01184f29dcf7172c283771ee355169117f",
+      "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-3/on/attempt-0/timings.csv": "55e88451e4b691f971e0f767285f0acbbc442c88ed09051d4b62186869e76ac9",
+      "runs/pdf-controlled-20261018/references/arcade/56c3b1dd87a7a7925c7ab768/accepted-16384-c36b645090d6/reference.pfm.gz": "2bef163db36af0bcc7e940c459ef25c1a4ae70e5c1bb22d88c4aab128c2270da",
+      "runs/pdf-controlled-20261018/references/arcade/9e65290c8bd00f4f3904cfb7/accepted-16384-ae2efe6eee85/reference.pfm.gz": "2104b72fa6b11fc5b08c73b0697c30b7e0d8be0b8bbc08e88f95cff1d491d07f",
+      "runs/pdf-controlled-20261018/references/arcade/9fb2ff44cf20dd0771da4c0d/accepted-16384-04d06f51da11/reference.pfm.gz": "5c75311e4190d6df818d1623e17a553a3ab81bbc5582b9725695f950ada6812b",
+      "runs/pdf-controlled-20261018/references/arcade/ba8fb7a0d70c0c68548cae7e/accepted-16384-9135be2698b3/reference.pfm.gz": "2308efc991553ed4773163d08e6be130140ddd7fb368a72acbcd616a593c0b7e"
     },
     "reports": [
       {
@@ -2839,12 +2839,12 @@
           }
         },
         "references": {
-          "31": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\9e65290c8bd00f4f3904cfb7\\accepted-16384-ae2efe6eee85\\reference.pfm.gz",
-          "32": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\9e65290c8bd00f4f3904cfb7\\accepted-16384-ae2efe6eee85\\reference.pfm.gz",
-          "47": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\56c3b1dd87a7a7925c7ab768\\accepted-16384-c36b645090d6\\reference.pfm.gz",
-          "48": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\9fb2ff44cf20dd0771da4c0d\\accepted-16384-04d06f51da11\\reference.pfm.gz",
-          "95": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\ba8fb7a0d70c0c68548cae7e\\accepted-16384-9135be2698b3\\reference.pfm.gz",
-          "96": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\ba8fb7a0d70c0c68548cae7e\\accepted-16384-9135be2698b3\\reference.pfm.gz"
+          "31": "runs/pdf-controlled-20261018/references/arcade/9e65290c8bd00f4f3904cfb7/accepted-16384-ae2efe6eee85/reference.pfm.gz",
+          "32": "runs/pdf-controlled-20261018/references/arcade/9e65290c8bd00f4f3904cfb7/accepted-16384-ae2efe6eee85/reference.pfm.gz",
+          "47": "runs/pdf-controlled-20261018/references/arcade/56c3b1dd87a7a7925c7ab768/accepted-16384-c36b645090d6/reference.pfm.gz",
+          "48": "runs/pdf-controlled-20261018/references/arcade/9fb2ff44cf20dd0771da4c0d/accepted-16384-04d06f51da11/reference.pfm.gz",
+          "95": "runs/pdf-controlled-20261018/references/arcade/ba8fb7a0d70c0c68548cae7e/accepted-16384-9135be2698b3/reference.pfm.gz",
+          "96": "runs/pdf-controlled-20261018/references/arcade/ba8fb7a0d70c0c68548cae7e/accepted-16384-9135be2698b3/reference.pfm.gz"
         },
         "rois": [
           {
@@ -2864,18 +2864,18 @@
         ],
         "runs": [
           {
-            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-1\\off\\attempt-0",
-            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-1\\on\\attempt-0",
+            "off_dir": "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-1/off/attempt-0",
+            "on_dir": "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-1/on/attempt-0",
             "seed": 1
           },
           {
-            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-2\\off\\attempt-0",
-            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-2\\on\\attempt-0",
+            "off_dir": "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-2/off/attempt-0",
+            "on_dir": "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-2/on/attempt-0",
             "seed": 2
           },
           {
-            "off_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-3\\off\\attempt-0",
-            "on_dir": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-motion\\combined\\neighbors-4\\seed-3\\on\\attempt-0",
+            "off_dir": "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-3/off/attempt-0",
+            "on_dir": "runs/pdf-controlled-20261018/formal/arcade-motion/combined/neighbors-4/seed-3/on/attempt-0",
             "seed": 3
           }
         ],
@@ -2910,7 +2910,17 @@
       "scripts/run/rtxdi_pdf_controlled.py": "4f24d7fa9cc7f78962cc121e67fa368e60e1703c992f3cba5e690b053182f428"
     }
   },
-  "identity_sha256": "f6aa199abbd7ea33e30e3e636dc2d43206212446cee8ba46b40022f6db4da2b0",
+  "identity_sha256": "8d008f3936859c822294b41bb9c490dababc88965530bc82a96412e642f4feeb",
   "schema_version": 2,
-  "status": "completed"
+  "status": "derived",
+  "path_normalization": {
+    "kind": "path_normalized_derived_receipt",
+    "path_base": "repository_root",
+    "original_archive_path": "runs/pdf-similarity-archive/analysis/arcade-motion/.controlled-output.json",
+    "original_sha256": "9e911710b7a1160c977ef347c1b5f399fd471b93ac5f34e299bb4b1f70c40b34",
+    "original_identity_sha256": "f6aa199abbd7ea33e30e3e636dc2d43206212446cee8ba46b40022f6db4da2b0",
+    "original_status": "completed",
+    "non_resumable": true,
+    "note": "Derived reporting copy, not the original controlled-output receipt."
+  }
 }

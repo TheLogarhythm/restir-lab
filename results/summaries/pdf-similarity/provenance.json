@@ -1,17 +1,21 @@
 {
-  "kind": "unchanged_current_statistics_copied_from_archived_state_products",
+  "kind": "path_normalized_derived_statistics_from_archived_state_products",
   "entries": [
     {
       "destination": "data/cornell-static/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/cornell-static-80ee109bf782/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/cornell-static-80ee109bf782/.controlled-output.json",
-      "sha256": "23a41e434054440a975ad8846a13da54ccb08e38994d11e1d8f90b20179f6fa0"
+      "sha256": "8e05d46e8094879347d6d0d4203bc6678ad609554ee618fe0d063a70c4f15bc5",
+      "original_sha256": "23a41e434054440a975ad8846a13da54ccb08e38994d11e1d8f90b20179f6fa0",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/cornell-static/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/cornell-static-80ee109bf782/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/cornell-static-80ee109bf782/analysis.json",
-      "sha256": "d97d71625730b09f0e78a22f683933683e96cb507958ad3665bf283a78dd913b"
+      "sha256": "65ba0cfcbeb4f720ff21e5134d84f173bdeb3dbe014c6571518d86d067708e98",
+      "original_sha256": "d97d71625730b09f0e78a22f683933683e96cb507958ad3665bf283a78dd913b",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/cornell-static/frame-metrics.csv",
@@ -53,13 +57,17 @@
       "destination": "data/main/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/main-14f9c50d91f0/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/main-14f9c50d91f0/.controlled-output.json",
-      "sha256": "719154818caf3e361a6c843c23b19e3bd8aad41eb8cdcf03018d07270fc385c5"
+      "sha256": "bec2581dbc4fd1d0222c282213f10e253b1771b2829992da74a0cb415bc1261b",
+      "original_sha256": "719154818caf3e361a6c843c23b19e3bd8aad41eb8cdcf03018d07270fc385c5",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/main/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/main-14f9c50d91f0/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/main-14f9c50d91f0/analysis.json",
-      "sha256": "e780f24f8ee820d849efa09a919f112f00a28805a21531f710cb28767f9f8667"
+      "sha256": "5806dabdd5e9084692b59c0bf6a7433852616d8dfbb7d3361ffe071e003e5afa",
+      "original_sha256": "e780f24f8ee820d849efa09a919f112f00a28805a21531f710cb28767f9f8667",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/main/frame-metrics.csv",
@@ -101,13 +109,17 @@
       "destination": "data/arcade-static/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/arcade-static-1a701b3c0676/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-static-1a701b3c0676/.controlled-output.json",
-      "sha256": "bb89eb4834fd4d349df090e7d38ca9f1ba50970f61e7d1281ad5b1b3133efcd8"
+      "sha256": "0e4d3e78a1eff29dccab20475144d879c78b12b58b996c3fb56c1e1be9c4852a",
+      "original_sha256": "bb89eb4834fd4d349df090e7d38ca9f1ba50970f61e7d1281ad5b1b3133efcd8",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/arcade-static/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/arcade-static-1a701b3c0676/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-static-1a701b3c0676/analysis.json",
-      "sha256": "70aadd04989ad279a7671e99ad42f6ec1f8f9b73b1c3592cf6d6d9f2c2537c7b"
+      "sha256": "7ebe466cedb7c3a107589d2b9aed2e9aba78e152980e56b401bc1ae242be28c3",
+      "original_sha256": "70aadd04989ad279a7671e99ad42f6ec1f8f9b73b1c3592cf6d6d9f2c2537c7b",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/arcade-static/frame-metrics.csv",
@@ -149,13 +161,17 @@
       "destination": "data/arcade-motion/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/arcade-motion/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-motion/.controlled-output.json",
-      "sha256": "9e911710b7a1160c977ef347c1b5f399fd471b93ac5f34e299bb4b1f70c40b34"
+      "sha256": "526f675d4d8d62f5c57de26de6309d70109b561c00ab14a29f512b31a2b244ab",
+      "original_sha256": "9e911710b7a1160c977ef347c1b5f399fd471b93ac5f34e299bb4b1f70c40b34",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/arcade-motion/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/arcade-motion/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/arcade-motion/analysis.json",
-      "sha256": "38379c4890c537bd8077a8feccd44e9ff1a1d35a25bf55c9de2330c3443d9073"
+      "sha256": "41ecaa2bdc0b9ba373f9f9960077ac4c06dd844f1216795c7b44bc1161b6afd3",
+      "original_sha256": "38379c4890c537bd8077a8feccd44e9ff1a1d35a25bf55c9de2330c3443d9073",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/arcade-motion/frame-metrics.csv",
@@ -197,13 +213,17 @@
       "destination": "data/bistro-interior-static/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static/.controlled-output.json",
-      "sha256": "4029444e8f5154ea85d6b56a342638a5e9440d0f9d4c4dfcc78e68a43d097030"
+      "sha256": "07c5d56fc97698660ca06e6654257dfd6dc7b89ed10a00f5ab742dd78d9ef839",
+      "original_sha256": "4029444e8f5154ea85d6b56a342638a5e9440d0f9d4c4dfcc78e68a43d097030",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-interior-static/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static/analysis.json",
-      "sha256": "b6b8191f18244f998acfd72129d8733359d3a7b9dc774191bf5b497693cdc97a"
+      "sha256": "f90673e29fcd2e8d33317aea9ea763830baf6b50fcd8dede0f575a069379f275",
+      "original_sha256": "b6b8191f18244f998acfd72129d8733359d3a7b9dc774191bf5b497693cdc97a",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-interior-static/frame-metrics.csv",
@@ -245,13 +265,17 @@
       "destination": "data/bistro-interior-static-spatial-only/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-spatial-only/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-spatial-only/.controlled-output.json",
-      "sha256": "9e93e194275ccd02fa3d36e14a938192d2e3b596978b82794200ec8d168be41b"
+      "sha256": "59f62659debd3bf1018dc89cbbd5d8848d6e54b127b2466d1150b975867738d1",
+      "original_sha256": "9e93e194275ccd02fa3d36e14a938192d2e3b596978b82794200ec8d168be41b",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-interior-static-spatial-only/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-spatial-only/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-spatial-only/analysis.json",
-      "sha256": "d74a4539eb1f40248d044c16a65f8dadf40e4d47382c3244ecd31c0166581efc"
+      "sha256": "d339d6de74465935dae1d4528f628530b4beb4c2ffc08a744e059fd06fe783a5",
+      "original_sha256": "d74a4539eb1f40248d044c16a65f8dadf40e4d47382c3244ecd31c0166581efc",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-interior-static-spatial-only/frame-metrics.csv",
@@ -293,13 +317,17 @@
       "destination": "data/bistro-interior-static-neighbors-2/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-2/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-2/.controlled-output.json",
-      "sha256": "ea05ccfa2fca5cd749e5b04f4cb7fe5e38410af058fd0cf17d3d5900c0143efd"
+      "sha256": "a1afdbc4e82f15d646766ba400dccf5dfe827cca1b20d71440d3a5a1fccac6c9",
+      "original_sha256": "ea05ccfa2fca5cd749e5b04f4cb7fe5e38410af058fd0cf17d3d5900c0143efd",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-interior-static-neighbors-2/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-2/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-2/analysis.json",
-      "sha256": "f5603eb0532ede21be1e35415a6842f2bf7487463ade1f1c833208ca631dca26"
+      "sha256": "d5945cb7ac6d7eafcb0052107c2e20b6045ed5b41a964f02561b165278eb97d2",
+      "original_sha256": "f5603eb0532ede21be1e35415a6842f2bf7487463ade1f1c833208ca631dca26",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-interior-static-neighbors-2/frame-metrics.csv",
@@ -341,13 +369,17 @@
       "destination": "data/bistro-interior-static-neighbors-8/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-8/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-8/.controlled-output.json",
-      "sha256": "882e30640162839bff2b7b352f9e0dd856021a7681fe74b69d27d1272e9c32bd"
+      "sha256": "92c1771f460be604724ec889e004688d0251dcb7f15feb354d91c55c20c123c7",
+      "original_sha256": "882e30640162839bff2b7b352f9e0dd856021a7681fe74b69d27d1272e9c32bd",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-interior-static-neighbors-8/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-static-neighbors-8/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-static-neighbors-8/analysis.json",
-      "sha256": "3ad39f1333e68deb7c583b7a09ea67dce2983ac3344a7a61d7c6f9455dcbc279"
+      "sha256": "f1d6e2bc5385786ed0ff1e3eeef15613fd53e8e8d13a77985cd58d1d745fdba5",
+      "original_sha256": "3ad39f1333e68deb7c583b7a09ea67dce2983ac3344a7a61d7c6f9455dcbc279",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-interior-static-neighbors-8/frame-metrics.csv",
@@ -389,13 +421,17 @@
       "destination": "data/bistro-exterior-static/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static/.controlled-output.json",
-      "sha256": "2f80fc69e1c7088d13681d864158f2ef37cf146b898da85c6fb25b88e6aed86a"
+      "sha256": "760fd0ed6f696fe76aa256a6b1f796d54cbd61ace9a44212bc202d8caab2fe0d",
+      "original_sha256": "2f80fc69e1c7088d13681d864158f2ef37cf146b898da85c6fb25b88e6aed86a",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-exterior-static/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static/analysis.json",
-      "sha256": "8a357481a5967eeca385710f296c710113aa299e8aa72aa323ce5f1a88659b12"
+      "sha256": "12a4b8425816e8969cf293eb655344c4d70438ce60dc52ffcbde0c7000d20d85",
+      "original_sha256": "8a357481a5967eeca385710f296c710113aa299e8aa72aa323ce5f1a88659b12",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-exterior-static/frame-metrics.csv",
@@ -437,13 +473,17 @@
       "destination": "data/bistro-exterior-static-neighbors-2/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-2/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-2/.controlled-output.json",
-      "sha256": "6447230d42c5556be2c60822bcba7624ddf7960c5b2f79251b3aa9f0d9589610"
+      "sha256": "d64e8152977474a3bd202a9d2e5345503faa1118411936b781fd4a515bb26638",
+      "original_sha256": "6447230d42c5556be2c60822bcba7624ddf7960c5b2f79251b3aa9f0d9589610",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-exterior-static-neighbors-2/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-2/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-2/analysis.json",
-      "sha256": "df42a131a1803bd8058cf2f8fdfc4016863fec7857ab9ce618b4b905bafebd0f"
+      "sha256": "fd5e14a5986dab144ead18d8e7d8904fa508214bd6bf8e62a6c3cfe8c5563d2f",
+      "original_sha256": "df42a131a1803bd8058cf2f8fdfc4016863fec7857ab9ce618b4b905bafebd0f",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-exterior-static-neighbors-2/frame-metrics.csv",
@@ -485,13 +525,17 @@
       "destination": "data/bistro-exterior-static-neighbors-8/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-8/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-8/.controlled-output.json",
-      "sha256": "3c4a96fa60bbce83be02260fb44542f97a7cd653ce1e54fee65fc2c5e40670ed"
+      "sha256": "3d0cfac7ba0d1f9df13b1d18b02262d338c9212fbf84d8d855da07dcbb4a1674",
+      "original_sha256": "3c4a96fa60bbce83be02260fb44542f97a7cd653ce1e54fee65fc2c5e40670ed",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-exterior-static-neighbors-8/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-static-neighbors-8/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-static-neighbors-8/analysis.json",
-      "sha256": "ecdaff0d1cd74be1293a43f761a8cb2229b9fd437313df17f00503390d62cbb4"
+      "sha256": "e693783b6d93f01e71c81f504dd5728a81ea3afc06f47c6f8833f64cefbaf244",
+      "original_sha256": "ecdaff0d1cd74be1293a43f761a8cb2229b9fd437313df17f00503390d62cbb4",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-exterior-static-neighbors-8/frame-metrics.csv",
@@ -533,13 +577,17 @@
       "destination": "data/bistro-lighting/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-lighting/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-lighting/.controlled-output.json",
-      "sha256": "9668834420f898cd8bf83219ecc44c22ef09979e33ba991168d05a868020ef4c"
+      "sha256": "c15cab505dd7f7088a836330d92a392686af49942420d3e8ab0af9389edae7c3",
+      "original_sha256": "9668834420f898cd8bf83219ecc44c22ef09979e33ba991168d05a868020ef4c",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-lighting/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-lighting/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-lighting/analysis.json",
-      "sha256": "b3bf30d3086d4f5f8b8f1d2a506731fa95f301c60d29a3946d2c0a0e31e666d1"
+      "sha256": "e18904b16f183c2c86a87aa5cf6102387c952fdf6f44634053e9c5c19153cbdf",
+      "original_sha256": "b3bf30d3086d4f5f8b8f1d2a506731fa95f301c60d29a3946d2c0a0e31e666d1",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-lighting/frame-metrics.csv",
@@ -581,13 +629,17 @@
       "destination": "data/bistro-exterior-motion/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-motion/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-motion/.controlled-output.json",
-      "sha256": "f623455da942bc15bef2e712002b2150ac004e2f0914c163212f53fb9fc529fe"
+      "sha256": "e344bcd93747bcd789850c4c9902ac387c943b1e74692404afc15754c909a963",
+      "original_sha256": "f623455da942bc15bef2e712002b2150ac004e2f0914c163212f53fb9fc529fe",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-exterior-motion/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-exterior-motion/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-exterior-motion/analysis.json",
-      "sha256": "b7d17215bde051c9b7bf4ef7dfc82126eff72ea8155386b8189e36002054c890"
+      "sha256": "2d00047b18fae05bee3b29d6b49affd1562205a3eddf239104d608cbf53e28ad",
+      "original_sha256": "b7d17215bde051c9b7bf4ef7dfc82126eff72ea8155386b8189e36002054c890",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-exterior-motion/frame-metrics.csv",
@@ -629,13 +681,17 @@
       "destination": "data/bistro-interior-motion/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-motion/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-motion/.controlled-output.json",
-      "sha256": "473f92196195678bceabe79a7b6c4cd802ea594c24ed8e3669a00fb906d2e74c"
+      "sha256": "507dfe0b9b6f427cd10c16c82d5ed60f3604554ba1f154dd81cff8d83bd8cf7e",
+      "original_sha256": "473f92196195678bceabe79a7b6c4cd802ea594c24ed8e3669a00fb906d2e74c",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-interior-motion/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/bistro-interior-motion/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/bistro-interior-motion/analysis.json",
-      "sha256": "083681dc15ec98de28ad4139089406932fdad4a09f85988e6788f981001a5855"
+      "sha256": "106efef3920aa35d28d1cf43ced76382945b0faefc489f1789573e9c979359ad",
+      "original_sha256": "083681dc15ec98de28ad4139089406932fdad4a09f85988e6788f981001a5855",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/bistro-interior-motion/frame-metrics.csv",
@@ -677,13 +733,17 @@
       "destination": "data/equal-time/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/equal-time/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time/.controlled-output.json",
-      "sha256": "a7de8b96b85f3e840088528f20c66b1f2a26b149462f670045b9ec02416ce0ae"
+      "sha256": "fa52caf3e4e9a2cb32c4f171067fdcbc5822054c9113fb415b22b48f6912f924",
+      "original_sha256": "a7de8b96b85f3e840088528f20c66b1f2a26b149462f670045b9ec02416ce0ae",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/equal-time/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/equal-time/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time/analysis.json",
-      "sha256": "5693c15023d4e7a44927d99e8e9527762e894f85f306504fc6130d3471123a32"
+      "sha256": "429a79d3e65694d339850118939af9a733af100ee47dcd1e5c0a97943f397556",
+      "original_sha256": "5693c15023d4e7a44927d99e8e9527762e894f85f306504fc6130d3471123a32",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/equal-time/frame-metrics.csv",
@@ -725,13 +785,17 @@
       "destination": "data/equal-time-comparison/.controlled-output.json",
       "current_source": "runs/pdf-similarity-archive/analysis/equal-time-comparison/.controlled-output.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time-comparison/.controlled-output.json",
-      "sha256": "9e2185d04c8a5ea3a7f735301bfc6913904b6fb274d26a4c78df7ad332cbc787"
+      "sha256": "989861f3ea36f88a9faad18f0b8adad026512d54a1d83cce7af14e86c08b4e54",
+      "original_sha256": "9e2185d04c8a5ea3a7f735301bfc6913904b6fb274d26a4c78df7ad332cbc787",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/equal-time-comparison/analysis.json",
       "current_source": "runs/pdf-similarity-archive/analysis/equal-time-comparison/analysis.json",
       "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time-comparison/analysis.json",
-      "sha256": "cd9c0a39768d9dc71dd9f1765b5837258acff1e11388db832da4ddf5a1b6e784"
+      "sha256": "0ea622f17e1dc99fbcfe4ffd21825e87225ac586eedbd57f64d5d9c8c18f59b1",
+      "original_sha256": "cd9c0a39768d9dc71dd9f1765b5837258acff1e11388db832da4ddf5a1b6e784",
+      "copy_kind": "path_normalized_derived_copy"
     },
     {
       "destination": "data/equal-time-comparison/frontier.png",
@@ -763,5 +827,14 @@
       "historical_source": "runs/pdf-controlled-20261018/analysis/equal-time-comparison/summary.md",
       "sha256": "e189d6f74273688d9688a800acdc687bbfc21045d352f2ada4ef01f44d51cb1b"
     }
-  ]
+  ],
+  "path_normalization": {
+    "kind": "path_normalized_derived_reporting_copy",
+    "path_base": "repository_root",
+    "original_provenance_sha256": "61f9bc365bf46282c29a3f000f3e986d4613699243c645fa2ce91c5b4d6b5f00",
+    "original_archive_unchanged": true,
+    "statistics_recomputed": false,
+    "historical_input_paths_may_be_unavailable": true,
+    "controlled_receipts_resumable": false
+  }
 }

@@ -65,7 +65,7 @@
       "inputs": {
         "references": {
           "128": {
-            "path": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\references\\arcade\\9e65290c8bd00f4f3904cfb7\\accepted-16384-ae2efe6eee85\\reference.pfm.gz",
+            "path": "runs/pdf-controlled-20261018/references/arcade/9e65290c8bd00f4f3904cfb7/accepted-16384-ae2efe6eee85/reference.pfm.gz",
             "sha256": "2104b72fa6b11fc5b08c73b0697c30b7e0d8be0b8bbc08e88f95cff1d491d07f"
           }
         },
@@ -73,7 +73,7 @@
           {
             "seed": 1,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-1/off/attempt-0",
             "timings_sha256": "573a80cbffd07989705e37391e34f3ac88e7642b0047b2b75df00151c5b49b34",
             "images": {
               "128": "023cf58adcece8af563ad2cc1d5bcbf8e3f043f7fcf5f850e05eeab78130ef05"
@@ -82,7 +82,7 @@
           {
             "seed": 1,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-1\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-1/on/attempt-0",
             "timings_sha256": "814e637ef7fdab50b12009e868804b364d7a1a7c698c5e340c6ab924c5391dd9",
             "images": {
               "128": "336b5154a63973da4fde33875ae9b9d46d99a911efa577a00b8c155e4ed4ecb1"
@@ -91,7 +91,7 @@
           {
             "seed": 2,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-2/off/attempt-0",
             "timings_sha256": "abca2957393a8bfeb0dbc516d6b4aac571ca737d141132178258ce62252c3e13",
             "images": {
               "128": "05ce0b9fe773189e5c25d9d53e62e531282f831151069d72a50221acb799cc21"
@@ -100,7 +100,7 @@
           {
             "seed": 2,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-2\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-2/on/attempt-0",
             "timings_sha256": "cced0a58db971683c4e8b336c42cf3c09fedde780868306048c3b41af10a367f",
             "images": {
               "128": "3e16c6eb560adfbe798a47b184030ded5916ae07b6ca30472afd9455b5cf3e65"
@@ -109,7 +109,7 @@
           {
             "seed": 3,
             "method": "pdf-off",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\off\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-3/off/attempt-0",
             "timings_sha256": "33ee1e719f109c58a8acbde6df7785f1e73bd8e5f741b54f5832ac2294dd69e6",
             "images": {
               "128": "add096d239553f97040df1bf059a1e3fa79a9cd385f9909d384d902d45272477"
@@ -118,7 +118,7 @@
           {
             "seed": 3,
             "method": "pdf-on",
-            "directory": "C:\\Users\\Royal\\Desktop\\COMP5411\\restir-lab\\runs\\pdf-controlled-20261018\\formal\\arcade-static\\combined\\neighbors-4\\seed-3\\on\\attempt-0",
+            "directory": "runs/pdf-controlled-20261018/formal/arcade-static/combined/neighbors-4/seed-3/on/attempt-0",
             "timings_sha256": "506af3bc0aa922a3761acf04a654d590fb8b90b24646a2457cd70dfc1ba866f4",
             "images": {
               "128": "ffc76c09b9cce3c9d0eb3c1144330e90cf604555c9654b5f29cb2b0aa271b3bf"
@@ -1641,5 +1641,13 @@
       "trmae_direction": "not applicable",
       "trmae_reference_max_change": null
     }
-  ]
+  ],
+  "path_normalization": {
+    "kind": "path_normalized_derived_copy",
+    "path_base": "repository_root",
+    "original_archive_path": "runs/pdf-similarity-archive/analysis/arcade-static-1a701b3c0676/analysis.json",
+    "original_sha256": "70aadd04989ad279a7671e99ad42f6ec1f8f9b73b1c3592cf6d6d9f2c2537c7b",
+    "historical_input_paths_may_be_unavailable": true,
+    "statistics_recomputed": false
+  }
 }
