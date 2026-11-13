@@ -1,0 +1,45 @@
+{
+  "scene_file": "renderers/rtxdi/Assets/Media/bistro-rtxdi.scene.json",
+  "asset_root": "renderers/rtxdi/Assets/Media",
+  "camera": {
+    "position": [
+      -7.688,
+      2,
+      5.594
+    ],
+    "direction": [
+      0.3539,
+      0,
+      0.9426
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "vertical_fov": 60,
+    "near_plane": 0.01
+  },
+  "animation_policy": "source_default_disabled",
+  "source_lighting_model": "rtxdi_fullsample",
+  "environment": {
+    "kind": "procedural",
+    "baked_hdr": "assets/generated/bistro/environment.exr",
+    "bake_receipt": "scenes/configs/falcor/bistro-gltf/sky-bake-receipt.json",
+    "intensity_ev": 0,
+    "rotation_degrees": 0
+  },
+  "approximations": {
+    "light_radius": "delta",
+    "light_ies": "omit",
+    "sun_angular_size": "delta",
+    "procedural_environment": "baked_hdr",
+    "rtxdi_spot_falloff": "donut_angular"
+  },
+  "ignored_top_level": {
+    "rtxgi-volumes": "Not used by the path tracer"
+  },
+  "blend_policy": "rtxdi-mask",
+  "scene_id": "bistro",
+  "view_id": "view-a"
+}

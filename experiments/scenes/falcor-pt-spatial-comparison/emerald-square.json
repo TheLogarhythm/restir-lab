@@ -1,0 +1,21 @@
+{
+  "scene_id": "emerald-square",
+  "scene_source": "scenes/configs/falcor/emerald-square-converted-reference.pyscene",
+  "notes": [
+    "Gallery converted glTF and matching night-sky HDR; twenty named emissive materials recover factor 5 omitted by Assimp.",
+    "Converted material and punctual-light handling may differ from the ORCA FBX; gallery EV 8.25 is used only for preview."
+  ],
+  "ready_for_reference": true,
+  "asset_roots": [
+    "scenes/configs/falcor/emerald-square-converted-reference.pyscene",
+    "assets/converted/emerald-square"
+  ],
+  "qualification": {
+    "scope": "640x360 16-spp structural scout; first and final frame camera matched, not material or transport equivalence proof"
+  },
+  "schema_version": 1,
+  "kind": "falcor_scene_profile",
+  "profile_id": "emerald-square",
+  "adapted": false,
+  "inventory": "experiments/scenes/falcor-pt-spatial-comparison/emerald-square-inventory.json"
+}

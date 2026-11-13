@@ -1,0 +1,84 @@
+{
+  "schema_version": 2,
+  "name": "falcor-pt-spatial-comparison-16384",
+  "path_base": "repository_root",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "samples_per_pixel": 16384,
+  "views": [
+    {
+      "scene_id": "bistro",
+      "view_id": "view-a",
+      "path": "assets/references/falcor-pt-spatial-comparison-16384/bistro/view-a.exr",
+      "sha256": "243f6801826c36bdc921bf382a2aa06b555777f387c69a691f6e1e5855a4f633",
+      "binding": {
+        "schema_version": 1,
+        "camera_sha256": "dc3fd44fe8250f4223747fce64c9c92105bda2b4866350d65244a928cd7acb88",
+        "scene_sha256": "1863e14f5573a021ff84d747ac5c142699d9ca4f66b4da951f5aba1833697e30",
+        "transport_sha256": "a1cf8287a9f5a9086c866a8c9fd378d7037af90ef97fe0606477f3d99bd058f4"
+      }
+    },
+    {
+      "scene_id": "bistro",
+      "view_id": "view-b",
+      "path": "assets/references/falcor-pt-spatial-comparison-16384/bistro/view-b.exr",
+      "sha256": "e353749820f052ed5490b3443be5e39ac4252d9a4349f098025797094d72e755",
+      "binding": {
+        "schema_version": 1,
+        "camera_sha256": "21ee6c3c88d00e8ba0f9bdbc1cbe50286a9d3ac209b4e61128773dc55855cb1e",
+        "scene_sha256": "16be7361920fd2566f8c41feccd1090d9f6df99faab0c045aa3707a89cab88bd",
+        "transport_sha256": "a1cf8287a9f5a9086c866a8c9fd378d7037af90ef97fe0606477f3d99bd058f4"
+      }
+    },
+    {
+      "scene_id": "classroom",
+      "view_id": "view-a",
+      "path": "assets/references/falcor-pt-spatial-comparison-16384/classroom/view-a.exr",
+      "sha256": "26d3cf1e3fc0ba66bee569d132e7c5059cd67822b71a271dceef215c4c9d903c",
+      "binding": {
+        "schema_version": 1,
+        "camera_sha256": "88d2e6a57887a798629a23bf7d5f2dd4289d31af3c9bd4e595e31a5b0e8992b6",
+        "scene_sha256": "18638e1a5ecfd1c9dd3d29e6c70c023ddc8a5a36757d7e323a9d86f3babdf3ea",
+        "transport_sha256": "a1cf8287a9f5a9086c866a8c9fd378d7037af90ef97fe0606477f3d99bd058f4"
+      }
+    },
+    {
+      "scene_id": "emerald-square",
+      "view_id": "view-a",
+      "path": "assets/references/falcor-pt-spatial-comparison-16384/emerald-square/view-a.exr",
+      "sha256": "9d51a485267f9466459c6643426ceb409959d671d757809f40f57f261d16a0c5",
+      "binding": {
+        "schema_version": 1,
+        "camera_sha256": "b06f82a2f93164089b1ab1f8efea1f860bf451d9e60c89c4a87d0143eb510172",
+        "scene_sha256": "ba0ca2a1edfeb6e9e16db4e99e38b92d700b684f721f10449b8f9e2e17e0ff93",
+        "transport_sha256": "a1cf8287a9f5a9086c866a8c9fd378d7037af90ef97fe0606477f3d99bd058f4"
+      }
+    },
+    {
+      "scene_id": "veach-ajar",
+      "view_id": "view-a",
+      "path": "assets/references/falcor-pt-spatial-comparison-16384/veach-ajar/view-a.exr",
+      "sha256": "4ff563ce9cd26806d4c4246bddf66da87f984764773982093887658fc13a828c",
+      "binding": {
+        "schema_version": 1,
+        "camera_sha256": "67e4ba233dbd464a4cb56e68526c4de92ec465c9414538e9e6660e73c57deac5",
+        "scene_sha256": "0ce98877c1d72f4b5ffd9b4e3e8375082bd98bf85b87d2d36ae119669f491ce7",
+        "transport_sha256": "a1cf8287a9f5a9086c866a8c9fd378d7037af90ef97fe0606477f3d99bd058f4"
+      }
+    },
+    {
+      "scene_id": "zero-day-measure-seven",
+      "view_id": "view-a",
+      "path": "assets/references/falcor-pt-spatial-comparison-16384/zero-day-measure-seven/view-a.exr",
+      "sha256": "ee8a35517f867890160bb6f6c1481a29c8d11da5b6ae14ee5378b1be28271f56",
+      "binding": {
+        "schema_version": 1,
+        "camera_sha256": "aa76923505a289aba445259fb7f43b9af4ba8b46c0c05b415f656a68286b3ca4",
+        "scene_sha256": "ccbc3e607e0d4091bd2803ec865f04ae7a60d9be2403dc77b0afc31fdcb0223b",
+        "transport_sha256": "a1cf8287a9f5a9086c866a8c9fd378d7037af90ef97fe0606477f3d99bd058f4"
+      }
+    }
+  ]
+}

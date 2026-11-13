@@ -1,0 +1,24 @@
+{
+  "schema_version": 2,
+  "scene_id": "emerald-square",
+  "view_id": "view-a",
+  "scene_profile": "experiments/scenes/falcor-pt-spatial-comparison/emerald-square.json",
+  "camera": {
+    "position": [
+      -38.47235107421875,
+      1.795238971710205,
+      75.7105712890625
+    ],
+    "direction": [
+      0.12186798453330994,
+      0.004566818941384554,
+      -0.9925358891487122
+    ],
+    "up": [
+      -0.0005565584287978709,
+      0.9999896287918091,
+      0.004532777704298496
+    ],
+    "vertical_fov": 33.96661366396131
+  }
+}

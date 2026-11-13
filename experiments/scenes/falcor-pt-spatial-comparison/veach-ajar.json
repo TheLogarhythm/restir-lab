@@ -1,0 +1,22 @@
+{
+  "scene_id": "veach-ajar",
+  "scene_source": "scenes/configs/falcor/veach-ajar-reference.pyscene",
+  "notes": [
+    "Gallery converted glTF with no environment; Tungsten conductor BRDFs are approximate PBR conversions.",
+    "Source emitter factor 1000 and dielectric transmission=1 / IOR=1.5 were restored with source and import guards; importer merged three source entries into two dielectric materials.",
+    "Scene import reported missing texture coordinates and zero-length normals/tangents on some meshes; their visual and material impact is not fully established. Low-spp scout validates composition and configuration, not material parity or final image quality."
+  ],
+  "ready_for_reference": true,
+  "asset_roots": [
+    "scenes/configs/falcor/veach-ajar-reference.pyscene",
+    "assets/converted/veach-ajar"
+  ],
+  "qualification": {
+    "scope": "640x360 16-spp structural scout; first and final frame camera matched, restored emission and transmission recorded; not material or transport equivalence proof"
+  },
+  "schema_version": 1,
+  "kind": "falcor_scene_profile",
+  "profile_id": "veach-ajar",
+  "adapted": false,
+  "inventory": "experiments/scenes/falcor-pt-spatial-comparison/veach-ajar-inventory.json"
+}

@@ -1,0 +1,6 @@
+# Preliminary scene: see config notes for lighting and geometry differences.
+from pathlib import Path
+from falcor import *
+root = Path(__file__).resolve().parents[3]
+sceneBuilder.importScene(str(root / 'assets/converted/zero-day/measure-seven-viewer/measure-seven.gltf'))
+sceneBuilder.envMap = EnvMap(str(root / 'renderers/rtxdi/Assets/Media/environment/derelict_overpass_4k.exr'))

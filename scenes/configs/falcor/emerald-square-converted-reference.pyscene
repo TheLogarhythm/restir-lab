@@ -1,0 +1,22 @@
+# Gallery-converted Emerald Dusk. Pending Falcor validation.
+from pathlib import Path
+import json
+from falcor import *
+root = Path(__file__).resolve().parents[3]
+source = root / 'assets/converted/emerald-square'
+gltf = source / 'emerald-square.gltf'
+sceneBuilder.importScene(str(gltf))
+sceneBuilder.envMap = EnvMap(str(source / 'environment.hdr'))
+# Falcor's Assimp path drops KHR_materials_emissive_strength; restore only
+# the materials that explicitly carry the extension, without double scaling.
+materials = json.loads(gltf.read_text(encoding='utf-8'))['materials']
+rows = [(m['name'], m['extensions']['KHR_materials_emissive_strength']['emissiveStrength'])
+        for m in materials if 'KHR_materials_emissive_strength' in m.get('extensions', {})]
+if len(rows) != 20 or any(strength != 5 for _, strength in rows) or len({name for name, _ in rows}) != len(rows):
+    raise RuntimeError('Emerald emissive source changed; revalidate before rendering')
+for name, strength in rows:
+    material = sceneBuilder.getMaterial(name)
+    if abs(material.emissiveFactor - 1.0) > 1e-6:
+        raise RuntimeError('Emerald emissive importer changed; revalidate before scaling ' + name)
+    material.emissiveFactor = strength
+print('Emerald restored KHR_materials_emissive_strength=5 on 20 materials', flush=True)

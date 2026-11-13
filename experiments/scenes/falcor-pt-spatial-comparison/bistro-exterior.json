@@ -1,0 +1,22 @@
+{
+  "scene_id": "bistro",
+  "scene_source": "assets/prepared/bistro-orca-v5-2/Bistro_v5_2/BistroExterior.pyscene",
+  "notes": [
+    "Gallery exterior camera mapped to author ORCA FBX using 12 hedge-object correspondence fit; median residual 0.03783 m, max 0.08083 m. Minor fitted rotation suppressed; camera visually checked in a 640x360 16 spp scout.",
+    "Uses official standalone BistroExterior.pyscene and author HDR intensity 10; scene differs from RTXDI gallery composite. Author recommends disabling analytic lights for ray tracing; standalone scout used original scene setup and analytic-light duplication remains unaudited.",
+    "Unbiasedness and convergence are not established; finite path-depth and Falcor material/transport limitations apply."
+  ],
+  "ready_for_reference": true,
+  "asset_roots": [
+    "assets/prepared/bistro-orca-v5-2"
+  ],
+  "qualification": {
+    "status": "accepted_for_reference_capture_with_limits"
+  },
+  "reference_runtime": "reference",
+  "schema_version": 1,
+  "kind": "falcor_scene_profile",
+  "profile_id": "bistro-exterior",
+  "adapted": false,
+  "inventory": "experiments/scenes/falcor-pt-spatial-comparison/bistro-exterior-inventory.json"
+}

@@ -1,0 +1,23 @@
+{
+  "scene_id": "classroom",
+  "scene_source": "scenes/configs/falcor/classroom-reference.pyscene",
+  "notes": [
+    "Gallery glTF with approximated material conversion; three named emissive materials restore source factors 2, 20, 20 lost in the importer.",
+    "Urban-street HDR replaces procedural sky; two rectangular lights are isotropic point approximations and mapped sun/point-light strengths are approximate."
+  ],
+  "ready_for_reference": true,
+  "asset_roots": [
+    "scenes/configs/falcor/classroom-reference.pyscene",
+    "scenes/configs/falcor/gallery-lights.py",
+    "assets/converted/classroom",
+    "renderers/rtxdi/Assets/Media/environment/urban_street_04_4k.exr"
+  ],
+  "qualification": {
+    "scope": "640x360 16-spp structural scout; first and final frame camera matched, not material or transport equivalence proof"
+  },
+  "schema_version": 1,
+  "kind": "falcor_scene_profile",
+  "profile_id": "classroom",
+  "adapted": false,
+  "inventory": "experiments/scenes/falcor-pt-spatial-comparison/classroom-inventory.json"
+}

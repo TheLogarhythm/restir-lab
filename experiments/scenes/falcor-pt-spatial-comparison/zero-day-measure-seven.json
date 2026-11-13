@@ -1,0 +1,22 @@
+{
+  "scene_id": "zero-day-measure-seven",
+  "scene_source": "scenes/configs/falcor/zero-day-measure-seven-reference.pyscene",
+  "notes": [
+    "Gallery static frame-one converted glTF excludes hidden and non-renderable objects.",
+    "Derelict-overpass HDR replaces the gallery procedural sky; the gallery analytic sun is omitted; converted material behavior may differ."
+  ],
+  "ready_for_reference": true,
+  "asset_roots": [
+    "scenes/configs/falcor/zero-day-measure-seven-reference.pyscene",
+    "assets/converted/zero-day/measure-seven-viewer",
+    "renderers/rtxdi/Assets/Media/environment/derelict_overpass_4k.exr"
+  ],
+  "qualification": {
+    "scope": "640x360 16-spp structural scout; first and final frame camera matched, not material or transport equivalence proof"
+  },
+  "schema_version": 1,
+  "kind": "falcor_scene_profile",
+  "profile_id": "zero-day-measure-seven",
+  "adapted": false,
+  "inventory": "experiments/scenes/falcor-pt-spatial-comparison/zero-day-measure-seven-inventory.json"
+}

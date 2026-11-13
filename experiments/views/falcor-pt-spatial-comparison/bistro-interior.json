@@ -1,0 +1,25 @@
+{
+  "schema_version": 2,
+  "scene_id": "bistro",
+  "view_id": "view-a",
+  "scene_profile": "experiments/scenes/falcor-pt-spatial-comparison/bistro-interior.json",
+  "camera": {
+    "position": [
+      -7.688,
+      2,
+      5.594
+    ],
+    "direction": [
+      0.3539,
+      0,
+      0.9426
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "vertical_fov": 60,
+    "near_plane": 0.01
+  }
+}

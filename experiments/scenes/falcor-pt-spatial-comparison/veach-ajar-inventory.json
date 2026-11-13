@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "kind": "falcor_scene_inventory",
+  "resources": [
+    {
+      "path": "assets/converted/veach-ajar/resources/albedo-000.jpg",
+      "sha256": "3c3ce01a744aa1445afb1a2444d209336a1b2722cc53f5a054536960ed6d5fb7"
+    },
+    {
+      "path": "assets/converted/veach-ajar/resources/albedo-001.jpg",
+      "sha256": "0246b94f6459f06e0efc92b9708fd35d57e80116acdbd8f1c723bca07769b106"
+    },
+    {
+      "path": "assets/converted/veach-ajar/resources/albedo-002.jpg",
+      "sha256": "8e29463aeb4e22555227fad592d4768afeb3103120459c0020ab7a0c1b4a0267"
+    },
+    {
+      "path": "assets/converted/veach-ajar/resources/checker-003.png",
+      "sha256": "9326f1cc24cce30c38ecd1be38c22267bc7d882dfd386e15130a90d4252f58b9"
+    },
+    {
+      "path": "assets/converted/veach-ajar/resources/geometry.bin",
+      "sha256": "449ed34787df4f9634c9747e5963f812cc091fd08424bf7494f6b3fe9bb2b469"
+    },
+    {
+      "path": "assets/converted/veach-ajar/veach-ajar.conversion.json",
+      "sha256": "c0dabd58d8c382592e7c9570ebbd76dda320bdf7c518c2cb24bfe2838348eb55"
+    },
+    {
+      "path": "assets/converted/veach-ajar/veach-ajar.gltf",
+      "sha256": "b399986cd2d8651339088e4a305fa9445a771bd519a6b4c377bbf92b3df5735d"
+    },
+    {
+      "path": "scenes/configs/falcor/veach-ajar-reference.pyscene",
+      "sha256": "bcf253a6f5ec1820da26fbe7595e7c92b1960aa51b9c99b7e673e15e1cfba13f"
+    }
+  ],
+  "sources": []
+}

@@ -1,0 +1,36 @@
+{
+  "scene_id": "bistro",
+  "ready_for_reference": true,
+  "scene_source": "scenes/configs/falcor/bistro-gltf/adapted.pyscene",
+  "runtime_receipt_sha256": "533b41fbf1397b2b4d07fc85cecadb8c08cf0395f91e950c47d66a1cf4b2ed64",
+  "expected_light_count": 15,
+  "expected_environment_present": true,
+  "expected_material_counts": [
+    254,
+    4,
+    59
+  ],
+  "expected_texture_slots": [
+    559,
+    6,
+    0
+  ],
+  "limitations": [
+    "Finite angular source approximated by a delta directional light",
+    "Finite radius becomes delta light",
+    "RTXDI FullSample uses a cosine-space smoothstep and quantized parameters; Falcor uses Donut angular-space smoothstep",
+    "Per-light IES profile not implemented by this Falcor adapter",
+    "Procedural sky represented by selected HDR; inspect source and quantization limitations",
+    "Falcor thinSurface is an approximation: refraction, tint, and BRDF are not proven glTF-equivalent",
+    "BLEND is approximated with RTXDI G-buffer 0.5 alpha mask; indirect/shadow equivalence is unverified"
+  ],
+  "schema_version": 1,
+  "kind": "falcor_scene_profile",
+  "profile_id": "bistro-interior",
+  "adapted": true,
+  "inventory": "experiments/scenes/falcor-pt-spatial-comparison/bistro-interior-inventory.json",
+  "qualification": {
+    "status": "accepted_for_reference_capture_with_limits",
+    "scope": "Same inventoried scene/material/runtime profile used by the retained fixed-view references; camera supplied independently. Material and transport approximations remain listed in limitations."
+  }
+}

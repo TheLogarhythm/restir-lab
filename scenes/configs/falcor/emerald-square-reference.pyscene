@@ -1,0 +1,9 @@
+# ORCA authored Dusk scene; camera is applied by the experiment runner.
+from pathlib import Path
+from falcor import *
+root = Path(__file__).resolve().parents[3]
+source = root / 'assets/prepared/emerald-square/EmeraldSquare_v4_1'
+sceneBuilder.importScene(str(source / 'EmeraldSquare_Dusk.fbx'))
+sceneBuilder.envMap = EnvMap(str(source / 'night_sky.hdr'))
+for material in sceneBuilder.materials:
+    material.emissiveFactor *= 5

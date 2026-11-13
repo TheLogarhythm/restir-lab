@@ -1,0 +1,24 @@
+{
+  "schema_version": 2,
+  "scene_id": "bistro",
+  "view_id": "view-b",
+  "scene_profile": "experiments/scenes/falcor-pt-spatial-comparison/bistro-exterior.json",
+  "camera": {
+    "position": [
+      -14.46600546409794,
+      3.3903545752405138,
+      -0.17796007328050387
+    ],
+    "direction": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "up": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "vertical_fov": 60.0
+  }
+}

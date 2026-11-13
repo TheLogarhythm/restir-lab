@@ -1,0 +1,41 @@
+# Converted gallery geometry; no environment. Camera is applied by the runner.
+from pathlib import Path
+from falcor import *
+root = Path(__file__).resolve().parents[3]
+sceneBuilder.importScene(str(root / 'assets/converted/veach-ajar/veach-ajar.gltf'))
+# Assimp's glTF importer omits KHR_materials_emissive_strength. The source
+# Tungsten quad and glTF extension both specify 1000; enforce the measured
+# importer defaults so a future importer change cannot silently double-scale.
+light = sceneBuilder.getMaterial('Light')
+color = light.emissiveColor
+if abs(light.emissiveFactor - 1.0) > 1e-6 or any(abs(v - 1.0) > 1e-6 for v in (color.x, color.y, color.z)):
+    raise RuntimeError('Veach emissive import changed; revalidate source strength')
+light.emissiveFactor = 1000.0
+print('Veach Light emitter: emissiveColor=(1,1,1), emissiveFactor=1000', flush=True)
+# Source glTF has three Material entries, all dielectric transmission=1;
+# Assimp retains this property but Falcor's importer does not consume it.
+# glTF's default IOR 1.5 also matches the original Tungsten scene.
+import json
+source = root / 'assets/converted/veach-ajar/veach-ajar.gltf'
+gltf_materials = json.loads(source.read_text(encoding='utf-8'))['materials']
+named = [m for m in gltf_materials if m.get('name') == 'Material']
+if len(named) != 3 or any(m.get('extensions', {}).get('KHR_materials_transmission', {}).get('transmissionFactor') != 1 for m in named):
+    raise RuntimeError('Veach source transmission materials changed; revalidate')
+for m in named:
+    pbr = m.get('pbrMetallicRoughness', {})
+    if pbr.get('metallicFactor') != 0 or pbr.get('roughnessFactor') != 0 or pbr.get('baseColorFactor') != [0.9, 0.9, 0.9, 1]:
+        raise RuntimeError('Veach source material collision or properties changed')
+    if m.get('extensions', {}).get('KHR_materials_ior', {}).get('ior', 1.5) != 1.5:
+        raise RuntimeError('Veach source IOR changed; revalidate')
+imported = [m for m in sceneBuilder.materials if m.name == 'Material']
+if not 1 <= len(imported) <= 3:
+    raise RuntimeError('Unexpected Veach imported Material count')
+for material in imported:
+    color = material.baseColor
+    if (abs(material.specularTransmission) > 1e-6 or abs(material.indexOfRefraction - 1.5) > 1e-3
+        or abs(material.metallic) > 1e-6 or abs(material.roughness) > 1e-6
+        or any(abs(v - 0.9) > 1e-3 for v in (color.x, color.y, color.z)) or abs(color.w - 1) > 1e-6):
+        raise RuntimeError('Veach imported Material collision or transmission behavior changed')
+    material.specularTransmission = 1.0
+    material.indexOfRefraction = 1.5
+print('Veach restored specularTransmission=1, IOR=1.5 on', len(imported), 'imported dielectric materials', flush=True)

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "kind": "falcor_scene_inputs_v2_migration",
+  "old_scene_migration_receipt_sha256": "fa8ade5d615adc3856e9a9a09c753dbb3f094484aed2d137603360a411ac9411",
+  "sky_sha256": "3d99d20cae2d2168a01ee97cb81d0ae3a62dba58897e0c2517e07922e32e650d",
+  "old_sky_path": "runs/falcor-pt-spatial-comparison/scene-assets/bistro/sky/environment.exr",
+  "new_sky_path": "assets/generated/bistro/environment.exr",
+  "changes": [
+    {
+      "path": "experiments/configs/falcor-pt-spatial-comparison/bistro-gltf-direct-spec.json",
+      "old_sha256": "eb48f50f95835658410c1705cf40b121b735232b55fb3322b64e36b60b382671",
+      "new_sha256": "d06fe451c508b6862863f1b40176d3b82ac8e4de4fd64f90bad3c30a768f207a",
+      "snapshot": "runs/falcor-pt-spatial-comparison/provenance/relocations/scene-inputs-v2-original/experiments/configs/falcor-pt-spatial-comparison/bistro-gltf-direct-spec.json"
+    },
+    {
+      "path": "experiments/configs/falcor-pt-spatial-comparison/bistro-interior-reference.json",
+      "old_sha256": "57a6e4276cb7b7b63f3bcfda21be43606a544170aa230bea51937ad723fcbee6",
+      "new_sha256": "bea275f0fe4fd4a0f6772be94392f322aea9bb90688e239be8a9e2d5a51b78da",
+      "snapshot": "runs/falcor-pt-spatial-comparison/provenance/relocations/scene-inputs-v2-original/experiments/configs/falcor-pt-spatial-comparison/bistro-interior-reference.json"
+    },
+    {
+      "path": "experiments/configs/falcor-pt-spatial-comparison/bistro-exterior-reference.json",
+      "old_sha256": "e91bf6fdf61266fd312e893ef0065aa2040a34454bbb5e6da75dc735983d3e03",
+      "new_sha256": "6e8e7449b0c014170328debfea3f04afe4d0db63625bb97affd9c65b262ee1e9",
+      "snapshot": "runs/falcor-pt-spatial-comparison/provenance/relocations/scene-inputs-v2-original/experiments/configs/falcor-pt-spatial-comparison/bistro-exterior-reference.json"
+    },
+    {
+      "path": "experiments/configs/falcor-pt-spatial-comparison/classroom-reference.json",
+      "old_sha256": "bebf01d1c1ffe98fe1af54ea172cfeb835712d132ca445d97fd5d69cb83a355d",
+      "new_sha256": "f707a696a9980e995f5124243e46e1647b387b13fe801ef58b01b2e0afaa46c9",
+      "snapshot": "runs/falcor-pt-spatial-comparison/provenance/relocations/scene-inputs-v2-original/experiments/configs/falcor-pt-spatial-comparison/classroom-reference.json"
+    },
+    {
+      "path": "experiments/configs/falcor-pt-spatial-comparison/emerald-square-reference.json",
+      "old_sha256": "f6bf5260c4a2ba7bba3caf1afcf35a2f1f2d54a9d7f45dd20c3822cf27fc4a42",
+      "new_sha256": "e918f04360aa0a5c87f5318cd16b3050ac61fad545629ab741fa966a3182edf0",
+      "snapshot": "runs/falcor-pt-spatial-comparison/provenance/relocations/scene-inputs-v2-original/experiments/configs/falcor-pt-spatial-comparison/emerald-square-reference.json"
+    },
+    {
+      "path": "experiments/configs/falcor-pt-spatial-comparison/veach-ajar-reference.json",
+      "old_sha256": "c8e15e8997fd0dc073094460ccb49b7fe3e08c1b3bcad9b6566fbd5603862267",
+      "new_sha256": "b4a3d11d2ea230224f1cadd5af70ca2c6025a9a1a44294b07b408c8186b68492",
+      "snapshot": "runs/falcor-pt-spatial-comparison/provenance/relocations/scene-inputs-v2-original/experiments/configs/falcor-pt-spatial-comparison/veach-ajar-reference.json"
+    },
+    {
+      "path": "experiments/configs/falcor-pt-spatial-comparison/zero-day-measure-seven-reference.json",
+      "old_sha256": "58fdb454be18794aa7466a40a094823c9abd46601cd060f0b5bf2fb49bda1f98",
+      "new_sha256": "9a29882091d2fea0b861b15296adc9912272b00f04253e4360e247e496ddb95c",
+      "snapshot": "runs/falcor-pt-spatial-comparison/provenance/relocations/scene-inputs-v2-original/experiments/configs/falcor-pt-spatial-comparison/zero-day-measure-seven-reference.json"
+    },
+    {
+      "path": "scenes/configs/falcor/bistro-gltf/scene-plan.json",
+      "old_sha256": "926221099d6e8fec7261ec041ec595d2cf128d3799a43758f244509452bf5524",
+      "new_sha256": "b658ad4f354cbfbdeabf5991ba2904cd3474bd99901e7b9fbf2f63fe2ab2e3ba",
+      "snapshot": "runs/falcor-pt-spatial-comparison/provenance/relocations/scene-inputs-v2-original/scenes/configs/falcor/bistro-gltf/scene-plan.json"
+    },
+    {
+      "path": "scenes/configs/falcor/bistro-gltf/sky-bake-receipt.json",
+      "old_sha256": "59e6085fa30d309853534fde455aeb113debceb7cc4ae32c6c90875da909c3fd",
+      "new_sha256": "0f2bfc9054cd1b30e51d870a84b9ae3e852505e141272d28c2e292c3cf02f89e",
+      "snapshot": "runs/falcor-pt-spatial-comparison/provenance/relocations/scene-inputs-v2-original/scenes/configs/falcor/bistro-gltf/sky-bake-receipt.json"
+    }
+  ],
+  "scene_inputs_sha256": "0fb3f546d319b2102f5460051fe7d2d128698b08a4c47924fb698dbbbbcc4ee5"
+}

@@ -1,0 +1,1363 @@
+{
+  "schema_version": 1,
+  "kind": "falcor_scene_inventory",
+  "resources": [
+    {
+      "path": "assets/converted/classroom/classroom-color-000.png",
+      "sha256": "f544033a374bba756c7bab1c1c5a86db0ee2da0389fb07b76b4adb4c5c0700d4"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-001.png",
+      "sha256": "7c18507af6a81ce7bebba330628b7f069af1c5e2d830d52e1715699245c26b84"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-002.png",
+      "sha256": "6119143509d44ee0916237a67d847000b82f53717b82d9a074f01c209df28a8a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-003.png",
+      "sha256": "77391255f7d71a805c40f7e6d3aa339c9e40345d31506d0e96f41041fa519d82"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-004.png",
+      "sha256": "b6632b58ee997934e8e72ff3b52e9f63bf15ea0c554b5c2145034bbe21ea9655"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-005.png",
+      "sha256": "526b7fbda610d4c71781dc59195027caebf78812cdf874c06601f1443e56da41"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-006.png",
+      "sha256": "7a02a430a0580376160d92be267a9ac9542491e966e2aab8b080279d4dba1cbd"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-007.png",
+      "sha256": "942a012969ed31bb7685a55a9cd6b6789908b810b1e38a3d8d5257cafed4a465"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-008.png",
+      "sha256": "6ce2dd35ca7a3ba628d793f0bfe444d9eaa05144e6eef2ee262c75c57f388f3e"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-009.png",
+      "sha256": "38e412740899354a022c9309d16a0b53000a331319a0823dd7ec6e852616d649"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-010.png",
+      "sha256": "cea594fcc3a65fa74dc2723e32d3308e8c754cb93ac2f2eea78f119abb2fc23e"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-011.png",
+      "sha256": "6c19c1bccb088d8b24cd5674997164f439635c13771b8a4fce787a75905d6bcc"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-012.png",
+      "sha256": "6c19c1bccb088d8b24cd5674997164f439635c13771b8a4fce787a75905d6bcc"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-013.png",
+      "sha256": "4c2416427ece23742d533563ab5d40b3089b01910bfb067a2819d3ff353cdece"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-014.png",
+      "sha256": "cea594fcc3a65fa74dc2723e32d3308e8c754cb93ac2f2eea78f119abb2fc23e"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-015.png",
+      "sha256": "8a04016df5e3fb571688060f0d22339f1b1c5306ca152183d4540ea1bcc61d94"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-016.png",
+      "sha256": "1f378d06c38006ffce4ae44ece1bbb91640e78c3695df8927c90c57740428f3c"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-017.png",
+      "sha256": "1482656f3e3761116c112e6cb88a628914b8c1d923a4bb3508f4044aa91fea1c"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-018.png",
+      "sha256": "9c6c1748d5770ea290c6f6243eaf31a97eaf45a07bfe625af657b4969822fd39"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-019.png",
+      "sha256": "6013aede9c88accbb2d48b781eef3585bdb55eda239293e9d3d17fe0d9803c82"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-020.png",
+      "sha256": "6e396bc470a9b7f7f074ac93eb8e39c1b25668049c9b0af599cecf58a2d0b751"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-021.png",
+      "sha256": "66c161250e8cdb944b4790fd22f1141379a3a307a8ba13ca35871cc474d2003b"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-022.png",
+      "sha256": "5ee2e7d606fedfc7cccc4d0a7dfebe2f5fc0760f3013be7c589177161e1c5ad9"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-023.png",
+      "sha256": "538782b537919051c5e4fd79a2735621dadc169ffeb97ea62f5dec78729f351e"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-024.png",
+      "sha256": "52ecda9a04559c4cb64a68d012310691ac9d05243a949f2c2b28481bfdfdad4a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-025.png",
+      "sha256": "ff5308fa3145fd6ea462a3f0e78982b35ddf188cd1602963847b26d09d4c17ee"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-026.png",
+      "sha256": "62ba1b8458ed21ce3ca14a54f46c3b71d80de9810219002b1e7bef26d12e8063"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-027.png",
+      "sha256": "868ab0dc96e62eadc800b60283ef756c2584fb994edf8486e4554e340bc56ac6"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-028.png",
+      "sha256": "80db7ad438f8c32654c844c745c39c9fa46f335fd3ccded3a44b2061bc93f0f8"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-029.png",
+      "sha256": "0c1745665d5b8a1a718c2cb264de6f2cb4e9ba944ffc542be370e6827120b071"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-030.png",
+      "sha256": "ad8583016a2ae4a278368e6b179499cf17c5d151daef8bd532f5b4c32c7db276"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-031.png",
+      "sha256": "28ce6dca9d96142ab71ab32e3f9d648ea8d7cafd9bd2ecefe1462118042b2216"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-032.png",
+      "sha256": "28ce6dca9d96142ab71ab32e3f9d648ea8d7cafd9bd2ecefe1462118042b2216"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-033.png",
+      "sha256": "6d9a388c07c6d6b29129c8c5d051ad433db7e1f337e3cdc3aad33f2c6a3bbda3"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-034.png",
+      "sha256": "2bf36c9c215c1d31f38eb09d7b35b9012c0d667865a7b027873c70a4b7e18b06"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-035.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-036.png",
+      "sha256": "3889541ee6b6948d4f6413e36ef13ea158355ee2915927c73a5032184894621a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-037.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-038.png",
+      "sha256": "e4e8c6f246f7cd06f52c5a650427e87f67fe2a5ffb758d0ec70ed47323e4b6a1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-039.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-040.png",
+      "sha256": "b7cbed13b2169458502b4d26982b31383ef70e3cc0f72da37dd9818339a36a7f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-041.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-042.png",
+      "sha256": "e30d63816f927d48607eb567c3a3aa436ded988bba6ef4b252ea26a4d36a2542"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-043.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-044.png",
+      "sha256": "4eeea29b3a47404c6a24d2e2c7e9203deea4dfb924f2025d31e04ec127041f9e"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-045.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-046.png",
+      "sha256": "58dbe4ae1bfa63ac5423c74e249658418bc0fa7bb686198a2c241d57ed28883d"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-047.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-048.png",
+      "sha256": "3b04462548c20dd460d4d8cad93c5d545723f003d3c97cd2feb2f22603fe16a4"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-049.png",
+      "sha256": "3139117286498294196a09201d0976964fe628de285b3833319d7da98fe26dea"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-050.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-051.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-052.png",
+      "sha256": "f16c85492fb054b61b5f98ca5594c50fa3781013d3605bdb2821939bf8e31ac9"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-053.png",
+      "sha256": "07221515bf924134c4d218ed2f297ff861321ebfde0085e4f381be040d4f596a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-054.png",
+      "sha256": "4bd5c514fc4b0b8f9a2100f6fe2292f64aa3d637e8d4943ba7e5c931d70f58dc"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-055.png",
+      "sha256": "ef7acc94dd2811e6b524e78a2f3518042cd32356551d9750597da115f4ce6c87"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-056.png",
+      "sha256": "c573760b0bcdf979e3793fe1ad46c7beccfc7aee5f9871638dddab41e83a20d6"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-057.png",
+      "sha256": "90d6a54825ded4d8ac69ae86e040415274faebcd8548f4e112ba00b6759912cb"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-058.png",
+      "sha256": "f1ba25fdfdd1c2c6b28f8d458ad6c4957dccf82e609e4bf1932af2607e51459a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-059.png",
+      "sha256": "70548c1d396b85bc4794bfed53974ed5aca86cf19352bcf7d8e4e149731262dd"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-060.png",
+      "sha256": "40a80a0ab9a3e34ca7bb5b675dcc3b81c4f2301d3d481562525e714702c6ce8d"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-061.png",
+      "sha256": "e75fbcd8d81cdb66593609f249c32136e0c16af1df167ad4d572ceab157921ae"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-062.png",
+      "sha256": "1f0546da9b701c4a6282fc1c92d141ff446ff0f64c646dcb617e0e5c8419d693"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-063.png",
+      "sha256": "b554cd46b5fdbeed3c28c3a0bcf7c617d1d9545e2300526be3e52f3ff0a46a35"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-064.png",
+      "sha256": "b554cd46b5fdbeed3c28c3a0bcf7c617d1d9545e2300526be3e52f3ff0a46a35"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-065.png",
+      "sha256": "0027c81aba9d1c6d686c5989e2d36b95932dc8f5ab4206dfbb2308d6f707805f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-066.png",
+      "sha256": "9ef9ce6838f19f7a0aae60802c09ce50b5e895cb03b2d36a2318c9da484995a4"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-067.png",
+      "sha256": "7e48631e5886d74cab8bca9e4cb9e66799f16d56ec018a05fa32d0e77225e89f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-068.png",
+      "sha256": "4c5d191c06fc9f30dd489578109b9512c2177fa665718833855fbc01b80f00e8"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-069.png",
+      "sha256": "616e0118db2f2e70b9678169f612d31e27b899fcffb8fbe490bab26940e714f5"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-070.png",
+      "sha256": "bb0ae974c851016dcf17788a76d65a61741f0d5cdb893b6ba002fecfa711764d"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-071.png",
+      "sha256": "bb0ae974c851016dcf17788a76d65a61741f0d5cdb893b6ba002fecfa711764d"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-072.png",
+      "sha256": "bb0ae974c851016dcf17788a76d65a61741f0d5cdb893b6ba002fecfa711764d"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-073.png",
+      "sha256": "bb0ae974c851016dcf17788a76d65a61741f0d5cdb893b6ba002fecfa711764d"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-074.png",
+      "sha256": "422e9f1368a8f1efc9c9d1902a3e1309aba5d9957b9f204d6db74a5ad0069e06"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-075.png",
+      "sha256": "31d287b7aed5690f6806d3fedaec58797dd28387f0a734e99442d371cebfada1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-076.png",
+      "sha256": "b4b19dc4aad5c8fcd10a1963b008de2a089f2d9aec6ce8a2b0501d4e02e49042"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-077.png",
+      "sha256": "b66f6fee57450e81cc9916afd4fe0256fff6dc4b0cfe2f471ada6ebb580510ec"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-078.png",
+      "sha256": "ad868cbe3f63135ee61c6ae99d6c1a2084345403aeb90a10048e62607ac916c4"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-079.png",
+      "sha256": "ad868cbe3f63135ee61c6ae99d6c1a2084345403aeb90a10048e62607ac916c4"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-080.png",
+      "sha256": "1305650d7306cdd63fda28bbdf995b64fc1cf168e6dcb89a8be11bcd30320f77"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-081.png",
+      "sha256": "f62b7d2a2f0655a47882f8b8d908bd96f5de60b20e81692c939eca6c685ae059"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-082.png",
+      "sha256": "bb6b936e78519335c72ca7286244043ffb9de00e2d87791132d82171fa8aac1b"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-083.png",
+      "sha256": "70e4206565ab76bf50c485a59efbe762b371a27ed7b283a285643122d7b2cb97"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-084.png",
+      "sha256": "d8177a4ae2912e402868ab63c48d2a43dd6022ee42428712e366ec38516795ce"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-085.png",
+      "sha256": "a13ccd1c8c3f4752f6e71a5ee22d4b74eb37a6fe621fc844c29e546328ca5cc9"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-086.png",
+      "sha256": "99256e1b82520f98f87f6dac9b0c51ac5550d61cdcd09de90753138d7f008af6"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-087.png",
+      "sha256": "c606e4b2e59f629689749cf16dd2b9c605188fa0fdcf737981488d281adf7cd3"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-088.png",
+      "sha256": "0e8e52832fdc68a9e7e481e7840ed8217562eb42e7e65c3d0f66f1662ccf70f0"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-089.png",
+      "sha256": "fd63427f81984cc305dbfc039abe35bb08a21f2ad283bc934855ecc341895a92"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-090.png",
+      "sha256": "9012778941cd5b15038d2645407ac4f071c8ceea47be1be363eb30bc30f8ecde"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-091.png",
+      "sha256": "9aca0e9722f1bb84498eeda12b1a4e25f8ff64310702ffb5f62a15456b41a49c"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-092.png",
+      "sha256": "94548241a5a334a1c53cfdc56c6001c0322ab202f5b4a05393eead0113be8a8a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-093.png",
+      "sha256": "4a6d9cdba075aca1a507c4d755c3f91d8300b0813f168f6666b96794b7a7a66e"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-094.png",
+      "sha256": "89d78d7b4b91e4b0e11260bc6d0cfbde576b9a87fa4d4644b44db5c305faf210"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-095.png",
+      "sha256": "20f1700f28d1606040667f6542a9f114be10f3a406091f737c55afd3e321eb0d"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-096.png",
+      "sha256": "315d8ad3e0212d05190f045c2874e2314926d424be4a30bf449c47ed1687a937"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-097.png",
+      "sha256": "acfd1b108ed71ea25a701c7b2f53cb44e59da1ff7dfebab268a6da13915dc99c"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-098.png",
+      "sha256": "453633f5a07f6bed9e3c7b92a753d07fc89fe1908f365a922121aa5a1bee7e71"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-099.png",
+      "sha256": "7e0eeb3aee7bffe616bd56dfd89497a0664f01dec28c65854546ca6ed92c5c39"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-100.png",
+      "sha256": "b1c5a37ca856e4173bd68e9a5834f83af00fd1c674abf7dddbc8470dc4383c71"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-101.png",
+      "sha256": "d32df9fdac6f55703d276cec140e97cd777eb5f51a729dc0bd95d4b15367d3b5"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-102.png",
+      "sha256": "376a8eb58393830a016d84df5554f92b6f22b01a7c7451c50e59257b2fd8d78e"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-103.png",
+      "sha256": "1d2c5d20b6a1bfeeaddddb7baa29527c00dd5e992a9a569cde5c946110372440"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-104.png",
+      "sha256": "2663cd63912ba45efb3b2501f94e789da154ddb3a04ea1a5091445e868c33290"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-105.png",
+      "sha256": "4c2b0a713a51ab9cee206b1e45ff21ba20540dd54404c9690ab8189ccc1a6c11"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-106.png",
+      "sha256": "91c3c9346cb4a101080d2ee357c49191d6193dafc0e75f9ef01223b18e564535"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-107.png",
+      "sha256": "b799b4810f1853281eca2b3906405dd1209401174f33410d8fb9de4ca9d5f3f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-108.png",
+      "sha256": "bcf47f36ce5d4ad4860b5eaf48af41a29f5b5f7c31c97bbcaeb68444a685f41c"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-109.png",
+      "sha256": "8ce9da45bc631743ab03c47a63bbbce1d867d3824198081d2a50cf54d3d8af05"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-110.png",
+      "sha256": "d08049a3d81732eff1ca53beef4d7f3c9e9ed27259e516724e886bbfb51b7208"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-111.png",
+      "sha256": "fbab1a0e5807f784282fb90a2e3d37ed52f0d81f38fd914567e5226cfce96867"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-112.png",
+      "sha256": "57801257db5f748c6a327e570cd3d2551786b0b41fa92ebbbc0439b6fa181401"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-113.png",
+      "sha256": "57801257db5f748c6a327e570cd3d2551786b0b41fa92ebbbc0439b6fa181401"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-114.png",
+      "sha256": "fbab1a0e5807f784282fb90a2e3d37ed52f0d81f38fd914567e5226cfce96867"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-115.png",
+      "sha256": "57801257db5f748c6a327e570cd3d2551786b0b41fa92ebbbc0439b6fa181401"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-116.png",
+      "sha256": "fbab1a0e5807f784282fb90a2e3d37ed52f0d81f38fd914567e5226cfce96867"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-117.png",
+      "sha256": "57801257db5f748c6a327e570cd3d2551786b0b41fa92ebbbc0439b6fa181401"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-118.png",
+      "sha256": "fbab1a0e5807f784282fb90a2e3d37ed52f0d81f38fd914567e5226cfce96867"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-119.png",
+      "sha256": "7e5d731956a1be3d2412a7c7d294d8f8436ae644d7475b6a4dcece196a6f5bb5"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-120.png",
+      "sha256": "7e5d731956a1be3d2412a7c7d294d8f8436ae644d7475b6a4dcece196a6f5bb5"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-121.png",
+      "sha256": "7e5d731956a1be3d2412a7c7d294d8f8436ae644d7475b6a4dcece196a6f5bb5"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-122.png",
+      "sha256": "30bc402dfb80d31d85443047df169d242ac44e911a998f687f2be810c390acd2"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-123.png",
+      "sha256": "1482656f3e3761116c112e6cb88a628914b8c1d923a4bb3508f4044aa91fea1c"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-124.png",
+      "sha256": "1f378d06c38006ffce4ae44ece1bbb91640e78c3695df8927c90c57740428f3c"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-125.png",
+      "sha256": "8a04016df5e3fb571688060f0d22339f1b1c5306ca152183d4540ea1bcc61d94"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-126.png",
+      "sha256": "cea594fcc3a65fa74dc2723e32d3308e8c754cb93ac2f2eea78f119abb2fc23e"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-127.png",
+      "sha256": "4c2416427ece23742d533563ab5d40b3089b01910bfb067a2819d3ff353cdece"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-128.png",
+      "sha256": "6c19c1bccb088d8b24cd5674997164f439635c13771b8a4fce787a75905d6bcc"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-129.png",
+      "sha256": "6c19c1bccb088d8b24cd5674997164f439635c13771b8a4fce787a75905d6bcc"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-130.png",
+      "sha256": "cea594fcc3a65fa74dc2723e32d3308e8c754cb93ac2f2eea78f119abb2fc23e"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-131.png",
+      "sha256": "7014bd3fadc61f89a124b4d1bbb36d0bc7f2f51db916b93bf68da58ce39d93b6"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-132.png",
+      "sha256": "654897ee8cce6395f8cc2fd007c298006fbec3a6d6ea56f905215177dc7a2780"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-133.png",
+      "sha256": "7e5d731956a1be3d2412a7c7d294d8f8436ae644d7475b6a4dcece196a6f5bb5"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-134.png",
+      "sha256": "f0efc5da7929ccac6465f6e3b2cf5c2a3a187f12d6a5cd3445d32948e34bd8ba"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-135.png",
+      "sha256": "f0efc5da7929ccac6465f6e3b2cf5c2a3a187f12d6a5cd3445d32948e34bd8ba"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-136.png",
+      "sha256": "f0efc5da7929ccac6465f6e3b2cf5c2a3a187f12d6a5cd3445d32948e34bd8ba"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-137.png",
+      "sha256": "f0efc5da7929ccac6465f6e3b2cf5c2a3a187f12d6a5cd3445d32948e34bd8ba"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-138.png",
+      "sha256": "f0efc5da7929ccac6465f6e3b2cf5c2a3a187f12d6a5cd3445d32948e34bd8ba"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-139.png",
+      "sha256": "f0efc5da7929ccac6465f6e3b2cf5c2a3a187f12d6a5cd3445d32948e34bd8ba"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-140.png",
+      "sha256": "f0efc5da7929ccac6465f6e3b2cf5c2a3a187f12d6a5cd3445d32948e34bd8ba"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-141.png",
+      "sha256": "f0efc5da7929ccac6465f6e3b2cf5c2a3a187f12d6a5cd3445d32948e34bd8ba"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-142.png",
+      "sha256": "e43a2727121b71806250214b45677d03e7b8af0d72a8be30dc025d4032e069f4"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-143.png",
+      "sha256": "f64d768b4d6857b2ebc5653b5d84a520a3012f4a699b107de8da3f6035da8b98"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-144.png",
+      "sha256": "2c6c8b0e33712b93c115acb4c3ae77bfa9c3e5a40d298b4b279df29ecb9a7e80"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-145.png",
+      "sha256": "0889bec6f122dd8099fda78474244a431e7a6137aaf61544d730622386151e4a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-146.png",
+      "sha256": "827a738fa8c080f8e82d2eabaa80d3851f7b0f9480143ca232769d453e94224f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-147.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-148.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-149.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-150.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-151.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-152.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-153.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-154.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-155.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-156.png",
+      "sha256": "38e412740899354a022c9309d16a0b53000a331319a0823dd7ec6e852616d649"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-157.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-158.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-159.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-160.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-161.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-162.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-163.png",
+      "sha256": "0f65de13ded8d8bd048f1942f0a8e516117670c6b9a5952026b2d6c55b21f1f1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-164.png",
+      "sha256": "9e5177cfcd0d08ed21aee9014568c3dfe10a6214f7f4b78622c2b51dc2ab8afb"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-165.png",
+      "sha256": "9e5177cfcd0d08ed21aee9014568c3dfe10a6214f7f4b78622c2b51dc2ab8afb"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-166.png",
+      "sha256": "9e5177cfcd0d08ed21aee9014568c3dfe10a6214f7f4b78622c2b51dc2ab8afb"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-167.png",
+      "sha256": "9e5177cfcd0d08ed21aee9014568c3dfe10a6214f7f4b78622c2b51dc2ab8afb"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-168.png",
+      "sha256": "263eaf7745355967d236c583b82f37d0853a66c4d8baac0b49a44addefc39cda"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-169.png",
+      "sha256": "9e5177cfcd0d08ed21aee9014568c3dfe10a6214f7f4b78622c2b51dc2ab8afb"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-170.png",
+      "sha256": "f89055019bf064f1311a4064e459a17ffb34bb37889ecf67ee515face0d4ab54"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-171.png",
+      "sha256": "9e5177cfcd0d08ed21aee9014568c3dfe10a6214f7f4b78622c2b51dc2ab8afb"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-172.png",
+      "sha256": "c508be35a163d787b3e4ebb7f2a645fb3877201e0e4b2baaf19013f8f8acf274"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-173.png",
+      "sha256": "db9e9c15a716f71fb52b70f97d0f218bff1197b2f6cbdb483e5463449af206b2"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-174.png",
+      "sha256": "9ee34d9b63181c733f420e752579af2c3b1933ca1e910941244a9aa343ee87fb"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-175.png",
+      "sha256": "4e8d8e538a5170f45915f613b52e305c3c9babb1dad01d38e0f5898cbf6af144"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-176.png",
+      "sha256": "4e8d8e538a5170f45915f613b52e305c3c9babb1dad01d38e0f5898cbf6af144"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-177.png",
+      "sha256": "4e8d8e538a5170f45915f613b52e305c3c9babb1dad01d38e0f5898cbf6af144"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-178.png",
+      "sha256": "f4b1b01a234006f2609824764e5fe23071e7cb741e6e16e67e19a5ee5ab64ef1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-179.png",
+      "sha256": "0333c359bef18cb9ad2db670c3837e087b6271d3dec525587498d1067501c2b1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-180.png",
+      "sha256": "75885f6af1c9da78fd9279911b008e00e7e7da26b1740b233fd4e5cf49077ba2"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-181.png",
+      "sha256": "76b37ce6853335089015b03bea1371495eff879df66062dd2360e78bf83370e7"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-182.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-183.png",
+      "sha256": "dbf2f50bea8630d080532a2e8357a2145e8fd79a4aa0344da1b8487787a43e8c"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-184.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-185.png",
+      "sha256": "a81b51341bb861156d8994f6c780da1be819e4fcf007a7ee96dcf5b21b4a207b"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-186.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-187.png",
+      "sha256": "ccc02377c2d9cce26cedb28d6ece9008149f849d39cb6c44d9032590b77f617e"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-188.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-189.png",
+      "sha256": "734033dd1553c5ec63123bebf770e93200fcccf0b77290887f0e6495e4e4f455"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-190.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-191.png",
+      "sha256": "765593d57c5fe2ff4888ac926d8f4cc17fb09291e0bd1bf91e0a4ac5c0214a2a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-192.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-193.png",
+      "sha256": "7c42892c0cb1dae13925637a5164f5e72bab14038f7a3e00a3977c2dac1581a8"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-194.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-195.png",
+      "sha256": "85f4e03b9133cde1c32954c2845ea76123a85dfd204c2552508fbfd9b9969944"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-196.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-197.png",
+      "sha256": "716ce1eb6dcf081d18c840e8e5f82bec6bb609a2245aeca9afef74c6b4ee4783"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-198.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-199.png",
+      "sha256": "525df1800b8c56d898b7ff32c9224b542dc9e3245e5fdfe5542e51579ad2399d"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-200.png",
+      "sha256": "aa9f1f3c293fd1504e793691b8e1d0872d73fe86da623bab2cf235d969a443dd"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-201.png",
+      "sha256": "c289b483742756025219dd97c44ebf2ee532b194b6d6d1d377dd2047fbec37cb"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-202.png",
+      "sha256": "8a9a7ef8b59751b9c77b402c8f989c5fa06c48cbcc5a38d4949ef7bf9bc60b8e"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-203.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-204.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-205.png",
+      "sha256": "d99efc54ad7611bbcff49371ee113f68c127168d7539cbd9a6893e3a6573d771"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-206.png",
+      "sha256": "0d74057ec882db28ab7756b2c8d8c6eabb7b5b2ebeb7f6f2e0d5da4725956f05"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-207.png",
+      "sha256": "3cbd81ef096abeda466b9e08d7d170c2a2415668b832288fa9803c40858ed0ef"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-208.png",
+      "sha256": "a0be8df837e936f4631d89237b7c97cc2b925a272220d061d47ae0d38d43d25f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-209.png",
+      "sha256": "1c0c965e8462c2ac6a70798250062ebdb54c0efb7935ed329f2ccb9438e1deb4"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-210.png",
+      "sha256": "313cd1e98dfd221909825f12507617f78d4baebf17b9be4b33ca5ad0bf3f640a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-211.png",
+      "sha256": "43ac5b42f6b62b0b01b05b0d96e3e30b2ca7e137991a0c967bc0b079c94be1fd"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-212.png",
+      "sha256": "43ac5b42f6b62b0b01b05b0d96e3e30b2ca7e137991a0c967bc0b079c94be1fd"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-213.png",
+      "sha256": "b4edccdd06463774fbc18054234ee4f59b71bbfdba01a83a31b9586d8ae93a07"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-214.png",
+      "sha256": "f8405b13705a70fbcc5f07eeaa77fcb440074714d1acf258e5f5939a0ff11256"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-215.png",
+      "sha256": "1f7005b7c638271ad1360714ba68c41e454f13e81b558d31f3699ed0a890ca7d"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-216.png",
+      "sha256": "38d9713d652840a06d1cd54c9b0fee08736cf998d01a6cf185f18ff27325c17c"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-217.png",
+      "sha256": "1f0c4e739de94fa6458579b8365c0c39f7aa4f93481f57c80e41354c00c45119"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-218.png",
+      "sha256": "94c5cf4ed79b4874cb62b7499d7835607b19f497fa62b0706938437e477fbb38"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-219.png",
+      "sha256": "d22b4bcbbafd6c028b723d980724dcce7f6ba262edb604b3b1b6ee9f40498953"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-220.png",
+      "sha256": "0dc21fa47bd8c7f8613c8cab6eae0c6269ecb1da27f9695bd3b540c545b8223d"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-221.png",
+      "sha256": "0b75454c68d33f3a160cad75860231e1299067d0c6d20d09ea8e1e2e974618f0"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-222.png",
+      "sha256": "8bb6e9fb671a3a4da1bf54dc0adec26788c5c0baac193c1785e960da2b77469f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-223.png",
+      "sha256": "0b75454c68d33f3a160cad75860231e1299067d0c6d20d09ea8e1e2e974618f0"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-224.png",
+      "sha256": "0dc21fa47bd8c7f8613c8cab6eae0c6269ecb1da27f9695bd3b540c545b8223d"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-225.png",
+      "sha256": "778095b45cd049b4420127091674fedbb7885738cda80a186e4feb14b91b13ef"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-226.png",
+      "sha256": "b4e2b03098b22643412fba667a31633007c351bcfeb62da1b7c4ddd282b10d0d"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-227.png",
+      "sha256": "11483c242165f2eaf0b7179aba90dd16ca5b8c2aafa1359e480f11237b5a5bf4"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-228.png",
+      "sha256": "c3b4d74f25dc04944567cc641da3329696eab4ae2adc6ab69fa4f98e6ca7925f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-229.png",
+      "sha256": "b1b7ae65b0cb771ada8f48caad25c0662d97f0328a746c18b98c6cd214e5cade"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-230.png",
+      "sha256": "5dc70ebf51b59d550fc83656eb72629c5e65824ab4b8872006054bba219be2aa"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-231.png",
+      "sha256": "fcc521652ac8ce5875e518cfd4aea1ca7c7c10e1f5b2d9d9cf85393a9ab382b6"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-232.png",
+      "sha256": "ef652e95b1f30e50475804a4ea15b02f2e35ee094054603871e00bb3b15988fc"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-233.png",
+      "sha256": "5c0bd992430eca25a1cc58281d6d7c5ece8c91d5881096d0b92cd35991cfe051"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-234.png",
+      "sha256": "f7a64e628a32cc5b0eee40c361ad0194a0d6870118e481dbc1552bfacae569d3"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-235.png",
+      "sha256": "08854eab9870753d34fa3f79c6bb5e2d1f2ee1d931532ef1f406141756a405b5"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-236.png",
+      "sha256": "75db302e79e750edbb43b7af0e9d2d936cbebb806267e1833973fa5909bd12df"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-237.png",
+      "sha256": "75db302e79e750edbb43b7af0e9d2d936cbebb806267e1833973fa5909bd12df"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-238.png",
+      "sha256": "75db302e79e750edbb43b7af0e9d2d936cbebb806267e1833973fa5909bd12df"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-239.png",
+      "sha256": "75db302e79e750edbb43b7af0e9d2d936cbebb806267e1833973fa5909bd12df"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-240.png",
+      "sha256": "75db302e79e750edbb43b7af0e9d2d936cbebb806267e1833973fa5909bd12df"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-241.png",
+      "sha256": "75db302e79e750edbb43b7af0e9d2d936cbebb806267e1833973fa5909bd12df"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-242.png",
+      "sha256": "90bc4c9b774532ece671125bf2e6199c6293c7a20347a933e1c4326b131b4097"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-243.png",
+      "sha256": "d65dbb29a890f0a9c84f147dc478d3311b182008139904e2358e34fb883ec3f0"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-244.png",
+      "sha256": "ac426b2a58f74ae360c94d8f47411baa3168cf6e923a246c9f36fcbac46a35f6"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-245.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-246.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-247.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-248.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-249.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-250.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-251.png",
+      "sha256": "ac426b2a58f74ae360c94d8f47411baa3168cf6e923a246c9f36fcbac46a35f6"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-252.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-253.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-254.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-255.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-256.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-257.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-258.png",
+      "sha256": "d65dbb29a890f0a9c84f147dc478d3311b182008139904e2358e34fb883ec3f0"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-259.png",
+      "sha256": "90bc4c9b774532ece671125bf2e6199c6293c7a20347a933e1c4326b131b4097"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-260.png",
+      "sha256": "90bc4c9b774532ece671125bf2e6199c6293c7a20347a933e1c4326b131b4097"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-261.png",
+      "sha256": "d65dbb29a890f0a9c84f147dc478d3311b182008139904e2358e34fb883ec3f0"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-262.png",
+      "sha256": "ac426b2a58f74ae360c94d8f47411baa3168cf6e923a246c9f36fcbac46a35f6"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-263.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-264.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-265.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-266.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-267.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-268.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-269.png",
+      "sha256": "ac426b2a58f74ae360c94d8f47411baa3168cf6e923a246c9f36fcbac46a35f6"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-270.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-271.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-272.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-273.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-274.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-275.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-276.png",
+      "sha256": "d65dbb29a890f0a9c84f147dc478d3311b182008139904e2358e34fb883ec3f0"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-277.png",
+      "sha256": "90bc4c9b774532ece671125bf2e6199c6293c7a20347a933e1c4326b131b4097"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-278.png",
+      "sha256": "90bc4c9b774532ece671125bf2e6199c6293c7a20347a933e1c4326b131b4097"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-279.png",
+      "sha256": "d65dbb29a890f0a9c84f147dc478d3311b182008139904e2358e34fb883ec3f0"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-280.png",
+      "sha256": "ac426b2a58f74ae360c94d8f47411baa3168cf6e923a246c9f36fcbac46a35f6"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-281.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-282.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-283.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-284.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-285.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-286.png",
+      "sha256": "4b1ff9db644c19ba8669e3d7d66ca7b98d0a372d379cb283673420b796bba27a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-287.png",
+      "sha256": "ac426b2a58f74ae360c94d8f47411baa3168cf6e923a246c9f36fcbac46a35f6"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-288.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-289.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-290.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-291.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-292.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-293.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-294.png",
+      "sha256": "d65dbb29a890f0a9c84f147dc478d3311b182008139904e2358e34fb883ec3f0"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-295.png",
+      "sha256": "90bc4c9b774532ece671125bf2e6199c6293c7a20347a933e1c4326b131b4097"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-296.png",
+      "sha256": "90bc4c9b774532ece671125bf2e6199c6293c7a20347a933e1c4326b131b4097"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-297.png",
+      "sha256": "d65dbb29a890f0a9c84f147dc478d3311b182008139904e2358e34fb883ec3f0"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-298.png",
+      "sha256": "ac426b2a58f74ae360c94d8f47411baa3168cf6e923a246c9f36fcbac46a35f6"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-299.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-300.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-301.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-302.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-303.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-304.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-305.png",
+      "sha256": "27f3437d1e679946bf5f724908d03ec1a30e23d8804349a2df6e8dd1abd7ad0c"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-306.png",
+      "sha256": "23d6187a0ba770cbc5b39ae5c3c5aa17fded347e8289f1a33170fb4b8a46e7f6"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-307.png",
+      "sha256": "844c8d9eb8b834ec21b63614b8898b949dd927c340ef54828ecf4b8438be0a0e"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-308.png",
+      "sha256": "16a67bff0566f89b491d4d82ee477eea467a585be8a246f4d999b967149d5743"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-309.png",
+      "sha256": "9974000d93ca9bc6bdbf641f7e714c590ba068cf9ee3ede2986039f414e2bd23"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-310.png",
+      "sha256": "92a169f08f65073dbaebba75c947074acb688e0da66a19577e551eb7ed694295"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-311.png",
+      "sha256": "2334bbd9b7a01b5035950619c5ca43996b5081d8e8c095c39d3c852f1ffa0b34"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-312.png",
+      "sha256": "ac426b2a58f74ae360c94d8f47411baa3168cf6e923a246c9f36fcbac46a35f6"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-313.png",
+      "sha256": "d65dbb29a890f0a9c84f147dc478d3311b182008139904e2358e34fb883ec3f0"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-314.png",
+      "sha256": "90bc4c9b774532ece671125bf2e6199c6293c7a20347a933e1c4326b131b4097"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-315.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-316.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-317.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-318.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-319.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-320.png",
+      "sha256": "7d5586d3c871e5a4293ad0e390f54eb0aec5d908c0e45a3cd1b9f5de478cdd3f"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-321.png",
+      "sha256": "d3c68002af71fa408edfac3fce178b58fad2b5d165b18f05c167200e4a5ba36d"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-322.png",
+      "sha256": "b385c6f5035b425db69cd51d7ec2d2b54a9178e5dcc53613d75fdcb8a3e016b0"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-323.png",
+      "sha256": "52c4dabd29ae47fff01331ab243ffb2c75fe2e3d5e1a2a358a53b69084fe417b"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-324.png",
+      "sha256": "9f25388b305cd8cf6a9913e2d6690ffea15bee52595e7a27b1de2e0be9e8cef8"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-325.png",
+      "sha256": "d29c9c0ded58b689050068a2926951a4f774d33c89b14a68024545e3bcdaf51a"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-326.png",
+      "sha256": "3fc2b9e16e456cde8c4a3ce6fd7b68dcf6b9214266acc3290bbbbb6dfe18a46e"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-327.png",
+      "sha256": "b1fabab0b329ad9805763d0c34f7f492081d6bee6aab8e494676c6851231e415"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-328.png",
+      "sha256": "094d56f91c5dda1c66623be7f086d45ec4d0a28253bde4e40c591100af3f0fcd"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-329.png",
+      "sha256": "750226ef83557d1b2d18571a55b64548cd1bcb4460396f627c90f8e24db1dadc"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-330.png",
+      "sha256": "66dc96f84744e579701e22f8733a3fb5f4ee1f85291eef484cca7434e7c15f88"
+    },
+    {
+      "path": "assets/converted/classroom/classroom-color-331.png",
+      "sha256": "2d42425ba3a9282c19bccf4134e4b9041097650fbb5791c49d0e226ff1106ee9"
+    },
+    {
+      "path": "assets/converted/classroom/classroom.bin",
+      "sha256": "bff39dd36940e29dcfbbd9ed3d5c1ee77ded670201f24f8ae6367d2f4d4bbfd1"
+    },
+    {
+      "path": "assets/converted/classroom/classroom.conversion.json",
+      "sha256": "16d81a593538cbe93b4c78749294dda1cde867547b2f19d3d43db571f7115e45"
+    },
+    {
+      "path": "assets/converted/classroom/classroom.gltf",
+      "sha256": "052f35c39c00e18ded9842b90c0e99f81a11b68aceb44e4361681060d8c44ba2"
+    },
+    {
+      "path": "assets/converted/classroom/classroom.scene.json",
+      "sha256": "6030d6fd3bd8fce850e3b0353b8baca617c63b8a07c16b52267013cc1d402f93"
+    },
+    {
+      "path": "renderers/rtxdi/Assets/Media/environment/urban_street_04_4k.exr",
+      "sha256": "cea02c0729f910e0e1797069b60e17b40bb792eeec3ab046608048f1a23c80ef"
+    },
+    {
+      "path": "scenes/configs/falcor/classroom-reference.pyscene",
+      "sha256": "2f534e3f7250c4ec2252ed41b696538e5d1468275d553703f715823589f96360"
+    },
+    {
+      "path": "scenes/configs/falcor/gallery-lights.py",
+      "sha256": "fca53ab5aa22dc985d471e84036304078c41bfcfe7735b0c6feb95c314eb3181"
+    }
+  ],
+  "sources": []
+}

@@ -1,0 +1,8 @@
+from pathlib import Path
+import sys, json, falcor
+root = next((p for p in Path(__file__).resolve().parents if (p / 'scripts/falcor/adapted_scene_loader.py').is_file()), None)
+if root is None: raise RuntimeError('Cannot locate project root for adapted scene')
+sys.path.insert(0,str(root))
+from scripts.falcor.adapted_scene_loader import load_plan_file
+audit=load_plan_file(sceneBuilder,falcor,Path(__file__).resolve().with_name('scene-plan.json'),project_root=root,factor_shader_verified=True,material_optimization_disabled=True)
+Path('scene-audit.json').write_text(json.dumps(audit,indent=2,allow_nan=False),encoding='utf-8')

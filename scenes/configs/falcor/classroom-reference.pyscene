@@ -1,0 +1,25 @@
+# Preliminary scene: see config notes for lighting and geometry differences.
+from pathlib import Path
+from falcor import *
+root = Path(__file__).resolve().parents[3]
+sceneBuilder.importScene(str(root / 'assets/converted/classroom/classroom.gltf'))
+sceneBuilder.envMap = EnvMap(str(root / 'renderers/rtxdi/Assets/Media/environment/urban_street_04_4k.exr'))
+helper = root / 'scenes/configs/falcor/gallery-lights.py'
+exec(compile(helper.read_text(encoding="utf-8"), str(helper), "exec"))
+add_gallery_lights(sceneBuilder, root / 'assets/converted/classroom/classroom.scene.json')
+# Falcor Assimp import drops KHR_materials_emissive_strength. Recover exactly
+# the gallery source values and stop if importer behavior or source changes.
+import json
+gltf = root / 'assets/converted/classroom/classroom.gltf'
+materials = json.loads(gltf.read_text(encoding='utf-8'))['materials']
+rows = [(m['name'], m['extensions']['KHR_materials_emissive_strength']['emissiveStrength'])
+        for m in materials if 'KHR_materials_emissive_strength' in m.get('extensions', {})]
+expected = {'ceillingLamp_light': 2, 'dayLight_portal.001': 20, 'dayLight_portal.002': 20}
+if len(rows) != len(expected) or dict(rows) != expected:
+    raise RuntimeError('Classroom emissive source changed; revalidate before rendering')
+for name, strength in rows:
+    material = sceneBuilder.getMaterial(name)
+    if abs(material.emissiveFactor - 1.0) > 1e-6:
+        raise RuntimeError('Classroom emissive importer changed; revalidate before scaling ' + name)
+    material.emissiveFactor = strength
+print('Classroom restored source emissive strengths 2, 20, 20', flush=True)

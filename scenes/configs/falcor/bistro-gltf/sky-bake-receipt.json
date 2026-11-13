@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "source": "Donut procedural sky from first source directional light",
+  "image": "assets/generated/bistro/environment.exr",
+  "sha256": "3d99d20cae2d2168a01ee97cb81d0ae3a62dba58897e0c2517e07922e32e650d",
+  "resolution": [
+    2048,
+    1024
+  ],
+  "sun": {
+    "kind": "light",
+    "type": "DirectionalLight",
+    "node_path": "/graph[3]:Lights/children[0]:Sun",
+    "source": {
+      "name": "Sun",
+      "type": "DirectionalLight",
+      "rotation": [
+        -0.426794,
+        -0.393003,
+        -0.213387,
+        0.786042
+      ],
+      "angularSize": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "irradiance": 1.0
+    },
+    "world_matrix": [
+      [
+        0.6000294660200551,
+        0.6709245884315218,
+        -0.4356889217614793,
+        0.0
+      ],
+      [
+        3.562558169023511e-07,
+        0.5446259736422313,
+        0.8386790499554193,
+        0.0
+      ],
+      [
+        0.7999778996369591,
+        -0.5032322977236701,
+        0.3267913931244133,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "position": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "direction": [
+      0.4356889217614793,
+      -0.8386790499554193,
+      -0.3267913931244133
+    ],
+    "color": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "irradiance": 1.0,
+    "angular_size_degrees": 1.0
+  },
+  "direction_to_light": [
+    -0.4356889217614793,
+    0.8386790499554193,
+    0.3267913931244133
+  ],
+  "precision": "CPU evaluation then FLOAT16 quantization, stored FLOAT32 RGB; not bit-identical to GPU",
+  "source_sha256": {
+    "renderers/rtxdi/Assets/Media/bistro-rtxdi.scene.json": "ba2ba98a9b19807d9ec0025a3ae44bdc7927bf9eb1150ff545c69054189b245b",
+    "scripts/falcor/bake_donut_sky.py": "1ef3759c911fc4aaf0f9d55b34daebd30b5766ac5d5047e68af7c64b91b57896",
+    "scripts/falcor/donut_procedural_sky.py": "93b59e9350bdec43bf61924f48b599e3062a3d7e9f210261e16079aefe053be8",
+    "scripts/falcor/donut_scene_adapter.py": "2afa50f83d160a0e27d838e3cfcfcf4b3f4928a4bb5b20eae0df4ef267a2fb95",
+    "renderers/rtxdi/External/donut/include/donut/shaders/sky.hlsli": "0630ecd321bd70eb973b76803a3ee6f9efff45976364254c1a697a46386a3b7a",
+    "renderers/rtxdi/External/donut/src/render/SkyPass.cpp": "ab3f9e623578eec6c1f5b35b962e750c4dfd940f82ea8340802969be97749cb8",
+    "renderers/rtxdi/Samples/FullSample/Shaders/RenderEnvironmentMap.hlsl": "ea9f6d34e0ac9941dde0457dc41e6fed845c59feab484067e18dfe492e4cb591"
+  }
+}
