@@ -13,7 +13,7 @@ Start with the [scope](docs/scope.md), [literature review](docs/literature/READM
 | `docs/` | Plans, literature, decisions, and observations |
 | `writing/` | Course templates, working documents, and references |
 
-See the [comparison workflow](docs/comparison.md) for fixed-view spatial-reuse experiments.
+See the [comparison workflow](docs/comparison.md) for fixed-view spatial-reuse experiments. For the six fixed Falcor ReSTIR PT views, see the [scene preparation guide](experiments/configs/falcor-pt-spatial-comparison/PREPARATION.md) and [ordinary spatial reuse / CGNS configuration](experiments/configs/falcor-pt-spatial-comparison/README.md).
 
 Local assets, builds, and runs are ignored. Edit the [proposal](writing/course/proposal/main.tex) and [report](writing/course/report/main.tex); preserve the [original templates](writing/course/templates/README.md). See [contributing](CONTRIBUTING.md), [third-party sources](THIRD_PARTY.md), and [licensing](LICENSE).
 

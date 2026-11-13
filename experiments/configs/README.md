@@ -1,11 +1,11 @@
 # Configurations
 
-The example describes a proposed configuration shape and is explicitly not runnable. Null fields are unresolved choices, not defaults. Future backend runners must reject incomplete configs and record all effective parameters, including inherited backend defaults.
+These are the configurations used by the retained experiment workflows:
 
+- [di-reuse.json](di-reuse.json) defines the RTXDI DI reuse baseline.
+- [di-comparison-static.json](di-comparison-static.json) and [cgns-di-gi-pt-static.json](cgns-di-gi-pt-static.json) define the comparison workflows.
+- [pdf-controlled.json](pdf-controlled.json) is the declared matrix for the controlled PDF campaign, including view overrides, schedules, ROIs and execution order. The runner resolves scene defaults and freezes effective conditions in each suite. Changes remain subject to [experiment protocol](../protocol.md) approvals.
+- [falcor-sanity-check.json](falcor-sanity-check.json) configures the Falcor integration smoke test.
+- [Falcor ReSTIR PT spatial comparison](falcor-pt-spatial-comparison/README.md) defines the shared settings for ordinary spatial reuse and CGNS. Its six [camera presets](../views/falcor-pt-spatial-comparison/) select reusable [scene profiles and inventories](../scenes/falcor-pt-spatial-comparison/). See the [preparation guide](falcor-pt-spatial-comparison/PREPARATION.md) for the two Bistro variants and four other scenes.
 
-[pdf-controlled.json](pdf-controlled.json) is the runnable declared matrix for the controlled
-PDF campaign. It holds camera/view overrides, frame/capture schedules, ROIs and execution order.
-The runner resolves scene registry defaults and freezes the effective conditions and schedule
-in each suite. The current values preserve the historical eight-condition, three-seed campaign
-and its 78 method runs. Changes require the experiment approvals described in the
-[protocol](../protocol.md); this file does not replace budget or reference-policy authorizations.
+Superseded Falcor scout and diagnostic configurations are preserved as historical records under `runs/falcor-pt-spatial-comparison/provenance/archived-configs/`. The old Bistro FBX composition and glass-bypass scene wrappers and their three dedicated launchers have been retired; the archived paths describe the historical runs and are not current runnable entry points.
