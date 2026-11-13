@@ -7,6 +7,7 @@ from rtxdi_common import sha
 from experiment.artifacts import save_json
 from experiment.images import preview_rgb, read_pfm
 from . import pdf_artifacts
+from .pdf_paths import record_path
 
 
 def export_raw_condition(output, off_dir, on_dir, *, exposure_ev=0., write_videos=True,
@@ -41,7 +42,7 @@ def export_raw_condition(output, off_dir, on_dir, *, exposure_ev=0., write_video
             check_budget()
             if read_pfm(path).shape != (height, width, 3):
                 raise ValueError(f"Image resolution mismatch for {path}")
-            provenance[method][str(frame)] = {"path": str(path.resolve()), "sha256": sha(path)}
+            provenance[method][str(frame)] = {**record_path(path), "sha256": sha(path)}
     executable = shutil.which("ffmpeg") if write_videos else None
     if write_videos and not executable:
         raise ValueError("FFmpeg is required for visual comparison videos")

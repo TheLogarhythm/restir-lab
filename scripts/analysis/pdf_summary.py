@@ -11,6 +11,7 @@ import numpy as np
 
 from .pdf_artifacts import (METHODS, METRIC_DEFINITIONS, _captures, _config_alignment, _hash,
                             _phase, _reference_policy_metadata, _validate_rois)
+from .pdf_paths import record_path
 from experiment.controlled_evaluation import validate_selection
 from experiment.error_metrics import smape_map, trmae_map
 from experiment.images import read_pfm
@@ -99,7 +100,7 @@ def _prepare(condition):
     if len(regions) != len(rois) + 1:
         raise ValueError("ROI name 'full' is reserved")
     sources, timing, alignment, configs = {}, {}, {}, []
-    provenance = {"references": {str(frame): {"path": str(path), "sha256": _hash(path)}
+    provenance = {"references": {str(frame): {**record_path(path), "sha256": _hash(path)}
                   for frame, path in reference_paths.items()}, "runs": []}
     for run in sorted(runs, key=lambda run: run["seed"]):
         seed = run["seed"]
@@ -115,7 +116,8 @@ def _prepare(condition):
                 raise ValueError(f"Capture/reference frame alignment mismatch: {directory}")
             sources[(seed, method)] = captures
             timing[(seed, method)] = _timings(directory, count)
-            provenance["runs"].append({"seed": seed, "method": method, "directory": str(directory),
+            located=record_path(directory)
+            provenance["runs"].append({"seed": seed, "method": method, "directory": located['path'], "path_base": located['path_base'],
                 "timings_sha256": _hash(directory / "timings.csv"),
                 "images": {str(frame): _hash(captures[frame]) for frame in frames}})
     if configs and (len(configs) != 3 or any(config != configs[0] for config in configs[1:])):

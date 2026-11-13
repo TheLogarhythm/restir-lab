@@ -23,6 +23,11 @@ import tempfile
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
+if __package__:
+    from .pdf_paths import record_path, resolve_record
+else:
+    from pdf_paths import record_path, resolve_record
+
 RUN_SCRIPTS = Path(__file__).resolve().parents[1] / "run"
 if str(RUN_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(RUN_SCRIPTS))
@@ -347,7 +352,7 @@ def export_condition(output, off_dir, on_dir, references_mapping, *, references_
                 if image.shape != (height, width, 3):
                     raise ValueError(f"Image resolution/alignment mismatch for {path}: {image.shape}")
                 checked.add(path)
-            provenance[method][str(frame)] = {"path": str(path), "sha256": _hash(path)}
+            provenance[method][str(frame)] = {**record_path(path), "sha256": _hash(path)}
     executable = shutil.which("ffmpeg") if write_videos else None
     if write_videos and not executable:
         raise ValueError("FFmpeg is required for video export; install ffmpeg or set write_videos=False")
@@ -486,8 +491,7 @@ def main(argv=None):
     config = json.loads(args.manifest.read_text(encoding="utf-8"))
     base = args.manifest.resolve().parent
     def source_path(value):
-        path = Path(value)
-        return path if path.is_absolute() else base / path
+        return resolve_record(value,legacy_base=base)
     off_dir, on_dir = (source_path(config.pop(key)) for key in ("off_dir", "on_dir"))
     refs = {int(frame): source_path(path) for frame, path in config.pop("references").items()}
     export_condition(args.output, off_dir, on_dir, refs, **config)

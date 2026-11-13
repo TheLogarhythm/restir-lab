@@ -11,6 +11,7 @@ from statistics import mean, stdev
 import tempfile
 
 from .pdf_artifacts import _reference_policy_metadata
+from .pdf_paths import record_path
 
 
 METHODS = ("pdf-off", "pdf-on")
@@ -296,12 +297,13 @@ def analyze_equal_time(summary_directory, output_directory):
         if metadata and CONDITION.fullmatch(name):
             reference_policies[name] = metadata["reference_policy"]
     views = [_view(view, points, conditions) for view in VIEWS]
+    source_location=record_path(source)
     result = {"schema_version": 1, "estimate_kind": "piecewise-linear interpolated, within measured overlap only",
               "seeds": [1, 2, 3], "neighbors": list(BUDGETS), "difference": "PDF on minus off",
               "target_selection": "Midpoint of intersection of all six seed/method measured time ranges per view",
               "aggregation": "Interpolate each seed/method, then mean/sample SD of three paired seed differences",
               "metric_definitions": analysis.get("metric_definitions", {}), "views": views,
-              "source": {"directory": str(source), "sha256": {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+              "source": {"directory": source_location['path'], "path_base":source_location['path_base'], "sha256": {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
                          for path in (analysis_path, csv_path)},
                          "reference_assessments": {name: condition.get("reference_assessment") for name, condition in conditions.items()
                                                    if CONDITION.fullmatch(name)}}}

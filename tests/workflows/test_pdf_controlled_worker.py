@@ -84,6 +84,58 @@ class ControlledWorkerTests(unittest.TestCase):
                 worker.suite_path(name)
         self.assertEqual(worker.suite_path("pdf-controlled-new"), ROOT / "runs/pdf-controlled-new")
 
+    def test_new_identity_is_portable_validated_and_rejects_tampering(self):
+        from experiment import saved_runs
+        from experiment.controlled_budget import ExperimentBudget
+        import shutil
+        worker = self.worker()
+        with tempfile.TemporaryDirectory() as folder:
+            roots = [Path(folder) / 'checkout-a', Path(folder) / 'checkout-b']
+            root = roots[0]
+            root.mkdir()
+            runs = {}
+            for method in ('off', 'on'):
+                directory = root / method
+                directory.mkdir()
+                for name in ('manifest.json', 'config.json', 'captures.json', 'timings.csv'):
+                    (directory / name).write_text('{}')
+                runs[method + '_dir'] = directory
+            ref = root / 'reference.pfm'
+            ref.write_bytes(b'reference')
+            summary = root / 'summary'
+            summary.mkdir()
+            reports = [{'runs': [runs], 'references': {1: ref}}]
+            instance = worker.ControlledExperiment.__new__(worker.ControlledExperiment)
+            instance.root, instance.state, instance.state_path = root, {}, root / 'state.json'
+            instance.budget = ExperimentBudget(root)
+            def generate(path):
+                path.mkdir()
+                (path / 'result').write_text('complete')
+            with patch.object(saved_runs, 'ROOT', root):
+                output = instance.product(root / 'artifacts', reports, generate, settings={'summary_input': str(summary)})
+                receipt = json.loads((output / '.controlled-output.json').read_text())
+                identity = receipt['identity']
+                self.assertEqual(identity['path_schema'], 'repository_root_v1')
+                self.assertEqual(identity['reports'][0]['runs'][0]['off_dir'], {'path': 'off', 'path_base': 'repository_root'})
+                self.assertEqual(identity['settings']['summary_input'], {'path': 'summary', 'path_base': 'repository_root'})
+                self.assertTrue(all(i['path_base'] == 'repository_root' for i in identity['inputs']))
+                worker.validate_retained_raw_product(output, reports[0])
+            shutil.copytree(root, roots[1])
+            new_reports = [{'runs': [{k: roots[1] / v.name for k, v in runs.items()}], 'references': {1: roots[1] / ref.name}}]
+            with patch.object(saved_runs, 'ROOT', roots[1]):
+                worker.validate_retained_raw_product(roots[1] / 'artifacts', new_reports[0])
+                migrated = worker.ControlledExperiment.__new__(worker.ControlledExperiment)
+                migrated.root, migrated.state, migrated.state_path = roots[1], {}, roots[1] / 'state.json'
+                migrated.budget = ExperimentBudget(roots[1])
+                def no_regenerate(path):
+                    raise AssertionError('A matching migrated product must be reused')
+                reused = migrated.product(roots[1] / 'artifacts', new_reports, no_regenerate,
+                                          settings={'summary_input': str(roots[1] / 'summary')})
+                self.assertEqual(reused, roots[1] / 'artifacts')
+                (roots[1] / 'off' / 'timings.csv').write_text('changed')
+                with self.assertRaisesRegex(ValueError, 'timings changed'):
+                    worker.validate_retained_raw_product(roots[1] / 'artifacts', new_reports[0])
+
     def test_reference_refinement_regenerates_figures_without_overwriting_previous(self):
         worker = self.worker()
         with tempfile.TemporaryDirectory() as folder:

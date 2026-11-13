@@ -231,6 +231,36 @@ class BistroFixedWorkerTests(unittest.TestCase):
         condition = {"id": name, "scenario": "static", "rois": [], "scene": {"scene_id": scene}}
         return condition, report, output
 
+    def test_retained_portable_identity_validates_all_inputs_and_rejects_escape(self):
+        from experiment import controlled_reports, saved_runs
+        worker = worker_module()
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            condition, report, old_output = self.retained(worker, root, 'cornell-static', 'cornell-box')
+            old = json.loads((old_output / worker.RECEIPT_NAME).read_text())['identity']
+            with patch.object(saved_runs, 'ROOT', root):
+                identity = {'path_schema': controlled_reports.PATH_SCHEMA,
+                            'reports': controlled_reports.portable_reports([report]),
+                            'inputs': [{**saved_runs.source_record(path), 'sha256': digest}
+                                       for path, digest in old['inputs'].items()],
+                            'sources': old['sources']}
+                def produce(path):
+                    path.mkdir(parents=True)
+                    (path / 'summary.md').write_text('completed')
+                output = generate_versioned(root / 'analysis' / 'portable', identity, produce)
+                loaded = worker.load_retained_condition_report(output, condition, report, root=root)
+                self.assertEqual(loaded['runs'], report['runs'])
+                self.assertEqual(loaded['references'], report['references'])
+                duplicate = dict(identity, inputs=identity['inputs'] + [identity['inputs'][0]])
+                with self.assertRaisesRegex(ValueError, 'Duplicate'):
+                    controlled_reports.identity_inputs(duplicate)
+                escaped = dict(identity, inputs=[{'path': '../outside', 'path_base': 'repository_root', 'sha256': 'x'}])
+                with self.assertRaises(ValueError):
+                    controlled_reports.identity_inputs(escaped)
+                report['references'][128].write_bytes(b'changed')
+                with self.assertRaisesRegex(ValueError, 'input|changed|modified'):
+                    worker.load_retained_condition_report(output, condition, report, root=root)
+
     def test_retained_report_validates_exact_output_and_inputs_without_requiring_current_source_hash(self):
         worker = worker_module()
         self.assertTrue(hasattr(worker, "load_retained_condition_report"), "retained report loader required")

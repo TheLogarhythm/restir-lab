@@ -17,13 +17,14 @@ from .controlled_budget import BudgetExceeded, ExperimentBudget
 from .controlled_evaluation import (selection_spec, select_reference_captures,
                                     target_inventory, quality_captures, reference_execution_order)
 from .controlled_temporal import assess_static_reference_differences, check_temporal_references
-from .controlled_reports import (validate_retained_raw_product, load_retained_condition_report,
+from .controlled_reports import (PATH_SCHEMA, portable_reports, validate_retained_raw_product, load_retained_condition_report,
                                  fixed_reference_assessment)
 from .controlled_validation import validate_pilot_gate, validate_technical_gate, lighting_influence
 from .error_metrics import trmae_map
 from .images import read_pfm
 from .reference import suite_captures
 from .runner import preflight, run_one
+from .saved_runs import source_record
 from .scenes import validate_assets
 
 PDF_EXE = RENDERER / "build/bin/FullSamplePdf.exe"
@@ -302,8 +303,11 @@ class ControlledExperiment:
                                   ("manifest.json", "config.json", "captures.json", "timings.csv"))
         sources = [ROOT / "scripts/run/rtxdi_pdf_controlled.py", CAMPAIGN_PATH, *(ROOT / "scripts/analysis").glob("pdf_*.py"),
                    *(ROOT / "scripts/run/experiment").glob("*.py")]
-        identity = {"reports": json.loads(json.dumps(reports, default=str)), "settings": settings,
-                    "inputs": {str(path.resolve()): sha(path) for path in sorted(inputs)},
+        portable_settings = copy.deepcopy(settings)
+        if portable_settings is not None and "summary_input" in portable_settings:
+            portable_settings["summary_input"] = source_record(portable_settings["summary_input"])
+        identity = {"path_schema": PATH_SCHEMA, "reports": portable_reports(reports), "settings": portable_settings,
+                    "inputs": [{**source_record(path), "sha256": sha(path)} for path in sorted(inputs)],
                     "sources": {**{path.relative_to(ROOT).as_posix(): sha(path) for path in sources},
                                 **shared_source_hashes(ROOT)}}
         def bounded_generate(output):
