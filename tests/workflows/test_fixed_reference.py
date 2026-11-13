@@ -75,7 +75,9 @@ class FixedReferenceTests(unittest.TestCase):
                 comparison.collect(spec,output,{"DI":self.build},{"cornell-box":{"sha256":"assets"}},input_guard=lambda:None)
         saved=api.read_json(output/"comparison.json")
         self.assertEqual(saved["reference_build"],self.build)
-        self.assertEqual(saved["reference_inputs"]["reference/cornell-box/direct"],{"path":str(index.resolve()),"sha256":sha(index)})
+        self.assertEqual(saved["path_schema"], "repository_root_v1")
+        self.assertEqual(saved["reference_inputs"]["reference/cornell-box/direct"],
+                         {"path":str(index.resolve()), "path_base":"external_absolute", "sha256":sha(index)})
         self.assertEqual(saved["status"],"incomplete")
         self.assertFalse((output/"references").exists())
 

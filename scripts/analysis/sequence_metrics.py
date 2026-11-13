@@ -31,7 +31,7 @@ def _csv(path, rows):
 
 
 # Preserve the sequence adapter while sharing capture/geometry validation.
-from experiment.saved_runs import (load_run, geometry_target as _geometry_target,
+from experiment.saved_runs import (source_record, load_run, geometry_target as _geometry_target,
                                    SharedRegions as _SharedRegions)
 
 
@@ -105,7 +105,7 @@ def analyze_manifest(inputs, output):
                     raise ValueError("Compared runs/methods have different image targets")
                 geometry_targets[frame] = _geometry_target(capture["target"])
         loaded[name] = runs
-        provenance[name] = [{"directory":str(item["directory"]), "seed":item["config"]["seed"],
+        provenance[name] = [{"directory":source_record(item["directory"])["path"], "path_base":source_record(item["directory"])["path_base"], "seed":item["config"]["seed"],
                              "manifest_sha256":sha(item["directory"]/"manifest.json"),
                              "config_sha256":item["manifest"]["config_sha256"],
                              "images":{str(f): item["records"][f]["image_sha256"] for f in measured}}
@@ -117,12 +117,12 @@ def analyze_manifest(inputs, output):
     if references is not None:
         if isinstance(references, str):
             references = inputs.parent / references
-            reference_hashes["static"] = {"path":str(references.resolve()), "sha256":sha(references)}
+            reference_hashes["static"] = {**source_record(references), "sha256":sha(references)}
         elif isinstance(references, dict):
             if set(references) != {str(f) for f in measured}:
                 raise ValueError("Reference frame coverage must match measured frames exactly")
             references = {f: inputs.parent / references[str(f)] for f in measured}
-            reference_hashes = {str(f): {"path":str(p.resolve()), "sha256":sha(p)} for f,p in references.items()}
+            reference_hashes = {str(f): {**source_record(p), "sha256":sha(p)} for f,p in references.items()}
         else:
             raise ValueError("references must be a static path or frame-to-path mapping")
     geometry = spec.get("geometry")

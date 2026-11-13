@@ -73,6 +73,40 @@ class SequenceAnalysisTests(unittest.TestCase):
         with self.assertRaises(FileExistsError):
             self.api.analyze_manifest(inputs, self.folder/"analysis")
 
+    def test_portable_source_records_and_external_inputs(self):
+        from unittest.mock import patch
+        from experiment import saved_runs
+        inputs, _ = self.fixture()
+        with patch.object(saved_runs, 'ROOT', self.folder):
+            result = self.api.analyze_manifest(inputs, self.folder / "portable")
+        run = result['sources']['baseline'][0]
+        self.assertEqual((run['directory'], run['path_base']), ('a0', 'repository_root'))
+        ref = result['references']['static']
+        self.assertEqual((ref['path'], ref['path_base']), ('ref.pfm', 'repository_root'))
+        geo = result['shared_regions']['1']
+        self.assertEqual((geo['source'], geo['source_path_base']), ('a0/frame-0001.geometry.npz', 'repository_root'))
+        with patch.object(saved_runs, 'ROOT', self.folder / 'a0'):
+            outside = saved_runs.source_record(self.folder / 'ref.pfm')
+        self.assertEqual(outside['path_base'], 'external_absolute')
+        self.assertTrue(Path(outside['path']).is_absolute())
+
+    def test_repository_source_record_survives_moving_checkout(self):
+        from unittest.mock import patch
+        from experiment import saved_runs
+        roots = [self.folder / 'checkout-a', self.folder / 'checkout-b']
+        for root in roots:
+            (root / 'runs').mkdir(parents=True)
+            (root / 'runs' / 'input').write_text('same bytes')
+        with patch.object(saved_runs, 'ROOT', roots[0]):
+            record = saved_runs.source_record(roots[0] / 'runs' / 'input')
+        with patch.object(saved_runs, 'ROOT', roots[1]):
+            self.assertEqual(saved_runs.resolve_source(record['path'], record['path_base']), roots[1] / 'runs' / 'input')
+            with self.assertRaises(ValueError):
+                saved_runs.resolve_source('../input', 'repository_root')
+            with self.assertRaises(ValueError):
+                saved_runs.resolve_source(str(roots[0] / 'runs' / 'input'), 'repository_root')
+            self.assertEqual(saved_runs.resolve_source(str(roots[0] / 'runs' / 'input')), roots[0] / 'runs' / 'input')
+
     def test_duplicate_seed_missing_frame_and_modified_capture_are_rejected(self):
         inputs, spec = self.fixture()
         spec["methods"]["baseline"] = ["a0","a0"]

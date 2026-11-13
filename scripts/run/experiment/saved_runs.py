@@ -7,6 +7,34 @@ from .geometry_io import read_geometry
 from .pixel_regions import traditional_acceptance, rank_regions
 
 
+ROOT = Path(__file__).resolve().parents[3]
+
+
+def source_record(path):
+    """Record repository inputs portably and explicitly label external inputs."""
+    root = ROOT.resolve(strict=True)
+    path = Path(path).resolve(strict=True)
+    if path.is_relative_to(root):
+        return {'path': path.relative_to(root).as_posix(), 'path_base': 'repository_root'}
+    return {'path': str(path), 'path_base': 'external_absolute'}
+
+
+def resolve_source(path, path_base=None):
+    """Read new source records and legacy native-absolute records."""
+    value = Path(path)
+    if path_base == 'repository_root':
+        if value.is_absolute() or value.drive or '..' in value.parts or '\\' in str(path):
+            raise ValueError('Invalid repository source path')
+        root = ROOT.resolve(strict=True)
+        value = (root / value).resolve(strict=True)
+        if not value.is_relative_to(root):
+            raise ValueError('Repository source path escapes workspace')
+        return value
+    if path_base not in (None, 'external_absolute') or not value.is_absolute():
+        raise ValueError('Invalid external or legacy source path')
+    return value.resolve(strict=True)
+
+
 def load_run(directory, measured):
     directory = Path(directory).resolve()
     captures = suite_captures(directory)
@@ -94,8 +122,9 @@ class SharedRegions:
         mask_path = folder / f"frame-{source_frame:04d}.npz"
         np.savez_compressed(mask_path, **masks, acceptance=rates["acceptance"],
                             accepted=rates["accepted"], candidates=rates["candidates"])
+        source_path = source_record(path)
         self.records[key] = {
-            "source": str(path), "source_sha256": record["geometry_sha256"],
+            "source": source_path["path"], "source_path_base": source_path["path_base"], "source_sha256": record["geometry_sha256"],
             "target_key": capture["key"], "mask": mask_path.relative_to(self.output).as_posix(),
             "mask_sha256": sha(mask_path), "valid_pixels": int(masks["valid"].sum()),
             "hard_pixels": int(masks["hard"].sum()), "easy_pixels": int(masks["easy"].sum()),

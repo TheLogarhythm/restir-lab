@@ -14,7 +14,7 @@ from experiment import path_reference
 from experiment.geometry_io import read_geometry
 from experiment.images import read_pfm
 from experiment.reference import rmae
-from experiment.saved_runs import SharedRegions, geometry_target
+from experiment.saved_runs import SharedRegions, geometry_target, source_record
 from metrics.comparison_metrics import aggregate_smape, compare_errors, validate_masks
 from metrics.error_metrics import smape_map
 from scripts.analysis.comparison_diagnostics import file_record, capture_evidence, timing_summary, comparison_summary
@@ -273,7 +273,7 @@ def analyze(source, output, *, source_archive=None):
             raise ValueError("Frozen plan changed during analysis")
         if source_hashes() != result["provenance"]["code_sha256"]:
             raise ValueError("Analysis code changed during processing")
-        result["input_inventory"] = [{"path":str(Path(name).resolve()), "sha256":digest} for name,digest in sorted(inventory.items())]
+        result["input_inventory"] = [{**source_record(name), "sha256":digest} for name,digest in sorted(inventory.items())]
         if read_json(source).get("schema_version") == 1:
             from experiment.legacy_comparison import validate_frozen_references
             validate_frozen_references(read_json(source))

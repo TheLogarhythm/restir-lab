@@ -44,6 +44,44 @@ class ComparisonAnalysisTests(LegacyComparisonFixture, unittest.TestCase):
         save_json(source,record)
         return source,record,index
 
+    def test_neighbor_source_is_portable(self):
+        from scripts.analysis import comparison_diagnostics
+        from experiment import saved_runs
+        source = self.folder / 'counts'
+        np.array([[128, 129]], dtype='<u4').tofile(source)
+        item = {'directory': self.folder, 'records': {1: {'spatial_neighbors': 'counts', 'spatial_neighbors_sha256': sha(source), 'spatial_neighbors_definition': 'test'}},
+                'resolved': {}, 'config': {'width': 2, 'height': 1, 'definition': {'spatial_neighbors': 2}}}
+        with patch.object(saved_runs, 'ROOT', self.folder), patch.object(comparison_diagnostics, 'spatial_neighbor_stats'):
+            value = comparison_diagnostics.neighbor_counts(item, 1, {'all': np.ones((1, 2), dtype=bool)})
+        self.assertEqual((value['source'], value['source_path_base']), ('counts', 'repository_root'))
+        self.assertEqual(value['sha256'], sha(source))
+
+    def test_verifier_normalizes_legacy_and_portable_source_evidence(self):
+        from scripts.analysis.comparison_verify import normalized
+        from experiment import saved_runs
+        path = self.folder / 'source'
+        path.write_text('saved input')
+        old = {'source': str(path), 'source_sha256': sha(path)}
+        new = {'source': 'source', 'source_path_base': 'repository_root', 'source_sha256': sha(path)}
+        with patch.object(saved_runs, 'ROOT', self.folder):
+            self.assertEqual(normalized(old, self.folder, self.folder), normalized(new, self.folder, self.folder))
+            with self.assertRaises(ValueError):
+                normalized({**new, 'source': '../source'}, self.folder, self.folder)
+
+    def test_new_analysis_inventory_uses_portable_source_records(self):
+        from experiment import saved_runs
+        source, _ = self.fixture()
+        with patch.object(saved_runs, 'ROOT', self.folder):
+            result = api.analyze(source, self.folder / 'analysis')
+            self.assertTrue(result['input_inventory'])
+            self.assertTrue(all(row['path_base'] == 'repository_root' for row in result['input_inventory']))
+            self.assertTrue(all(not Path(row['path']).is_absolute() for row in result['input_inventory']))
+            self.assertEqual(self.verify(source, report=False)['status'], 'verified')
+            for row in result['input_inventory']:
+                row['path'] = str(saved_runs.resolve_source(row['path'], row.pop('path_base')))
+            save_json(self.folder / 'analysis/analysis.json', result)
+            self.assertEqual(self.verify(source, report=False)['status'], 'verified')
+
     def test_frozen_reference_damage_fails_before_output_creation(self):
         source,_,index = self.frozen_fixture()
         index.write_text(index.read_text()+"\n")

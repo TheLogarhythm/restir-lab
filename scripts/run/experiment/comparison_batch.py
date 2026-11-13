@@ -15,8 +15,9 @@ from .comparison_config import load_spec, resolve_configs, validate_approved_bud
 from .comparison_plan import source_hashes, validate_gate, validate_plan
 from .fixed_reference import read_json
 from .reference import target
-from .runner import preflight, query, relative_path
+from .runner import preflight, query, relative_path, portable_message
 from .scenes import load_scene, validate_assets
+from .saved_runs import source_record
 
 
 def now():
@@ -29,11 +30,30 @@ def renderer_idle():
         raise RuntimeError("A FullSample process still exists; diagnose ownership before starting")
 
 
+def portable_spec_sources(spec):
+    """Freeze repository inputs relative to ROOT, keeping external paths absolute."""
+    spec = copy.deepcopy(spec)
+    root = ROOT.resolve()
+    def portable(value):
+        path = (root / value).resolve()
+        return path.relative_to(root).as_posix() if path.is_relative_to(root) else str(path)
+    for method in spec["methods"].values():
+        source = method["source"]
+        if source["kind"] == "comparison":
+            source["index"] = portable(source["index"])
+    for reference in spec["references"].values():
+        source = reference["source"]
+        if source["kind"] == "indices":
+            source["indices"] = {view:portable(value) for view,value in source["indices"].items()}
+    spec["source_path_base"] = "repository_root_for_relative_paths; external_inputs_are_absolute"
+    return spec
+
+
 def prepare(spec_path, root, preview_check, conformance):
     root = Path(root).resolve()
     if root.exists():
         raise FileExistsError(f"Comparison already exists: {root}")
-    spec = load_spec(spec_path)
+    spec = portable_spec_sources(load_spec(spec_path))
     validate_approved_budget(spec)
     jobs = resolve_configs(spec)
     assets = {s:validate_assets(load_scene(s)) for s in {j["config"]["scene_id"] for j in jobs}}
@@ -72,7 +92,9 @@ def prepare(spec_path, root, preview_check, conformance):
                 or actual["resolution"][0]*expected["resolution"][1] != actual["resolution"][1]*expected["resolution"][0]
                 or sha(image) != checked["preview_sha256"]):
             raise ValueError(f"Unverified/mismatched preview: {view}")
-        checked["preview"] = str(image)
+        preview = source_record(image)
+        checked["preview"] = preview["path"]
+        checked["preview_path_base"] = preview["path_base"]
         spec["views"][view]["camera"] = config["scene"]["camera"]
     external = {"conformance":{"path":str(Path(conformance).resolve()), "sha256":sha(Path(conformance))},
                 **{f"reuse-index/{n}":entry for n,entry in enumerate(origins.values())}}
@@ -82,12 +104,13 @@ def prepare(spec_path, root, preview_check, conformance):
             if path.is_file():
                 external["/".join(map(str,key)) + "/" + path.name] = {"path":str(path), "sha256":sha(path)}
     external.update(reference_inputs)
+    external = {key:{**source_record(entry["path"]), "sha256":entry["sha256"]} for key,entry in external.items()}
     root.mkdir(parents=True)
     shutil.copyfile(ROOT / spec["definition_file"],root / "definition.json")
     spec["definition_file"] = relative_path(root / "definition.json",ROOT)
     save_json(root / "config.json",spec)
     save_json(root / "preview-check.json",receipt)
-    plan = {"schema_version":3, "batch_id":str(uuid.uuid4()), "created_utc":now(),
+    plan = {"schema_version":3, "path_schema":"repository_root_v1", "batch_id":str(uuid.uuid4()), "created_utc":now(),
             "config_sha256":sha(root / "config.json"), "definition_sha256":sha(root / "definition.json"),
             "preview_check_sha256":sha(root / "preview-check.json"), "assets":assets,
             "builds":builds, "code_sha256":code, "external_inputs":external,
@@ -97,6 +120,41 @@ def prepare(spec_path, root, preview_check, conformance):
     save_json(root / "state.json",{"schema_version":3, "batch_id":plan["batch_id"], "status":"prepared",
                                     "phase":"methods", "updated_utc":now(), "history":[]})
     return plan
+
+
+def record_command(command):
+    """Retain argv with path arguments normalized; execution uses the original argv."""
+    recorded = list(command)
+    bases = {}
+    for index in (0, 2, 5):
+        item = source_record(command[index])
+        recorded[index] = item["path"]
+        bases[str(index)] = item["path_base"]
+    return {"command": recorded, "command_path_bases": bases,
+            "command_kind": "path_normalized_copy_of_executed_argv",
+            "command_cwd": source_record(ROOT)}
+
+
+def batch_path(path, root):
+    root = Path(root).resolve()
+    path = Path(path).resolve()
+    if not path.is_relative_to(root):
+        raise ValueError("Batch path escapes its root")
+    return path.relative_to(root).as_posix()
+
+
+def resolve_batch_path(value, path_base, root):
+    if path_base is None:  # Historical records stored native paths.
+        return Path(value)
+    path = Path(value)
+    if (path_base != "batch_root" or path.is_absolute() or path.drive
+            or ".." in path.parts or "\\" in str(value)):
+        raise ValueError("Invalid batch-relative path")
+    root = Path(root).resolve()
+    result = (root / path).resolve()
+    if not result.is_relative_to(root):
+        raise ValueError("Batch path escapes its root")
+    return result
 
 
 def status(root):
@@ -109,7 +167,7 @@ def status(root):
         state["attention"] = "Worker exited; inspect worker.log and FullSample processes before explicit resume"
     p = state.get("progress", {})
     if state.get("phase") == "references" and p.get("status") == "rendering" and "directory" in p:
-        timing = Path(p["directory"]) / "timings.csv"
+        timing = resolve_batch_path(p["directory"], p.get("directory_path_base"), root) / "timings.csv"
         if timing.is_file():
             with timing.open(newline="") as stream:
                 rows = [row for row in csv.DictReader(stream) if row.get("frame") and row.get("gpu_ms")]
@@ -146,10 +204,11 @@ def start(root, *, resume_reason=None):
         save_json(root / "state.json",state)
         command = [sys.executable,"-B",str(ROOT / "scripts/run/rtxdi_comparison.py"),"work","--root",str(root),"--token",token]
         try:
+            command_record = record_command(command)
             identity = batch_process.launch(command,ROOT,root / "worker.log")
-            save_json(root / "process.json",{"identity":identity, "token":token, "command":command, "started_utc":now()})
+            save_json(root / "process.json",{"identity":identity, "token":token, **command_record, "started_utc":now()})
         except BaseException as exc:
-            state.update(status="failed",error=str(exc),updated_utc=now())
+            state.update(status="failed", error=portable_message(str(exc),root), diagnostic_text_path_base="batch_root",updated_utc=now())
             save_json(root / "state.json",state)
             raise
     return state
@@ -196,7 +255,11 @@ def work(root, token):
     with batch_process.exclusive(ROOT / "runs/.static-comparison-gpu.lock"):
         state = batch_process.claim_worker(root,token)
         def update(phase,progress=None):
-            state.update(phase=phase,progress=progress or {},updated_utc=now())
+            progress = dict(progress or {})
+            if phase == "references" and "directory" in progress:
+                progress["directory"] = batch_path(progress["directory"], root)
+                progress["directory_path_base"] = "batch_root"
+            state.update(phase=phase,progress=progress,updated_utc=now())
             save_json(root / "state.json",state)
         try:
             plan = validate_plan(root)
@@ -228,9 +291,10 @@ def work(root, token):
             verification = verify(root,analysis,report)
             save_json(root / "verification.json",verification)
             state.update(status="awaiting_ui",phase="offline_ui_check",updated_utc=now(),progress={},
-                         report=str(report.parent / "comparison.html"),machine_verified_utc=now())
+                         report=batch_path(report.parent / "comparison.html", root), report_path_base="batch_root", machine_verified_utc=now())
         except BaseException as exc:
-            state.update(status="failed",error=str(exc),traceback=traceback.format_exc(),updated_utc=now())
+            state.update(status="failed",error=portable_message(str(exc),root), traceback=portable_message(traceback.format_exc(),root),
+                         diagnostic_text_path_base="batch_root",updated_utc=now())
             traceback.print_exc()
             raise
         finally:
@@ -245,7 +309,7 @@ def confirm_ui(root, note):
         if state.get("schema_version") != 3 or state["status"] != "awaiting_ui" or not note.strip():
             raise ValueError("UI confirmation requires a current machine-verified report and actual inspection")
         verification = read_json(root / "verification.json")
-        if sha(Path(state["report"])) != verification["html_sha256"]:
+        if sha(resolve_batch_path(state["report"], state.get("report_path_base"), root)) != verification["html_sha256"]:
             raise ValueError("Report changed since machine verification")
         state.update(status="completed",phase="completed",completed_utc=now(),
                      ui_check={"utc":now(), "note":note, "html_sha256":verification["html_sha256"]})

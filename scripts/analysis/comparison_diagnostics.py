@@ -3,6 +3,7 @@ import numpy as np
 from rtxdi_common import sha
 from experiment.artifacts import spatial_neighbor_stats
 from experiment.runner import relative_path
+from experiment.saved_runs import source_record, resolve_source
 
 def file_record(path, output):
     return {"path":relative_path(path,output), "sha256":sha(path)}
@@ -19,11 +20,12 @@ def neighbor_counts(item, frame, masks):
     config = item["config"]
     spatial_neighbor_stats(path,config["width"],config["height"],config["definition"]["spatial_neighbors"])
     values = np.fromfile(path,dtype="<u4").reshape(config["height"],config["width"])
+    source = source_record(path)
     return {"available":True, "definition":record["spatial_neighbors_definition"],
             "mean_including_background":{name:float((values[mask]&127).mean()) for name,mask in masks.items()},
             "mean_surface":{name:float((values[mask & (values>=128)]&127).mean())
                             if (mask & (values>=128)).any() else None for name,mask in masks.items()},
-            "source":str(path),"sha256":sha(path),
+            "source":source["path"], "source_path_base":source["path_base"], "sha256":sha(path),
             "cgns_preselected_mean_active":record.get("cgns_selected_mean_active")}
 
 
@@ -64,6 +66,9 @@ def comparison_summary(original, cgns):
 
 def check_records(value, base):
     if isinstance(value, dict):
+        if set(value) == {"path", "path_base", "sha256"}:
+            if sha(resolve_source(value["path"], value["path_base"])) != value["sha256"]:
+                raise ValueError("Analysis input or artifact hash changed")
         if set(value) == {"path", "sha256"}:
             if sha((base / value["path"]).resolve()) != value["sha256"]:
                 raise ValueError("Analysis input or artifact hash changed")

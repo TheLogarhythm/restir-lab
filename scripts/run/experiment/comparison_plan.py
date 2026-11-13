@@ -5,6 +5,7 @@ import zipfile
 from rtxdi_common import ROOT, sha
 from records.provenance import shared_source_hashes
 from .fixed_reference import read_json
+from .saved_runs import resolve_source
 
 REQUIRED_CHECKS = {"cpu", "native", "scaffold", "gpu_off_equivalence", "gpu_transport_edges",
                    "gpu_reference_resume", "gpu_reference_convergence", "independent_review"}
@@ -43,6 +44,14 @@ def validate_gate(path, builds, code, *, source_archive=None):
     return gate
 
 
+def input_path(entry, path_schema=None):
+    if path_schema is None:
+        return Path(entry["path"])  # Historical native paths retain their original semantics.
+    if path_schema != "repository_root_v1" or set(entry) != {"path", "path_base", "sha256"}:
+        raise ValueError("Invalid comparison plan input path schema")
+    return resolve_source(entry["path"], entry["path_base"])
+
+
 def read_artifact_plan(root, *, source_archive=None):
     """Verify an immutable historical receipt; never authorize a renderer launch.
 
@@ -52,6 +61,8 @@ current inventory separately and does not claim the original exact-code receipt.
     root = Path(root).resolve()
     plan = read_json(root / "plan.json")
     version = plan.get("schema_version")
+    if plan.get("path_schema") not in (None, "repository_root_v1"):
+        raise ValueError("Unknown comparison plan path schema")
     if version not in (1,2,3) or sha(root / "config.json") != plan["config_sha256"]:
         raise ValueError("Plan/configuration changed or schema unsupported")
     spec = read_json(root / "config.json")
@@ -61,7 +72,7 @@ current inventory separately and does not claim the original exact-code receipt.
     if sha(root / "preview-check.json") != plan["preview_check_sha256"]:
         raise ValueError("Frozen camera verification changed")
     for entry in (*plan.get("external_inputs", {}).values(), *plan.get("reference_inputs", {}).values()):
-        if sha(Path(entry["path"])) != entry["sha256"]:
+        if sha(input_path(entry, plan.get("path_schema"))) != entry["sha256"]:
             raise ValueError("Frozen external/reference input changed")
     if source_archive is not None:
         with zipfile.ZipFile(source_archive) as archive:
@@ -69,7 +80,7 @@ current inventory separately and does not claim the original exact-code receipt.
                 if key not in archive.namelist() or hashlib.sha256(archive.read(key)).hexdigest() != digest:
                     raise ValueError(f"Historical source archive differs from frozen inventory: {key}")
     if version in (2,3):
-        validate_gate(plan["external_inputs"]["conformance"]["path"], plan["builds"], plan["code_sha256"],
+        validate_gate(input_path(plan["external_inputs"]["conformance"], plan.get("path_schema")), plan["builds"], plan["code_sha256"],
                       source_archive=source_archive)
     return plan
 

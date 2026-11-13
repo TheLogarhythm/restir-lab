@@ -8,12 +8,18 @@ from scripts.analysis.comparison_analysis import analyze, comparison_source
 from scripts.analysis.comparison_report import checked_path, display_images, render_html, validate_coverage
 from scripts.analysis.comparison_diagnostics import file_record, check_records
 from experiment.fixed_reference import read_json
+from experiment.saved_runs import resolve_source
 from experiment.comparison_config import validate_display
 from rtxdi_common import sha
 
 
 def normalized(value, base, destination):
     if isinstance(value, dict):
+        if isinstance(value.get("source"), str) and ("source_sha256" in value or "source_path_base" in value or (value.get("available") is True and "sha256" in value)):
+            value = {**value, "source": str(resolve_source(value["source"], value.get("source_path_base")))}
+            value.pop("source_path_base", None)
+        if set(value) == {"path", "path_base", "sha256"}:
+            return {"path": str(resolve_source(value["path"], value["path_base"])), "sha256":value["sha256"]}
         if set(value) == {"path", "sha256"}:
             path = (base / value["path"]).resolve()
             if path.is_relative_to(base):

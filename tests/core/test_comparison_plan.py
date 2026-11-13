@@ -2,6 +2,7 @@
 from contextlib import nullcontext
 import copy
 import json
+import sys
 from pathlib import Path
 import tempfile
 import unittest
@@ -9,7 +10,7 @@ from unittest.mock import patch
 import zipfile
 
 from tests.fixtures.comparison import ROOT, save_json, sha
-from experiment import comparison_batch as batch, comparison, comparison_plan as plan_api, batch_process
+from experiment import comparison_batch as batch, comparison, comparison_plan as plan_api, batch_process, saved_runs
 from experiment.comparison_config import load_spec, resolve_configs
 from experiment.reference import target
 
@@ -53,9 +54,14 @@ class ComparisonPlanTests(unittest.TestCase):
              patch.object(batch,"validate_assets",return_value={"sha256":"asset"}), \
              patch.object(batch,"preflight",side_effect=lambda d,e:builds["reference" if "PathReference" in e.name else "GI"]), \
              patch.object(batch,"query",return_value="fixture"), \
-             patch.object(batch,"source_hashes",return_value={}), patch.object(plan_api,"source_hashes",return_value={}):
+             patch.object(batch,"source_hashes",return_value={}), patch.object(plan_api,"source_hashes",return_value={}), \
+             patch.object(saved_runs,"ROOT",self.folder):
             plan = batch.prepare(config_path,root,preview_path,gate)
             self.assertEqual(plan_api.validate_plan(root),plan)
+            self.assertEqual(plan["path_schema"], "repository_root_v1")
+            self.assertTrue(all(v["path_base"] == "repository_root" for v in plan["external_inputs"].values()))
+            previews = json.loads((root / "preview-check.json").read_text())["views"]
+            self.assertTrue(all(v["preview_path_base"] == "repository_root" for v in previews.values()))
             self.assertTrue(any(key.endswith("timings.csv") for key in plan["external_inputs"]))
             with patch.object(batch,"renderer_idle"), patch.object(batch_process,"exclusive",side_effect=lambda *a,**k:nullcontext()), \
                  patch.object(batch_process,"alive",side_effect=[False,True]), \
@@ -63,8 +69,58 @@ class ComparisonPlanTests(unittest.TestCase):
                 self.assertEqual(batch.start(root),batch.start(root))
                 self.assertEqual(launch.call_count,1)
                 self.assertIn("rtxdi_comparison.py",launch.call_args.args[0][2])
+                actual = launch.call_args.args[0]
+                process = json.loads((root/'process.json').read_text())
+                self.assertEqual(process['command_kind'], 'path_normalized_copy_of_executed_argv')
+                for index in (0, 2, 5):
+                    self.assertEqual(saved_runs.resolve_source(process['command'][index], process['command_path_bases'][str(index)]), Path(actual[index]).resolve())
             next(iter(reused.values()))["directory"].joinpath("timings.csv").write_text("changed")
             with self.assertRaisesRegex(ValueError,"external"): plan_api.validate_plan(root)
+
+    def test_portable_plan_rebinds_after_checkout_move_and_checks_hashes(self):
+        import shutil
+        from experiment import saved_runs
+        workspace = self.folder / 'checkout-a'
+        root = workspace / 'runs' / 'campaign'
+        root.mkdir(parents=True)
+        (root / 'definition.json').write_text('{}')
+        (root / 'preview-check.json').write_text('{}')
+        save_json(root / 'config.json', {'definition_file':'runs/campaign/definition.json'})
+        source = workspace / 'frozen-input'
+        source.write_text('original')
+        plan = {'schema_version': 3, 'path_schema':'repository_root_v1',
+                'config_sha256':sha(root/'config.json'), 'definition_sha256':sha(root/'definition.json'),
+                'preview_check_sha256':sha(root/'preview-check.json'), 'code_sha256':{}, 'builds':{},
+                'external_inputs':{'source':{'path':'frozen-input','path_base':'repository_root','sha256':sha(source)},
+                                   'conformance':{'path':'frozen-input','path_base':'repository_root','sha256':sha(source)}}}
+        save_json(root/'plan.json',plan)
+        with patch.object(saved_runs,'ROOT',workspace), patch.object(plan_api,'ROOT',workspace), patch.object(plan_api,'validate_gate'):
+            self.assertEqual(plan_api.read_artifact_plan(root),plan)
+        moved = self.folder/'checkout-b'; shutil.copytree(workspace,moved)
+        with patch.object(saved_runs,'ROOT',moved), patch.object(plan_api,'ROOT',moved), patch.object(plan_api,'validate_gate'):
+            self.assertEqual(plan_api.read_artifact_plan(moved/'runs/campaign'),plan)
+            (moved/'frozen-input').write_text('changed')
+            with self.assertRaisesRegex(ValueError,'external'):
+                plan_api.read_artifact_plan(moved/'runs/campaign')
+            plan['external_inputs']['source']['path'] = '../outside'
+            save_json(moved/'runs/campaign/plan.json',plan)
+            with self.assertRaises(ValueError):
+                plan_api.read_artifact_plan(moved/'runs/campaign')
+
+    def test_spec_sources_normalize_only_project_internal_paths(self):
+        project = self.folder / 'project'
+        project.mkdir()
+        inside = project / 'runs' / 'index.json'
+        outside = self.folder / 'outside.json'
+        spec = {'methods': {'m': {'source': {'kind':'comparison', 'index':str(inside), 'method':'m'}}},
+                'references': {'direct': {'source': {'kind':'indices', 'indices': {'view':str(inside), 'external':str(outside)}}}}}
+        with patch.object(batch, 'ROOT', project):
+            normalized = batch.portable_spec_sources(spec)
+        self.assertEqual(normalized['methods']['m']['source']['index'], 'runs/index.json')
+        self.assertEqual(normalized['references']['direct']['source']['indices']['view'], 'runs/index.json')
+        self.assertEqual(normalized['references']['direct']['source']['indices']['external'], str(outside))
+        self.assertEqual(normalized['source_path_base'], 'repository_root_for_relative_paths; external_inputs_are_absolute')
+        self.assertEqual(spec['methods']['m']['source']['index'], str(inside))
 
     def test_changed_conformance_evidence_is_rejected(self):
         builds = {"GI":{},"reference":{}}
@@ -83,6 +139,49 @@ class ComparisonPlanTests(unittest.TestCase):
         save_json(self.folder / "plan.json",plan)
         self.assertEqual(plan_api.read_artifact_plan(self.folder),plan)
         with self.assertRaisesRegex(ValueError,"does not authorize resume"): plan_api.validate_plan(self.folder)
+
+    def test_status_and_confirmation_accept_portable_and_legacy_paths(self):
+        report = self.folder / 'report' / 'comparison.html'
+        report.parent.mkdir()
+        report.write_text('verified')
+        source = self.folder / 'references' / 'checkpoint'
+        source.mkdir(parents=True)
+        (source / 'timings.csv').write_text('frame,gpu_ms\n10,50\n')
+        progress = {'status':'rendering','directory':'references/checkpoint','directory_path_base':'batch_root',
+                    'component':'full','view':'v','spp_target':100}
+        state = {'schema_version':3,'status':'running','phase':'references','progress':progress}
+        save_json(self.folder/'state.json',state)
+        with patch.object(batch_process,'alive',return_value=False):
+            self.assertEqual(batch.status(self.folder)['live_progress']['completed_spp'],10)
+            import shutil
+            with tempfile.TemporaryDirectory() as moved_parent:
+                moved = Path(moved_parent) / 'campaign'
+                shutil.copytree(self.folder, moved)
+                self.assertEqual(batch.status(moved)['live_progress']['completed_spp'],10)
+            state['progress']['directory'] = str(source)
+            state['progress'].pop('directory_path_base')
+            save_json(self.folder/'state.json',state)
+            self.assertEqual(batch.status(self.folder)['live_progress']['completed_spp'],10)
+            state['progress'].update(directory='../outside',directory_path_base='batch_root')
+            save_json(self.folder/'state.json',state)
+            with self.assertRaises(ValueError): batch.status(self.folder)
+        save_json(self.folder/'verification.json',{'html_sha256':sha(report)})
+        for value, base in (('report/comparison.html','batch_root'),(str(report),None)):
+            state = {'schema_version':3,'status':'awaiting_ui','report':value}
+            if base: state['report_path_base']=base
+            save_json(self.folder/'state.json',state)
+            with patch.object(batch_process,'exclusive',side_effect=lambda *a,**k:nullcontext()):
+                self.assertEqual(batch.confirm_ui(self.folder,'checked')['status'],'completed')
+
+    def test_process_command_is_recorded_as_portable_derivative_of_actual_argv(self):
+        command = [sys.executable,'-B',str(ROOT/'scripts/run/rtxdi_comparison.py'),'work','--root',str(self.folder),'--token','abc']
+        record = batch.record_command(command)
+        self.assertEqual(record['command_kind'],'path_normalized_copy_of_executed_argv')
+        for index in (0,2,5):
+            field = record['command_path_bases'][str(index)]
+            self.assertEqual(saved_runs.resolve_source(record['command'][index],field),Path(command[index]).resolve())
+        self.assertEqual(record['command'][1],'-B')
+        self.assertEqual(record['command'][-1],'abc')
 
     def test_status_is_read_only_and_does_not_launch(self):
         save_json(self.folder / "state.json",{"status":"running","phase":"methods"})

@@ -10,6 +10,7 @@ from .geometry_io import read_geometry
 from .images import read_pfm
 from .runner import relative_path, run_one, frozen_input_guard
 from . import reference, transport
+from .saved_runs import source_record
 
 EXECUTABLES = {"DI":RENDERER / "build/bin/FullSampleCgns.exe",
                "GI":RENDERER / "build/bin/FullSampleTransport.exe",
@@ -229,11 +230,25 @@ def collect(spec, root, builds, assets, *, input_guard, progress=None):
     jobs = resolve_configs(spec)
     reference_build, reference_inputs = validate_reference_sources(spec,jobs,assets)
     reused, origins = reused_runs(spec, jobs, assets)
+    record_path = root / "comparison.json"
+    old_record = read_json(record_path) if record_path.exists() else None
+    path_schema = old_record.get("path_schema") if old_record is not None else "repository_root_v1"
+    if path_schema == "repository_root_v1":
+        def portable(entry):
+            return {**source_record(entry["path"]), "sha256":entry["sha256"]}
+        converted = [portable(entry) for entry in origins.values()]
+        origins = {entry["path"]:entry for entry in converted}
+        if len(origins) != len(converted):
+            raise ValueError("Duplicate comparison source paths")
+        reference_inputs = {key:portable(entry) for key,entry in reference_inputs.items()}
+    elif path_schema is not None:
+        raise ValueError("Unknown comparison path schema")
     initial = {"schema_version":3, "spec":spec, "builds":builds, "reuse_sources":origins,
                "reference_build":reference_build, "reference_inputs":reference_inputs}
-    record_path = root / "comparison.json"
-    if record_path.exists():
-        record = read_json(record_path)
+    if path_schema is not None:
+        initial["path_schema"] = path_schema
+    if old_record is not None:
+        record = old_record
         if any(record.get(k) != v for k,v in initial.items()):
             raise ValueError("Frozen comparison inputs changed")
     else:
