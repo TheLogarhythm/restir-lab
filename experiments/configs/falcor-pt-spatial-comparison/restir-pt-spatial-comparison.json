@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "name": "falcor-pt-spatial-comparison",
+  "reference_catalog": "experiments/references/falcor-pt-spatial-comparison-16384.json",
+  "render": {
+    "width": 1920,
+    "height": 1080,
+    "warmup_frames": 40,
+    "capture_count": 8,
+    "image_accumulation": false
+  },
+  "graph": {
+    "samplesPerPixel": 1,
+    "sampleGenerator": 0,
+    "tracePassMode": "MinimalPayload",
+    "useReSTIRPT": true,
+    "useRTXDI": false,
+    "emissiveSampler": "Power",
+    "maxSurfaceBounces": 10,
+    "maxDiffuseBounces": 10,
+    "maxSpecularBounces": 10,
+    "maxTransmissionBounces": 10,
+    "useRussianRoulette": true,
+    "reSTIRPathTracingOptions": {
+      "useAreaReservoirs": false,
+      "useSpatialResampling": true,
+      "spatialIterations": 1,
+      "spatialNeighborCount": 1,
+      "spatialGatherRadius": 30,
+      "usePairedNeighbors": false,
+      "useDoFReconnectionShift": false,
+      "useDoFReconnectionForTemporalReuse": false,
+      "deriveDoFReconnectionShiftProbabilityFromCoC": false,
+      "maxHistoryLength": 20
+    }
+  },
+  "temporal_modes": {
+    "temporal-on": true,
+    "temporal-off": false
+  },
+  "methods": {
+    "spatial": {
+      "kind": "baseline"
+    },
+    "cgns": {
+      "kind": "cgns",
+      "shader": {
+        "candidate_count": 32,
+        "position_scale": 0.05,
+        "normal_exponent": 8.0,
+        "early_stop_score": 0.5,
+        "early_stop_count": 1
+      }
+    }
+  }
+}

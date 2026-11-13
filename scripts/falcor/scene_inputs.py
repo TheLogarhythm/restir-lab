@@ -203,3 +203,56 @@ def verify_profile_inventory(config, root, *, adapted):
         if record.get("bytes") is not None and path.stat().st_size != record["bytes"]:
             raise ValueError("Scene resource size differs from the pinned inventory")
     return assets, sources
+
+
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--check-assets", action="store_true")
+    parser.add_argument("--check-runtimes", action="store_true")
+    parser.add_argument("--check-reference-images", action="store_true")
+    args = parser.parse_args()
+    from . import (
+        cgns_pt_six_view_smoke as six,
+        adapted_reference_runner,
+        reference_runner,
+    )
+    from . import reference_extension_batch
+
+    entries = six.frozen_views()
+    for key, entry in sorted(entries.items()):
+        config = six.load_config(entry["config_path"])
+        six.validate_reference_for_view(
+            key, config=config, entry=entry, require_image=args.check_reference_images
+        )
+        if args.check_assets:
+            assets = (
+                adapted_reference_runner.inventory_resources(
+                    config["resources"], six.ROOT
+                )
+                if entry["adapted"]
+                else reference_runner.asset_inventory(config, six.ROOT)
+            )
+            sources = (
+                adapted_reference_runner.inventory_resources(
+                    config["sources"], six.ROOT
+                )
+                if config["sources"]
+                else {}
+            )
+            if assets != entry["asset_sha256"] or sources != entry["source_sha256"]:
+                raise ValueError("Scene inventory differs: " + str(key))
+        if args.check_runtimes:
+            reference_extension_batch.recheck_view(entry, config)
+        print(
+            "/".join(key)
+            + ": verified metadata"
+            + (", assets" if args.check_assets else "")
+            + (", runtime receipt" if args.check_runtimes else "")
+            + (", reference image" if args.check_reference_images else "")
+        )
+
+
+if __name__ == "__main__":
+    main()

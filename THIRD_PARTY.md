@@ -33,6 +33,8 @@ The [PDF Similarity extension](docs/reproductions/pdf-similarity.md) is an indep
 
 The [CGNS extension](docs/reproductions/cgns.md) is an independent DI adaptation developed with Codex from Junkins et al. (2026), with [author code `f28d553`](https://github.com/orion-junkins/ReSTIR-CGNS/tree/f28d553f3b2552b1be829feffea6d1abb1945e1d) as an algorithm reference. Its generated spatial shader preserves the pinned RTXDI source notice; implementation differences are recorded in the reproduction note.
 
+The [Falcor ReSTIR PT CGNS adaptation](docs/reproductions/falcor-cgns-pt.md) is independent project code informed by Junkins et al. (2026) and the pinned author implementation. Its private runtime overlay modifies Falcor shaders without removing their upstream NVIDIA BSD-3-Clause-style notices; Falcor and its dependencies retain their original notices and licenses. It is not the authors' renderer.
+
 The [spatial-reuse comparison](docs/reproductions/spatial-reuse.md), common
 transport corrections and conventional path reference are project integration
 code developed with Codex. They use pinned NVIDIA sampling/ray/material interfaces
