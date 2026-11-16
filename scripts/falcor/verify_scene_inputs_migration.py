@@ -26,7 +26,11 @@ def _read(root, path):
     path = Path(path)
     if path.is_absolute() or '..' in path.parts:
         raise ValueError('Migration path must be workspace-relative')
-    target = (root / path).resolve(strict=True)
+    target = root / path
+    retired = Path('runs/falcor-pt-spatial-comparison/provenance/relocations')
+    if not target.exists() and path.is_relative_to(retired):
+        target = root / 'runs/pt-6-views-spatial-compare/provenance/scene-migrations' / path.relative_to(retired)
+    target = target.resolve(strict=True)
     if not target.is_relative_to(root):
         raise ValueError('Migration path escapes workspace')
     return target.read_bytes()

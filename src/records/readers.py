@@ -21,7 +21,11 @@ def read_run(directory, backend=None):
         if inferred == "rtxdi":
             from backends.rtxdi.records import normalize
         elif inferred == "falcor":
-            from backends.falcor.records import normalize
+            from backends.falcor.quality_records import KINDS
+            if manifest.get("kind") in KINDS:
+                from backends.falcor.quality_records import normalize
+            else:
+                from backends.falcor.records import normalize
         else:
             raise ValueError("Unsupported saved-run format")
         return normalize(directory, manifest, digest)
@@ -45,3 +49,9 @@ def validate_record(run):
     for name, digest in run.provenance["record_files"].items():
         if sha256(artifact_path(run.directory, name)) != digest:
             raise ValueError("Saved record changed since it was read: " + name)
+
+    archive = run.provenance.get("archive")
+    if archive is not None:
+        for name, digest in archive["record_files"].items():
+            if sha256(artifact_path(archive["directory"], name)) != digest:
+                raise ValueError("Archive record changed since it was read: " + name)

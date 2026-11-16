@@ -72,6 +72,7 @@ def describe_run(run, reference_image=None):
         "limitations": list(run.limitations),
         "transport": run.provenance["transport"],
         "record_files": run.provenance["record_files"],
+        "archive": run.provenance.get("archive"),
         "reference": reference_record,
         "frames": rows,
         "analysis_source_sha256": package_source_hashes(),
@@ -79,6 +80,8 @@ def describe_run(run, reference_image=None):
 
 
 def _settings(run):
+    if run.backend == "falcor":
+        return run.provenance["comparison_identity"]
     config = run.config
     return {
         "mode": config["mode"],
@@ -216,6 +219,7 @@ def analyze_repeats(runs, frames, **options):
                 "run_directory": str(run.directory),
                 "manifest_sha256": run.manifest_sha256,
                 "record_files": run.provenance["record_files"],
+                "archive": run.provenance.get("archive"),
                 "seed": run.seed,
                 "transport": run.provenance["transport"],
                 "capabilities": sorted(run.capabilities),

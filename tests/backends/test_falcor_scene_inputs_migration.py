@@ -66,6 +66,19 @@ def fixture(root):
 
 
 class SceneMigrationTest(unittest.TestCase):
+    def test_retired_relocation_paths_resolve_in_stage_archive(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            proof = fixture(root)
+            old = root / 'runs/falcor-pt-spatial-comparison/provenance/relocations'
+            new = root / 'runs/pt-6-views-spatial-compare/provenance/scene-migrations'
+            new.parent.mkdir(parents=True)
+            old.rename(new)
+            self.assertEqual(migration.verify(root), 9)
+            (new / 'bistro-portable-v1.json').write_bytes(b'changed')
+            with self.assertRaisesRegex(ValueError, 'Prior migration receipt changed'):
+                migration.verify(root)
+
     def test_proves_path_only_migration_and_rejects_changed_scene(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
