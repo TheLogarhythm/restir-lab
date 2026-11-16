@@ -35,6 +35,13 @@ The [CGNS extension](docs/reproductions/cgns.md) is an independent DI adaptation
 
 The [Falcor ReSTIR PT CGNS adaptation](docs/reproductions/falcor-cgns-pt.md) is independent project code informed by Junkins et al. (2026) and the pinned author implementation. Its private runtime overlay modifies Falcor shaders without removing their upstream NVIDIA BSD-3-Clause-style notices; Falcor and its dependencies retain their original notices and licenses. It is not the authors' renderer.
 
+The [Falcor PDF-guided PT adaptation](docs/reproductions/falcor-pdf-pt.md) is independent
+project code developed with Codex from Tokuyoshi (2023) and the weighted-GRIS
+confidence formulation of Lin et al. (2022). It reuses the project's scalar vMF
+math and adds first-hop statistics and effective-confidence handling through
+private Falcor shader overlays. Upstream notices remain intact; no Tokuyoshi
+author implementation was imported.
+
 The [spatial-reuse comparison](docs/reproductions/spatial-reuse.md), common
 transport corrections and conventional path reference are project integration
 code developed with Codex. They use pinned NVIDIA sampling/ray/material interfaces

@@ -9,9 +9,11 @@ The shared Python library lives in `src`. Metrics and image I/O have one canonic
 - `records/`: typed run/capture records, path/hash validation and source fingerprints.
 - `backends/rtxdi/records.py`: schema-3 direct-lighting baseline reader with the full control/RNG schedule and native target/lighting provenance.
 - `backends/falcor/records.py`: schema-1 smoke reader, including historical records lacking retained build/graph snapshots.
+- `backends/falcor/quality_records.py`: fixed-view PT quality captures with verified saved seed/history controls.
+- `backends/falcor/archive.py`: current paths and original capture evidence for the compact PT stage archive.
 - `analysis/`: saved-image summaries, explicit-reference SMAPE and conservative independent-repeat analysis.
 
-The shared execution layer, Falcor trial/RNG controls, GPU timing, reference generation and cross-backend transport validation remain future work. Existing campaign-specific runners and policies remain in place. No rendering is needed for the commands below.
+Existing campaign-specific execution and reference-generation policies remain in place. The fixed-view PT reader now supports recorded Falcor trial/RNG controls; the archive exposes timing inclusion metadata. Neither reader launches a renderer or certifies cross-backend transport equivalence. No rendering is needed for the commands below.
 
 ## Install and inspect saved runs
 
@@ -42,6 +44,48 @@ summary = describe_run(run)
 `read_run` returns `RunRecord` and `CapturedFrame` views. Missing seed/reset/sampling metadata remains `None`; it is not synthesized. Each subsequent `load_frame` rechecks saved metadata, image digest and dimensions. File references must remain inside the run directory. Reading does not rewrite native manifests or images.
 
 `analyze_repeats(runs, frames, lag=3, radius=8)` uses the same sequence metric implementation with verified image loads. It requires multiple eligible runs of one method: unique seeds, nonoverlapping recorded RNG streams with one-step progression and matching constant offsets, matching full controls (including unmeasured frames), settings, targets and lighting/build provenance. Its result includes the measured input image hashes, run/config hashes, package-source hashes and per-frame reference paths/hashes. `references=` accepts one HDR path or a frame-to-path mapping; the same uncertified-reference label applies, and each read plus analysis completion rechecks the reference digest. The existing array API also remains available for callers with independently validated data and custom loaders. Caller-provided region masks remain the caller's provenance responsibility.
+
+## Fixed-view PT archive
+
+The compact stage archive is a collection, not one capture. Use the archive
+adapter to select a view, method and independent seed realizations:
+
+```python
+from backends.falcor.archive import read_archive
+from analysis.saved_runs import independent_sequences
+
+archive = read_archive("runs/pt-6-views-spatial-compare")
+# Metadata only; no quality HDR decoding.
+records = archive.quality_records(view="classroom", method="cgns")
+timings = archive.timing_records(included_only=True)
+# Validate the selected captures, including linear FLOAT32 EXRs.
+runs = archive.quality_runs(view="classroom", method="cgns")
+sequences = independent_sequences(runs, range(41, 57))
+```
+
+Method labels are `temporal-off`, `temporal-on`, `cgns` and `pdf`.
+Only `quality_runs()` decodes the selected quality HDR. It binds original capture
+evidence to the archive's current paths and hashes; saved Python scripts are
+parsed, never executed. Source/runtime paths inside old manifests remain historical
+provenance and are not resolved against the current checkout.
+
+Fixed-view captures can also be read with `read_run(quality_directory)`.
+Fresh-history and nonoverlapping path-seed schedules are checked before repeat
+analysis. Statistical RNG independence remains an experiment assumption; correlated
+frames are not additional independent trials. Old smoke captures still lack this
+capability.
+
+Timing records carry `included`, `exclusion_reason`, `source_run_id` and
+`raw_timings_validated=False`; `included_only=True` excludes Emerald's timings. Nested stage timers remain
+inclusive and must not be summed with their parent. Reading these records does
+not compute timing statistics or certify unexposed visibility timers.
+
+For a metadata-only inventory, use
+`python -B scripts/analysis/pt_stage_archive.py --inspect`.
+For complete archive integrity, use
+`python -B scripts/analysis/pt_stage_archive.py`. The archive adapter's selected
+input checks do not replace that full inventory/reference verifier. All analysis
+outputs must go outside the immutable archive.
 
 ## Historical limits
 

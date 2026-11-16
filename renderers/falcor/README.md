@@ -58,7 +58,7 @@ This establishes the official research environment, not a paper reproduction or 
 
 The existing RTXDI binaries, runners, scenes and experiment state are independent. Falcor scripts live outside the frozen campaign's source globs; scene config is `.pyscene`, with the run profile under `experiments/configs/`. Falcor's own bundled RTXDI 1.3.0 dependency is separate from the lab's RTXDI 3.1.0.
 
-See [the design](../../docs/superpowers/specs/2026-10-28-falcor-integration-design.md).
+See [the integration decisions](../../docs/superpowers/backend-and-analysis.md#repository-and-backend-isolation).
 
 ## Verification on 2026-10-28
 

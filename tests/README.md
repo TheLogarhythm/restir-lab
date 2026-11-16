@@ -33,10 +33,13 @@ built runtimes or a GPU. The `source` group checks transformations of pinned Fal
 shader sources. Initialize only `renderers/falcor/upstream` with
 `git submodule update --init renderers/falcor/upstream` and
 `GIT_LFS_SKIP_SMUDGE=1`; this group performs no rendering.
+The cached-CGNS consumer/round scheduling check runs in `source`; its pure selector
+comparison remains in `cpu`. This prevents the source-dependent check from being
+silently skipped by the portable CI checkout.
 Shader variant identity tests use synthetic runtime receipts. Historical scene
 migration tests use synthetic, hash-bound snapshots and a prepared-sky placeholder.
 Native checks compile production shader functions with MSVC
-and need the pinned RTXDI/Donut sources. Media checks encode, probe and decode an actual
+and need the pinned RTXDI/Donut and Falcor sources. Media checks encode, probe and decode an actual
 video with FFmpeg/ffprobe. Windows checks run the PowerShell supervisor with CPU stand-ins,
 real OS locks, and a detached virtual-environment worker ownership handshake. They need an
 idle renderer/worker; portable scheduler tests mock only the OS process/lock boundary.
@@ -111,6 +114,20 @@ checkout or GPU is required. The `exr` extra above supplies their HDR dependency
 also declared in [scripts/falcor/requirements.txt](../scripts/falcor/requirements.txt).
 The separate bounded native validation commands are in the
 [Falcor integration guide](../renderers/falcor/README.md).
+
+The [PDF-guided PT adaptation](../docs/reproductions/falcor-pdf-pt.md) keeps its
+synthetic runtime/receipt, configuration, capture/campaign, reset-plan and saved-AOV
+checks in `cpu`. The direction/history C++ checks and the two production-MIS numerical
+checks run in `native`; they compile shared math and extracted pinned Falcor shader
+functions without launching a renderer. The MIS oracle also compiles deliberate
+normalization mutations and requires their numerical checks to fail. The overlay's
+missing/already-patched source rejection belongs to `source`. The native integration
+job fetches Falcor sources as well as RTXDI/Donut, without building Falcor or fetching
+scene assets. GPU scout results remain separate from these regression groups.
+`test_falcor_pdf_pt_history.py` directly executes the production `labCombineHistory`
+and camera/resolution stamp functions with CPU texture/geometry stubs. It checks
+exact A/B/count updates and unchanged current statistics across initialization,
+disocclusion, stamp changes, invalid reprojection and nonfinite-history rejection.
 
 ## Comparison checks
 

@@ -2,6 +2,10 @@
 
 Independent adaptation of [Tokuyoshi 2023](https://doi.org/10.1145/3585501), Algorithm 2 and Eqs. 9–18, on pinned RTXDI 3.1.0. This is not the author's MiniEngine implementation.
 
+The later [Falcor PDF-guided PT adaptation](falcor-pdf-pt.md) uses first-hop
+statistics from multi-bounce initial candidates and Falcor's weighted pairwise
+MIS. Its history, implementation and validation are separate from this DI extension.
+
 ## Use
 
 ```powershell
@@ -28,6 +32,19 @@ The two banks cost **64 bytes/pixel** (126.6 MiB at 1080p), even with the switch
 
 Recorded checks (2026-10-02–03): Release build, Cornell static/motion/reset and Arcade static smoke runs; finite captures and exact reset/fresh agreement. Extension-off captures matched baseline exactly except combined reuse (at most two FP16 ULPs). GUI smoke runs covered toggles and incompatible settings. These checks establish runtime behavior, not quality or performance gains.
 
-CPU tests execute the shared direction update and adapted RTXDI spatial loops, covering zero-weight history, unequal target PDFs and fractional M. Regression tests pass; the rebuilt variant passes Cornell PDF on/off finite-HDR and reset/fresh checks, plus a bounded viewer run. Conventional reference configs explicitly disable PDF Similarity for new and resumed streams.
+CPU tests execute shared direction updates and adapted spatial loops, including
+zero-weight history, unequal target PDFs and fractional M. Conventional reference
+configs disable PDF Similarity for both new and resumed streams.
 
-[Analysis](../../scripts/analysis/README.md) separates methods in metrics, timings and figures; matched on/off report generation passes synthetic fixtures. Reference acceptance remains pending, so quantitative error analysis and reference-based products remain gated. Formal evaluation requires regenerated references with matching lighting provenance and DI's geometric-normal hemisphere support. Earlier references omitted that support gate and are not used for this comparison. See the [experiment protocol](../../experiments/protocol.md).
+The [sparse evaluation](../../results/summaries/pdf-similarity/README.md) completed
+on 2026-10-19 across three method seeds and 15 reference states. Five
+Cornell/Arcade states passed the original precision policy; ten Bistro states
+used the approved fixed budget, with precision not evaluated. Recorded benefits
+were selective, with adverse regional/motion cases. Earlier references missing
+DI's geometric-hemisphere support were excluded.
+
+As of 2026-11-16, the [availability record](../../results/summaries/pdf-similarity/artifact-availability.json)
+reports retained statistics/provenance but no local image media. Tables are
+historical results; image-based reanalysis or video reconstruction requires
+restoring matching inputs. See the [experiment protocol](../../experiments/protocol.md)
+for reference and comparison requirements.
