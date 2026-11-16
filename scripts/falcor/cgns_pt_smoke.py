@@ -4,7 +4,6 @@ import argparse
 import ast
 import json
 import hashlib
-import re
 import math
 import os
 from pathlib import Path
@@ -13,6 +12,9 @@ import subprocess
 from . import reference_runner, reference_runtime, run
 from .adapted_reference_runner import isolated_python_environment
 from .process_utils import check_renderer_idle, exclusive_operation
+# Compatibility exports for older smoke/campaign adapters.
+from .runtime_common import (is_transient_runtime_file as _transient_runtime_file,
+                             validate_runtime_inventory)
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CONFIG = ROOT / 'experiments/configs/falcor-pt-spatial-comparison/classroom-reference.json'
@@ -78,24 +80,6 @@ def validate_resolved_graph(source, requested, pass_name='PathTracer'):
                 raise ValueError('Resolved option mismatch at ' + path + '.' + key)
     check(requested, actual, pass_name)
     return actual
-
-
-def _transient_runtime_file(name):
-    return (name.startswith('.shadercache/') or name.endswith('.pdb')
-            or bool(re.fullmatch(r'Mogwai\.exe\.\d+\.log', name)))
-
-
-def validate_runtime_inventory(runtime, expected):
-    runtime = Path(runtime)
-    files = {p.relative_to(runtime).as_posix() for p in runtime.rglob('*') if p.is_file()}
-    wanted = {k for k in expected if not _transient_runtime_file(k)}
-    actual = {k for k in files if not _transient_runtime_file(k)}
-    if actual != wanted:
-        raise ValueError('Runtime inventory differs; missing=' + repr(sorted(wanted-actual)[:5]) + ' extra=' + repr(sorted(actual-wanted)[:5]))
-    for name in sorted(wanted):
-        path = runtime / name
-        if path.is_symlink() or run.sha(path) != expected[name]:
-            raise ValueError('Runtime hash mismatch: ' + name)
 
 
 def validate_runtime(runtime, method):
