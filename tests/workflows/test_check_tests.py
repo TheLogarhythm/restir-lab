@@ -70,6 +70,15 @@ class TestGroupDiscoveryTests(unittest.TestCase):
             self.assertEqual(len(errors), 1)
             self.assertIn('test_omitted is not a unittest method', errors[0])
 
+    def test_cached_consumer_contract_runs_in_the_falcor_source_group(self):
+        from tests.backends.test_falcor_cgns_cached import CachedCgnsTests
+        consumer = CachedCgnsTests("test_all_consumers_address_by_central_pixel_and_round")
+        independent = CachedCgnsTests("test_cache_only_substitutes_geometry_inputs")
+        # CPU CI has no pinned Falcor checkout. The consumer test must be selected
+        # by the group that fetches it and treats unavailable sources as failure.
+        self.assertEqual(check_tests.group_for(consumer), "source")
+        self.assertEqual(check_tests.group_for(independent), "cpu")
+
     def test_explicit_group_cannot_pass_with_a_skipped_dependency(self):
         code, output = self.run_fixture(skipped=True)
         self.assertNotEqual(code, 0)
