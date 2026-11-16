@@ -30,7 +30,7 @@ jobs:
           git submodule update --init renderers/rtxdi
           git -C renderers/rtxdi submodule update --init External/donut Libraries/Rtxdi
       - name: Fetch pinned Falcor shader sources without assets or nested dependencies
-        if: inputs.suite == 'source'
+        if: inputs.suite == 'source' || inputs.suite == 'native'
         run: git submodule update --init renderers/falcor/upstream
       - name: Locate the installed MSVC compiler
         if: inputs.suite == 'native'

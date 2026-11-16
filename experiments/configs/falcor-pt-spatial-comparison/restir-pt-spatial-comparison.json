@@ -42,6 +42,13 @@
     "spatial": {
       "kind": "baseline"
     },
+    "pdf-similarity": {
+      "kind": "pdf-similarity",
+      "shader": {
+        "history_limit": 20,
+        "history_decay": 0.95
+      }
+    },
     "cgns": {
       "kind": "cgns",
       "shader": {

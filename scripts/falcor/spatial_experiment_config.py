@@ -61,6 +61,17 @@ def validate_cgns_shader(parameters):
     }
 
 
+def validate_pdf_shader(parameters):
+    """Validate the bounded PDF temporal-history shader controls."""
+    _keys(parameters, ('history_limit', 'history_decay'), 'PDF similarity shader parameters')
+    _integer(parameters['history_limit'], 1, 100, 'history_limit')
+    _number(parameters['history_decay'], 0, 1, 'history_decay')
+    if 0 < parameters['history_decay'] < _FLOAT32_MIN_NORMAL:
+        raise ValueError('history_decay is too small for reliable GPU float32 evaluation')
+    return {'history_limit': parameters['history_limit'],
+            'history_decay': float(parameters['history_decay'])}
+
+
 def validate_config(value):
     """Validate a parsed config and return a detached, normalized copy."""
     _keys(value, ('schema_version', 'name', 'reference_catalog', 'render',
@@ -123,13 +134,20 @@ def validate_config(value):
     _fixed(modes['temporal-on'], True, 'temporal_modes.temporal-on')
     _fixed(modes['temporal-off'], False, 'temporal_modes.temporal-off')
     methods = value['methods']
-    _keys(methods, ('spatial', 'cgns'), 'methods')
+    if not isinstance(methods, dict) or set(methods) not in (
+            {'spatial', 'cgns'}, {'spatial', 'cgns', 'pdf-similarity'}):
+        raise ValueError('methods must contain spatial, cgns and optionally pdf-similarity')
     _keys(methods['spatial'], ('kind',), 'methods.spatial')
     _fixed(methods['spatial']['kind'], 'baseline', 'methods.spatial.kind')
     _keys(methods['cgns'], ('kind', 'shader'), 'methods.cgns')
     _fixed(methods['cgns']['kind'], 'cgns', 'methods.cgns.kind')
     result = deepcopy(value)
     result['methods']['cgns']['shader'] = validate_cgns_shader(methods['cgns']['shader'])
+    if 'pdf-similarity' in methods:
+        pdf = methods['pdf-similarity']
+        _keys(pdf, ('kind', 'shader'), 'methods.pdf-similarity')
+        _fixed(pdf['kind'], 'pdf-similarity', 'methods.pdf-similarity.kind')
+        result['methods']['pdf-similarity']['shader'] = validate_pdf_shader(pdf['shader'])
     return result
 
 
@@ -164,8 +182,10 @@ def load_config(path=DEFAULT_CONFIG):
 def graph_options(config, mode, method):
     """Return the Falcor options for a method and temporal mode."""
     value = validate_config(config)
-    if method not in ('baseline', 'cgns'):
+    if method not in ('baseline', 'cgns', 'pdf-similarity'):
         raise ValueError('Unknown comparison method')
+    if method == 'pdf-similarity' and method not in value['methods']:
+        raise ValueError('PDF similarity method is absent from experiment configuration')
     if mode not in value['temporal_modes']:
         raise ValueError('Unknown temporal mode')
     graph = deepcopy(value['graph'])
