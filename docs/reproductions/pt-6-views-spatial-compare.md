@@ -1,9 +1,9 @@
 # Six-view ReSTIR PT comparison
 
-The completed stage is the immutable
-[PT archive](../../runs/pt-6-views-spatial-compare/README.md). Its
-[manifest](../../runs/pt-6-views-spatial-compare/manifest.json) defines current paths;
-original batch IDs and receipts remain provenance. New captures use
+The completed stage is the immutable local archive at
+`runs/pt-6-views-spatial-compare/`. Its `README.md` describes the retained data,
+and `manifest.json` defines current paths; original batch IDs and receipts remain
+provenance. These generated files are not included in a Git checkout. New captures use
 `runs/pt-fixed-view-batches/<id>/`, never the archive as an output/resume directory.
 
 Method details: [CGNS](falcor-cgns-pt.md) and [PDF Similarity](falcor-pdf-pt.md).
@@ -44,7 +44,7 @@ latest recheck for all methods; the other views use original timing. Emerald's
 four timing captures are excluded from performance aggregates/equal-time claims,
 while its quality data remain eligible. VRAM pressure was suspected but not
 established as the cause of instability. The
-[timing table](../../runs/pt-6-views-spatial-compare/analysis/timing.csv) records
+local timing table, `runs/pt-6-views-spatial-compare/analysis/timing.csv`, records
 inclusion explicitly: 20 of 24 captures are included.
 
 Six final references remain in assets; six 8192-spp checkpoints and generation

@@ -26,7 +26,7 @@ The run saves a 1280 × 720 Cornell Box BMP and its command, configuration, and 
 
 The completed 78-run campaign has a local records/statistics archive at runs/pdf-similarity-archive/. As checked on 2026-11-16, this directory contains no PNG, EXR, HDR or PFM files. Its earlier documentation of full seed-1 PNG sequences and selected HDR describes the historical archival state. Cornell/Arcade retain historical precision-validation records; Bistro precision remains not evaluated.
 
-See the [archive README](../runs/pdf-similarity-archive/README.md) and [current availability](../results/summaries/pdf-similarity/artifact-availability.json). Image-dependent archive verification, sparse-metric recalculation and the PNG-sequence viewer require restoring the matching images first. Do not run those commands expecting a successful current-media verification or recreate the retired campaign automatically.
+See the [archive report](../results/summaries/pdf-similarity/README.md) and [current availability](../results/summaries/pdf-similarity/artifact-availability.json). The local-only archive README is at `runs/pdf-similarity-archive/README.md`; it is not included in a Git checkout. Image-dependent archive verification, sparse-metric recalculation and the PNG-sequence viewer require restoring the matching images first. Do not run those commands expecting a successful current-media verification or recreate the retired campaign automatically.
 
 The original reference window and scheduled launch are finished. The renderer runner rejects the retired output name; a new experiment needs a new campaign name and its own approved budget. Original supervision, source/configuration snapshots and audit records survive under runs/pdf-similarity-archive/audits/.
 

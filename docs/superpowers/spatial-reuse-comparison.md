@@ -148,7 +148,8 @@ six-view guide.
 
 ## Validation provenance: 2026-11-16
 
-The retained [maintenance receipt](../../build/pt-maintenance-20261116/verification.json)
+The local-only maintenance receipt at
+`build/pt-maintenance-20261116/verification.json` (not included in a Git checkout)
 records checks against the maintenance worktree, after independent review found and
 fixed a batch-preparation variable-shadowing regression.
 
