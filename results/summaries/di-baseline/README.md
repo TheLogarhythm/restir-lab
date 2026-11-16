@@ -1,5 +1,7 @@
 # ReSTIR DI baseline evaluation
 
+**Current local availability — 2026-11-16:** The local archive retains records/statistics but no PNG, EXR, HDR or PFM files. The 216 method PNGs and 12 reference PNGs mentioned below describe the historical archive, not current local availability. Tables remain historical reported results; image links may be unavailable. See [current availability](artifact-availability.json). This update does not rerender or recalculate results.
+
 ## Experimental design
 
 Controlled ablation of initial sampling, temporal reuse, spatial reuse, and combined reuse: 36 runs, baseline seed(s) 1. Camera paths, candidate budgets, lighting and materials are matched across modes; denoising and AA are disabled.

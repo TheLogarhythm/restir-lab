@@ -24,16 +24,9 @@ The run saves a 1280 × 720 Cornell Box BMP and its command, configuration, and 
 
 ## Controlled PDF comparison
 
-The completed 78-run campaign is now the local archive at `runs/pdf-similarity-archive/`. It contains all three-seed CSV/timings, full seed-1 PNG sequences, and selected HDR for static frame 128 and temporal frames 31/32/47/48/95/96. Cornell/Arcade retain five original precision acceptances; Bistro uses ten seed-1001 / 262,144-local-sample fixed references whose precision is not evaluated.
+The completed 78-run campaign has a local records/statistics archive at runs/pdf-similarity-archive/. As checked on 2026-11-16, this directory contains no PNG, EXR, HDR or PFM files. Its earlier documentation of full seed-1 PNG sequences and selected HDR describes the historical archival state. Cornell/Arcade retain historical precision-validation records; Bistro precision remains not evaluated.
 
-Verify the archive without GPU work:
-
-```powershell
-python -B scripts/analysis/pdf_archive.py verify --decode
-python -B scripts/analysis/pdf_archive.py numerical
-```
-
-The second command recomputes sparse spatial/local-temporal metrics and checks numeric maps against the saved pre-deletion array hashes. Original metadata paths are historical; archive-inputs.json supplies current paths. The old MP4s and full reference-generation chain have been removed. Use the generated viewer at `writing/progress/comparison.html#sequences` (build instructions are in the [progress README](../writing/progress/README.md)) to play synchronized video previews and inspect the complete archived PNG sequences.
+See the [archive README](../runs/pdf-similarity-archive/README.md) and [current availability](../results/summaries/pdf-similarity/artifact-availability.json). Image-dependent archive verification, sparse-metric recalculation and the PNG-sequence viewer require restoring the matching images first. Do not run those commands expecting a successful current-media verification or recreate the retired campaign automatically.
 
 The original reference window and scheduled launch are finished. The renderer runner rejects the retired output name; a new experiment needs a new campaign name and its own approved budget. Original supervision, source/configuration snapshots and audit records survive under runs/pdf-similarity-archive/audits/.
 

@@ -1,16 +1,31 @@
 {
   "schema_version": 1,
   "date": "2026-10-23",
-  "status": "reporting_archive",
+  "status": "records_retained_image_inputs_unavailable",
   "archive": "runs/di-baseline-archive",
   "inventory": "runs/di-baseline-archive/inventory.json",
-  "method_pngs": 216,
-  "final_reference_pngs": 12,
+  "method_pngs": 0,
+  "final_reference_pngs": 0,
   "method_runs": 36,
   "full_image_metric_rows": 216,
   "quadrant_metric_rows": 864,
   "linear_hdr_retained": false,
-  "pixel_error_recalculation": "requires_new_renders",
+  "pixel_error_recalculation": "requires_matching_linear_hdr_restoration_or_separately_authorized_new_renders",
   "reference_records": "runs/di-baseline-archive/records/references/generation-records.zip",
-  "original_provenance_unchanged": true
+  "original_provenance_unchanged": true,
+  "historical_availability_2026_10_23": {
+    "status": "reporting_archive",
+    "method_pngs": 216,
+    "final_reference_pngs": 12
+  },
+  "availability_checked_date": "2026-11-16",
+  "availability_check": {
+    "scope": "Recursive file inventory of runs/di-baseline-archive; not a full integrity or numerical revalidation.",
+    "file_count": 234,
+    "csv_count": 37,
+    "png_count": 0,
+    "exr_hdr_pfm_count": 0,
+    "image_removal_date_and_cause": "not_established",
+    "backup_availability": "not_checked"
+  }
 }
