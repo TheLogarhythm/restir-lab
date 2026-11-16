@@ -1,0 +1,29 @@
+{
+  "schema_version": 2,
+  "name": "pt-6-views-spatial-compare",
+  "base_experiment": "experiments/configs/falcor-pt-spatial-comparison/restir-pt-spatial-comparison.json",
+  "views": [
+    "experiments/views/falcor-pt-spatial-comparison/bistro-interior.json",
+    "experiments/views/falcor-pt-spatial-comparison/bistro-exterior.json",
+    "experiments/views/falcor-pt-spatial-comparison/classroom.json",
+    "experiments/views/falcor-pt-spatial-comparison/emerald-square.json",
+    "experiments/views/falcor-pt-spatial-comparison/veach-ajar.json",
+    "experiments/views/falcor-pt-spatial-comparison/zero-day-measure-seven.json"
+  ],
+  "methods": [
+    "temporal-off",
+    "temporal-on",
+    "cgns",
+    "pdf"
+  ],
+  "warmup_frames": 40,
+  "quality_frames": 16,
+  "timing_frames": 64,
+  "quality_seed_offsets": [
+    0,
+    100000,
+    200000,
+    300000
+  ],
+  "timing_seed_offset": 0
+}

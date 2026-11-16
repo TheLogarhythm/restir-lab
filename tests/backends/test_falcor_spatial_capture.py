@@ -4,6 +4,14 @@ from scripts.falcor import cgns_paper_capture as off, cgns_temporal_capture as o
 
 
 class SpatialCaptureTests(TestCase):
+    def test_all_capture_source_identities_include_shared_runtime_verification(self):
+        from scripts.falcor import spatial_capture as capture, runtime_common
+        for method in ("baseline", "cgns", "pdf-similarity"):
+            with self.subTest(method=method):
+                files = set(capture.dependency_files(method))
+                self.assertTrue(set(runtime_common.implementation_files()).issubset(files),
+                                "Runtime verification changes must invalidate capture identity")
+
     def test_temporal_contrast_uses_identical_static_clock_and_path_seeds(self):
         camera = dict(position=[0, 0, 0], direction=[0, 0, 1], up=[0, 1, 0], vertical_fov=45)
         for mode in (off, on):

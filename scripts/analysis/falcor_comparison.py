@@ -161,6 +161,9 @@ def _render_html(views, first, second, *, temporal_required, contrast):
     description = '每帧 1 spp，关闭 temporal reuse；'
     first_caption, second_caption = '普通 spatial reuse', 'CGNS'
     summary_label = '普通 SMAPE '
+    if second == 'pdf-similarity':
+        heading = 'Falcor ReSTIR PT：spatial reuse 与 PDF similarity'
+        second_caption = 'PDF similarity'
     if contrast:
         title = 'Falcor ReSTIR PT temporal contrast'
         heading = 'Falcor ReSTIR PT：普通 spatial reuse temporal on / off'
@@ -259,12 +262,18 @@ def analyze(manifest_path, output, *, temporal_required=True, contrast=False):
         raise ValueError(
             f'Require temporal_reuse={str(temporal_required).lower()} and spp_per_frame=1'
         )
-    labels = ('temporal_off', 'temporal_on') if contrast else ('baseline', 'cgns')
+    comparison_method = ('pdf-similarity'
+                         if settings.get('comparison_kind') == 'spatial-pdf-similarity' else 'cgns')
+    labels = ('temporal_off', 'temporal_on') if contrast else ('baseline', comparison_method)
     metric = dict(METRIC)
     if contrast:
         metric['relative_improvement'] = (
             '100 * (mean temporal-off SMAPE - mean temporal-on SMAPE) / '
             'mean temporal-off SMAPE'
+        )
+    elif comparison_method == 'pdf-similarity':
+        metric['relative_improvement'] = (
+            '100 * (mean baseline SMAPE - mean PDF similarity SMAPE) / mean baseline SMAPE'
         )
     views = manifest.get('views')
     if not isinstance(views, list) or not views:
@@ -279,6 +288,8 @@ def analyze(manifest_path, output, *, temporal_required=True, contrast=False):
         report_settings['source_catalog'] = rebase_record(catalog, source.parent, output)
     kind = (
         'falcor_baseline_temporal_comparison' if contrast else
+        ('falcor_temporal_pdf_similarity_comparison' if temporal_required
+         else 'falcor_pdf_similarity_comparison') if comparison_method == 'pdf-similarity' else
         'falcor_temporal_spatial_comparison' if temporal_required else
         'falcor_spatial_comparison'
     )

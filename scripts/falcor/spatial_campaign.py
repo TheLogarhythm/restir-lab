@@ -13,11 +13,10 @@ import math
 import os
 from pathlib import Path
 import re
-import tempfile
 from copy import deepcopy
 from . import spatial_capture as capture, cgns_pt_six_view_smoke as six
 from . import cgns_pt_smoke as smoke, reference_runner, reference_extension_batch
-from . import run
+from . import run, capture_lifecycle, spatial_inputs
 from . import build, spatial_experiment_config as experiment_config
 from . import reference_catalog as reference_sets
 from .process_utils import check_renderer_idle, exclusive_operation
@@ -31,92 +30,19 @@ def _analysis_file_record(path, digest, manifest):
     return {"path": relative_to_document(path, Path(manifest).parent), "sha256": digest}
 
 
-RUNTIME = {
-    ("baseline", False): ROOT / "build/falcor-reference-runtime/runtime",
-    ("baseline", True): ROOT / "build/falcor-gltf-composite-runtime-v3/runtime",
-    ("cgns", False): ROOT / "build/falcor-cgns-single-reference/runtime",
-    ("cgns", True): ROOT / "build/falcor-cgns-single-gltf-v3/runtime",
-}
+RUNTIME = dict(spatial_inputs.RUNTIME)
 
 
 def _attempt_path(attempt, output):
     return Path(attempt).resolve().relative_to(Path(output).resolve()).as_posix()
 
 
-def validate_artifacts(directory, artifacts, schedule, width, height, *, temporal_reuse=True):
-    directory = Path(directory).resolve(strict=True)
-    if not isinstance(artifacts, list) or len(artifacts) != len(schedule):
-        raise ValueError("Unexpected capture artifact count")
-    expected_names = set()
-    by_frame = {}
-    for record in artifacts:
-        if not isinstance(record, dict) or type(record.get("frame")) is not int:
-            raise ValueError("Invalid capture artifact")
-        frame = record["frame"]
-        name = record.get("hdr")
-        if (
-            frame not in schedule
-            or frame in by_frame
-            or record.get("seed") != frame - 1
-            or (temporal_reuse and record.get("reuse_seed") != max(0, frame - 2))
-            or (not isinstance(name, str))
-            or (Path(name).name != name)
-            or (
-                not re.fullmatch(
-                    "capture\\.PathTracer\\.color\\." + str(frame) + "(?:\\.RGBA)?\\.exr", name
-                )
-            )
-        ):
-            raise ValueError("Capture frame, seed or path mismatch")
-        digest = record.get("sha256")
-        if not isinstance(digest, str) or not re.fullmatch("[0-9a-f]{64}", digest):
-            raise ValueError("Invalid capture hash")
-        path = (directory / name).resolve(strict=True)
-        if not path.is_relative_to(directory) or not path.is_file() or run.sha(path) != digest:
-            raise ValueError("Capture hash or location mismatch")
-        run.inspect_hdr(path, width, height)
-        if run.sha(path) != digest:
-            raise ValueError("Capture changed while inspecting")
-        expected_names.add(name)
-        by_frame[frame] = {"frame": frame, "seed": frame - 1, "hdr": name, "sha256": digest}
-        if temporal_reuse:
-            by_frame[frame]["reuse_seed"] = max(0, frame - 2)
-    actual = {p.name for p in directory.glob("capture.PathTracer.color.*.exr")}
-    if actual != expected_names or sorted(by_frame) != list(schedule):
-        raise ValueError("Unexpected capture set")
-    return [by_frame[n] for n in schedule]
+def validate_artifacts(directory, artifacts, schedule, width, height, *, temporal_reuse=True, seed_offset=0):
+    return spatial_inputs.validate_artifacts(directory, artifacts, schedule, width, height,
+                                            temporal_reuse=temporal_reuse, seed_offset=seed_offset)
 
 
-def choose_attempt(directory, *, retry_failed=False):
-    directory = Path(directory)
-    if type(retry_failed) is not bool:
-        raise ValueError("Invalid retry flag")
-    if not directory.exists():
-        return (directory / "attempt-001", False)
-    attempts = []
-    for p in directory.iterdir():
-        if p.name.startswith("attempt-"):
-            if not p.is_dir() or not re.fullmatch("attempt-\\d{3}", p.name):
-                raise ValueError("Unexpected attempt entry")
-            attempts.append(p)
-    if not attempts:
-        return (directory / "attempt-001", False)
-    attempts.sort(key=lambda p: p.name)
-    if [p.name for p in attempts] != [f"attempt-{i:03d}" for i in range(1, len(attempts) + 1)]:
-        raise ValueError("Attempt numbering is not contiguous")
-    latest = attempts[-1]
-    path = latest / "manifest.json"
-    if path.is_file():
-        meta = json.loads(path.read_text(encoding="utf8"))
-        if meta.get("status") == "completed":
-            return (latest, True)
-    if not retry_failed:
-        raise ValueError(
-            "Incomplete or failed attempt preserved; use --retry-failed to create a new attempt"
-        )
-    if len(attempts) >= 999:
-        raise ValueError("Attempt limit reached")
-    return (directory / f"attempt-{len(attempts) + 1:03d}", False)
+choose_attempt = capture_lifecycle.choose_attempt
 
 
 def validate_code_inputs(meta, render_script, driver, root, dependency_names):
@@ -136,10 +62,12 @@ def validate_code_inputs(meta, render_script, driver, root, dependency_names):
             raise ValueError("Driver dependency changed: " + name)
 
 
-def validate_pair(a, ma, b, mb, *, temporal_reuse=True):
+def validate_pair(a, ma, b, mb, *, temporal_reuse=True, compare_method='cgns'):
     a = Path(a)
     b = Path(b)
-    if ma.get("requested_method") != "baseline" or mb.get("requested_method") != "cgns":
+    if (compare_method not in ('cgns', 'pdf-similarity')
+            or ma.get("requested_method") != "baseline"
+            or mb.get("requested_method") != compare_method):
         raise ValueError("Pair method mismatch")
     fields = (
         "scene_id",
@@ -191,23 +119,22 @@ def _json(path):
     return json.loads(Path(path).read_text(encoding="utf-8-sig"))
 
 
-def _atomic(path, value):
-    path = Path(path)
-    fd, name = tempfile.mkstemp(prefix=".campaign-", suffix=".tmp", dir=path.parent)
-    try:
-        with os.fdopen(fd, "w", encoding="utf8", newline="\n") as f:
-            json.dump(value, f, indent=2, ensure_ascii=False, allow_nan=False)
-            f.write("\n")
-            f.flush()
-            os.fsync(f.fileno())
-        os.replace(name, path)
-    finally:
-        if os.path.exists(name):
-            os.unlink(name)
+_atomic = capture_lifecycle.atomic_json
 
 
-def _dependency_names():
-    return {Path(m.__file__).resolve().relative_to(ROOT).as_posix() for m in capture.dependencies()}
+def _dependency_names(method='baseline'):
+    return {path.relative_to(ROOT).as_posix() for path in capture.dependency_files(method)}
+
+
+def _campaign_code_identity(compare_method):
+    identity = _code_identity()
+    if compare_method == 'pdf-similarity':
+        from . import pdf_pt_runtime, pdf_pt_overlay, pdf_pt_shader
+        files = [Path(module.__file__).resolve()
+                 for module in (pdf_pt_runtime, pdf_pt_overlay, pdf_pt_shader)]
+        files.extend(pdf_pt_shader.source_files())
+        identity.update({path.relative_to(ROOT).as_posix(): run.sha(path) for path in files})
+    return identity
 
 
 def _code_identity():
@@ -225,6 +152,7 @@ def _code_identity():
         build,
         analysis,
         experiment_config,
+        spatial_inputs,
     ]
     files = [
         Path(__file__).resolve(),
@@ -238,77 +166,22 @@ def _code_identity():
         ROOT / "src/metrics/error_metrics.py",
         ROOT / "scripts/falcor/reference_extension_gallery.py",
     ]
+    from . import cgns_cached_runtime
+    files.extend(cgns_cached_runtime.implementation_files())
     return {str(p.relative_to(ROOT)).replace("\\", "/"): run.sha(p) for p in sorted(set(files))}
 
 
 def _reference_catalog(experiment=None, *, require_images=False, image_views=None):
-    """Lock all view metadata while reading EXRs only for the requested image scope."""
-    experiment = (
-        experiment_config.load_config()
-        if experiment is None
-        else experiment_config.validate_config(experiment)
-    )
-    entries = six.frozen_views()
-    root = Path(ROOT).resolve(strict=True)
-    manifest = (root / experiment["reference_catalog"]).resolve(strict=True)
-    if not manifest.is_relative_to(root):
-        raise ValueError("Reference catalog escapes workspace")
-    references = reference_sets.load_catalog(manifest, root, require_images=False)
-    if set(references) != set(entries):
-        raise ValueError("Reference view set differs")
-    if image_views is not None and not require_images:
-        raise ValueError("Reference image selection requires image validation")
-    selected_images = set(entries) if image_views is None else set(image_views)
-    if not selected_images or not selected_images.issubset(entries):
-        raise ValueError("Reference image selection must contain known views")
-    catalog = {}
-    for key, entry in entries.items():
-        item = references[key]
-        path = (ROOT / item["path"]).resolve()
-        if require_images and key in selected_images:
-            if run.sha(path) != item["sha256"]:
-                raise ValueError("Reference image hash mismatch")
-            run.inspect_hdr(path, experiment["render"]["width"], experiment["render"]["height"])
-            if run.sha(path) != item["sha256"]:
-                raise ValueError("Reference image changed while inspecting")
-        config = Path(entry["config_path"]).resolve(strict=True)
-        if run.sha(config) != entry["config_sha256"]:
-            raise ValueError("Scene config hash differs")
-        resolved_config = six.load_config(config)
-        reference_sets.validate_binding(item, resolved_config, entry, experiment)
-        catalog[key] = {
-            "entry": entry,
-            "config": resolved_config,
-            "config_path": config,
-            "reference": {"path": str(path), "sha256": item["sha256"]},
-        }
-    return catalog
+    return spatial_inputs.reference_catalog(experiment, require_images=require_images,
+                                           image_views=image_views, root=ROOT)
 
 
-def _prepare_runtimes(experiment):
-    from . import cgns_single_runtime
-
-    paths = dict(RUNTIME)
-    for adapted, kind in ((False, "reference"), (True, "gltf-v3")):
-        paths["cgns", adapted] = cgns_single_runtime.ensure_variant(
-            kind, experiment["methods"]["cgns"]["shader"]
-        )
-    return paths
+def _prepare_runtimes(experiment, *, compare_method='cgns'):
+    return spatial_inputs.prepare_runtimes(experiment, compare_method=compare_method, runtime_paths=RUNTIME)
 
 
 def _runtime_snapshots(experiment=None, runtime_paths=None):
-    experiment = (
-        experiment_config.load_config()
-        if experiment is None
-        else experiment_config.validate_config(experiment)
-    )
-    runtime_paths = RUNTIME if runtime_paths is None else runtime_paths
-    snapshots = {}
-    for (method, adapted), runtime in runtime_paths.items():
-        rt = runtime.resolve(strict=True)
-        parameters = experiment["methods"]["cgns"]["shader"] if method == "cgns" else None
-        snapshots[method, adapted] = capture.validate_runtime(rt, method, adapted, parameters)
-    return snapshots
+    return spatial_inputs.runtime_snapshots(experiment, RUNTIME if runtime_paths is None else runtime_paths)
 
 
 def _validate_job(
@@ -343,11 +216,7 @@ def _validate_job(
     expected = {
         "status": "completed",
         "exit_code": 0,
-        "kind": (
-            "cgns_pt_temporal_single_frame"
-            if temporal_reuse
-            else "cgns_pt_paper_setting_single_frame"
-        ),
+        "kind": capture.capture_kind(method, temporal_reuse),
         "requested_method": method,
         "scene_id": key[0],
         "view_id": key[1],
@@ -384,6 +253,11 @@ def _validate_job(
                 ),
             }
         )
+    if method == 'pdf-similarity':
+        expected['pdf_shader_parameters'] = experiment['methods'][method]['shader']
+        expected['pdf_profile'] = 'normal'
+        if meta.get('seed_offset', 0) != 0:
+            raise ValueError('Campaign requires the default seed offset')
     if portable:
         if "experiment_config_path" in expected:
             expected["experiment_config_path"] = relative_to_document(experiment_path, ROOT)
@@ -392,7 +266,7 @@ def _validate_job(
         if meta.get(k) != v:
             raise ValueError("Job metadata mismatch: " + k + " " + str(path))
     validate_code_inputs(
-        meta, path / "render.py", Path(capture.__file__), ROOT, _dependency_names()
+        meta, path / "render.py", Path(capture.__file__), ROOT, _dependency_names(method)
     )
     scene = Path(config["scene_source"])
     scene = (scene if scene.is_absolute() else ROOT / scene).resolve(strict=True)
@@ -473,6 +347,7 @@ def _identity(
     runtime_paths=None,
     temporal_reuse=True,
     temporal_contrast=False,
+    compare_method='cgns',
 ):
     experiment = (
         experiment_config.load_config()
@@ -501,9 +376,11 @@ def _identity(
             "falcor_baseline_temporal_contrast"
             if temporal_contrast
             else (
-                "falcor_cgns_temporal_fast_single_frame"
+                ('falcor_pdf_similarity_temporal_single_frame' if compare_method == 'pdf-similarity'
+                 else "falcor_cgns_temporal_fast_single_frame")
                 if temporal_reuse
-                else "falcor_cgns_paper_fast_single_frame"
+                else ('falcor_pdf_similarity_spatial_single_frame' if compare_method == 'pdf-similarity'
+                      else "falcor_cgns_paper_fast_single_frame")
             )
         ),
         "schema_version": 1,
@@ -517,11 +394,14 @@ def _identity(
         "temporal_reuse": None if temporal_contrast else temporal_reuse,
         "image_accumulation": False,
         "clock_policy": {"paused": True, "framerate": 0, "time": 0},
-        "comparison_kind": "baseline-temporal-on-off" if temporal_contrast else "spatial-cgns",
+        "comparison_kind": "baseline-temporal-on-off" if temporal_contrast else 'spatial-' + compare_method,
         "algorithm": (
             "ordinary spatial reuse, temporal on/off"
             if temporal_contrast
-            else "independent CGNS adaptation; point reservoirs, unpaired"
+            else ('PDF similarity: first-hop contribution moments from initial PT candidates; vMF similarity '
+                  'scales the proposed spatial neighbor\'s effective M.'
+                  if compare_method == 'pdf-similarity'
+                  else "independent CGNS adaptation; point reservoirs, unpaired")
         ),
         "experiment_config": {
             "path": (
@@ -535,7 +415,7 @@ def _identity(
         "scene_manifest_sha256": run.sha(six.scene_manifest_path()),
         "views": records,
         "build_commit": build_commit,
-        "code_sha256": _code_identity(),
+        "code_sha256": _campaign_code_identity(compare_method),
         "runtimes": {
             method
             + ("-gltf" if adapted else "-reference"): {
@@ -750,11 +630,15 @@ def _select_catalog(catalog, temporal_contrast, view):
     return {key: catalog[key]}
 
 
-def _job_specs(temporal_reuse, temporal_contrast):
+def _job_specs(temporal_reuse, temporal_contrast, *, compare_method='cgns'):
+    if compare_method not in ('cgns', 'pdf-similarity'):
+        raise ValueError('Unknown comparison method')
+    if temporal_contrast and compare_method != 'cgns':
+        raise ValueError('Temporal contrast compares ordinary spatial reuse only')
     return (
         (("temporal-on", "baseline", True), ("temporal-off", "baseline", False))
         if temporal_contrast
-        else (("baseline", "baseline", temporal_reuse), ("cgns", "cgns", temporal_reuse))
+        else (("baseline", "baseline", temporal_reuse), (compare_method, compare_method, temporal_reuse))
     )
 
 
@@ -766,11 +650,15 @@ def run_campaign(
     temporal_reuse=True,
     temporal_contrast=False,
     view=None,
+    compare_method='cgns',
 ):
+    capture_lifecycle.check_shader_environment()
     if type(retry_failed) is not bool or type(temporal_reuse) is not bool:
         raise ValueError("Invalid campaign flag")
     experiment_path = Path(experiment_path or experiment_config.DEFAULT_CONFIG).resolve(strict=True)
     experiment, experiment_sha256 = experiment_config.load_config_snapshot(experiment_path)
+    _job_specs(temporal_reuse, temporal_contrast, compare_method=compare_method)
+    capture.graph_options(compare_method, experiment, temporal_reuse=temporal_reuse)
     budget = experiment["render"]
     capture.validate_budget(
         budget["width"],
@@ -785,7 +673,8 @@ def run_campaign(
             adapted = next(iter(catalog.values()))["entry"]["adapted"]
             runtime_paths = {("baseline", adapted): RUNTIME["baseline", adapted]}
         else:
-            runtime_paths = _prepare_runtimes(experiment)
+            runtime_paths = (_prepare_runtimes(experiment) if compare_method == 'cgns' else
+                             _prepare_runtimes(experiment, compare_method=compare_method))
         return _run_campaign(
             output,
             retry_failed=retry_failed,
@@ -797,6 +686,7 @@ def run_campaign(
             temporal_reuse=temporal_reuse,
             temporal_contrast=temporal_contrast,
             view=view,
+            compare_method=compare_method,
         )
 
 
@@ -812,7 +702,9 @@ def _run_campaign(
     temporal_reuse=True,
     temporal_contrast=False,
     view=None,
+    compare_method='cgns',
 ):
+    _job_specs(temporal_reuse, temporal_contrast, compare_method=compare_method)
     if run.sha(experiment_path) != experiment_sha256:
         raise ValueError("Experiment configuration changed before campaign")
     budget = experiment["render"]
@@ -840,6 +732,7 @@ def _run_campaign(
             runtime_paths=runtime_paths,
             temporal_reuse=temporal_reuse,
             temporal_contrast=temporal_contrast,
+            compare_method=compare_method,
         )
         fingerprint = _identity_hash(identity)
     if output.exists():
@@ -867,7 +760,7 @@ def _run_campaign(
     _atomic(output / "campaign.json", campaign)
     try:
         done = {}
-        specs = _job_specs(temporal_reuse, temporal_contrast)
+        specs = _job_specs(temporal_reuse, temporal_contrast, compare_method=compare_method)
         for key in sorted(catalog):
             item = catalog[key]
             entry, config = (item["entry"], item["config"])
@@ -913,17 +806,12 @@ def _run_campaign(
                             temporal_reuse=reuse_temporal,
                         )
                     except BaseException as exc:
-                        if not attempt.exists():
-                            attempt.mkdir(parents=True, exist_ok=False)
-                            _atomic(
-                                attempt / "campaign-failure.json",
-                                {"status": "failed", "error": str(exc)},
-                            )
+                        capture_lifecycle.preserve_failure(attempt, exc, receipt_name="campaign-failure.json")
                         raise
                 else:
                     print(f"Rechecking {key[0]}/{key[1]} {label}: {attempt.name}", flush=True)
                 if (
-                    _code_identity() != identity["code_sha256"]
+                    _campaign_code_identity(compare_method) != identity["code_sha256"]
                     or run.sha(experiment_path) != experiment_sha256
                 ):
                     raise ValueError("Campaign code or configuration changed during render")
@@ -961,13 +849,14 @@ def _run_campaign(
                 validate_temporal_contrast(*done[key]["temporal-on"], *done[key]["temporal-off"])
             else:
                 validate_pair(
-                    *done[key]["baseline"], *done[key]["cgns"], temporal_reuse=temporal_reuse
+                    *done[key]['baseline'], *done[key][compare_method],
+                    temporal_reuse=temporal_reuse, compare_method=compare_method,
                 )
         with exclusive_operation(ROOT / "build/falcor/.operation.lock"):
             check_renderer_idle()
             if (
                 _runtime_snapshots(experiment, runtime_paths) != runtimes
-                or _code_identity() != identity["code_sha256"]
+                or _campaign_code_identity(compare_method) != identity["code_sha256"]
                 or run.sha(experiment_path) != experiment_sha256
             ):
                 raise ValueError("Runtime or code changed before analysis")
@@ -1001,6 +890,7 @@ def _run_campaign(
             count,
             temporal_reuse,
             temporal_contrast,
+            compare_method=compare_method,
         )
         with input_path.open("x", encoding="utf8", newline="\n") as handle:
             json.dump(payload, handle, indent=2, allow_nan=False)
@@ -1032,9 +922,10 @@ def _run_campaign(
 
 
 def _analysis_payload(
-    catalog, done, input_path, experiment_sha256, warmup, count, temporal_reuse, temporal_contrast
+    catalog, done, input_path, experiment_sha256, warmup, count, temporal_reuse, temporal_contrast,
+    *, compare_method='cgns',
 ):
-    labels = ("temporal-on", "temporal-off") if temporal_contrast else ("baseline", "cgns")
+    labels = ("temporal-on", "temporal-off") if temporal_contrast else ('baseline', compare_method)
     pair_fields = ("temporal_on", "temporal_off") if temporal_contrast else labels
     views = []
     for key in sorted(catalog):
@@ -1065,7 +956,7 @@ def _analysis_payload(
         )
     return {
         "settings": {
-            "comparison_kind": "baseline-temporal-on-off" if temporal_contrast else "spatial-cgns",
+            "comparison_kind": "baseline-temporal-on-off" if temporal_contrast else 'spatial-' + compare_method,
             "temporal_reuse": None if temporal_contrast else temporal_reuse,
             "spp_per_frame": 1,
             "image_accumulation": False,
@@ -1075,7 +966,10 @@ def _analysis_payload(
             "provenance": (
                 "Ordinary spatial reuse; selected-view temporal on/off contrast"
                 if temporal_contrast
-                else "CGNS Fast-inspired point-reservoir adaptation; not author area/splatting"
+                else ('PDF similarity: first-hop contribution moments from initial PT candidates; vMF similarity '
+                      'scales the proposed spatial neighbor\'s effective M.'
+                      if compare_method == 'pdf-similarity'
+                      else "CGNS Fast-inspired point-reservoir adaptation; not author area/splatting")
             ),
         },
         "views": views,
@@ -1095,6 +989,8 @@ def main(argv=None, *, temporal_reuse=True, legacy=False):
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--experiment-config", type=Path, default=experiment_config.DEFAULT_CONFIG)
+    parser.add_argument('--compare-method', choices=('cgns', 'pdf-similarity'), default='cgns',
+                        help='Pair ordinary spatial reuse with this method; default: cgns')
     parser.add_argument(
         "--retry-failed",
         action="store_true",
@@ -1114,6 +1010,8 @@ def main(argv=None, *, temporal_reuse=True, legacy=False):
         parser.error(
             "--temporal-contrast and exactly one --view SCENE/VIEW must be supplied together"
         )
+    if contrast and args.compare_method != 'cgns':
+        parser.error('--temporal-contrast uses ordinary spatial reuse and cannot select a comparison method')
     print(
         run_campaign(
             args.output,
@@ -1122,6 +1020,7 @@ def main(argv=None, *, temporal_reuse=True, legacy=False):
             temporal_reuse=temporal_reuse,
             temporal_contrast=contrast,
             view=view,
+            compare_method=args.compare_method,
         )
     )
 

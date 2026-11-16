@@ -6,6 +6,7 @@ import json
 import math
 import os
 from pathlib import Path
+import re
 import subprocess
 
 from scripts.analysis import relative_paths
@@ -26,6 +27,8 @@ from . import (
     spatial_experiment_config as settings,
     spatial_render_script,
     process_utils,
+    capture_lifecycle,
+    runtime_common,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -33,10 +36,18 @@ SEED_POLICIES = {
     True: "path fixedSeed=frame-1; ReSTIR reuse seed=max(0,frame-2); first temporal pass skipped",
     False: "fixedSeed=frame-1; temporal reuse disabled",
 }
+PDF_DIAGNOSTIC_OUTPUTS = (
+    'PathTracer.nrdEmission',
+    'PathTracer.nrdDiffuseRadianceHitDist',
+    'PathTracer.nrdSpecularRadianceHitDist',
+    'PathTracer.nrdResidualRadianceHitDist',
+)
 
 
-def dependencies():
-    return (
+def dependencies(method='baseline'):
+    modules = (
+        capture_lifecycle,
+        runtime_common,
         cgns_pt_smoke,
         views,
         reference_runner,
@@ -55,6 +66,22 @@ def dependencies():
         build,
         process_utils,
     )
+    if method == 'pdf-similarity':
+        from . import pdf_pt_runtime, pdf_pt_overlay, pdf_pt_shader
+        modules += (pdf_pt_runtime, pdf_pt_overlay, pdf_pt_shader)
+    return modules
+
+
+def dependency_files(method='baseline'):
+    files = {Path(module.__file__).resolve() for module in dependencies(method)}
+    if method == 'pdf-similarity':
+        from . import pdf_pt_shader
+        files.update(path.resolve() for path in pdf_pt_shader.source_files())
+        files.update(runtime_common.implementation_files())
+    if method == 'cgns':
+        from . import cgns_cached_runtime
+        files.update(cgns_cached_runtime.implementation_files())
+    return tuple(sorted(files))
 
 
 def portable_paths(experiment_path, runtime, command, root):
@@ -79,14 +106,42 @@ def graph_options(method, experiment=None, *, temporal_reuse=True):
     return settings.graph_options(value, mode, method)
 
 
-def seed_record(frame, *, temporal_reuse=True):
+def seed_record(frame, *, temporal_reuse=True, seed_offset=0):
     if type(frame) is not int or frame < 1:
         raise ValueError("Frame must be a positive integer")
-    result = {"frame": frame, "seed": frame - 1}
+    if type(seed_offset) is not int or not 0 <= seed_offset <= 2**32 - frame:
+        raise ValueError("Seed offset and frame exceed uint32 seed range")
+    result = {"frame": frame, "seed": seed_offset + frame - 1}
     if temporal_reuse:
         # Falcor copies the previous path seed before updating this frame.
-        result["reuse_seed"] = max(0, frame - 2)
+        result["reuse_seed"] = 0 if frame == 1 else seed_offset + frame - 2
     return result
+
+
+def validate_capture_controls(method, *, scout=False, seed_offset=0, pdf_profile='normal'):
+    if method not in ('baseline', 'cgns', 'pdf-similarity'):
+        raise ValueError('Unknown comparison method')
+    if type(seed_offset) is not int or not 0 <= seed_offset < 2**32:
+        raise ValueError('seed_offset must be a uint32 integer')
+    if pdf_profile not in ('normal', 'one', 'zero', 'center', 'observe', 'native'):
+        raise ValueError('Unknown PDF profile')
+    if pdf_profile != 'normal' and (method != 'pdf-similarity' or not scout):
+        raise ValueError('PDF diagnostic profiles require a bounded PDF similarity scout')
+
+
+def seed_policy(temporal_reuse, seed_offset=0):
+    if not seed_offset:
+        return SEED_POLICIES[temporal_reuse]
+    return (f'path fixedSeed={seed_offset}+frame-1; ReSTIR reuse seed=0 on first frame, '
+            f'otherwise {seed_offset}+frame-2; first temporal pass skipped'
+            if temporal_reuse else
+            f'fixedSeed={seed_offset}+frame-1; temporal reuse disabled')
+
+
+def capture_kind(method, temporal_reuse):
+    prefix = 'pdf_similarity' if method == 'pdf-similarity' else 'cgns'
+    mode = 'temporal' if temporal_reuse else 'paper_setting'
+    return f'{prefix}_pt_{mode}_single_frame'
 
 
 def capture_schedule(warmup, count):
@@ -137,7 +192,14 @@ def render_script(
     temporal_reuse=True,
     experiment=None,
     portable=False,
+    seed_offset=0,
+    pdf_profile='normal',
 ):
+    validate_capture_controls(method, scout=True, seed_offset=seed_offset,
+                              pdf_profile=pdf_profile)
+    diagnostic_outputs = (() if pdf_profile == 'normal' else
+                          PDF_DIAGNOSTIC_OUTPUTS[:2] if pdf_profile == 'native' else
+                          PDF_DIAGNOSTIC_OUTPUTS)
     if portable:
         scene, output = Path(relative_paths.relative_to_document(scene, output)), Path(".")
     return spatial_render_script.build_script(
@@ -151,23 +213,50 @@ def render_script(
         static_clock=True,
         record_scene_state=True,
         portable=portable,
+        seed_offset=seed_offset,
+        additional_outputs=diagnostic_outputs,
     )
 
 
-def validate_runtime(runtime, method, adapted, shader_parameters=None):
+def validate_runtime(runtime, method, adapted, shader_parameters=None, *, pdf_profile='normal'):
     if method == "baseline":
         return views._validate_runtime(runtime, method, adapted)
+    if method == 'pdf-similarity':
+        from . import pdf_pt_runtime
+        result = pdf_pt_runtime.verify_prepared(runtime, expected_parameters=shader_parameters,
+                                                profile=pdf_profile)
+        if result.get('source_kind') != ('gltf-v3' if adapted else 'reference'):
+            raise ValueError('PDF similarity runtime source mismatch')
+        return result
     if method != "cgns":
         raise ValueError("Unknown method")
-    result = cgns_single_runtime.verify_prepared(runtime, expected_parameters=shader_parameters)
+    from . import cgns_cached_runtime
+    verifier = (cgns_cached_runtime if Path(runtime).parent.name.startswith(cgns_cached_runtime.PREFIX)
+                else cgns_single_runtime)
+    result = verifier.verify_prepared(runtime, expected_parameters=shader_parameters)
     if result.get("source_kind") != ("gltf-v3" if adapted else "reference"):
         raise ValueError("CGNS single-neighbor runtime source mismatch")
     return result
 
 
-def _verify_captures(output, config, options, schedule, width, height, temporal_reuse, adapted):
+def verify_launch_inputs(config, entry, runtime, method, experiment, shader_parameters,
+                         *, pdf_profile='normal', require_reference_image=False):
+    """Verify the same scene, reference and private runtime before either run kind."""
+    capture_lifecycle.check_shader_environment()
+    build_record = build.verify_build()
+    reference_extension_batch.recheck_view(entry, config)
+    key = config["scene_id"], config["view_id"]
+    reference = views.validate_reference_for_view(key, experiment=experiment, config=config,
+                                                entry=entry, require_image=require_reference_image)
+    receipt = validate_runtime(runtime, method, entry["adapted"], shader_parameters,
+                               pdf_profile=pdf_profile)
+    return build_record, reference, receipt
+
+
+def verify_scene_records(output, config, options, last_frame, adapted, *, portable_audit=False):
+    """Check the common camera, graph and scene evidence from a capture or timing run."""
     camera = json.loads((output / "resolved-camera.json").read_text(encoding="utf8"))
-    reference_runner.validate_camera_records(config["camera"], camera, schedule[-1])
+    reference_runner.validate_camera_records(config["camera"], camera, last_frame)
     if "near_plane" in config["camera"]:
         expected = config["camera"]["near_plane"]
         if any(
@@ -184,10 +273,15 @@ def _verify_captures(output, config, options, schedule, width, height, temporal_
     audit_path = output / "scene-audit.json"
     audit = json.loads(audit_path.read_text(encoding="utf8")) if adapted else None
     views.validate_current_scene_state(config, state, audit)
-    if adapted:
+    if adapted and portable_audit:
         audit_path.write_text(
             json.dumps(views.portable_adapted_audit(audit, ROOT), indent=2) + "\n", encoding="utf8"
         )
+
+
+def _verify_captures(output, config, options, schedule, width, height, temporal_reuse, adapted,
+                     seed_offset=0):
+    verify_scene_records(output, config, options, schedule[-1], adapted, portable_audit=True)
     files = list(output.glob("capture.PathTracer.color.*.exr"))
     frames = run.capture_frames(files, schedule)
     artifacts = []
@@ -195,12 +289,54 @@ def _verify_captures(output, config, options, schedule, width, height, temporal_
         run.inspect_hdr(path, width, height)
         artifacts.append(
             {
-                **seed_record(frame, temporal_reuse=temporal_reuse),
+                **seed_record(frame, temporal_reuse=temporal_reuse, seed_offset=seed_offset),
                 "hdr": path.name,
                 "sha256": run.sha(path),
             }
         )
     return artifacts
+
+
+def verify_pdf_diagnostics(output, schedule, width, height, profile):
+    """Require exact FLOAT32 RGBA diagnostic captures, including raw alpha data."""
+    if profile == 'normal':
+        return []
+    import OpenEXR
+    import numpy as np
+    expected_outputs = PDF_DIAGNOSTIC_OUTPUTS[:2] if profile == 'native' else PDF_DIAGNOSTIC_OUTPUTS
+    output = Path(output)
+    records = []
+    expected_names = set()
+    for name in expected_outputs:
+        found = {}
+        prefix = 'capture.' + name + '.'
+        for path in output.glob(prefix + '*.exr'):
+            match = re.fullmatch(re.escape(prefix) + r'(\d+)(?:\.RGBA)?\.exr', path.name)
+            if not match or int(match[1]) in found:
+                raise ValueError('Unexpected or duplicate PDF diagnostic capture: ' + path.name)
+            found[int(match[1])] = path
+        if sorted(found) != list(schedule):
+            raise ValueError('Missing or unexpected PDF diagnostic frames: ' + name)
+        for frame, path in sorted(found.items()):
+            digest = run.sha(path)
+            with OpenEXR.File(str(path), separate_channels=True) as image:
+                channels = image.channels()
+                if not all(channel in channels for channel in ('R', 'G', 'B', 'A')):
+                    raise ValueError('PDF diagnostic EXR requires RGBA channels: ' + path.name)
+                for channel in ('R', 'G', 'B', 'A'):
+                    pixels = channels[channel].pixels
+                    if (pixels.dtype != np.float32 or pixels.shape != (height, width)
+                            or not np.isfinite(pixels).all()):
+                        raise ValueError('PDF diagnostic requires finite FLOAT32 RGBA: ' + path.name)
+            if run.sha(path) != digest:
+                raise ValueError('PDF diagnostic changed during verification')
+            expected_names.add(path.name)
+            records.append({'frame': frame, 'output': name, 'hdr': path.name, 'sha256': digest})
+    actual_names = {path.name for name in PDF_DIAGNOSTIC_OUTPUTS
+                    for path in output.glob('capture.' + name + '.*.exr')}
+    if actual_names != expected_names:
+        raise ValueError('Unexpected PDF diagnostic output set')
+    return records
 
 
 def launch(
@@ -220,7 +356,12 @@ def launch(
     experiment=None,
     experiment_path=None,
     experiment_sha256=None,
+    seed_offset=0,
+    pdf_profile='normal',
 ):
+    capture_lifecycle.check_shader_environment()
+    validate_capture_controls(method, scout=scout, seed_offset=seed_offset,
+                              pdf_profile=pdf_profile)
     experiment_path = Path(experiment_path or settings.DEFAULT_CONFIG).resolve(strict=True)
     selected, digest = settings.load_config_snapshot(experiment_path)
     if experiment_sha256 is not None and experiment_sha256 != digest:
@@ -243,10 +384,9 @@ def launch(
     )
     options = graph_options(method, selected, temporal_reuse=temporal_reuse)
     schedule = capture_schedule(warmup, count)
+    seed_record(schedule[-1], seed_offset=seed_offset)
     if type(timeout) not in (int, float) or not math.isfinite(timeout) or timeout <= 0:
         raise ValueError("Invalid timeout")
-    if os.environ.get("FALCOR_DEVMODE") == "1":
-        raise RuntimeError("FALCOR_DEVMODE overrides isolated shaders")
     config_path = Path(config_path).resolve(strict=True)
     requested_sha256 = run.sha(config_path)
     config = views.load_config(config_path)
@@ -259,6 +399,11 @@ def launch(
     if not scene.is_relative_to(ROOT):
         raise ValueError("Scene escapes workspace")
     runtime, output = Path(runtime).resolve(strict=True), Path(output).resolve()
+    from . import cgns_cached_runtime
+    cached_cgns = method == 'cgns' and runtime.parent.name.startswith(cgns_cached_runtime.PREFIX)
+    verify_cgns_ids = cached_cgns and os.environ.get('RESTIR_LAB_CGNS_VERIFY_IDS') == '1'
+    if verify_cgns_ids and not scout:
+        raise ValueError('CGNS ID verification requires a scout')
     executable = (runtime / "Mogwai.exe").resolve(strict=True)
     shader = (runtime / "shaders/ReSTIRPathTracing/SpatialResampling.cs.slang").resolve(strict=True)
     command = [
@@ -273,15 +418,13 @@ def launch(
         str(output / "render.py"),
         "--headless",
     ]
-    parameters = selected["methods"]["cgns"]["shader"] if method == "cgns" else None
+    parameters = selected['methods'][method]['shader'] if method in ('cgns', 'pdf-similarity') else None
     with process_utils.exclusive_operation(ROOT / "build/falcor/.operation.lock"):
         process_utils.check_renderer_idle()
-        build_record = build.verify_build()
-        reference_extension_batch.recheck_view(entry, config)
-        views.validate_reference_for_view(key, experiment=selected, config=config, entry=entry)
         if adapted and scene.relative_to(ROOT).as_posix() not in entry["source_sha256"]:
             raise ValueError("Bistro scene missing from inventory")
-        runtime_receipt = validate_runtime(runtime, method, adapted, parameters)
+        build_record, _, runtime_receipt = verify_launch_inputs(
+            config, entry, runtime, method, selected, parameters, pdf_profile=pdf_profile)
         shader_hash = run.sha(shader)
         gpu = subprocess.check_output(
             ["nvidia-smi", "--query-gpu=name,driver_version", "--format=csv,noheader"], text=True
@@ -298,17 +441,15 @@ def launch(
             adapted=adapted,
             experiment=selected,
             portable=True,
+            seed_offset=seed_offset,
+            pdf_profile=pdf_profile,
         ).encode("utf8")
         dependency_hashes = {
-            Path(module.__file__).resolve().relative_to(ROOT).as_posix(): run.sha(module.__file__)
-            for module in dependencies()
+            path.relative_to(ROOT).as_posix(): run.sha(path)
+            for path in dependency_files(method)
         }
         scene_hash = run.sha(views.scene_manifest_path())
-        kind = (
-            "cgns_pt_temporal_single_frame"
-            if temporal_reuse
-            else "cgns_pt_paper_setting_single_frame"
-        )
+        kind = capture_kind(method, temporal_reuse)
         if scout:
             kind += "_scout"
         elif resource_preflight:
@@ -331,7 +472,7 @@ def launch(
             "resolution": [width, height],
             "warmup_frames": warmup,
             "capture_frames": schedule,
-            "seed_policy": SEED_POLICIES[temporal_reuse],
+            "seed_policy": seed_policy(temporal_reuse, seed_offset),
             "spp_per_frame": 1,
             "image_accumulation": False,
             "temporal_reuse": temporal_reuse,
@@ -340,7 +481,7 @@ def launch(
             "display_transform": {"method": transform, "ev": exposure, "encoding": "sRGB"},
             "experiment_config_sha256": digest,
             "experiment_config": selected,
-            "cgns_shader_parameters": parameters,
+            "cgns_shader_parameters": parameters if method == 'cgns' else None,
             "adapted": adapted,
             "retrace_schedule": "Compact default in pinned Falcor; not exposed in serialized options",
             "runtime_verification": runtime_receipt,
@@ -351,14 +492,23 @@ def launch(
             "dependency_sha256": dependency_hashes,
             "render_script_sha256": hashlib.sha256(source).hexdigest(),
         }
+        if cached_cgns:
+            metadata['cgns_verify_ids'] = verify_cgns_ids
+        if method == 'pdf-similarity':
+            metadata['pdf_shader_parameters'] = parameters
+            metadata['pdf_profile'] = pdf_profile
+        if seed_offset:
+            metadata['seed_offset'] = seed_offset
 
         def prepare(directory):
             (directory / "render.py").write_bytes(source)
 
         def verify(directory):
             artifacts = _verify_captures(
-                directory, config, options, schedule, width, height, temporal_reuse, adapted
+                directory, config, options, schedule, width, height, temporal_reuse, adapted,
+                seed_offset=seed_offset,
             )
+            diagnostic_artifacts = verify_pdf_diagnostics(directory, schedule, width, height, pdf_profile)
             if (directory / "render.py").read_bytes() != source or run.sha(__file__) != metadata[
                 "driver_sha256"
             ]:
@@ -369,7 +519,8 @@ def launch(
                 raise ValueError("Capture dependency changed")
             if (
                 run.sha(shader) != shader_hash
-                or validate_runtime(runtime, method, adapted, parameters) != runtime_receipt
+                or validate_runtime(runtime, method, adapted, parameters,
+                                    pdf_profile=pdf_profile) != runtime_receipt
             ):
                 raise ValueError("Runtime changed during render")
             if run.sha(config_path) != requested_sha256:
@@ -385,6 +536,9 @@ def launch(
             ):
                 raise ValueError("Reference catalog changed")
             reference_extension_batch.recheck_view(entry, config)
+            if pdf_profile != 'normal':
+                run.save(directory / 'pdf-diagnostics.json',
+                         {'profile': pdf_profile, 'artifacts': diagnostic_artifacts})
             return artifacts
 
         try:
@@ -404,11 +558,14 @@ def main(*, temporal_reuse=True):
     parser.add_argument(
         "--experiment-config", dest="experiment_path", type=Path, default=settings.DEFAULT_CONFIG
     )
-    parser.add_argument("--method", choices=("baseline", "cgns"), required=True)
+    parser.add_argument("--method", choices=("baseline", "cgns", "pdf-similarity"), required=True)
     for name in ("width", "height", "warmup", "count"):
         parser.add_argument("--" + name, type=int)
     parser.add_argument("--timeout", type=int, default=7200)
     parser.add_argument("--scout", action="store_true")
+    parser.add_argument('--seed-offset', type=int, default=0, help='Independent realization offset; frame and uint32 bounds are validated')
+    parser.add_argument('--pdf-profile', choices=('normal', 'one', 'zero', 'center', 'observe', 'native'),
+                        default='normal', help='Non-normal profiles require a PDF similarity scout')
     args = vars(parser.parse_args())
     config = args.pop("config")
     print(launch(config, temporal_reuse=temporal_reuse, **args))

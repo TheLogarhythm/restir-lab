@@ -27,9 +27,16 @@ def build_script(
     record_scene_state=False,
     portable=False,
     duplication_map=False,
+    seed_offset=0,
+    additional_outputs=(),
 ):
     """Capture scheduled frames inside the loop, or the final frame for smoke runs."""
+    if type(seed_offset) is not int or not 0 <= seed_offset <= 2**32 - frames:
+        raise ValueError('Seed offset and frame count exceed uint32 seed range')
+    seed_expression = 'frame - 1' if seed_offset == 0 else f'{seed_offset} + frame - 1'
     scene_import = ", SceneBuilderFlags" if adapted else ""
+    if additional_outputs:
+        scene_import += ', TextureChannelFlags'
     load_flags = ", SceneBuilderFlags.DontOptimizeMaterials" if adapted else ""
     near_plane = ""
     if "near_plane" in camera:
@@ -47,6 +54,8 @@ def build_script(
         else ""
     )
     extra_output = "\ng.markOutput('PathTracer.dupMap')" if duplication_map else ""
+    extra_output += ''.join('\ng.markOutput(' + repr(name) + ', TextureChannelFlags.RGBA)'
+                            for name in additional_outputs)
     output = Path(output)
     output_expression = "str(Path('.').resolve())" if portable else repr(str(output))
     capture_frame = ""
@@ -104,7 +113,7 @@ def camera_state():
     return {{'position': [camera.position.x,camera.position.y,camera.position.z], 'target': [camera.target.x,camera.target.y,camera.target.z], 'up': [camera.up.x,camera.up.y,camera.up.z], 'frameHeight': camera.frameHeight, 'focalLength': camera.focalLength, 'apertureRadius': camera.apertureRadius, 'nearPlane': camera.nearPlane, 'farPlane': camera.farPlane, 'animated': camera.animated}}
 records = {{'initial': camera_state()}}
 for frame in range(1, {frames+1}):
-    tracer.fixedSeed = frame - 1
+    tracer.fixedSeed = {seed_expression}
     m.clock.frame = frame
     m.renderFrame(){clock_check}{capture_frame}{record_scene}
     if frame == 1: records['first_frame'] = {{**camera_state(), 'frame': frame}}
