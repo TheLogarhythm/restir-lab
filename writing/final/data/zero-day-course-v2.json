@@ -1,0 +1,257 @@
+{
+  "scene": "zero-day",
+  "sources": [
+    {
+      "method": "baseline",
+      "display_label": "Bitterli et al. [2020]",
+      "manifest": {
+        "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/manifest.json",
+        "sha256": "dce2bb7241de12521b9c9b99f985e667640ea30f90dca1c00d6cad8797e93eee"
+      },
+      "artifacts": {
+        "video.mp4": {
+          "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/video.mp4",
+          "sha256": "e40119a5eda6f75d5e2244e34d820eab534753f9dc910b8d156c71a4298263f8",
+          "bytes": 157522079
+        },
+        "gpu-frame-timings.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/gpu-frame-timings.json",
+          "sha256": "9e2cfc707f7a98ce412890980717b3506a29bb26b86b681522d4f8d2a548d6f8",
+          "bytes": 831869
+        },
+        "watermarks.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/watermarks.json",
+          "sha256": "ebb93312f7535c56d4e9e393d31fa7e6e603a2332b648ce4d0af905d998eb527",
+          "bytes": 32895
+        },
+        "video-probe.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/video-probe.json",
+          "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+          "bytes": 281
+        }
+      },
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "display_transform": {
+        "method": "reinhard",
+        "ev": 6.0,
+        "encoding": "sRGB"
+      },
+      "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+      "gpu_total_event": "/onFrameRender/gpu_time",
+      "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+      "trajectory_sha256": "077096cc99f53e3cce86b9779f0a87d25303d8b89e932672fd32147617cc34a2"
+    },
+    {
+      "method": "pdf-similarity",
+      "display_label": "PDF Similarity",
+      "manifest": {
+        "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/manifest.json",
+        "sha256": "683a9c6ea1ce6eb178436f7b54062278e8d2d595639e0ffa83359d2679fb5d0f"
+      },
+      "artifacts": {
+        "video.mp4": {
+          "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/video.mp4",
+          "sha256": "07edccf889406267440c9e06ab2531c0d65ac82cb02cd4da7e132694115dc708",
+          "bytes": 155764049
+        },
+        "gpu-frame-timings.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/gpu-frame-timings.json",
+          "sha256": "da9542ba522151f13800322d6185ea6564badfdd3ade4335fc47de49f39975fe",
+          "bytes": 832229
+        },
+        "watermarks.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/watermarks.json",
+          "sha256": "c6cc68884b4ae33472f3a27caeb115935c3266010485a104e2c37ce0440362d6",
+          "bytes": 34695
+        },
+        "video-probe.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/video-probe.json",
+          "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+          "bytes": 281
+        }
+      },
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "display_transform": {
+        "method": "reinhard",
+        "ev": 6.0,
+        "encoding": "sRGB"
+      },
+      "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+      "gpu_total_event": "/onFrameRender/gpu_time",
+      "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+      "trajectory_sha256": "077096cc99f53e3cce86b9779f0a87d25303d8b89e932672fd32147617cc34a2"
+    },
+    {
+      "method": "cgns",
+      "display_label": "CGNS",
+      "manifest": {
+        "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/manifest.json",
+        "sha256": "3946aefb69920b037d78315ecb44f26c414c2e0dbb686948b27e535f85f7845c"
+      },
+      "artifacts": {
+        "video.mp4": {
+          "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/video.mp4",
+          "sha256": "e4b8bc12491007ae4abae9ecb4736e7bf70c983e13e37c53875e97277d611641",
+          "bytes": 161191951
+        },
+        "gpu-frame-timings.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/gpu-frame-timings.json",
+          "sha256": "dd623f64d8d4bcff544ba9bf9449e89aca6253e474e65b10e15ba5926d5e7b27",
+          "bytes": 929869
+        },
+        "watermarks.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/watermarks.json",
+          "sha256": "b92fe9356c660c3e5a82901916e2e11be8a8fde6f3e7c73e852439f9ee0c4f83",
+          "bytes": 31695
+        },
+        "video-probe.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/video-probe.json",
+          "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+          "bytes": 281
+        }
+      },
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "display_transform": {
+        "method": "reinhard",
+        "ev": 6.0,
+        "encoding": "sRGB"
+      },
+      "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+      "gpu_total_event": "/onFrameRender/gpu_time",
+      "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+      "trajectory_sha256": "077096cc99f53e3cce86b9779f0a87d25303d8b89e932672fd32147617cc34a2"
+    }
+  ],
+  "command": [
+    "ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-nostdin",
+    "-y",
+    "-filter_complex_threads",
+    "1",
+    "-i",
+    "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/video.mp4",
+    "-i",
+    "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/video.mp4",
+    "-i",
+    "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/video.mp4",
+    "-filter_complex",
+    "[0:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f0][c0];[f0]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=81.06666666666666:y=101.33333333333333:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full0];[c0]crop=640:360:256:320,scale=608:342:flags=lanczos,setsar=1[crop0];[1:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f1][c1];[f1]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=81.06666666666666:y=101.33333333333333:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full1];[c1]crop=640:360:256:320,scale=608:342:flags=lanczos,setsar=1[crop1];[2:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f2][c2];[f2]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=81.06666666666666:y=101.33333333333333:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full2];[c2]crop=640:360:256:320,scale=608:342:flags=lanczos,setsar=1[crop2];[full0][full1][full2][crop0][crop1][crop2]xstack=inputs=6:layout=24_290|656_290|1288_290|24_656|656_656|1288_656:fill=white[stack];[stack]pad=1920:1080:0:0:color=white,drawbox=x=0:y=0:w=1920:h=156:color=0xf4ece2:t=fill,drawbox=x=0:y=1050:w=1920:h=30:color=0x23150e:t=fill,ass=filename='writing/final/assets/videos/zero-day-course-v2.ass',format=yuv420p[out]",
+    "-map",
+    "[out]",
+    "-frames:v",
+    "300",
+    "-r",
+    "30",
+    "-an",
+    "-c:v",
+    "libx264",
+    "-preset",
+    "medium",
+    "-crf",
+    "16",
+    "-pix_fmt",
+    "yuv420p",
+    "-g",
+    "30",
+    "-movflags",
+    "+faststart",
+    "writing/final/assets/videos/zero-day-course-v2.mp4"
+  ],
+  "probe": {
+    "codec_name": "h264",
+    "width": 1920,
+    "height": 1080,
+    "pix_fmt": "yuv420p",
+    "r_frame_rate": "30/1",
+    "avg_frame_rate": "30/1",
+    "duration": "10.000000",
+    "nb_read_frames": "300"
+  },
+  "decode": {
+    "command": [
+      "ffmpeg",
+      "-hide_banner",
+      "-v",
+      "error",
+      "-nostdin",
+      "-xerror",
+      "-err_detect",
+      "explode",
+      "-i",
+      "writing/final/assets/videos/zero-day-course-v2.mp4",
+      "-map",
+      "0:v:0",
+      "-an",
+      "-f",
+      "null",
+      "-"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "all_frames_decoded": true
+  },
+  "output": "writing/final/assets/videos/zero-day-course-v2.mp4",
+  "output_sha256": "54f833932373849b892921c3635b757f820accff99b73e4cc5a6eaa3621a4066",
+  "poster": "writing/final/assets/videos/zero-day-course-v2.png",
+  "poster_sha256": "c8c23ac4811dbbe28d669d4c67d929597bd461ead2f8dd458116c74bba76d70b",
+  "ass_sha256": "65bf755e8a971498a543fe86a0ca1c7554e85af016cca417ba933b2b47c91e6b",
+  "layout": {
+    "full_view": [
+      608,
+      342
+    ],
+    "detail_view": [
+      608,
+      342
+    ],
+    "columns_x": [
+      24,
+      656,
+      1288
+    ],
+    "full_y": 290,
+    "detail_y": 656,
+    "background": "white",
+    "header": "#f4ece2",
+    "footer": "#23150e",
+    "crop_box": "#FF0080",
+    "crop_box_width_px": 4
+  },
+  "timing": "Original per-frame mean15 GPU timing, unchanged; no retiming",
+  "removed_text": [
+    "frame count and playback metadata",
+    "matched-detail caption",
+    "replay and timing footnotes"
+  ],
+  "other_scenes_modified": false
+}

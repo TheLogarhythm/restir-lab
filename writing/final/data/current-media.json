@@ -1,0 +1,1141 @@
+{
+  "schema_version": 1,
+  "role": "Current source-referenced presentation derivatives; historical media receipts are preserved.",
+  "source_decks": [
+    "source/final.md",
+    "source/appendix.md"
+  ],
+  "source_references": [
+    {
+      "deck": "final",
+      "slide": 10,
+      "path": "assets/videos/bistro-interior-course-v2.mp4",
+      "poster": "assets/videos/bistro-interior-course-v2.png"
+    },
+    {
+      "deck": "final",
+      "slide": 11,
+      "path": "assets/videos/bistro-exterior-course-v2.mp4",
+      "poster": "assets/videos/bistro-exterior-course-v2.png"
+    },
+    {
+      "deck": "final",
+      "slide": 12,
+      "path": "assets/videos/zero-day-course-v2.mp4",
+      "poster": "assets/videos/zero-day-course-v2.png"
+    },
+    {
+      "deck": "final",
+      "slide": 13,
+      "path": "assets/videos/classroom-course-v2.mp4",
+      "poster": "assets/videos/classroom-course-v2.png"
+    }
+  ],
+  "entries": [
+    {
+      "scene": "bistro-interior",
+      "path": "assets/videos/bistro-interior-course-v2.mp4",
+      "sha256": "b1e3677c211e2b2bc7b10f788c1b9f14e35783148c3ff2960d8fc8f4e9111127",
+      "bytes": 95499199,
+      "poster": {
+        "path": "assets/videos/bistro-interior-course-v2.png",
+        "sha256": "07a5ba5b4b711720e270966c4073d9bfbc9a0aeb36fc9d41601c9ba835d56734",
+        "bytes": 2800550
+      },
+      "overlays": {
+        "path": "assets/videos/bistro-interior-course-v2.ass",
+        "sha256": "85bd69b971024c49e9836f770c5139dec812c4924c8110b28f0b1bd1927d5d46"
+      },
+      "receipt": {
+        "path": "data/bistro-interior-course-v2.json",
+        "sha256": "d3cb52964c3f81470798b142a8cf427dcd9665d7b267080be49849899d72cbb8"
+      },
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "full_decode_verification": {
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-v",
+          "error",
+          "-nostdin",
+          "-xerror",
+          "-err_detect",
+          "explode",
+          "-i",
+          "writing/final/assets/videos/bistro-interior-course-v2.mp4",
+          "-map",
+          "0:v:0",
+          "-an",
+          "-f",
+          "null",
+          "-"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "all_frames_decoded": true
+      },
+      "build_identity": {
+        "recipe": "course-v2",
+        "sources": [
+          {
+            "method": "baseline",
+            "display_label": "Bitterli et al. [2020]",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/baseline/encode/manifest.json",
+              "sha256": "a193fdf83927245f03555318b6c5f5bcdc8b004d27824a0eaf514a68f08f3ba2"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/baseline/encode/video.mp4",
+                "sha256": "f8d9eaae69a3771d5b43330c8df674ee65041ad4dd6d35ce3a4c06b30c24e7c9",
+                "bytes": 165896790
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/baseline/encode/gpu-frame-timings.json",
+                "sha256": "dfa21b9b48b6ddc49fe7215518ae9512efa103bf2372a401e30b370236ad9913",
+                "bytes": 833151
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/baseline/encode/watermarks.json",
+                "sha256": "621a9f74934b36475cd21f28d22867bf1fc97469c9d135767027dd74e486494f",
+                "bytes": 32895
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/baseline/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "aces",
+              "ev": 7.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "f2510e6b589a7ae09401336c60ceb2b3df1a8a94be46dfed66e9f2f5fabe7997"
+          },
+          {
+            "method": "pdf-similarity",
+            "display_label": "PDF Similarity",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/pdf-similarity/encode/manifest.json",
+              "sha256": "f4ab57e50fb2cdd94a76091bcf1a0001d1be4a24926387e1b17c907380b54382"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/pdf-similarity/encode/video.mp4",
+                "sha256": "415edb2992d98379877caa76057942cc81e2ba547a276e1ba131de76e7a0b3de",
+                "bytes": 165832979
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/pdf-similarity/encode/gpu-frame-timings.json",
+                "sha256": "a93c649c5aa9052101aa10b0eab3677df9fe2db9ac33a135f3d5414ed91c93a5",
+                "bytes": 833455
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/pdf-similarity/encode/watermarks.json",
+                "sha256": "f9ec725416faca4e352e08003216c5de5d44ad738150304de49458ab2791cd36",
+                "bytes": 34695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/pdf-similarity/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "aces",
+              "ev": 7.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "f2510e6b589a7ae09401336c60ceb2b3df1a8a94be46dfed66e9f2f5fabe7997"
+          },
+          {
+            "method": "cgns",
+            "display_label": "CGNS",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/cgns/encode/manifest.json",
+              "sha256": "d095a91d8e1707eacb90f983ee9f82c56ad187052583d29330ec1e183e2f578f"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/cgns/encode/video.mp4",
+                "sha256": "b6db6a623ac4920ffb9ef28688436398af6a2abc259afaf23c64becbf75164c2",
+                "bytes": 171327745
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/cgns/encode/gpu-frame-timings.json",
+                "sha256": "7ba37762e1b79a7608f8afe529b04bb2340d04a59b5c21bd14c81e3395f6ab39",
+                "bytes": 930944
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/cgns/encode/watermarks.json",
+                "sha256": "ad27201aaddceb8163091ef03e6111de26407c2ff5717695e7e4523d53695752",
+                "bytes": 31695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/cgns/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "aces",
+              "ev": 7.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "f2510e6b589a7ae09401336c60ceb2b3df1a8a94be46dfed66e9f2f5fabe7997"
+          }
+        ],
+        "production_manifest_sha256": "4ae0a4e4ba5bdd58403e9519d0611d91a18968422ec3734f46a9e138a14526da",
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-nostdin",
+          "-y",
+          "-filter_complex_threads",
+          "1",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/bistro-interior/baseline/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/bistro-interior/pdf-similarity/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/bistro-interior/cgns/encode/video.mp4",
+          "-filter_complex",
+          "[0:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f0][c0];[f0]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=324.26666666666665:y=202.66666666666666:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full0];[c0]crop=640:360:1024:640,scale=608:342:flags=lanczos,setsar=1[crop0];[1:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f1][c1];[f1]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=324.26666666666665:y=202.66666666666666:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full1];[c1]crop=640:360:1024:640,scale=608:342:flags=lanczos,setsar=1[crop1];[2:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f2][c2];[f2]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=324.26666666666665:y=202.66666666666666:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full2];[c2]crop=640:360:1024:640,scale=608:342:flags=lanczos,setsar=1[crop2];[full0][full1][full2][crop0][crop1][crop2]xstack=inputs=6:layout=24_290|656_290|1288_290|24_656|656_656|1288_656:fill=white[stack];[stack]pad=1920:1080:0:0:color=white,drawbox=x=0:y=0:w=1920:h=156:color=0xf4ece2:t=fill,drawbox=x=0:y=1050:w=1920:h=30:color=0x23150e:t=fill,ass=filename='writing/final/assets/videos/bistro-interior-course-v2.ass',format=yuv420p[out]",
+          "-map",
+          "[out]",
+          "-frames:v",
+          "300",
+          "-r",
+          "30",
+          "-an",
+          "-c:v",
+          "libx264",
+          "-preset",
+          "medium",
+          "-crf",
+          "16",
+          "-pix_fmt",
+          "yuv420p",
+          "-g",
+          "30",
+          "-movflags",
+          "+faststart",
+          "writing/final/assets/videos/bistro-interior-course-v2.mp4"
+        ],
+        "layout": {
+          "full_view": [
+            608,
+            342
+          ],
+          "detail_view": [
+            608,
+            342
+          ],
+          "columns_x": [
+            24,
+            656,
+            1288
+          ],
+          "full_y": 290,
+          "detail_y": 656,
+          "background": "white",
+          "header": "#f4ece2",
+          "footer": "#23150e",
+          "crop_box": "#FF0080",
+          "crop_box_width_px": 4
+        },
+        "ass_sha256": "85bd69b971024c49e9836f770c5139dec812c4924c8110b28f0b1bd1927d5d46",
+        "encoder": "ffmpeg version 8.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "fonts": {
+          "arial.ttf": "edfbd22a3d088fc2f5d7c79b8c9c732df6dc878a60f0a80be0f92a3c7a634404",
+          "arialbd.ttf": "4d59199834e7439c67ea4949407639961060b21b173833f566eb60ac6fd8f5af"
+        },
+        "scripts": {
+          "build_media.py": "6ec98415681a9ddd5bff54ce9b61419ad06c3bee321a622b085e2d67b8588d99",
+          "presentation_media.py": "911340e60ac62bfb648ae6d640f0e9623f344fc948661966961dc0fe26c2c5d7"
+        }
+      },
+      "cache_origin": "Existing course-v2 output adopted after receipt/source/recipe validation; no encoding"
+    },
+    {
+      "scene": "bistro-exterior",
+      "path": "assets/videos/bistro-exterior-course-v2.mp4",
+      "sha256": "848f51cda4fb7beb00706d70199007638d7d6ba18cb1ad0c71252efe2d81b3ff",
+      "bytes": 71709099,
+      "poster": {
+        "path": "assets/videos/bistro-exterior-course-v2.png",
+        "sha256": "b38bffa7e33a01eb24371d9c7f2a3ca39e1cd4c4a8ab60f5f46cf39556a1db7b",
+        "bytes": 2303488
+      },
+      "overlays": {
+        "path": "assets/videos/bistro-exterior-course-v2.ass",
+        "sha256": "42879e51c1d302f4554985e01808e441c96793b5e65a0aff367c9aa780332157"
+      },
+      "receipt": {
+        "path": "data/bistro-exterior-course-v2.json",
+        "sha256": "f5b198a31e9bbd28d487d877ea4e3fdde220cf177039ebfdeb469a994c62711e"
+      },
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "full_decode_verification": {
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-v",
+          "error",
+          "-nostdin",
+          "-xerror",
+          "-err_detect",
+          "explode",
+          "-i",
+          "writing/final/assets/videos/bistro-exterior-course-v2.mp4",
+          "-map",
+          "0:v:0",
+          "-an",
+          "-f",
+          "null",
+          "-"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "all_frames_decoded": true
+      },
+      "build_identity": {
+        "recipe": "course-v2",
+        "sources": [
+          {
+            "method": "baseline",
+            "display_label": "Bitterli et al. [2020]",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/manifest.json",
+              "sha256": "b5c6c5921a312e5b7e3ee3a1d2b4caca7c07e9f5e6b93805e18121053975d59e"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/video.mp4",
+                "sha256": "a55f245197f99e786e39d18c7ccd44cea0d8da9756f17e8e20a424b6e88b5442",
+                "bytes": 141672986
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/gpu-frame-timings.json",
+                "sha256": "0c83dce03b42e16201174b176baf42e255a0a00e9d834b8b58ebed3760e8bc3c",
+                "bytes": 833475
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/watermarks.json",
+                "sha256": "949fcd3e9a8eb5fccb988115a0b88e86814b73deccaa9ca36f104d7210875f61",
+                "bytes": 32895
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 0.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "8da5f5771e92ffd74a554e1737cd6f2e443cf94a43e935a87e0b3403aeaf9fa5"
+          },
+          {
+            "method": "pdf-similarity",
+            "display_label": "PDF Similarity",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/manifest.json",
+              "sha256": "41c25fae0dac92a9323795be37260e2d0b4ea8c729726a8d79cee28c0882d239"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/video.mp4",
+                "sha256": "f3d9bdab2d988f67a700f6935b9d52fcedb98aa03efb4676238ac22a2e79b044",
+                "bytes": 140283799
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/gpu-frame-timings.json",
+                "sha256": "f1c87ac0a470b9f3038b1df0fe465575c405a5ca718df973ebf5bd759b0d8a52",
+                "bytes": 833870
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/watermarks.json",
+                "sha256": "60eb88d6a77547c7a88cd2eb49c05343dfefcf6f0dafc1b4eeb934b84ab6c826",
+                "bytes": 34695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 0.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "8da5f5771e92ffd74a554e1737cd6f2e443cf94a43e935a87e0b3403aeaf9fa5"
+          },
+          {
+            "method": "cgns",
+            "display_label": "CGNS",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/manifest.json",
+              "sha256": "aa9b3e63af7a76e923c6d4894833ad4f325072421381ff04bb53813b92372df1"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/video.mp4",
+                "sha256": "0d9668772447aa5d1f4ab599e114a22623ef2589f36ed581ed71287edf5513cc",
+                "bytes": 142469823
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/gpu-frame-timings.json",
+                "sha256": "f743d313e2792afccf2f43eb5f62af32cc961bf503bb128dd25a31444789be79",
+                "bytes": 931596
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/watermarks.json",
+                "sha256": "6a248cb810229abc59d757a8e0931f10ab8993ba0c187955e31f5a849e6aa694",
+                "bytes": 31695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 0.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "8da5f5771e92ffd74a554e1737cd6f2e443cf94a43e935a87e0b3403aeaf9fa5"
+          }
+        ],
+        "production_manifest_sha256": "4ae0a4e4ba5bdd58403e9519d0611d91a18968422ec3734f46a9e138a14526da",
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-nostdin",
+          "-y",
+          "-filter_complex_threads",
+          "1",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/video.mp4",
+          "-filter_complex",
+          "[0:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f0][c0];[f0]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=202.66666666666666:y=190.0:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full0];[c0]crop=640:360:640:600,scale=608:342:flags=lanczos,setsar=1[crop0];[1:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f1][c1];[f1]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=202.66666666666666:y=190.0:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full1];[c1]crop=640:360:640:600,scale=608:342:flags=lanczos,setsar=1[crop1];[2:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f2][c2];[f2]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=202.66666666666666:y=190.0:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full2];[c2]crop=640:360:640:600,scale=608:342:flags=lanczos,setsar=1[crop2];[full0][full1][full2][crop0][crop1][crop2]xstack=inputs=6:layout=24_290|656_290|1288_290|24_656|656_656|1288_656:fill=white[stack];[stack]pad=1920:1080:0:0:color=white,drawbox=x=0:y=0:w=1920:h=156:color=0xf4ece2:t=fill,drawbox=x=0:y=1050:w=1920:h=30:color=0x23150e:t=fill,ass=filename='writing/final/assets/videos/bistro-exterior-course-v2.ass',format=yuv420p[out]",
+          "-map",
+          "[out]",
+          "-frames:v",
+          "300",
+          "-r",
+          "30",
+          "-an",
+          "-c:v",
+          "libx264",
+          "-preset",
+          "medium",
+          "-crf",
+          "16",
+          "-pix_fmt",
+          "yuv420p",
+          "-g",
+          "30",
+          "-movflags",
+          "+faststart",
+          "writing/final/assets/videos/bistro-exterior-course-v2.mp4"
+        ],
+        "layout": {
+          "full_view": [
+            608,
+            342
+          ],
+          "detail_view": [
+            608,
+            342
+          ],
+          "columns_x": [
+            24,
+            656,
+            1288
+          ],
+          "full_y": 290,
+          "detail_y": 656,
+          "background": "white",
+          "header": "#f4ece2",
+          "footer": "#23150e",
+          "crop_box": "#FF0080",
+          "crop_box_width_px": 4
+        },
+        "ass_sha256": "42879e51c1d302f4554985e01808e441c96793b5e65a0aff367c9aa780332157",
+        "encoder": "ffmpeg version 8.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "fonts": {
+          "arial.ttf": "edfbd22a3d088fc2f5d7c79b8c9c732df6dc878a60f0a80be0f92a3c7a634404",
+          "arialbd.ttf": "4d59199834e7439c67ea4949407639961060b21b173833f566eb60ac6fd8f5af"
+        },
+        "scripts": {
+          "build_media.py": "6ec98415681a9ddd5bff54ce9b61419ad06c3bee321a622b085e2d67b8588d99",
+          "presentation_media.py": "911340e60ac62bfb648ae6d640f0e9623f344fc948661966961dc0fe26c2c5d7"
+        }
+      },
+      "cache_origin": "Existing course-v2 output adopted after receipt/source/recipe validation; no encoding"
+    },
+    {
+      "scene": "zero-day",
+      "path": "assets/videos/zero-day-course-v2.mp4",
+      "sha256": "54f833932373849b892921c3635b757f820accff99b73e4cc5a6eaa3621a4066",
+      "bytes": 87969287,
+      "poster": {
+        "path": "assets/videos/zero-day-course-v2.png",
+        "sha256": "c8c23ac4811dbbe28d669d4c67d929597bd461ead2f8dd458116c74bba76d70b",
+        "bytes": 2516184
+      },
+      "overlays": {
+        "path": "assets/videos/zero-day-course-v2.ass",
+        "sha256": "65bf755e8a971498a543fe86a0ca1c7554e85af016cca417ba933b2b47c91e6b"
+      },
+      "receipt": {
+        "path": "data/zero-day-course-v2.json",
+        "sha256": "116b106313530bf335b056c4a76e72af835fb9fb082db5330edc386d7ca54d1d"
+      },
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "full_decode_verification": {
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-v",
+          "error",
+          "-nostdin",
+          "-xerror",
+          "-err_detect",
+          "explode",
+          "-i",
+          "writing/final/assets/videos/zero-day-course-v2.mp4",
+          "-map",
+          "0:v:0",
+          "-an",
+          "-f",
+          "null",
+          "-"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "all_frames_decoded": true
+      },
+      "build_identity": {
+        "recipe": "course-v2",
+        "sources": [
+          {
+            "method": "baseline",
+            "display_label": "Bitterli et al. [2020]",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/manifest.json",
+              "sha256": "dce2bb7241de12521b9c9b99f985e667640ea30f90dca1c00d6cad8797e93eee"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/video.mp4",
+                "sha256": "e40119a5eda6f75d5e2244e34d820eab534753f9dc910b8d156c71a4298263f8",
+                "bytes": 157522079
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/gpu-frame-timings.json",
+                "sha256": "9e2cfc707f7a98ce412890980717b3506a29bb26b86b681522d4f8d2a548d6f8",
+                "bytes": 831869
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/watermarks.json",
+                "sha256": "ebb93312f7535c56d4e9e393d31fa7e6e603a2332b648ce4d0af905d998eb527",
+                "bytes": 32895
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 6.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "077096cc99f53e3cce86b9779f0a87d25303d8b89e932672fd32147617cc34a2"
+          },
+          {
+            "method": "pdf-similarity",
+            "display_label": "PDF Similarity",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/manifest.json",
+              "sha256": "683a9c6ea1ce6eb178436f7b54062278e8d2d595639e0ffa83359d2679fb5d0f"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/video.mp4",
+                "sha256": "07edccf889406267440c9e06ab2531c0d65ac82cb02cd4da7e132694115dc708",
+                "bytes": 155764049
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/gpu-frame-timings.json",
+                "sha256": "da9542ba522151f13800322d6185ea6564badfdd3ade4335fc47de49f39975fe",
+                "bytes": 832229
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/watermarks.json",
+                "sha256": "c6cc68884b4ae33472f3a27caeb115935c3266010485a104e2c37ce0440362d6",
+                "bytes": 34695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 6.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "077096cc99f53e3cce86b9779f0a87d25303d8b89e932672fd32147617cc34a2"
+          },
+          {
+            "method": "cgns",
+            "display_label": "CGNS",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/manifest.json",
+              "sha256": "3946aefb69920b037d78315ecb44f26c414c2e0dbb686948b27e535f85f7845c"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/video.mp4",
+                "sha256": "e4b8bc12491007ae4abae9ecb4736e7bf70c983e13e37c53875e97277d611641",
+                "bytes": 161191951
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/gpu-frame-timings.json",
+                "sha256": "dd623f64d8d4bcff544ba9bf9449e89aca6253e474e65b10e15ba5926d5e7b27",
+                "bytes": 929869
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/watermarks.json",
+                "sha256": "b92fe9356c660c3e5a82901916e2e11be8a8fde6f3e7c73e852439f9ee0c4f83",
+                "bytes": 31695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 6.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "077096cc99f53e3cce86b9779f0a87d25303d8b89e932672fd32147617cc34a2"
+          }
+        ],
+        "production_manifest_sha256": "4ae0a4e4ba5bdd58403e9519d0611d91a18968422ec3734f46a9e138a14526da",
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-nostdin",
+          "-y",
+          "-filter_complex_threads",
+          "1",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/video.mp4",
+          "-filter_complex",
+          "[0:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f0][c0];[f0]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=81.06666666666666:y=101.33333333333333:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full0];[c0]crop=640:360:256:320,scale=608:342:flags=lanczos,setsar=1[crop0];[1:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f1][c1];[f1]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=81.06666666666666:y=101.33333333333333:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full1];[c1]crop=640:360:256:320,scale=608:342:flags=lanczos,setsar=1[crop1];[2:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f2][c2];[f2]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=81.06666666666666:y=101.33333333333333:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full2];[c2]crop=640:360:256:320,scale=608:342:flags=lanczos,setsar=1[crop2];[full0][full1][full2][crop0][crop1][crop2]xstack=inputs=6:layout=24_290|656_290|1288_290|24_656|656_656|1288_656:fill=white[stack];[stack]pad=1920:1080:0:0:color=white,drawbox=x=0:y=0:w=1920:h=156:color=0xf4ece2:t=fill,drawbox=x=0:y=1050:w=1920:h=30:color=0x23150e:t=fill,ass=filename='writing/final/assets/videos/zero-day-course-v2.ass',format=yuv420p[out]",
+          "-map",
+          "[out]",
+          "-frames:v",
+          "300",
+          "-r",
+          "30",
+          "-an",
+          "-c:v",
+          "libx264",
+          "-preset",
+          "medium",
+          "-crf",
+          "16",
+          "-pix_fmt",
+          "yuv420p",
+          "-g",
+          "30",
+          "-movflags",
+          "+faststart",
+          "writing/final/assets/videos/zero-day-course-v2.mp4"
+        ],
+        "layout": {
+          "full_view": [
+            608,
+            342
+          ],
+          "detail_view": [
+            608,
+            342
+          ],
+          "columns_x": [
+            24,
+            656,
+            1288
+          ],
+          "full_y": 290,
+          "detail_y": 656,
+          "background": "white",
+          "header": "#f4ece2",
+          "footer": "#23150e",
+          "crop_box": "#FF0080",
+          "crop_box_width_px": 4
+        },
+        "ass_sha256": "65bf755e8a971498a543fe86a0ca1c7554e85af016cca417ba933b2b47c91e6b",
+        "encoder": "ffmpeg version 8.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "fonts": {
+          "arial.ttf": "edfbd22a3d088fc2f5d7c79b8c9c732df6dc878a60f0a80be0f92a3c7a634404",
+          "arialbd.ttf": "4d59199834e7439c67ea4949407639961060b21b173833f566eb60ac6fd8f5af"
+        },
+        "scripts": {
+          "build_media.py": "6ec98415681a9ddd5bff54ce9b61419ad06c3bee321a622b085e2d67b8588d99",
+          "presentation_media.py": "911340e60ac62bfb648ae6d640f0e9623f344fc948661966961dc0fe26c2c5d7"
+        }
+      },
+      "cache_origin": "Existing course-v2 output adopted after receipt/source/recipe validation; no encoding"
+    },
+    {
+      "scene": "classroom",
+      "path": "assets/videos/classroom-course-v2.mp4",
+      "sha256": "0a0b3a0e1ab89afed7b50c5ce8fefd113cff85da94737f7c4267fa6eeb0874e0",
+      "bytes": 53423969,
+      "poster": {
+        "path": "assets/videos/classroom-course-v2.png",
+        "sha256": "d3982e04b51b6d30d83ad500bf2a6c8f706dd0f64acb260f23f559b8a89a7b7c",
+        "bytes": 1295053
+      },
+      "overlays": {
+        "path": "assets/videos/classroom-course-v2.ass",
+        "sha256": "155baaa6b37441623a0844bb6f38ea64392d68068af1310b9d31fac68a4a756f"
+      },
+      "receipt": {
+        "path": "data/classroom-course-v2.json",
+        "sha256": "150766eb6278a5f20cd30c3447ca142b86a0a61ede9d8c93a9b9bb11b46a050d"
+      },
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "full_decode_verification": {
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-v",
+          "error",
+          "-nostdin",
+          "-xerror",
+          "-err_detect",
+          "explode",
+          "-i",
+          "writing/final/assets/videos/classroom-course-v2.mp4",
+          "-map",
+          "0:v:0",
+          "-an",
+          "-f",
+          "null",
+          "-"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "all_frames_decoded": true
+      },
+      "build_identity": {
+        "recipe": "course-v2",
+        "sources": [
+          {
+            "method": "baseline",
+            "display_label": "Bitterli et al. [2020]",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/manifest.json",
+              "sha256": "ab9d55ca4082e10f2f3b4388bdbb2b331fbad6e9cb289a49274a5a440619cf3e"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/video.mp4",
+                "sha256": "346b42f70c506471bd0a2bb33dc07223c6b6c8d9e75dbeb7919eda35d98beccb",
+                "bytes": 110338758
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/gpu-frame-timings.json",
+                "sha256": "fd95cd97d47a482a6bab76b7c70dc77b844b67e865185be3806958eb40130a1e",
+                "bytes": 833761
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/watermarks.json",
+                "sha256": "836115275430ddf88318b6ece67682b19c7f0bde4525eb8e909f95fa527f7dc1",
+                "bytes": 32895
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 0.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "51c3f87461527a2387694e3f45b74b3e31aca927ef0314397b2f794a513a372f"
+          },
+          {
+            "method": "pdf-similarity",
+            "display_label": "PDF Similarity",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/manifest.json",
+              "sha256": "cdec80b73d9deb7e2f3dc3b04634a452a266978fd4573d8d52b93e82d5658ae1"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/video.mp4",
+                "sha256": "ca96fd63ddf8680cabae23ceb2cef7ccbd86907f33263c1892f4ff10aced4643",
+                "bytes": 108802273
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/gpu-frame-timings.json",
+                "sha256": "66475e3b6a1f07e800fba571b6f6bd4b61c479793d9c686b0adcdbe11cca4618",
+                "bytes": 833366
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/watermarks.json",
+                "sha256": "176801ee624b567e74d42074b7ee52a7039bde9f034b3b7230d33ec582a6249b",
+                "bytes": 34695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 0.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "51c3f87461527a2387694e3f45b74b3e31aca927ef0314397b2f794a513a372f"
+          },
+          {
+            "method": "cgns",
+            "display_label": "CGNS",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/manifest.json",
+              "sha256": "dc757ad7cf59bd5cc359ab1798e87984151e00030fa22a9a2c5e2354fe2a05d7"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/video.mp4",
+                "sha256": "7700945566390f77db957a1071b80791bff195c4df26a815b31e83f6780a0204",
+                "bytes": 109461099
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/gpu-frame-timings.json",
+                "sha256": "bf6beb595fa8641ae0c877837aaa1b4a2c0b3d7627dc7bccc38379b6a9f56232",
+                "bytes": 931444
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/watermarks.json",
+                "sha256": "078c797d8cdc181c7a1de0be34cdc7bbc6442852e35f8d5a6809503ff5304335",
+                "bytes": 31695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 0.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "51c3f87461527a2387694e3f45b74b3e31aca927ef0314397b2f794a513a372f"
+          }
+        ],
+        "production_manifest_sha256": "4ae0a4e4ba5bdd58403e9519d0611d91a18968422ec3734f46a9e138a14526da",
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-nostdin",
+          "-y",
+          "-filter_complex_threads",
+          "1",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/video.mp4",
+          "-filter_complex",
+          "[0:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f0][c0];[f0]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=202.66666666666666:y=114.0:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full0];[c0]crop=640:360:640:360,scale=608:342:flags=lanczos,setsar=1[crop0];[1:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f1][c1];[f1]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=202.66666666666666:y=114.0:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full1];[c1]crop=640:360:640:360,scale=608:342:flags=lanczos,setsar=1[crop1];[2:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f2][c2];[f2]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=202.66666666666666:y=114.0:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full2];[c2]crop=640:360:640:360,scale=608:342:flags=lanczos,setsar=1[crop2];[full0][full1][full2][crop0][crop1][crop2]xstack=inputs=6:layout=24_290|656_290|1288_290|24_656|656_656|1288_656:fill=white[stack];[stack]pad=1920:1080:0:0:color=white,drawbox=x=0:y=0:w=1920:h=156:color=0xf4ece2:t=fill,drawbox=x=0:y=1050:w=1920:h=30:color=0x23150e:t=fill,ass=filename='writing/final/assets/videos/classroom-course-v2.ass',format=yuv420p[out]",
+          "-map",
+          "[out]",
+          "-frames:v",
+          "300",
+          "-r",
+          "30",
+          "-an",
+          "-c:v",
+          "libx264",
+          "-preset",
+          "medium",
+          "-crf",
+          "16",
+          "-pix_fmt",
+          "yuv420p",
+          "-g",
+          "30",
+          "-movflags",
+          "+faststart",
+          "writing/final/assets/videos/classroom-course-v2.mp4"
+        ],
+        "layout": {
+          "full_view": [
+            608,
+            342
+          ],
+          "detail_view": [
+            608,
+            342
+          ],
+          "columns_x": [
+            24,
+            656,
+            1288
+          ],
+          "full_y": 290,
+          "detail_y": 656,
+          "background": "white",
+          "header": "#f4ece2",
+          "footer": "#23150e",
+          "crop_box": "#FF0080",
+          "crop_box_width_px": 4
+        },
+        "ass_sha256": "155baaa6b37441623a0844bb6f38ea64392d68068af1310b9d31fac68a4a756f",
+        "encoder": "ffmpeg version 8.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "fonts": {
+          "arial.ttf": "edfbd22a3d088fc2f5d7c79b8c9c732df6dc878a60f0a80be0f92a3c7a634404",
+          "arialbd.ttf": "4d59199834e7439c67ea4949407639961060b21b173833f566eb60ac6fd8f5af"
+        },
+        "scripts": {
+          "build_media.py": "6ec98415681a9ddd5bff54ce9b61419ad06c3bee321a622b085e2d67b8588d99",
+          "presentation_media.py": "911340e60ac62bfb648ae6d640f0e9623f344fc948661966961dc0fe26c2c5d7"
+        }
+      },
+      "cache_origin": "Existing course-v2 output adopted after receipt/source/recipe validation; no encoding"
+    }
+  ],
+  "verification": "MP4/poster/overlay hashes and pinned historical probe/full-decode receipt; no fresh decode implied."
+}

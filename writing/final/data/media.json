@@ -1,0 +1,1332 @@
+{
+  "schema_version": 1,
+  "role": "Lossy presentation derivatives of approved encoded MP4s; production files remain authoritative and unmodified.",
+  "source_root": "runs/pt-4-trajectories-spatial-compare",
+  "production_manifest": {
+    "path": "runs/pt-4-trajectories-spatial-compare/manifest.json",
+    "sha256": "4ae0a4e4ba5bdd58403e9519d0611d91a18968422ec3734f46a9e138a14526da"
+  },
+  "ordinary_label_note": "Bitterli et al. [2020] is the requested presentation label; the source is the ordinary-reuse Falcor ReSTIR PT integration, not a fresh run of the original 2020 DI author code.",
+  "demo_schedule": {
+    "clips": 4,
+    "clip_seconds": 10,
+    "loops_per_scene": 3,
+    "scene_seconds": 30,
+    "demo_seconds": 120,
+    "playback_speed": 1.0
+  },
+  "configuration": {
+    "version": 1,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frames": 300,
+    "seconds": 10,
+    "layout": "Three 640x360 full views at y=196; matching native-resolution 640x360 crops at y=620",
+    "colors": {
+      "navy": "#142d39",
+      "teal": "#13847d"
+    },
+    "minimum_overlay_font_px": 32,
+    "gpu_timing_font_px": 38,
+    "method_font_px": 42,
+    "scene_title_font_px": 48,
+    "source_watermark_mask": [
+      0,
+      0,
+      1920,
+      54
+    ],
+    "mask_note": "Only the original black watermark header is masked after 3:1 scaling; readable authentic timing is rebuilt above each method.",
+    "timing_fields": [
+      "gpu_ms_mean15",
+      "gpu_fps_mean15"
+    ],
+    "ass_timestamp_rule": "floor(n*100/30) centiseconds; current values at each n/30 PTS",
+    "font": {
+      "path": "C:\\Windows\\Fonts\\segoeui.ttf",
+      "sha256": "704eada12961a27fd271f7d3b09e2066520e758390c1776744eff430fee30f6e"
+    },
+    "bold_font": {
+      "path": "C:\\Windows\\Fonts\\segoeuib.ttf",
+      "sha256": "b169e636719880976a97e94e3b1cb3dbe5f4a38eabc037bf9f2a9165154c3ad2"
+    },
+    "encoder": "ffmpeg version 8.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+    "crf": 16,
+    "preset": "medium"
+  },
+  "limitations": [
+    "These camera clips are descriptive visual comparisons from one approved trajectory production, not independent repeats or an equal-time quality benchmark.",
+    "GPU timing is a separate deterministic image-free replay of the same frames, not measured during MP4 playback.",
+    "The first GPU smoothing windows contain fewer than 15 captured frames.",
+    "The source MP4s are already lossy. Full views are reduced by 3:1 and crops use native source resolution; no added tone mapping or denoising.",
+    "A fixed screen-space crop follows image coordinates, not the same world-space surface during camera motion.",
+    "No reference/ground-truth video is included."
+  ],
+  "entries": [
+    {
+      "condition": "classroom",
+      "title": "Classroom",
+      "kind": "synchronized-three-way-full-and-detail",
+      "path": "assets/videos/classroom.mp4",
+      "sha256": "f63bd80b01fda163f7a78e752ecddc743e8323ec86d78f7266b9211843e95ce3",
+      "bytes": 64301950,
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "full_decode_verification": {
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-v",
+          "error",
+          "-nostdin",
+          "-xerror",
+          "-err_detect",
+          "explode",
+          "-i",
+          "writing/final/assets/videos/classroom.mp4",
+          "-map",
+          "0:v:0",
+          "-an",
+          "-f",
+          "null",
+          "-"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "all_frames_decoded": true
+      },
+      "poster": {
+        "path": "assets/videos/classroom.png",
+        "sha256": "98b16d3a4ee26445589659a5116208e6e04594d48e6275d1be27460669593491",
+        "bytes": 1548364,
+        "frame_zero_based": 150,
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-nostdin",
+          "-y",
+          "-i",
+          "writing/final/assets/videos/classroom.mp4",
+          "-vf",
+          "select=eq(n\\,150)",
+          "-frames:v",
+          "1",
+          "writing/final/assets/videos/classroom.png"
+        ]
+      },
+      "overlays": {
+        "path": "assets/videos/classroom.ass",
+        "sha256": "7c4e60bfed4f48b35212f43e56fdb44f1b4a07f9798fc3de982dde34c969ed69"
+      },
+      "crop_rationale": "Chalkboard, walls and desks",
+      "transform": "No retiming: source frame n to output frame n; full view scale 1/3 with Lanczos, same native 640x360 screen-space crop for all methods. No aspect distortion.",
+      "identity": {
+        "sources": [
+          {
+            "method": "baseline",
+            "display_label": "Bitterli et al. [2020]",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/manifest.json",
+              "sha256": "ab9d55ca4082e10f2f3b4388bdbb2b331fbad6e9cb289a49274a5a440619cf3e"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/video.mp4",
+                "sha256": "346b42f70c506471bd0a2bb33dc07223c6b6c8d9e75dbeb7919eda35d98beccb",
+                "bytes": 110338758
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/gpu-frame-timings.json",
+                "sha256": "fd95cd97d47a482a6bab76b7c70dc77b844b67e865185be3806958eb40130a1e",
+                "bytes": 833761
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/watermarks.json",
+                "sha256": "836115275430ddf88318b6ece67682b19c7f0bde4525eb8e909f95fa527f7dc1",
+                "bytes": 32895
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 0.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "51c3f87461527a2387694e3f45b74b3e31aca927ef0314397b2f794a513a372f"
+          },
+          {
+            "method": "pdf-similarity",
+            "display_label": "PDF Similarity",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/manifest.json",
+              "sha256": "cdec80b73d9deb7e2f3dc3b04634a452a266978fd4573d8d52b93e82d5658ae1"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/video.mp4",
+                "sha256": "ca96fd63ddf8680cabae23ceb2cef7ccbd86907f33263c1892f4ff10aced4643",
+                "bytes": 108802273
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/gpu-frame-timings.json",
+                "sha256": "66475e3b6a1f07e800fba571b6f6bd4b61c479793d9c686b0adcdbe11cca4618",
+                "bytes": 833366
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/watermarks.json",
+                "sha256": "176801ee624b567e74d42074b7ee52a7039bde9f034b3b7230d33ec582a6249b",
+                "bytes": 34695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 0.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "51c3f87461527a2387694e3f45b74b3e31aca927ef0314397b2f794a513a372f"
+          },
+          {
+            "method": "cgns",
+            "display_label": "CGNS",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/manifest.json",
+              "sha256": "dc757ad7cf59bd5cc359ab1798e87984151e00030fa22a9a2c5e2354fe2a05d7"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/video.mp4",
+                "sha256": "7700945566390f77db957a1071b80791bff195c4df26a815b31e83f6780a0204",
+                "bytes": 109461099
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/gpu-frame-timings.json",
+                "sha256": "bf6beb595fa8641ae0c877837aaa1b4a2c0b3d7627dc7bccc38379b6a9f56232",
+                "bytes": 931444
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/watermarks.json",
+                "sha256": "078c797d8cdc181c7a1de0be34cdc7bbc6442852e35f8d5a6809503ff5304335",
+                "bytes": 31695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 0.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "51c3f87461527a2387694e3f45b74b3e31aca927ef0314397b2f794a513a372f"
+          }
+        ],
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-nostdin",
+          "-y",
+          "-filter_complex_threads",
+          "1",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/video.mp4",
+          "-filter_complex",
+          "[0:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f0][c0];[f0]scale=640:360:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=640:h=18:color=0x142d39:t=fill,drawbox=x=213.333333:y=120.000000:w=213.333333:h=120.000000:color=0x13847d:t=3[full0];[c0]crop=640:360:640:360,setsar=1[crop0];[1:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f1][c1];[f1]scale=640:360:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=640:h=18:color=0x142d39:t=fill,drawbox=x=213.333333:y=120.000000:w=213.333333:h=120.000000:color=0x13847d:t=3[full1];[c1]crop=640:360:640:360,setsar=1[crop1];[2:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f2][c2];[f2]scale=640:360:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=640:h=18:color=0x142d39:t=fill,drawbox=x=213.333333:y=120.000000:w=213.333333:h=120.000000:color=0x13847d:t=3[full2];[c2]crop=640:360:640:360,setsar=1[crop2];[full0][full1][full2][crop0][crop1][crop2]xstack=inputs=6:layout=0_196|640_196|1280_196|0_620|640_620|1280_620:fill=0x142d39[stack];[stack]pad=1920:1080:0:0:color=0x142d39,drawbox=x=0:y=83:w=1920:h=3:color=0x13847d:t=fill,drawbox=x=639:y=98:w=2:h=458:color=0x13847d:t=fill,drawbox=x=639:y=620:w=2:h=360:color=0x13847d:t=fill,drawbox=x=1279:y=98:w=2:h=458:color=0x13847d:t=fill,drawbox=x=1279:y=620:w=2:h=360:color=0x13847d:t=fill,ass=filename='writing/final/assets/videos/classroom.ass',format=yuv420p[out]",
+          "-map",
+          "[out]",
+          "-frames:v",
+          "300",
+          "-r",
+          "30",
+          "-an",
+          "-c:v",
+          "libx264",
+          "-preset",
+          "medium",
+          "-crf",
+          "16",
+          "-pix_fmt",
+          "yuv420p",
+          "-g",
+          "30",
+          "-keyint_min",
+          "30",
+          "-sc_threshold",
+          "0",
+          "-movflags",
+          "+faststart",
+          "writing/final/assets/videos/classroom.mp4"
+        ],
+        "configuration": {
+          "version": 1,
+          "width": 1920,
+          "height": 1080,
+          "fps": 30,
+          "frames": 300,
+          "seconds": 10,
+          "layout": "Three 640x360 full views at y=196; matching native-resolution 640x360 crops at y=620",
+          "colors": {
+            "navy": "#142d39",
+            "teal": "#13847d"
+          },
+          "minimum_overlay_font_px": 32,
+          "gpu_timing_font_px": 38,
+          "method_font_px": 42,
+          "scene_title_font_px": 48,
+          "source_watermark_mask": [
+            0,
+            0,
+            1920,
+            54
+          ],
+          "mask_note": "Only the original black watermark header is masked after 3:1 scaling; readable authentic timing is rebuilt above each method.",
+          "timing_fields": [
+            "gpu_ms_mean15",
+            "gpu_fps_mean15"
+          ],
+          "ass_timestamp_rule": "floor(n*100/30) centiseconds; current values at each n/30 PTS",
+          "font": {
+            "path": "C:\\Windows\\Fonts\\segoeui.ttf",
+            "sha256": "704eada12961a27fd271f7d3b09e2066520e758390c1776744eff430fee30f6e"
+          },
+          "bold_font": {
+            "path": "C:\\Windows\\Fonts\\segoeuib.ttf",
+            "sha256": "b169e636719880976a97e94e3b1cb3dbe5f4a38eabc037bf9f2a9165154c3ad2"
+          },
+          "encoder": "ffmpeg version 8.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+          "crf": 16,
+          "preset": "medium"
+        },
+        "ass_sha256": "7c4e60bfed4f48b35212f43e56fdb44f1b4a07f9798fc3de982dde34c969ed69",
+        "crop_pixels": [
+          640,
+          360,
+          640,
+          360
+        ],
+        "crop_normalized": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ]
+      },
+      "command_path_base": "repository_root"
+    },
+    {
+      "condition": "bistro-interior",
+      "title": "Bistro Interior",
+      "kind": "synchronized-three-way-full-and-detail",
+      "path": "assets/videos/bistro-interior.mp4",
+      "sha256": "578a01980c2060b160da5c510ba5bc0eee0e908769fd57f277c5dacaa78f2bbc",
+      "bytes": 109872929,
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "full_decode_verification": {
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-v",
+          "error",
+          "-nostdin",
+          "-xerror",
+          "-err_detect",
+          "explode",
+          "-i",
+          "writing/final/assets/videos/bistro-interior.mp4",
+          "-map",
+          "0:v:0",
+          "-an",
+          "-f",
+          "null",
+          "-"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "all_frames_decoded": true
+      },
+      "poster": {
+        "path": "assets/videos/bistro-interior.png",
+        "sha256": "7569ee8befa325eecd22bd4da9a3187757a40077cc14d6e168f1df7dabf6453c",
+        "bytes": 3266693,
+        "frame_zero_based": 150,
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-nostdin",
+          "-y",
+          "-i",
+          "writing/final/assets/videos/bistro-interior.mp4",
+          "-vf",
+          "select=eq(n\\,150)",
+          "-frames:v",
+          "1",
+          "writing/final/assets/videos/bistro-interior.png"
+        ]
+      },
+      "overlays": {
+        "path": "assets/videos/bistro-interior.ass",
+        "sha256": "c58e5a2ded331786937111a23c12347e1bb10944e7679e97f51ae92299446ff1"
+      },
+      "crop_rationale": "Floor, furniture and indirect light",
+      "transform": "No retiming: source frame n to output frame n; full view scale 1/3 with Lanczos, same native 640x360 screen-space crop for all methods. No aspect distortion.",
+      "identity": {
+        "sources": [
+          {
+            "method": "baseline",
+            "display_label": "Bitterli et al. [2020]",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/baseline/encode/manifest.json",
+              "sha256": "a193fdf83927245f03555318b6c5f5bcdc8b004d27824a0eaf514a68f08f3ba2"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/baseline/encode/video.mp4",
+                "sha256": "f8d9eaae69a3771d5b43330c8df674ee65041ad4dd6d35ce3a4c06b30c24e7c9",
+                "bytes": 165896790
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/baseline/encode/gpu-frame-timings.json",
+                "sha256": "dfa21b9b48b6ddc49fe7215518ae9512efa103bf2372a401e30b370236ad9913",
+                "bytes": 833151
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/baseline/encode/watermarks.json",
+                "sha256": "621a9f74934b36475cd21f28d22867bf1fc97469c9d135767027dd74e486494f",
+                "bytes": 32895
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/baseline/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "aces",
+              "ev": 7.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "f2510e6b589a7ae09401336c60ceb2b3df1a8a94be46dfed66e9f2f5fabe7997"
+          },
+          {
+            "method": "pdf-similarity",
+            "display_label": "PDF Similarity",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/pdf-similarity/encode/manifest.json",
+              "sha256": "f4ab57e50fb2cdd94a76091bcf1a0001d1be4a24926387e1b17c907380b54382"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/pdf-similarity/encode/video.mp4",
+                "sha256": "415edb2992d98379877caa76057942cc81e2ba547a276e1ba131de76e7a0b3de",
+                "bytes": 165832979
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/pdf-similarity/encode/gpu-frame-timings.json",
+                "sha256": "a93c649c5aa9052101aa10b0eab3677df9fe2db9ac33a135f3d5414ed91c93a5",
+                "bytes": 833455
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/pdf-similarity/encode/watermarks.json",
+                "sha256": "f9ec725416faca4e352e08003216c5de5d44ad738150304de49458ab2791cd36",
+                "bytes": 34695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/pdf-similarity/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "aces",
+              "ev": 7.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "f2510e6b589a7ae09401336c60ceb2b3df1a8a94be46dfed66e9f2f5fabe7997"
+          },
+          {
+            "method": "cgns",
+            "display_label": "CGNS",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/cgns/encode/manifest.json",
+              "sha256": "d095a91d8e1707eacb90f983ee9f82c56ad187052583d29330ec1e183e2f578f"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/cgns/encode/video.mp4",
+                "sha256": "b6db6a623ac4920ffb9ef28688436398af6a2abc259afaf23c64becbf75164c2",
+                "bytes": 171327745
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/cgns/encode/gpu-frame-timings.json",
+                "sha256": "7ba37762e1b79a7608f8afe529b04bb2340d04a59b5c21bd14c81e3395f6ab39",
+                "bytes": 930944
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/cgns/encode/watermarks.json",
+                "sha256": "ad27201aaddceb8163091ef03e6111de26407c2ff5717695e7e4523d53695752",
+                "bytes": 31695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-interior/cgns/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "aces",
+              "ev": 7.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "f2510e6b589a7ae09401336c60ceb2b3df1a8a94be46dfed66e9f2f5fabe7997"
+          }
+        ],
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-nostdin",
+          "-y",
+          "-filter_complex_threads",
+          "1",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/bistro-interior/baseline/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/bistro-interior/pdf-similarity/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/bistro-interior/cgns/encode/video.mp4",
+          "-filter_complex",
+          "[0:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f0][c0];[f0]scale=640:360:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=640:h=18:color=0x142d39:t=fill,drawbox=x=341.333333:y=213.333333:w=213.333333:h=120.000000:color=0x13847d:t=3[full0];[c0]crop=640:360:1024:640,setsar=1[crop0];[1:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f1][c1];[f1]scale=640:360:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=640:h=18:color=0x142d39:t=fill,drawbox=x=341.333333:y=213.333333:w=213.333333:h=120.000000:color=0x13847d:t=3[full1];[c1]crop=640:360:1024:640,setsar=1[crop1];[2:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f2][c2];[f2]scale=640:360:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=640:h=18:color=0x142d39:t=fill,drawbox=x=341.333333:y=213.333333:w=213.333333:h=120.000000:color=0x13847d:t=3[full2];[c2]crop=640:360:1024:640,setsar=1[crop2];[full0][full1][full2][crop0][crop1][crop2]xstack=inputs=6:layout=0_196|640_196|1280_196|0_620|640_620|1280_620:fill=0x142d39[stack];[stack]pad=1920:1080:0:0:color=0x142d39,drawbox=x=0:y=83:w=1920:h=3:color=0x13847d:t=fill,drawbox=x=639:y=98:w=2:h=458:color=0x13847d:t=fill,drawbox=x=639:y=620:w=2:h=360:color=0x13847d:t=fill,drawbox=x=1279:y=98:w=2:h=458:color=0x13847d:t=fill,drawbox=x=1279:y=620:w=2:h=360:color=0x13847d:t=fill,ass=filename='writing/final/assets/videos/bistro-interior.ass',format=yuv420p[out]",
+          "-map",
+          "[out]",
+          "-frames:v",
+          "300",
+          "-r",
+          "30",
+          "-an",
+          "-c:v",
+          "libx264",
+          "-preset",
+          "medium",
+          "-crf",
+          "16",
+          "-pix_fmt",
+          "yuv420p",
+          "-g",
+          "30",
+          "-keyint_min",
+          "30",
+          "-sc_threshold",
+          "0",
+          "-movflags",
+          "+faststart",
+          "writing/final/assets/videos/bistro-interior.mp4"
+        ],
+        "configuration": {
+          "version": 1,
+          "width": 1920,
+          "height": 1080,
+          "fps": 30,
+          "frames": 300,
+          "seconds": 10,
+          "layout": "Three 640x360 full views at y=196; matching native-resolution 640x360 crops at y=620",
+          "colors": {
+            "navy": "#142d39",
+            "teal": "#13847d"
+          },
+          "minimum_overlay_font_px": 32,
+          "gpu_timing_font_px": 38,
+          "method_font_px": 42,
+          "scene_title_font_px": 48,
+          "source_watermark_mask": [
+            0,
+            0,
+            1920,
+            54
+          ],
+          "mask_note": "Only the original black watermark header is masked after 3:1 scaling; readable authentic timing is rebuilt above each method.",
+          "timing_fields": [
+            "gpu_ms_mean15",
+            "gpu_fps_mean15"
+          ],
+          "ass_timestamp_rule": "floor(n*100/30) centiseconds; current values at each n/30 PTS",
+          "font": {
+            "path": "C:\\Windows\\Fonts\\segoeui.ttf",
+            "sha256": "704eada12961a27fd271f7d3b09e2066520e758390c1776744eff430fee30f6e"
+          },
+          "bold_font": {
+            "path": "C:\\Windows\\Fonts\\segoeuib.ttf",
+            "sha256": "b169e636719880976a97e94e3b1cb3dbe5f4a38eabc037bf9f2a9165154c3ad2"
+          },
+          "encoder": "ffmpeg version 8.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+          "crf": 16,
+          "preset": "medium"
+        },
+        "ass_sha256": "c58e5a2ded331786937111a23c12347e1bb10944e7679e97f51ae92299446ff1",
+        "crop_pixels": [
+          1024,
+          640,
+          640,
+          360
+        ],
+        "crop_normalized": [
+          0.5333333333333333,
+          0.5925925925925926,
+          0.3333333333333333,
+          0.3333333333333333
+        ]
+      },
+      "command_path_base": "repository_root"
+    },
+    {
+      "condition": "bistro-exterior",
+      "title": "Bistro Exterior",
+      "kind": "synchronized-three-way-full-and-detail",
+      "path": "assets/videos/bistro-exterior.mp4",
+      "sha256": "55e9fa679fb9d726a2f16fadd7bfe50b214d03733b6ea847f39dd7b9fe9ff9da",
+      "bytes": 82789918,
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "full_decode_verification": {
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-v",
+          "error",
+          "-nostdin",
+          "-xerror",
+          "-err_detect",
+          "explode",
+          "-i",
+          "writing/final/assets/videos/bistro-exterior.mp4",
+          "-map",
+          "0:v:0",
+          "-an",
+          "-f",
+          "null",
+          "-"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "all_frames_decoded": true
+      },
+      "poster": {
+        "path": "assets/videos/bistro-exterior.png",
+        "sha256": "d4f5e92fcd706415f3acc0a42a1bbabf7ab7e84f977fe66746c35e0cabc1b3d0",
+        "bytes": 2655329,
+        "frame_zero_based": 150,
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-nostdin",
+          "-y",
+          "-i",
+          "writing/final/assets/videos/bistro-exterior.mp4",
+          "-vf",
+          "select=eq(n\\,150)",
+          "-frames:v",
+          "1",
+          "writing/final/assets/videos/bistro-exterior.png"
+        ]
+      },
+      "overlays": {
+        "path": "assets/videos/bistro-exterior.ass",
+        "sha256": "de71ba45aedc8ab94e25690843ee7321de8d17854cd5984f1c17dbecf1c978c5"
+      },
+      "crop_rationale": "Facade, pavement and shadow edges",
+      "transform": "No retiming: source frame n to output frame n; full view scale 1/3 with Lanczos, same native 640x360 screen-space crop for all methods. No aspect distortion.",
+      "identity": {
+        "sources": [
+          {
+            "method": "baseline",
+            "display_label": "Bitterli et al. [2020]",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/manifest.json",
+              "sha256": "b5c6c5921a312e5b7e3ee3a1d2b4caca7c07e9f5e6b93805e18121053975d59e"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/video.mp4",
+                "sha256": "a55f245197f99e786e39d18c7ccd44cea0d8da9756f17e8e20a424b6e88b5442",
+                "bytes": 141672986
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/gpu-frame-timings.json",
+                "sha256": "0c83dce03b42e16201174b176baf42e255a0a00e9d834b8b58ebed3760e8bc3c",
+                "bytes": 833475
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/watermarks.json",
+                "sha256": "949fcd3e9a8eb5fccb988115a0b88e86814b73deccaa9ca36f104d7210875f61",
+                "bytes": 32895
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 0.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "8da5f5771e92ffd74a554e1737cd6f2e443cf94a43e935a87e0b3403aeaf9fa5"
+          },
+          {
+            "method": "pdf-similarity",
+            "display_label": "PDF Similarity",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/manifest.json",
+              "sha256": "41c25fae0dac92a9323795be37260e2d0b4ea8c729726a8d79cee28c0882d239"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/video.mp4",
+                "sha256": "f3d9bdab2d988f67a700f6935b9d52fcedb98aa03efb4676238ac22a2e79b044",
+                "bytes": 140283799
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/gpu-frame-timings.json",
+                "sha256": "f1c87ac0a470b9f3038b1df0fe465575c405a5ca718df973ebf5bd759b0d8a52",
+                "bytes": 833870
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/watermarks.json",
+                "sha256": "60eb88d6a77547c7a88cd2eb49c05343dfefcf6f0dafc1b4eeb934b84ab6c826",
+                "bytes": 34695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 0.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "8da5f5771e92ffd74a554e1737cd6f2e443cf94a43e935a87e0b3403aeaf9fa5"
+          },
+          {
+            "method": "cgns",
+            "display_label": "CGNS",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/manifest.json",
+              "sha256": "aa9b3e63af7a76e923c6d4894833ad4f325072421381ff04bb53813b92372df1"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/video.mp4",
+                "sha256": "0d9668772447aa5d1f4ab599e114a22623ef2589f36ed581ed71287edf5513cc",
+                "bytes": 142469823
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/gpu-frame-timings.json",
+                "sha256": "f743d313e2792afccf2f43eb5f62af32cc961bf503bb128dd25a31444789be79",
+                "bytes": 931596
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/watermarks.json",
+                "sha256": "6a248cb810229abc59d757a8e0931f10ab8993ba0c187955e31f5a849e6aa694",
+                "bytes": 31695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 0.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "8da5f5771e92ffd74a554e1737cd6f2e443cf94a43e935a87e0b3403aeaf9fa5"
+          }
+        ],
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-nostdin",
+          "-y",
+          "-filter_complex_threads",
+          "1",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/video.mp4",
+          "-filter_complex",
+          "[0:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f0][c0];[f0]scale=640:360:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=640:h=18:color=0x142d39:t=fill,drawbox=x=213.333333:y=200.000000:w=213.333333:h=120.000000:color=0x13847d:t=3[full0];[c0]crop=640:360:640:600,setsar=1[crop0];[1:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f1][c1];[f1]scale=640:360:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=640:h=18:color=0x142d39:t=fill,drawbox=x=213.333333:y=200.000000:w=213.333333:h=120.000000:color=0x13847d:t=3[full1];[c1]crop=640:360:640:600,setsar=1[crop1];[2:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f2][c2];[f2]scale=640:360:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=640:h=18:color=0x142d39:t=fill,drawbox=x=213.333333:y=200.000000:w=213.333333:h=120.000000:color=0x13847d:t=3[full2];[c2]crop=640:360:640:600,setsar=1[crop2];[full0][full1][full2][crop0][crop1][crop2]xstack=inputs=6:layout=0_196|640_196|1280_196|0_620|640_620|1280_620:fill=0x142d39[stack];[stack]pad=1920:1080:0:0:color=0x142d39,drawbox=x=0:y=83:w=1920:h=3:color=0x13847d:t=fill,drawbox=x=639:y=98:w=2:h=458:color=0x13847d:t=fill,drawbox=x=639:y=620:w=2:h=360:color=0x13847d:t=fill,drawbox=x=1279:y=98:w=2:h=458:color=0x13847d:t=fill,drawbox=x=1279:y=620:w=2:h=360:color=0x13847d:t=fill,ass=filename='writing/final/assets/videos/bistro-exterior.ass',format=yuv420p[out]",
+          "-map",
+          "[out]",
+          "-frames:v",
+          "300",
+          "-r",
+          "30",
+          "-an",
+          "-c:v",
+          "libx264",
+          "-preset",
+          "medium",
+          "-crf",
+          "16",
+          "-pix_fmt",
+          "yuv420p",
+          "-g",
+          "30",
+          "-keyint_min",
+          "30",
+          "-sc_threshold",
+          "0",
+          "-movflags",
+          "+faststart",
+          "writing/final/assets/videos/bistro-exterior.mp4"
+        ],
+        "configuration": {
+          "version": 1,
+          "width": 1920,
+          "height": 1080,
+          "fps": 30,
+          "frames": 300,
+          "seconds": 10,
+          "layout": "Three 640x360 full views at y=196; matching native-resolution 640x360 crops at y=620",
+          "colors": {
+            "navy": "#142d39",
+            "teal": "#13847d"
+          },
+          "minimum_overlay_font_px": 32,
+          "gpu_timing_font_px": 38,
+          "method_font_px": 42,
+          "scene_title_font_px": 48,
+          "source_watermark_mask": [
+            0,
+            0,
+            1920,
+            54
+          ],
+          "mask_note": "Only the original black watermark header is masked after 3:1 scaling; readable authentic timing is rebuilt above each method.",
+          "timing_fields": [
+            "gpu_ms_mean15",
+            "gpu_fps_mean15"
+          ],
+          "ass_timestamp_rule": "floor(n*100/30) centiseconds; current values at each n/30 PTS",
+          "font": {
+            "path": "C:\\Windows\\Fonts\\segoeui.ttf",
+            "sha256": "704eada12961a27fd271f7d3b09e2066520e758390c1776744eff430fee30f6e"
+          },
+          "bold_font": {
+            "path": "C:\\Windows\\Fonts\\segoeuib.ttf",
+            "sha256": "b169e636719880976a97e94e3b1cb3dbe5f4a38eabc037bf9f2a9165154c3ad2"
+          },
+          "encoder": "ffmpeg version 8.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+          "crf": 16,
+          "preset": "medium"
+        },
+        "ass_sha256": "de71ba45aedc8ab94e25690843ee7321de8d17854cd5984f1c17dbecf1c978c5",
+        "crop_pixels": [
+          640,
+          600,
+          640,
+          360
+        ],
+        "crop_normalized": [
+          0.3333333333333333,
+          0.5555555555555556,
+          0.3333333333333333,
+          0.3333333333333333
+        ]
+      },
+      "command_path_base": "repository_root"
+    },
+    {
+      "condition": "zero-day",
+      "title": "Zero Day",
+      "kind": "synchronized-three-way-full-and-detail",
+      "path": "assets/videos/zero-day.mp4",
+      "sha256": "b5e4783c3d445e9f0b757e54ebe7a94a28f55a86901eb7e7a7f9a22d9a93d09d",
+      "bytes": 102638016,
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "full_decode_verification": {
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-v",
+          "error",
+          "-nostdin",
+          "-xerror",
+          "-err_detect",
+          "explode",
+          "-i",
+          "writing/final/assets/videos/zero-day.mp4",
+          "-map",
+          "0:v:0",
+          "-an",
+          "-f",
+          "null",
+          "-"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "all_frames_decoded": true
+      },
+      "poster": {
+        "path": "assets/videos/zero-day.png",
+        "sha256": "d9388d23440583a84121b9f14a09f368abf537ab8b21a7f6d799ce27c3929aaa",
+        "bytes": 2928623,
+        "frame_zero_based": 150,
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-nostdin",
+          "-y",
+          "-i",
+          "writing/final/assets/videos/zero-day.mp4",
+          "-vf",
+          "select=eq(n\\,150)",
+          "-frames:v",
+          "1",
+          "writing/final/assets/videos/zero-day.png"
+        ]
+      },
+      "overlays": {
+        "path": "assets/videos/zero-day.ass",
+        "sha256": "5dae4839757042f8ede30f34483641f41be38c14a5ba11c62a630144eef52c63"
+      },
+      "crop_rationale": "Panels, machinery and dark surfaces",
+      "transform": "No retiming: source frame n to output frame n; full view scale 1/3 with Lanczos, same native 640x360 screen-space crop for all methods. No aspect distortion.",
+      "identity": {
+        "sources": [
+          {
+            "method": "baseline",
+            "display_label": "Bitterli et al. [2020]",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/manifest.json",
+              "sha256": "dce2bb7241de12521b9c9b99f985e667640ea30f90dca1c00d6cad8797e93eee"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/video.mp4",
+                "sha256": "e40119a5eda6f75d5e2244e34d820eab534753f9dc910b8d156c71a4298263f8",
+                "bytes": 157522079
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/gpu-frame-timings.json",
+                "sha256": "9e2cfc707f7a98ce412890980717b3506a29bb26b86b681522d4f8d2a548d6f8",
+                "bytes": 831869
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/watermarks.json",
+                "sha256": "ebb93312f7535c56d4e9e393d31fa7e6e603a2332b648ce4d0af905d998eb527",
+                "bytes": 32895
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 6.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "077096cc99f53e3cce86b9779f0a87d25303d8b89e932672fd32147617cc34a2"
+          },
+          {
+            "method": "pdf-similarity",
+            "display_label": "PDF Similarity",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/manifest.json",
+              "sha256": "683a9c6ea1ce6eb178436f7b54062278e8d2d595639e0ffa83359d2679fb5d0f"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/video.mp4",
+                "sha256": "07edccf889406267440c9e06ab2531c0d65ac82cb02cd4da7e132694115dc708",
+                "bytes": 155764049
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/gpu-frame-timings.json",
+                "sha256": "da9542ba522151f13800322d6185ea6564badfdd3ade4335fc47de49f39975fe",
+                "bytes": 832229
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/watermarks.json",
+                "sha256": "c6cc68884b4ae33472f3a27caeb115935c3266010485a104e2c37ce0440362d6",
+                "bytes": 34695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 6.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "077096cc99f53e3cce86b9779f0a87d25303d8b89e932672fd32147617cc34a2"
+          },
+          {
+            "method": "cgns",
+            "display_label": "CGNS",
+            "manifest": {
+              "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/manifest.json",
+              "sha256": "3946aefb69920b037d78315ecb44f26c414c2e0dbb686948b27e535f85f7845c"
+            },
+            "artifacts": {
+              "video.mp4": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/video.mp4",
+                "sha256": "e4b8bc12491007ae4abae9ecb4736e7bf70c983e13e37c53875e97277d611641",
+                "bytes": 161191951
+              },
+              "gpu-frame-timings.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/gpu-frame-timings.json",
+                "sha256": "dd623f64d8d4bcff544ba9bf9449e89aca6253e474e65b10e15ba5926d5e7b27",
+                "bytes": 929869
+              },
+              "watermarks.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/watermarks.json",
+                "sha256": "b92fe9356c660c3e5a82901916e2e11be8a8fde6f3e7c73e852439f9ee0c4f83",
+                "bytes": 31695
+              },
+              "video-probe.json": {
+                "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/video-probe.json",
+                "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+                "bytes": 281
+              }
+            },
+            "probe": {
+              "codec_name": "h264",
+              "width": 1920,
+              "height": 1080,
+              "pix_fmt": "yuv420p",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "duration": "10.000000",
+              "nb_read_frames": "300"
+            },
+            "display_transform": {
+              "method": "reinhard",
+              "ev": 6.0,
+              "encoding": "sRGB"
+            },
+            "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+            "gpu_total_event": "/onFrameRender/gpu_time",
+            "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+            "trajectory_sha256": "077096cc99f53e3cce86b9779f0a87d25303d8b89e932672fd32147617cc34a2"
+          }
+        ],
+        "command": [
+          "ffmpeg",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-nostdin",
+          "-y",
+          "-filter_complex_threads",
+          "1",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/video.mp4",
+          "-i",
+          "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/video.mp4",
+          "-filter_complex",
+          "[0:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f0][c0];[f0]scale=640:360:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=640:h=18:color=0x142d39:t=fill,drawbox=x=85.333333:y=106.666667:w=213.333333:h=120.000000:color=0x13847d:t=3[full0];[c0]crop=640:360:256:320,setsar=1[crop0];[1:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f1][c1];[f1]scale=640:360:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=640:h=18:color=0x142d39:t=fill,drawbox=x=85.333333:y=106.666667:w=213.333333:h=120.000000:color=0x13847d:t=3[full1];[c1]crop=640:360:256:320,setsar=1[crop1];[2:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f2][c2];[f2]scale=640:360:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=640:h=18:color=0x142d39:t=fill,drawbox=x=85.333333:y=106.666667:w=213.333333:h=120.000000:color=0x13847d:t=3[full2];[c2]crop=640:360:256:320,setsar=1[crop2];[full0][full1][full2][crop0][crop1][crop2]xstack=inputs=6:layout=0_196|640_196|1280_196|0_620|640_620|1280_620:fill=0x142d39[stack];[stack]pad=1920:1080:0:0:color=0x142d39,drawbox=x=0:y=83:w=1920:h=3:color=0x13847d:t=fill,drawbox=x=639:y=98:w=2:h=458:color=0x13847d:t=fill,drawbox=x=639:y=620:w=2:h=360:color=0x13847d:t=fill,drawbox=x=1279:y=98:w=2:h=458:color=0x13847d:t=fill,drawbox=x=1279:y=620:w=2:h=360:color=0x13847d:t=fill,ass=filename='writing/final/assets/videos/zero-day.ass',format=yuv420p[out]",
+          "-map",
+          "[out]",
+          "-frames:v",
+          "300",
+          "-r",
+          "30",
+          "-an",
+          "-c:v",
+          "libx264",
+          "-preset",
+          "medium",
+          "-crf",
+          "16",
+          "-pix_fmt",
+          "yuv420p",
+          "-g",
+          "30",
+          "-keyint_min",
+          "30",
+          "-sc_threshold",
+          "0",
+          "-movflags",
+          "+faststart",
+          "writing/final/assets/videos/zero-day.mp4"
+        ],
+        "configuration": {
+          "version": 1,
+          "width": 1920,
+          "height": 1080,
+          "fps": 30,
+          "frames": 300,
+          "seconds": 10,
+          "layout": "Three 640x360 full views at y=196; matching native-resolution 640x360 crops at y=620",
+          "colors": {
+            "navy": "#142d39",
+            "teal": "#13847d"
+          },
+          "minimum_overlay_font_px": 32,
+          "gpu_timing_font_px": 38,
+          "method_font_px": 42,
+          "scene_title_font_px": 48,
+          "source_watermark_mask": [
+            0,
+            0,
+            1920,
+            54
+          ],
+          "mask_note": "Only the original black watermark header is masked after 3:1 scaling; readable authentic timing is rebuilt above each method.",
+          "timing_fields": [
+            "gpu_ms_mean15",
+            "gpu_fps_mean15"
+          ],
+          "ass_timestamp_rule": "floor(n*100/30) centiseconds; current values at each n/30 PTS",
+          "font": {
+            "path": "C:\\Windows\\Fonts\\segoeui.ttf",
+            "sha256": "704eada12961a27fd271f7d3b09e2066520e758390c1776744eff430fee30f6e"
+          },
+          "bold_font": {
+            "path": "C:\\Windows\\Fonts\\segoeuib.ttf",
+            "sha256": "b169e636719880976a97e94e3b1cb3dbe5f4a38eabc037bf9f2a9165154c3ad2"
+          },
+          "encoder": "ffmpeg version 8.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+          "crf": 16,
+          "preset": "medium"
+        },
+        "ass_sha256": "5dae4839757042f8ede30f34483641f41be38c14a5ba11c62a630144eef52c63",
+        "crop_pixels": [
+          256,
+          320,
+          640,
+          360
+        ],
+        "crop_normalized": [
+          0.13333333333333333,
+          0.2962962962962963,
+          0.3333333333333333,
+          0.3333333333333333
+        ]
+      },
+      "command_path_base": "repository_root"
+    }
+  ],
+  "source_path_migration": {
+    "original_receipt": "runs/pt-4-trajectories-spatial-compare/records/presentation-media-before.json",
+    "note": "Source paths migrated; source hashes, final comparison MP4s and posters unchanged. Original production/encode manifests remain byte-identical."
+  }
+}

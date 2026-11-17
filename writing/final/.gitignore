@@ -1,0 +1,8 @@
+/assets/
+/build/
+/final.html
+/appendix.html
+/final.pdf
+*.mp4
+*.pptx
+__pycache__/

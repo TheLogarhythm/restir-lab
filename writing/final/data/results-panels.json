@@ -1,0 +1,18 @@
+{
+  "inputs": {
+    "runs/pt-6-views-spatial-compare/statistics/summary.csv": "3b79e73053ad86d582b44babe482d4e625826073b290363c6c45616b3ff716bc",
+    "runs/pt-6-views-spatial-compare/data/classroom/presentation-strip-metrics.json": "a07cee41fbf500b121291490880a980e0ad72b205dfe8076069fb040bda54ddd",
+    "runs/pt-6-views-spatial-compare/images/classroom/reference.png": "98ef1946c07ef2d858455fc265ff72c9bd5ccca0a5416f328e717849ba40e61d",
+    "runs/pt-6-views-spatial-compare/images/classroom/temporal-on-frame48-seed0.png": "340fac6d7f3412912c10422e8fd1a024b27b7aa041b7dd7de0bfcda49a589e67",
+    "runs/pt-6-views-spatial-compare/images/classroom/pdf-frame48-seed0.png": "5c035b90e89e4258bed0e103d2c037eb0d7514e56c275e5eb7f2cd68d1428790",
+    "runs/pt-6-views-spatial-compare/images/classroom/cgns-frame48-seed0.png": "9affcb720c89c9920637b7bf480bb4b35b67d304d7cc6db41c50c3b231e2c976",
+    "runs/pt-6-views-spatial-compare/statistics/stage-summary.csv": "54affc379e24d0cd46bfa3df206b7cf5c7084411955c38951a8c8fa9b7005daf"
+  },
+  "outputs": {
+    "writing/final/assets/figures/covariance-change.png": "0b7783199699642e935d4043eb27693f0f2165674fe09a37dad6d4c83c777795",
+    "writing/final/assets/figures/classroom-local-results.png": "01ffc7315d2c5e0ba89d958c232808b14df08e2a7e97410b61e9704b4f1c18c6",
+    "writing/final/assets/figures/bistro-interior-stage-cost.png": "92e962b8345ae9d682a0b92f826565b564e1208934210ea45e36660becc1deb2"
+  },
+  "script_sha256": "66e79ab55f432d00b5a89502a5a3b3218b88d677d4acce3b452ab159b01f4f4f",
+  "source_images_unchanged": true
+}

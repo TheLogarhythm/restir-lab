@@ -1,0 +1,257 @@
+{
+  "scene": "bistro-exterior",
+  "sources": [
+    {
+      "method": "baseline",
+      "display_label": "Bitterli et al. [2020]",
+      "manifest": {
+        "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/manifest.json",
+        "sha256": "b5c6c5921a312e5b7e3ee3a1d2b4caca7c07e9f5e6b93805e18121053975d59e"
+      },
+      "artifacts": {
+        "video.mp4": {
+          "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/video.mp4",
+          "sha256": "a55f245197f99e786e39d18c7ccd44cea0d8da9756f17e8e20a424b6e88b5442",
+          "bytes": 141672986
+        },
+        "gpu-frame-timings.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/gpu-frame-timings.json",
+          "sha256": "0c83dce03b42e16201174b176baf42e255a0a00e9d834b8b58ebed3760e8bc3c",
+          "bytes": 833475
+        },
+        "watermarks.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/watermarks.json",
+          "sha256": "949fcd3e9a8eb5fccb988115a0b88e86814b73deccaa9ca36f104d7210875f61",
+          "bytes": 32895
+        },
+        "video-probe.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/video-probe.json",
+          "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+          "bytes": 281
+        }
+      },
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "display_transform": {
+        "method": "reinhard",
+        "ev": 0.0,
+        "encoding": "sRGB"
+      },
+      "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+      "gpu_total_event": "/onFrameRender/gpu_time",
+      "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+      "trajectory_sha256": "8da5f5771e92ffd74a554e1737cd6f2e443cf94a43e935a87e0b3403aeaf9fa5"
+    },
+    {
+      "method": "pdf-similarity",
+      "display_label": "PDF Similarity",
+      "manifest": {
+        "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/manifest.json",
+        "sha256": "41c25fae0dac92a9323795be37260e2d0b4ea8c729726a8d79cee28c0882d239"
+      },
+      "artifacts": {
+        "video.mp4": {
+          "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/video.mp4",
+          "sha256": "f3d9bdab2d988f67a700f6935b9d52fcedb98aa03efb4676238ac22a2e79b044",
+          "bytes": 140283799
+        },
+        "gpu-frame-timings.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/gpu-frame-timings.json",
+          "sha256": "f1c87ac0a470b9f3038b1df0fe465575c405a5ca718df973ebf5bd759b0d8a52",
+          "bytes": 833870
+        },
+        "watermarks.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/watermarks.json",
+          "sha256": "60eb88d6a77547c7a88cd2eb49c05343dfefcf6f0dafc1b4eeb934b84ab6c826",
+          "bytes": 34695
+        },
+        "video-probe.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/video-probe.json",
+          "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+          "bytes": 281
+        }
+      },
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "display_transform": {
+        "method": "reinhard",
+        "ev": 0.0,
+        "encoding": "sRGB"
+      },
+      "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+      "gpu_total_event": "/onFrameRender/gpu_time",
+      "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+      "trajectory_sha256": "8da5f5771e92ffd74a554e1737cd6f2e443cf94a43e935a87e0b3403aeaf9fa5"
+    },
+    {
+      "method": "cgns",
+      "display_label": "CGNS",
+      "manifest": {
+        "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/manifest.json",
+        "sha256": "aa9b3e63af7a76e923c6d4894833ad4f325072421381ff04bb53813b92372df1"
+      },
+      "artifacts": {
+        "video.mp4": {
+          "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/video.mp4",
+          "sha256": "0d9668772447aa5d1f4ab599e114a22623ef2589f36ed581ed71287edf5513cc",
+          "bytes": 142469823
+        },
+        "gpu-frame-timings.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/gpu-frame-timings.json",
+          "sha256": "f743d313e2792afccf2f43eb5f62af32cc961bf503bb128dd25a31444789be79",
+          "bytes": 931596
+        },
+        "watermarks.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/watermarks.json",
+          "sha256": "6a248cb810229abc59d757a8e0931f10ab8993ba0c187955e31f5a849e6aa694",
+          "bytes": 31695
+        },
+        "video-probe.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/video-probe.json",
+          "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+          "bytes": 281
+        }
+      },
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "display_transform": {
+        "method": "reinhard",
+        "ev": 0.0,
+        "encoding": "sRGB"
+      },
+      "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+      "gpu_total_event": "/onFrameRender/gpu_time",
+      "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+      "trajectory_sha256": "8da5f5771e92ffd74a554e1737cd6f2e443cf94a43e935a87e0b3403aeaf9fa5"
+    }
+  ],
+  "command": [
+    "ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-nostdin",
+    "-y",
+    "-filter_complex_threads",
+    "1",
+    "-i",
+    "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/video.mp4",
+    "-i",
+    "runs/pt-4-trajectories-spatial-compare/bistro-exterior/pdf-similarity/encode/video.mp4",
+    "-i",
+    "runs/pt-4-trajectories-spatial-compare/bistro-exterior/cgns/encode/video.mp4",
+    "-filter_complex",
+    "[0:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f0][c0];[f0]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=202.66666666666666:y=190.0:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full0];[c0]crop=640:360:640:600,scale=608:342:flags=lanczos,setsar=1[crop0];[1:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f1][c1];[f1]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=202.66666666666666:y=190.0:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full1];[c1]crop=640:360:640:600,scale=608:342:flags=lanczos,setsar=1[crop1];[2:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f2][c2];[f2]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=202.66666666666666:y=190.0:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full2];[c2]crop=640:360:640:600,scale=608:342:flags=lanczos,setsar=1[crop2];[full0][full1][full2][crop0][crop1][crop2]xstack=inputs=6:layout=24_290|656_290|1288_290|24_656|656_656|1288_656:fill=white[stack];[stack]pad=1920:1080:0:0:color=white,drawbox=x=0:y=0:w=1920:h=156:color=0xf4ece2:t=fill,drawbox=x=0:y=1050:w=1920:h=30:color=0x23150e:t=fill,ass=filename='writing/final/assets/videos/bistro-exterior-course-v2.ass',format=yuv420p[out]",
+    "-map",
+    "[out]",
+    "-frames:v",
+    "300",
+    "-r",
+    "30",
+    "-an",
+    "-c:v",
+    "libx264",
+    "-preset",
+    "medium",
+    "-crf",
+    "16",
+    "-pix_fmt",
+    "yuv420p",
+    "-g",
+    "30",
+    "-movflags",
+    "+faststart",
+    "writing/final/assets/videos/bistro-exterior-course-v2.mp4"
+  ],
+  "probe": {
+    "codec_name": "h264",
+    "width": 1920,
+    "height": 1080,
+    "pix_fmt": "yuv420p",
+    "r_frame_rate": "30/1",
+    "avg_frame_rate": "30/1",
+    "duration": "10.000000",
+    "nb_read_frames": "300"
+  },
+  "decode": {
+    "command": [
+      "ffmpeg",
+      "-hide_banner",
+      "-v",
+      "error",
+      "-nostdin",
+      "-xerror",
+      "-err_detect",
+      "explode",
+      "-i",
+      "writing/final/assets/videos/bistro-exterior-course-v2.mp4",
+      "-map",
+      "0:v:0",
+      "-an",
+      "-f",
+      "null",
+      "-"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "all_frames_decoded": true
+  },
+  "output": "writing/final/assets/videos/bistro-exterior-course-v2.mp4",
+  "output_sha256": "848f51cda4fb7beb00706d70199007638d7d6ba18cb1ad0c71252efe2d81b3ff",
+  "poster": "writing/final/assets/videos/bistro-exterior-course-v2.png",
+  "poster_sha256": "b38bffa7e33a01eb24371d9c7f2a3ca39e1cd4c4a8ab60f5f46cf39556a1db7b",
+  "ass_sha256": "42879e51c1d302f4554985e01808e441c96793b5e65a0aff367c9aa780332157",
+  "layout": {
+    "full_view": [
+      608,
+      342
+    ],
+    "detail_view": [
+      608,
+      342
+    ],
+    "columns_x": [
+      24,
+      656,
+      1288
+    ],
+    "full_y": 290,
+    "detail_y": 656,
+    "background": "white",
+    "header": "#f4ece2",
+    "footer": "#23150e",
+    "crop_box": "#FF0080",
+    "crop_box_width_px": 4
+  },
+  "timing": "Original per-frame mean15 GPU timing, unchanged; no retiming",
+  "removed_text": [
+    "frame count and playback metadata",
+    "matched-detail caption",
+    "replay and timing footnotes"
+  ],
+  "other_scenes_modified": false
+}

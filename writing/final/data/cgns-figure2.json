@@ -1,0 +1,18 @@
+{
+  "source": "assets/papers/2026-compatibility-guided-neighbor-selection-for-restir.pdf",
+  "source_sha256": "d5507c5ad81e0bf4950c0da25d1aaa330fa61c3d5668357eea8fb2c08e620cd5",
+  "page": 6,
+  "dpi": 432,
+  "crop_pixels": [
+    580,
+    480,
+    1760,
+    510
+  ],
+  "figure": 2,
+  "output": "writing/final/assets/figures/cgns-figure2.png",
+  "output_sha256": "02eb43ada62dc52b04bb817b37c681dc73caa5db088136cb00d78fedd1531dee",
+  "processing": "Poppler rasterization and crop, both panels retained, caption replaced by slide attribution",
+  "rights": "Junkins et al. 2026, CC BY 4.0",
+  "doi": "https://doi.org/10.1145/3820024"
+}

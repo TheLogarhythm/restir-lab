@@ -15,7 +15,7 @@ Start with the [scope](docs/scope.md), [literature review](docs/literature/READM
 
 See the [comparison workflow](docs/comparison.md) for fixed-view spatial-reuse experiments. For the six fixed Falcor ReSTIR PT views, see the [scene preparation guide](experiments/configs/falcor-pt-spatial-comparison/PREPARATION.md) and [ordinary spatial reuse / CGNS configuration](experiments/configs/falcor-pt-spatial-comparison/README.md).
 
-Local assets, builds, and runs are ignored. Edit the [proposal](writing/course/proposal/main.tex) and [report](writing/course/report/main.tex); preserve the [original templates](writing/course/templates/README.md). See [contributing](CONTRIBUTING.md), [third-party sources](THIRD_PARTY.md), and [licensing](LICENSE).
+Local assets, builds, and runs are ignored. Edit the [proposal](writing/course/proposal/main.tex) and [report](writing/course/report/main.tex); preserve the [original templates](writing/course/templates/README.md). The [final presentation](writing/final/README.md) includes the three-method PT comparison and trajectory demos. See [contributing](CONTRIBUTING.md), [third-party sources](THIRD_PARTY.md), and [licensing](LICENSE).
 
 Shared Python metrics and RTXDI/Falcor saved-result readers are documented in [shared offline analysis](docs/shared-analysis.md). Existing renderer commands remain available.
 

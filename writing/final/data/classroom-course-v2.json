@@ -1,0 +1,257 @@
+{
+  "scene": "classroom",
+  "sources": [
+    {
+      "method": "baseline",
+      "display_label": "Bitterli et al. [2020]",
+      "manifest": {
+        "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/manifest.json",
+        "sha256": "ab9d55ca4082e10f2f3b4388bdbb2b331fbad6e9cb289a49274a5a440619cf3e"
+      },
+      "artifacts": {
+        "video.mp4": {
+          "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/video.mp4",
+          "sha256": "346b42f70c506471bd0a2bb33dc07223c6b6c8d9e75dbeb7919eda35d98beccb",
+          "bytes": 110338758
+        },
+        "gpu-frame-timings.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/gpu-frame-timings.json",
+          "sha256": "fd95cd97d47a482a6bab76b7c70dc77b844b67e865185be3806958eb40130a1e",
+          "bytes": 833761
+        },
+        "watermarks.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/watermarks.json",
+          "sha256": "836115275430ddf88318b6ece67682b19c7f0bde4525eb8e909f95fa527f7dc1",
+          "bytes": 32895
+        },
+        "video-probe.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/video-probe.json",
+          "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+          "bytes": 281
+        }
+      },
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "display_transform": {
+        "method": "reinhard",
+        "ev": 0.0,
+        "encoding": "sRGB"
+      },
+      "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+      "gpu_total_event": "/onFrameRender/gpu_time",
+      "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+      "trajectory_sha256": "51c3f87461527a2387694e3f45b74b3e31aca927ef0314397b2f794a513a372f"
+    },
+    {
+      "method": "pdf-similarity",
+      "display_label": "PDF Similarity",
+      "manifest": {
+        "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/manifest.json",
+        "sha256": "cdec80b73d9deb7e2f3dc3b04634a452a266978fd4573d8d52b93e82d5658ae1"
+      },
+      "artifacts": {
+        "video.mp4": {
+          "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/video.mp4",
+          "sha256": "ca96fd63ddf8680cabae23ceb2cef7ccbd86907f33263c1892f4ff10aced4643",
+          "bytes": 108802273
+        },
+        "gpu-frame-timings.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/gpu-frame-timings.json",
+          "sha256": "66475e3b6a1f07e800fba571b6f6bd4b61c479793d9c686b0adcdbe11cca4618",
+          "bytes": 833366
+        },
+        "watermarks.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/watermarks.json",
+          "sha256": "176801ee624b567e74d42074b7ee52a7039bde9f034b3b7230d33ec582a6249b",
+          "bytes": 34695
+        },
+        "video-probe.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/video-probe.json",
+          "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+          "bytes": 281
+        }
+      },
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "display_transform": {
+        "method": "reinhard",
+        "ev": 0.0,
+        "encoding": "sRGB"
+      },
+      "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+      "gpu_total_event": "/onFrameRender/gpu_time",
+      "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+      "trajectory_sha256": "51c3f87461527a2387694e3f45b74b3e31aca927ef0314397b2f794a513a372f"
+    },
+    {
+      "method": "cgns",
+      "display_label": "CGNS",
+      "manifest": {
+        "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/manifest.json",
+        "sha256": "dc757ad7cf59bd5cc359ab1798e87984151e00030fa22a9a2c5e2354fe2a05d7"
+      },
+      "artifacts": {
+        "video.mp4": {
+          "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/video.mp4",
+          "sha256": "7700945566390f77db957a1071b80791bff195c4df26a815b31e83f6780a0204",
+          "bytes": 109461099
+        },
+        "gpu-frame-timings.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/gpu-frame-timings.json",
+          "sha256": "bf6beb595fa8641ae0c877837aaa1b4a2c0b3d7627dc7bccc38379b6a9f56232",
+          "bytes": 931444
+        },
+        "watermarks.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/watermarks.json",
+          "sha256": "078c797d8cdc181c7a1de0be34cdc7bbc6442852e35f8d5a6809503ff5304335",
+          "bytes": 31695
+        },
+        "video-probe.json": {
+          "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/video-probe.json",
+          "sha256": "8732cc8930adcb101552f8f001e91996a1445130354e218470007cf312f8ad41",
+          "bytes": 281
+        }
+      },
+      "probe": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      "display_transform": {
+        "method": "reinhard",
+        "ev": 0.0,
+        "encoding": "sRGB"
+      },
+      "gpu_timing_source": "Separate image-free deterministic replay; raw previous-frame GPU timestamps",
+      "gpu_total_event": "/onFrameRender/gpu_time",
+      "gpu_smoothing": "trailing 15 captured frames; partial initial windows",
+      "trajectory_sha256": "51c3f87461527a2387694e3f45b74b3e31aca927ef0314397b2f794a513a372f"
+    }
+  ],
+  "command": [
+    "ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-nostdin",
+    "-y",
+    "-filter_complex_threads",
+    "1",
+    "-i",
+    "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/video.mp4",
+    "-i",
+    "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/video.mp4",
+    "-i",
+    "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/video.mp4",
+    "-filter_complex",
+    "[0:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f0][c0];[f0]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=202.66666666666666:y=114.0:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full0];[c0]crop=640:360:640:360,scale=608:342:flags=lanczos,setsar=1[crop0];[1:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f1][c1];[f1]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=202.66666666666666:y=114.0:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full1];[c1]crop=640:360:640:360,scale=608:342:flags=lanczos,setsar=1[crop1];[2:v]trim=end_frame=300,setpts=N/(30*TB),split=2[f2][c2];[f2]scale=608:342:flags=lanczos,setsar=1,drawbox=x=0:y=0:w=608:h=18:color=white:t=fill,drawbox=x=202.66666666666666:y=114.0:w=202.66666666666666:h=114.0:color=0xff0080:t=4[full2];[c2]crop=640:360:640:360,scale=608:342:flags=lanczos,setsar=1[crop2];[full0][full1][full2][crop0][crop1][crop2]xstack=inputs=6:layout=24_290|656_290|1288_290|24_656|656_656|1288_656:fill=white[stack];[stack]pad=1920:1080:0:0:color=white,drawbox=x=0:y=0:w=1920:h=156:color=0xf4ece2:t=fill,drawbox=x=0:y=1050:w=1920:h=30:color=0x23150e:t=fill,ass=filename='writing/final/assets/videos/classroom-course-v2.ass',format=yuv420p[out]",
+    "-map",
+    "[out]",
+    "-frames:v",
+    "300",
+    "-r",
+    "30",
+    "-an",
+    "-c:v",
+    "libx264",
+    "-preset",
+    "medium",
+    "-crf",
+    "16",
+    "-pix_fmt",
+    "yuv420p",
+    "-g",
+    "30",
+    "-movflags",
+    "+faststart",
+    "writing/final/assets/videos/classroom-course-v2.mp4"
+  ],
+  "probe": {
+    "codec_name": "h264",
+    "width": 1920,
+    "height": 1080,
+    "pix_fmt": "yuv420p",
+    "r_frame_rate": "30/1",
+    "avg_frame_rate": "30/1",
+    "duration": "10.000000",
+    "nb_read_frames": "300"
+  },
+  "decode": {
+    "command": [
+      "ffmpeg",
+      "-hide_banner",
+      "-v",
+      "error",
+      "-nostdin",
+      "-xerror",
+      "-err_detect",
+      "explode",
+      "-i",
+      "writing/final/assets/videos/classroom-course-v2.mp4",
+      "-map",
+      "0:v:0",
+      "-an",
+      "-f",
+      "null",
+      "-"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "all_frames_decoded": true
+  },
+  "output": "writing/final/assets/videos/classroom-course-v2.mp4",
+  "output_sha256": "0a0b3a0e1ab89afed7b50c5ce8fefd113cff85da94737f7c4267fa6eeb0874e0",
+  "poster": "writing/final/assets/videos/classroom-course-v2.png",
+  "poster_sha256": "d3982e04b51b6d30d83ad500bf2a6c8f706dd0f64acb260f23f559b8a89a7b7c",
+  "ass_sha256": "155baaa6b37441623a0844bb6f38ea64392d68068af1310b9d31fac68a4a756f",
+  "layout": {
+    "full_view": [
+      608,
+      342
+    ],
+    "detail_view": [
+      608,
+      342
+    ],
+    "columns_x": [
+      24,
+      656,
+      1288
+    ],
+    "full_y": 290,
+    "detail_y": 656,
+    "background": "white",
+    "header": "#f4ece2",
+    "footer": "#23150e",
+    "crop_box": "#FF0080",
+    "crop_box_width_px": 4
+  },
+  "timing": "Original per-frame mean15 GPU timing, unchanged; no retiming",
+  "removed_text": [
+    "frame count and playback metadata",
+    "matched-detail caption",
+    "replay and timing footnotes"
+  ],
+  "other_scenes_modified": false
+}
