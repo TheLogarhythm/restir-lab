@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "classroom",
+  "scene_config": "experiments/configs/falcor-pt-spatial-comparison/classroom-reference.json",
+  "meters_per_scene_unit": 1.0,
+  "unit_basis": "Provisional 1 scene unit = 1 metre, based on architectural scale; source assets provide no explicit metric calibration. Actual speed is 1.5 scene units per second.",
+  "fps": 30,
+  "warmup_frames": 40,
+  "hold_start_seconds": 1,
+  "move_seconds": 8,
+  "hold_end_seconds": 1,
+  "speed_m_per_second": 1.5,
+  "camera": {
+    "vertical_fov": 65.0,
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "near_plane": 0.01
+  },
+  "rounded_u": {
+    "start": [
+      0.9,
+      1.6,
+      4.1
+    ],
+    "turn_entry": [
+      0.9,
+      1.6,
+      -1.2
+    ],
+    "radius": 1.2,
+    "side": "left",
+    "target": [
+      0.9,
+      1.4,
+      -3.2
+    ]
+  },
+  "notes": [
+    "Rounded U: straight, analytic radius-1.2 horizontal semicircle, straight. The final straight uses the remaining 12-unit distance budget; joins have continuous tangents. Camera tracks blackboard. Low furniture may pass below the camera; this is a camera path, not a human body simulation.",
+    "Preview revision: vertical FOV widened from 39.5977553 to 65 degrees to retain room context near the blackboard; motion and timing unchanged."
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "id": "bistro-interior",
+  "scene_config": "experiments/configs/falcor-pt-spatial-comparison/bistro-interior-reference.json",
+  "meters_per_scene_unit": 1.0,
+  "unit_basis": "Provisional 1 scene unit = 1 metre, based on architectural scale; source assets provide no explicit metric calibration. Actual speed is 1.5 scene units per second.",
+  "fps": 30,
+  "warmup_frames": 40,
+  "hold_start_seconds": 1,
+  "move_seconds": 8,
+  "hold_end_seconds": 1,
+  "speed_m_per_second": 1.5,
+  "camera": {
+    "vertical_fov": 60,
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "near_plane": 0.01
+  },
+  "waypoints": [
+    {
+      "position": [
+        -8.2,
+        2,
+        5
+      ],
+      "target": [
+        -8.5,
+        1.6,
+        9
+      ]
+    },
+    {
+      "position": [
+        -2.2,
+        2,
+        15.392304845413264
+      ],
+      "target": [
+        -8.5,
+        1.6,
+        9
+      ]
+    }
+  ],
+  "notes": [
+    "Lateral diagonal across the room, gaze tracks the bar. Camera-height clearance checked; not a pedestrian body collision model."
+  ]
+}

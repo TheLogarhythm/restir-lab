@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "id": "bistro-exterior",
+  "scene_config": "experiments/configs/falcor-pt-spatial-comparison/bistro-exterior-reference.json",
+  "meters_per_scene_unit": 1.0,
+  "unit_basis": "Provisional 1 scene unit = 1 metre, based on architectural scale; source assets provide no explicit metric calibration. Actual speed is 1.5 scene units per second.",
+  "fps": 30,
+  "warmup_frames": 40,
+  "hold_start_seconds": 1,
+  "move_seconds": 8,
+  "hold_end_seconds": 1,
+  "speed_m_per_second": 1.5,
+  "camera": {
+    "vertical_fov": 60,
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "near_plane": 0.01
+  },
+  "waypoints": [
+    {
+      "position": [
+        -14.466005464,
+        1.8,
+        -0.177960073
+      ],
+      "target": [
+        -1.3,
+        2.2,
+        -1.5
+      ]
+    },
+    {
+      "position": [
+        -8.466005464,
+        1.8,
+        -10.570264918413264
+      ],
+      "target": [
+        -1.3,
+        2.2,
+        -1.5
+      ]
+    }
+  ],
+  "notes": [
+    "Diagonal street dolly toward the cafe, keeping the entrance in view.",
+    "Uses actual standalone ORCA FBX geometry coordinates, not the interior glTF adaptation. The opposite direction from the first preview entered a building; that failed preview is retained."
+  ]
+}

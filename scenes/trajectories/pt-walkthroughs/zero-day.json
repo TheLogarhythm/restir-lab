@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "id": "zero-day",
+  "scene_config": "experiments/configs/falcor-pt-spatial-comparison/zero-day-measure-seven-reference.json",
+  "meters_per_scene_unit": 1.0,
+  "unit_basis": "Provisional 1 scene unit = 1 metre, based on architectural scale; source assets provide no explicit metric calibration. Actual speed is 1.5 scene units per second.",
+  "fps": 30,
+  "warmup_frames": 40,
+  "hold_start_seconds": 1,
+  "move_seconds": 8,
+  "hold_end_seconds": 1,
+  "speed_m_per_second": 1.5,
+  "camera": {
+    "vertical_fov": 32.2687407,
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "near_plane": 0.01
+  },
+  "waypoints": [
+    {
+      "position": [
+        12.5,
+        0.25,
+        0
+      ],
+      "target": [
+        7.5,
+        0.25,
+        0
+      ]
+    },
+    {
+      "position": [
+        0.5,
+        0.25,
+        0
+      ],
+      "target": [
+        -4.5,
+        0.25,
+        0
+      ]
+    }
+  ],
+  "notes": [
+    "Straight corridor dolly. Camera raised from the frozen view to avoid low crossbars."
+  ]
+}

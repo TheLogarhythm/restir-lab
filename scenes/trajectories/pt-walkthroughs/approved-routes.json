@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "approved_on": "2026-11-16",
+  "approval": "User approved current4routes1920x1080,12videos,40warmup+300frames temporalon,GPUFPS watermark,nooverwrite,nocommit/push.",
+  "source_preflight": "build/pt-trajectory-production/preflight.json",
+  "source_preflight_created_utc": "2026-11-16T06:48:55.454110+00:00",
+  "source_preflight_sha256": "1b4b3bff88b163731b1f3fe41786f3fe00570445d0d02017105fab0628368d28",
+  "source_git_head": "9aeea8be4cf9b397f4979e4c4d094e070589e769",
+  "trajectory_sha256": {
+    "scenes/trajectories/pt-walkthroughs/bistro-exterior.json": "8da5f5771e92ffd74a554e1737cd6f2e443cf94a43e935a87e0b3403aeaf9fa5",
+    "scenes/trajectories/pt-walkthroughs/bistro-interior.json": "f2510e6b589a7ae09401336c60ceb2b3df1a8a94be46dfed66e9f2f5fabe7997",
+    "scenes/trajectories/pt-walkthroughs/classroom.json": "51c3f87461527a2387694e3f45b74b3e31aca927ef0314397b2f794a513a372f",
+    "scenes/trajectories/pt-walkthroughs/zero-day.json": "077096cc99f53e3cce86b9779f0a87d25303d8b89e932672fd32147617cc34a2"
+  }
+}
