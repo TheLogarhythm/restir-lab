@@ -30,7 +30,7 @@ iteration/neighbor, radius 30 and native temporal history 20. Existing matched
 
 | Collection | Seeds | Warmup | Saved/measured frames | Total |
 | --- | --- | --- | --- | --- |
-| Quality | 0, 100000, 200000, 300000 | 1–40 | FLOAT32 EXRs 41–56 | 96 captures, 1536 EXRs |
+| Quality | 0, 100000, 200000, 300000 | 1–40 | Originally FLOAT32 EXRs 41–56 | 96 captures, 1536 per-frame statistic rows |
 | Timing | 0 | 1–40 | GPU frames 41–104; render 105 drains the profiler | 24 captures, no EXRs |
 
 Each job starts a fresh process/history. Path seed is `offset+frame-1`; reuse
@@ -39,19 +39,18 @@ is skipped. All quality jobs precede timing; method order rotates by view and
 is frozen in the resolved config. Diagnostics, accumulation, denoising and
 trajectories are disabled.
 
-The archive retains roughly 34 GiB of quality images. Veach timing uses the
-latest recheck for all methods; the other views use original timing. Emerald's
-four timing captures are excluded from performance aggregates/equal-time claims,
-while its quality data remain eligible. VRAM pressure was suspected but not
-established as the cause of instability. The
-local timing table, `runs/pt-6-views-spatial-compare/analysis/timing.csv`, records
-inclusion explicitly: 20 of 24 captures are included.
+The archive now consolidates measurements and presentation outputs. It retains
+CSV/JSON statistics, unclipped NPZ maps, selected strip samples, five display PNGs
+per view, current plots and original capture/runtime/timing provenance. The 1536
+method EXRs and six obsolete 8192-spp reference checkpoints were retired after
+hash verification. Six final 16384-spp references remain under `assets/references/`.
 
-Six final references remain in assets; six 8192-spp checkpoints and generation
-records remain in the archive. Intermediate 1024-spp blocks were removed, so
-block reconstruction/uncertainty recalculation is unavailable. Original manifests
-may name retired paths; use the archive's relocation and cleanup inventories.
-Old single-seed prepared-only metadata cannot resume the four-seed suite.
+Veach timing uses the latest recheck; Emerald's four timings remain excluded from
+performance aggregates. `statistics/stage-summary.csv` and `timing-events.csv`
+contain the current summaries; original timing records and exclusions are in
+`records/`. Original manifests contain historical paths; the root manifest and
+`records/provenance/relocations.json` describe current locations. The retired HDR
+inventory preserves hashes but does not imply recoverability.
 
 ## Read and verify the archive
 
@@ -68,12 +67,17 @@ $py = 'build/falcor/verify-env/Scripts/python.exe'
 full inventory and checks references, schedules and timing selection. The suite
 check validates current scene/reference inputs. Neither recomputes quality metrics.
 
-[Shared analysis](../shared-analysis.md#fixed-view-pt-archive) exposes
-`read_archive().quality_records()`, `quality_runs()` and `timing_records()`.
-Selected quality captures validate/decode HDR and retain full seed/history evidence.
-Timing metadata preserves exclusions but reports `raw_timings_validated=False`;
-use the full verifier to validate raw timings. Write derived analysis outside
-the immutable archive.
+[Shared analysis](../shared-analysis.md#fixed-view-pt-archive) describes the
+statistics-only archive. To change axes, colors or layout without raw HDR:
+
+```powershell
+& $py -B runs/pt-6-views-spatial-compare/tools/replot.py --output build/pt-six-view-replot-new
+```
+
+This uses saved numerical maps and strip samples, with NumPy, Pillow and Matplotlib.
+It does not recompute metrics. Arbitrary new metrics, covariance lags/radii and new
+temporal strip locations require the retired method HDR or new renders. The old
+raw-HDR adapter remains usable with older full-image archives, not this compact one.
 
 ## New batches
 

@@ -22,18 +22,36 @@ def _sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def _read(root, path):
+def _contained(root, path):
     path = Path(path)
-    if path.is_absolute() or '..' in path.parts:
+    if path.is_absolute() or path.drive or '..' in path.parts:
         raise ValueError('Migration path must be workspace-relative')
-    target = root / path
-    retired = Path('runs/falcor-pt-spatial-comparison/provenance/relocations')
-    if not target.exists() and path.is_relative_to(retired):
-        target = root / 'runs/pt-6-views-spatial-compare/provenance/scene-migrations' / path.relative_to(retired)
-    target = target.resolve(strict=True)
+    target = (root / path).resolve()
     if not target.is_relative_to(root):
         raise ValueError('Migration path escapes workspace')
-    return target.read_bytes()
+    return target
+
+
+def _read(root, path):
+    root = Path(root).resolve(strict=True)
+    target = _contained(root, path)
+    retired = Path('runs/falcor-pt-spatial-comparison/provenance/relocations')
+    record = None
+    if not target.exists() and Path(path).is_relative_to(retired):
+        former = Path('runs/pt-6-views-spatial-compare/provenance/scene-migrations') / Path(path).relative_to(retired)
+        target = _contained(root, former)
+        if not target.exists():
+            archive = _contained(root, 'runs/pt-6-views-spatial-compare')
+            relocations = json.loads(_contained(archive, 'records/provenance/relocations.json').read_text(encoding='utf-8-sig'))
+            matches = [r for r in relocations if r['source'] == former.as_posix()]
+            if len(matches) != 1:
+                raise ValueError('Missing or ambiguous migration relocation: ' + former.as_posix())
+            record = matches[0]
+            target = _contained(archive, record['path'])
+    data = target.read_bytes()
+    if record is not None and (len(data) != record['bytes'] or _sha(data) != record['sha256']):
+        raise ValueError('Relocated migration snapshot changed: ' + str(path))
+    return data
 
 
 def _replace(value, old, new):

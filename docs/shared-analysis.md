@@ -47,45 +47,26 @@ summary = describe_run(run)
 
 ## Fixed-view PT archive
 
-The compact stage archive is a collection, not one capture. Use the archive
-adapter to select a view, method and independent seed realizations:
+The local `runs/pt-6-views-spatial-compare` is now a statistics-only archive.
+Read `statistics/summary.csv`, per-seed/per-frame quality tables and profiler tables;
+`data/<view>/` retains unclipped numerical maps and strip samples. `images/` keeps
+seed-0/frame-48 display PNGs. Original capture/timing manifests remain in `records/`.
 
-```python
-from backends.falcor.archive import read_archive
-from analysis.saved_runs import independent_sequences
-
-archive = read_archive("runs/pt-6-views-spatial-compare")
-# Metadata only; no quality HDR decoding.
-records = archive.quality_records(view="classroom", method="cgns")
-timings = archive.timing_records(included_only=True)
-# Validate the selected captures, including linear FLOAT32 EXRs.
-runs = archive.quality_runs(view="classroom", method="cgns")
-sequences = independent_sequences(runs, range(41, 57))
+```powershell
+python -B scripts/analysis/pt_stage_archive.py --inspect
+python -B scripts/analysis/pt_stage_archive.py
+python -B runs/pt-6-views-spatial-compare/tools/replot.py --output build/pt-six-view-replot-new
 ```
 
-Method labels are `temporal-off`, `temporal-on`, `cgns` and `pdf`.
-Only `quality_runs()` decodes the selected quality HDR. It binds original capture
-evidence to the archive's current paths and hashes; saved Python scripts are
-parsed, never executed. Source/runtime paths inside old manifests remain historical
-provenance and are not resolved against the current checkout.
+The verifier checks retained hashes, table coverage/aggregation, maps, reference
+bindings and timing evidence. Redrawing changes presentation only; it cannot
+recompute arbitrary quality metrics or covariance settings without the retired HDR.
+Write new plots outside the frozen archive. Emerald timing stays excluded.
 
-Fixed-view captures can also be read with `read_run(quality_directory)`.
-Fresh-history and nonoverlapping path-seed schedules are checked before repeat
-analysis. Statistical RNG independence remains an experiment assumption; correlated
-frames are not additional independent trials. Old smoke captures still lack this
-capability.
-
-Timing records carry `included`, `exclusion_reason`, `source_run_id` and
-`raw_timings_validated=False`; `included_only=True` excludes Emerald's timings. Nested stage timers remain
-inclusive and must not be summed with their parent. Reading these records does
-not compute timing statistics or certify unexposed visibility timers.
-
-For a metadata-only inventory, use
-`python -B scripts/analysis/pt_stage_archive.py --inspect`.
-For complete archive integrity, use
-`python -B scripts/analysis/pt_stage_archive.py`. The archive adapter's selected
-input checks do not replace that full inventory/reference verifier. All analysis
-outputs must go outside the immutable archive.
+`backends.falcor.archive.read_archive()` still supports older full-HDR stage archives
+with `quality_records()`, `quality_runs()` and `timing_records()`. It explicitly rejects
+statistics-only archives instead of implying that full sequences remain available.
+Historical source/runtime paths in manifests are evidence, not current input paths.
 
 ## Historical limits
 

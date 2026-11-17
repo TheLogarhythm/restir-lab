@@ -20,6 +20,8 @@ class StageArchive:
         self.directory = Path(directory).resolve()
         self._manifest, self.manifest_sha256 = read_json(artifact_path(self.directory, "manifest.json"))
         m = self._manifest
+        if m.get("kind") == "falcor_pt_statistics_archive":
+            raise ValueError("Statistics-only archive: full quality HDR was retired. Read statistics/ or use tools/replot.py; raw quality_runs() is unavailable.")
         if (m.get("schema_version") != 1 or m.get("kind") != "falcor_pt_stage_archive"
                 or m.get("status") != "completed_compacted" or m.get("path_base") != "archive_root"):
             raise ValueError("Unsupported PT stage archive")

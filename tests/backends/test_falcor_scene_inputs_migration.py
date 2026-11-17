@@ -65,6 +65,29 @@ def fixture(root):
     return proof
 
 
+def compact_fixture(root):
+    proof = fixture(root)
+    retired = Path('runs/falcor-pt-spatial-comparison/provenance/relocations')
+    for i, row in enumerate(proof['changes']):
+        destination = retired / ('snapshot-' + str(i) + '.json')
+        (root / row['snapshot']).rename(root / destination)
+        row['snapshot'] = destination.as_posix()
+    (root / migration.PROOF).write_text(json.dumps(proof), encoding='utf8')
+    archive = root / 'runs/pt-6-views-spatial-compare'
+    records = []
+    for i, path in enumerate(sorted((root / retired).glob('*.json'))):
+        data = path.read_bytes()
+        destination = 'records/provenance/long-paths/' + str(i) + '.json'
+        target = archive / destination
+        target.parent.mkdir(parents=True, exist_ok=True)
+        path.rename(target)
+        records.append({'source': 'runs/pt-6-views-spatial-compare/provenance/scene-migrations/' + path.name,
+                        'path': destination, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
+    index = archive / 'records/provenance/relocations.json'
+    index.write_text(json.dumps(records), encoding='utf8')
+    return archive, index, records
+
+
 class SceneMigrationTest(unittest.TestCase):
     def test_retired_relocation_paths_resolve_in_stage_archive(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -94,3 +117,32 @@ class SceneMigrationTest(unittest.TestCase):
             (root / migration.PROOF).write_text(json.dumps(proof), encoding='utf8')
             with self.assertRaisesRegex(ValueError, 'non-path scene data'):
                 migration.verify(root)
+
+    def test_compacted_snapshots_and_receipts_are_read_without_rewriting(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            archive, index, records = compact_fixture(root)
+            before = {p: p.read_bytes() for p in root.rglob('*') if p.is_file()}
+            self.assertEqual(migration.verify(root), 9)
+            self.assertEqual(before, {p: p.read_bytes() for p in root.rglob('*') if p.is_file()})
+
+    def test_changed_compacted_snapshot_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            archive, index, records = compact_fixture(root)
+            (archive / records[0]['path']).write_bytes(b'changed snapshot')
+            with self.assertRaisesRegex(ValueError, 'Relocated migration snapshot changed'):
+                migration.verify(root)
+
+    def test_ambiguous_and_escaping_relocations_are_rejected(self):
+        for mode in ('duplicate', 'escape'):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                archive, index, records = compact_fixture(root)
+                if mode == 'duplicate':
+                    records.append(dict(records[0]))
+                else:
+                    records[0]['path'] = '../outside.json'
+                index.write_text(json.dumps(records), encoding='utf8')
+                with self.assertRaisesRegex(ValueError, 'ambiguous|workspace-relative'):
+                    migration.verify(root)

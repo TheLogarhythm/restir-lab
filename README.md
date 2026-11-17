@@ -18,3 +18,21 @@ See the [comparison workflow](docs/comparison.md) for fixed-view spatial-reuse e
 Local assets, builds, and runs are ignored. Edit the [proposal](writing/course/proposal/main.tex) and [report](writing/course/report/main.tex); preserve the [original templates](writing/course/templates/README.md). See [contributing](CONTRIBUTING.md), [third-party sources](THIRD_PARTY.md), and [licensing](LICENSE).
 
 Shared Python metrics and RTXDI/Falcor saved-result readers are documented in [shared offline analysis](docs/shared-analysis.md). Existing renderer commands remain available.
+
+## Current local PT archives
+
+| Collection | Local entry point | Retained capabilities |
+| --- | --- | --- |
+| [Six fixed views](docs/reproductions/pt-6-views-spatial-compare.md) | `runs/pt-6-views-spatial-compare/index.html` | Statistics, numeric maps and figure redesign; full method HDR retired |
+| [Four camera trajectories](scenes/trajectories/README.md#compact-archive-availability) | `runs/pt-4-trajectories-spatial-compare/index.html` | Twelve final videos, full timing/configuration records and raw motion-validation AOVs; production frame sequences retired |
+
+These local archives are ignored by Git. Their current inventories are the
+six-view `manifest.json` and trajectory `archive-manifest.json`; original capture
+manifests are historical records and can reference retired files.
+
+Run `python -B scripts/check_archive_references.py` to check current result-index
+paths and view/trajectory coverage when archives are installed. Absent archives
+are reported as skipped, so the check also works in a fresh checkout. It excludes
+historical record paths and does not replace the full integrity verifiers:
+`python -B scripts/analysis/pt_stage_archive.py` and
+`python -B scripts/analysis/pt_trajectory_archive.py`.

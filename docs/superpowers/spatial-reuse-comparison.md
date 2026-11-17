@@ -94,7 +94,11 @@ targeted checks and 120 scripts compiled. Six view/reference bindings were check
 without rendering. These configuration checks were not experiment results; the
 stage subsequently completed.
 
-## Archive decisions and availability
+## Historical archive decisions — before final compaction
+
+The following paragraphs preserve the earlier retention decision and verification
+counts. Their availability claims and original paths were superseded by the
+final compaction described below; they do not describe the current archive.
 
 The completed stage is an immutable collection, not a resumable batch.
 Its current paths come from `runs/pt-6-views-spatial-compare/manifest.json`.
@@ -121,6 +125,34 @@ checks, scaffold/link checks and independent provenance review; approximately
 7.70 GiB was retired. Its retained receipt is
 `runs/pt-6-views-spatial-compare/provenance/verification.json`.
 No renderer, commit or push was part of archival.
+
+## Current archive availability after final compaction
+
+The six-view collection is now a statistics-only archive. It retains per-frame,
+per-seed and aggregate statistics, unclipped maps, strip samples, selected display
+PNGs and provenance. Its 1536 full method EXRs and six 8192-spp checkpoints were
+retired after verification. Six canonical 16384-spp references remain in assets.
+New plot layouts are supported; arbitrary new quality metrics or covariance
+settings require the retired inputs or new renders. Veach timing selection and
+Emerald timing exclusion are unchanged.
+
+The earlier verification receipt quoted above is now at
+`runs/pt-6-views-spatial-compare/records/provenance/original-archive/provenance/verification.json`.
+The root `manifest.json` indexes current files; cleanup receipts are under
+`records/provenance/compaction/`. Earlier counts in this document remain historical.
+
+The four-trajectory media archive is `runs/pt-4-trajectories-spatial-compare/`.
+It retains twelve final videos, complete timing/configuration records, preview
+selection records and all four camera-motion diagnostic trials. Production and
+preview frame sequences were retired; the 560 motion-validation EXRs remain.
+Use `archive-manifest.json` for current availability. Original production and
+phase manifests are preserved historical records, not resumable capture inputs.
+
+The local one-off production launcher at
+`build/pt-trajectory-production/run_campaign.py` is disabled. Its original bytes
+remain in `run_campaign.original.py.txt` beside a SHA-256 receipt. Future captures
+must use the documented entry point with an explicitly chosen new output; the
+archived runs are not rerun during these checks.
 
 ## Capture and runtime maintenance
 

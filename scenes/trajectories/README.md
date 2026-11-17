@@ -149,3 +149,20 @@ available in `timing/timings.json` and `timing/gpu-frame-timings.json`.
 Each final `encode/video.mp4` is verified as H.264, yuv420p,1920x1080,
 300frames,30FPS and10seconds. Single-seed videos are descriptive comparisons;
 correlated frames are not independent repeats. No moving reference is generated.
+
+## Compact archive availability
+
+`archive-manifest.json` defines current files and capabilities. Original
+`manifest.json` files are historical records and may reference deleted or moved
+files; they cannot be used to resume or re-encode the archived captures.
+`validation/` retains all four camera-motion diagnostic trials, including their
+560 EXRs and the failed low-resolution Bistro case. The old standalone preview
+and motion-validation folders were consolidated here.
+
+```powershell
+python -B scripts/analysis/pt_trajectory_archive.py
+python -B scripts/analysis/pt_trajectory_archive.py --decode
+```
+
+The verifier hashes retained files, checks timing alignment and original manifest
+bindings, and optionally probes/decodes all twelve videos. It does not render.

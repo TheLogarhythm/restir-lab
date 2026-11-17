@@ -6,7 +6,7 @@ repository root. The EXRs are generated assets and are not included in Git;
 place the files at the paths in the manifest and check their SHA-256 values.
 
 The six hashes were checked against the retained historical catalog at
-`runs/pt-6-views-spatial-compare/provenance/reference-catalog.original.json` (SHA-256
+`runs/pt-6-views-spatial-compare/records/provenance/original-archive/provenance/reference-catalog.original.json` (SHA-256
 `80c4dbcf12379670cec5dd7a4e3db8dc238822572d76c3a2cdfb96b745f54f82`)
 and against the original EXR bytes. The original catalog bytes are preserved. Final images remain byte-identical;
 redundant historical copies and intermediate blocks were retired in the 2026-11-16 compaction. The new locations were populated by copying those verified bytes.
@@ -62,11 +62,21 @@ The schema-2 catalog also binds each image to its camera, scene/runtime inventor
 and transport target. See the [six-view preparation guide](../configs/falcor-pt-spatial-comparison/PREPARATION.md)
 for reusable profiles, exact recipes and no-render verification.
 
-## Stage archive compaction — 2026-11-16
+## Current archive availability — 2026-11-16
 
-Six 8192-spp checkpoints and zipped generation records are retained under
-`runs/pt-6-views-spatial-compare/<view>/reference/`. The final EXRs above remain
-the canonical copies. Original 1024-spp blocks are no longer retained; the archive
-cannot rebuild references or recompute block uncertainty. Historical migration
-snapshots are under `provenance/scene-migrations/`; the optional migration verifier
-resolves their retired paths without modifying frozen migration receipts.
+The six final 16384-spp EXRs under `assets/references/` remain the canonical,
+byte-identical reference images. The six 8192-spp checkpoints and original
+1024-spp generation blocks have been retired; they cannot be used to rebuild
+references or recompute block uncertainty.
+
+Generation metadata and zipped generation records remain under
+`runs/pt-6-views-spatial-compare/records/references/<view>/reference/`.
+Original reference manifests may name retired checkpoint images. The current
+archive inventory is `runs/pt-6-views-spatial-compare/manifest.json`.
+
+Historical migration snapshots are located through
+`runs/pt-6-views-spatial-compare/records/provenance/relocations.json`, including
+flattened paths retained to avoid Windows path-length limits. The optional
+`python -B -m scripts.falcor.verify_scene_inputs_migration` check resolves these
+locations and validates the original snapshot hashes. Frozen migration receipts
+and their original path strings are not rewritten.

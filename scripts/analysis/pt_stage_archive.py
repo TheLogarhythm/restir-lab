@@ -1,52 +1,27 @@
 """Read-only integrity verification of the compact PT six-view reporting archive."""
 from __future__ import annotations
 import argparse
-import hashlib
 import json
 from pathlib import Path
+import sys
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from scripts.analysis.pt_archive_common import (
+    METHODS, SEEDS, VIEWS, child, read, require, sha, verify_inventory,
+)
+
 DEFAULT = ROOT / "runs/pt-6-views-spatial-compare"
-VIEWS = {"bistro-interior", "bistro-exterior", "classroom", "emerald-square", "veach-ajar", "zero-day-measure-seven"}
-METHODS = {"temporal-off", "temporal-on", "cgns", "pdf"}
-SEEDS = [0, 100000, 200000, 300000]
-
-def read(path):
-    return json.loads(path.read_text(encoding="utf-8-sig"))
-
-def sha(path):
-    with path.open("rb") as stream:
-        return hashlib.file_digest(stream, "sha256").hexdigest()
-
-def child(root, relative):
-    path = Path(relative)
-    if path.is_absolute() or ".." in path.parts:
-        raise ValueError("Expected a contained relative path: " + str(relative))
-    resolved = (root / path).resolve(strict=True)
-    if not resolved.is_relative_to(root.resolve()):
-        raise ValueError("Path escapes archive: " + str(relative))
-    return resolved
-
-def require(condition, message):
-    if not condition:
-        raise ValueError(message)
 
 def verify(archive=DEFAULT):
     archive = Path(archive).resolve()
     manifest = read(archive / "manifest.json")
+    if manifest.get("kind") == "falcor_pt_statistics_archive":
+        from scripts.analysis.pt_statistics_archive import verify as verify_statistics
+        return verify_statistics(archive)
     require(manifest["kind"] == "falcor_pt_stage_archive", "Not a stage archive")
     require(set(manifest["views"]) == VIEWS, "Unexpected views")
     require(manifest["quality_seed_offsets"] == SEEDS, "Unexpected seed coverage")
-    indexed = {}
-    for record in manifest["files"]:
-        name = record["path"]
-        require(name not in indexed, "Duplicate file: " + name)
-        path = child(archive, name)
-        require(path.stat().st_size == record["bytes"] and sha(path) == record["sha256"], "File changed: " + name)
-        indexed[name] = record
-    permitted = {"manifest.json", "provenance/verification.json"}
-    actual = {p.relative_to(archive).as_posix() for p in archive.rglob("*") if p.is_file()}
-    extras = actual - set(indexed) - permitted
     # Before cleanup, explicitly listed source roots may still exist. Never silently accept new files.
     cleanup = read(archive / "provenance/cleanup-inventory.json")
     historical = {str(Path(r["path"]).relative_to("runs/pt-6-views-spatial-compare")).replace("\\", "/")
@@ -60,7 +35,10 @@ def verify(archive=DEFAULT):
         for retired in cleanup["targets"]:
             require(not (ROOT / retired).exists(), "Retired directory reappeared: " + retired)
         historical = set()
-    require(not extras - historical, "Unindexed files: " + str(sorted(extras - historical)[:5]))
+    indexed = verify_inventory(
+        archive, manifest["files"],
+        allowed_unindexed={"manifest.json", "provenance/verification.json"} | historical,
+    )
     captures = images = included = 0
     method_names = {"temporal-off": "baseline", "temporal-on": "baseline", "cgns": "cgns", "pdf": "pdf-similarity"}
     for view, entry in manifest["views"].items():
@@ -123,9 +101,10 @@ def main():
     parser.add_argument("--inspect", action="store_true",
                         help="List current quality/timing selections; does not hash/decode HDR or run the full verifier")
     args = parser.parse_args()
-    if args.inspect:
-        import sys
-        sys.path.insert(0, str(ROOT / "src"))
+    if args.inspect and read(args.root / "manifest.json").get("kind") == "falcor_pt_statistics_archive":
+        from scripts.analysis.pt_statistics_archive import inspect
+        print(json.dumps(inspect(args.root), indent=2))
+    elif args.inspect:
         from backends.falcor.archive import read_archive
         archive = read_archive(args.root)
         quality = archive.quality_records()

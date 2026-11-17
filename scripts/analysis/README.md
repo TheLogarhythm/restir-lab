@@ -39,14 +39,37 @@ without rendering or writing outputs. Current paths are in its manifest;
 original batch manifests are provenance, not resumable batches. See the
 [six-view guide](../../docs/reproductions/pt-6-views-spatial-compare.md).
 
-For selected captures, use `backends.falcor.archive.read_archive()` and its
-`quality_records()`, `quality_runs()` and `timing_records()` methods. The
-[shared analysis guide](../../docs/shared-analysis.md#fixed-view-pt-archive)
-shows four-seed loading and independent-sequence validation. This reads saved
-results only; new batches belong in `runs/pt-fixed-view-batches/` and new reports
-must be outside the immutable stage archive.
+The current local archive is statistics-only: tables in `statistics/`, unclipped
+maps/strip samples in `data/`, selected PNGs in `images/`, and historical records in
+`records/`. Use its `tools/replot.py --output <new-directory>` to redraw without EXRs.
+Full method HDR was retired; arbitrary new metrics require original inputs or new
+renders. The raw `backends.falcor.archive` adapter remains available for older
+full-HDR archives and rejects statistics-only archives explicitly.
 
 The obsolete `falcor_three_methods` report and its `spatial_three_methods` /
 `spatial_reuse_audit` collectors were retired after stage archival. Historical
 reports remain unchanged; their original commands require their matching source
 snapshot and original inputs.
+
+## Compact trajectory media archive
+
+`python -B scripts/analysis/pt_trajectory_archive.py` checks the current inventory
+at `runs/pt-4-trajectories-spatial-compare`, retained historical hashes, native
+GPU/stage timing alignment and watermark values. Add `--decode` for complete
+FFmpeg decoding of all twelve final videos. Original manifests may name retired
+source frames; `archive-manifest.json` is authoritative for current availability.
+Production/preview frame sequences were retired; all motion-validation AOVs remain.
+
+For a lightweight optional check of current `results/index.csv` paths and complete
+view/trajectory coverage, run `python -B scripts/check_archive_references.py`.
+It skips absent ignored archives and excludes historical record paths. The full
+archive verifiers above additionally check content hashes and numerical evidence.
+
+### Compact archive validation
+
+The stage, statistics and trajectory archive commands share contained-path,
+strict-JSON and inventory checks through `src/records/archive.py`. Frozen six-view
+coverage constants live in `pt_archive_common.py`; format-specific numerical and
+status checks remain in their respective verifier. The command-line interfaces
+and historical archive formats are unchanged. Metadata-only checks do not load
+NumPy or image decoders.

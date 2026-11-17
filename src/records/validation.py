@@ -5,8 +5,6 @@ import json
 from pathlib import Path, PureWindowsPath
 import re
 
-from image_io.images import read_image
-from image_io.exr import read_exr
 from .provenance import sha256
 
 
@@ -49,7 +47,8 @@ def _constant(value):
     raise ValueError("Nonfinite JSON value: " + value)
 
 
-def read_json(path, expected=None):
+def read_json_value(path, expected=None):
+    """Read strict saved JSON, including archive tables represented as arrays."""
     data = Path(path).read_bytes()
     digest = hashlib.sha256(data).hexdigest()
     if expected is not None and digest != require_digest(expected):
@@ -57,6 +56,11 @@ def read_json(path, expected=None):
     value = json.loads(
         data.decode("utf-8-sig"), object_pairs_hook=_pairs, parse_constant=_constant
     )
+    return value, digest
+
+
+def read_json(path, expected=None):
+    value, digest = read_json_value(path, expected)
     if not isinstance(value, dict):
         raise ValueError("Expected a JSON object: " + str(path))
     return value, digest
@@ -92,6 +96,9 @@ def capture_rows(rows, expected):
 
 
 def checked_image(path, expected, width, height, *, float32_exr=False):
+    from image_io.images import read_image
+    from image_io.exr import read_exr
+
     expected = require_digest(expected)
     if sha256(path) != expected:
         raise ValueError("Saved image hash mismatch: " + str(path))
