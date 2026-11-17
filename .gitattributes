@@ -79,3 +79,9 @@
 /scripts/falcor/prepare_gltf_composite_runtime_v3.py -text
 /scripts/falcor/project_paths.py -text
 /scripts/falcor/reference_graph.py -text
+
+# Preserve exact user-approved trajectory bytes across platforms.
+/scenes/trajectories/pt-walkthroughs/bistro-exterior.json -text
+/scenes/trajectories/pt-walkthroughs/bistro-interior.json -text
+/scenes/trajectories/pt-walkthroughs/classroom.json -text
+/scenes/trajectories/pt-walkthroughs/zero-day.json -text

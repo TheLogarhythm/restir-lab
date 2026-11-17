@@ -81,6 +81,27 @@ class TrajectoryCaptureTests(unittest.TestCase):
             mod.launch(route, ROOT / "runs/not-created-formal-video", ROOT, "unknown")
         self.assertFalse((ROOT / "runs/not-created-formal-video").exists())
 
+    def test_output_root_is_rejected_even_without_local_runs(self):
+        mod = pipeline()
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder).resolve()
+            runs = root / "runs"
+            self.assertFalse(runs.exists())
+            with patch.object(mod, "ROOT", root):
+                with self.assertRaisesRegex(ValueError, "new.*runs"):
+                    mod._new_output(runs)
+                self.assertEqual(mod._new_output(runs / "new-video"), runs / "new-video")
+                runs.mkdir()
+                with self.assertRaisesRegex(ValueError, "new.*runs"):
+                    mod._new_output(runs)
+                existing = runs / "existing-video"
+                existing.mkdir()
+                with self.assertRaisesRegex(ValueError, "new.*runs"):
+                    mod._new_output(existing)
+                with self.assertRaisesRegex(ValueError, "new.*runs"):
+                    mod._new_output(root / "outside-runs")
+            self.assertFalse((runs / "new-video").exists())
+
     def test_approved_routes_do_not_depend_on_local_runtime_preflight(self):
         mod = pipeline()
         with patch.object(mod, "PREFLIGHT", ROOT / "build/missing-trajectory-preflight.json"):

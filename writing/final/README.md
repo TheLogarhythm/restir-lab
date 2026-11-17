@@ -4,7 +4,7 @@ The English final deck keeps the previous Marp source structure and adopts the v
 
 ## Present
 
-Open **[final.html](final.html)** in Chrome or Edge, then enter fullscreen. Arrow keys advance slides; native video controls allow pausing. Only the active slide's video plays. Each demo is a synchronized three-method comparison with full views and identical magnified crops. The magenta rectangles identify the crops. Videos retain 1× speed and 30 FPS playback; GPU FPS is a separate recorded measurement.
+Open **`final.html`** in Chrome or Edge, then enter fullscreen. Arrow keys advance slides; native video controls allow pausing. Only the active slide's video plays. Each demo is a synchronized three-method comparison with full views and identical magnified crops. The magenta rectangles identify the crops. Videos retain 1× speed and 30 FPS playback; GPU FPS is a separate recorded measurement.
 
 The main deck has **15 slides** and a **4:30 rehearsal target**, including **2:00 of demos**. This is a timing plan, not a measured presentation recording. Each original ten-second trajectory loops three times within its thirty-second slot; it does not become a longer camera path. The presenter advances after the third loop. There is no automatic slide advancement.
 
@@ -17,7 +17,7 @@ The main deck has **15 slides** and a **4:30 rehearsal target**, including **2:0
 | 14 | 4:15–4:27 | Conclusions |
 | 15 | 4:27–4:30 | Thanks |
 
-The separate **[appendix.html](appendix.html)** contains seven backup slides: full quality table, stage costs, covariance, temporal ablation, a local CGNS failure, validation limits and full resources. It is outside the timed presentation. PDF versions in `build/` use static video posters; **use HTML for the demo**, not PDF. The full speaker notes live in the main Markdown, and `build/rehearsal-script.md` extracts the spoken paragraphs and timing cues.
+The separate **`appendix.html`** contains seven backup slides: full quality table, stage costs, covariance, temporal ablation, a local CGNS failure, validation limits and full resources. It is outside the timed presentation. PDF versions in `build/` use static video posters; **use HTML for the demo**, not PDF. The full speaker notes live in the main Markdown, and `build/rehearsal-script.md` extracts the spoken paragraphs and timing cues.
 
 ## Sources and structure
 

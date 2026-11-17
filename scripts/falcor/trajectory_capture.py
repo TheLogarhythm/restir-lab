@@ -38,7 +38,8 @@ def _json(path):
 
 def _new_output(output):
     output = Path(output).resolve()
-    if output.exists() or not output.is_relative_to((ROOT / "runs").resolve()):
+    runs = (ROOT / "runs").resolve()
+    if output == runs or output.exists() or not output.is_relative_to(runs):
         raise ValueError("Formal video requires a new output directory under runs")
     return output
 
