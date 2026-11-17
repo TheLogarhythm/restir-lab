@@ -19,7 +19,11 @@
         float distance = length(sd.posW - gScene.camera.data.posW);
         if (length(sd.posW - old.posW) > .01f * max(.001f, distance)) return;
         PathReservoir prior = prevReservoirs[params.getReservoirOffset(previous)];
-        if (prior.labCamera != sample.labCamera || prior.labCount <= 0.f || prior.labMoment.w <= 0.f ||
+        // The source frame was traced with the previous camera. Comparing to
+        // the current stamp would discard valid reprojection during camera motion.
+        // Discontinuous cuts require the driver to reset the tracer explicitly.
+        if (prior.labCamera != restirpt.labPreviousCameraStamp(params.frameDim) ||
+            prior.labCount <= 0.f || prior.labMoment.w <= 0.f ||
             !all(isfinite(prior.labMoment)) || !isfinite(prior.labCount)) return;
         float4 total = labPdfSum(sample.labMoment, prior.labMoment, kLabPdfDecay);
         if (!all(isfinite(total))) return;

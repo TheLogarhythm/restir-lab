@@ -15,7 +15,7 @@ class PdfHistoryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Only the hardware unroll attribute and Slang inout spelling change.
-        # Both function bodies come from the production shader composition.
+        # Camera stamps and history update come from the production composition.
         upstream = ROOT / 'renderers/falcor/upstream/Source'
         sources = {}
         for name in shader.FILES:
@@ -26,7 +26,10 @@ class PdfHistoryTests(unittest.TestCase):
         changed = shader.build_overlay(sources, {'history_limit': 20, 'history_decay': .95})
         restir = changed[shader.MODULE + 'ReSTIRPT.slang']
         temporal = changed[shader.MODULE + 'TemporalResampling.cs.slang']
-        functions = (shader_function(restir, 'labCameraStamp', 'uint').replace('[unroll]', ''),
+        stamps = '\n'.join(shader_function(restir, name, 'uint').replace('[unroll]', '')
+                           for name in ('labCameraStampForMatrix', 'labCameraStamp',
+                                        'labPreviousCameraStamp'))
+        functions = ('struct ReSTIRPT {\n' + stamps + '\n} restirpt;',
                      shader_function(temporal, 'labCombineHistory', 'void'))
         temporary = tempfile.TemporaryDirectory()
         cls.addClassCleanup(temporary.cleanup)
@@ -46,10 +49,19 @@ class PdfHistoryTests(unittest.TestCase):
         self.assertIn('default: A=(2.9,2,3.8), B=11.6, count=6.7', output)
         self.assertIn('empty: A=(1,0,2), B=4, count=3, A/B=(0.25,0,0.5)', output)
 
+    def test_continuous_camera_then_stop_preserve_reprojected_direction_history(self):
+        output = self.execute('continuous_camera')
+        self.assertIn('continuous_updates=3', output)
+        self.assertIn('moving: A=(2,2,2), B=8, count=4', output)
+        self.assertIn('moving_again: A=(2,3,1), B=8, count=3', output)
+        self.assertIn('stopped: A=(2,3.5,0.5), B=8, count=2.5', output)
+
     def test_initialization_disocclusion_stamps_invalid_reprojection_and_nonfinite_history(self):
         output = self.execute('rejections')
-        self.assertIn('rejections=27', output)
-        self.assertIn('camera_stamp_changed', output)
+        self.assertIn('rejections=29', output)
+        self.assertIn('previous_camera_stamp_mismatch', output)
+        self.assertIn('previous_projection_stamp_mismatch', output)
+        self.assertIn('explicit_cut_reset', output)
         self.assertIn('resolution_stamp_changed', output)
         self.assertIn('nonfinite_total', output)
 

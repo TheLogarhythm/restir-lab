@@ -66,8 +66,27 @@ History requires valid hits with matching type, instance, primitive, material
 and front-facing state; face-normal agreement >=0.95; and position error <=1%
 of camera distance with a 0.001 floor. Out-of-bounds/nonfinite reprojection,
 invalid previous evidence or nonfinite sums are rejected. Non-jittered camera
-matrix and resolution stamps must match. First use, frame-zero reset, camera
-changes and resizing discard history; decay 0 uses current evidence only.
+stamp stored with prior evidence must match Falcor's actual previous-frame
+`prevViewProjMatNoJitter`, together with the current resolution. The current
+camera stamp is still written on every initial reservoir. Continuous camera
+motion and stopping therefore retain geometrically valid reprojected evidence;
+comparing the prior stamp to the current camera would incorrectly reset every
+moving frame. First use, frame-zero reset, mismatched source camera/projection,
+and resizing reject history; decay 0 uses current evidence only.
+
+A discontinuous camera cut is an explicit driver operation: call
+`tracer.reset()` to reset direction history. That API only resets PathTracer's
+frame counter in this pinned Falcor version; it is not a full lighting-reservoir
+reset. To restart both histories, remove the old graph and construct a new
+PathTracer graph with matching options and camera. Ordinary continuous movement
+must not call either reset. See the [trajectory preview guide](../../scenes/trajectories/README.md).
+
+This follows the paper's use of temporally reprojected evidence, not a new claim
+that its single-bounce formulation solves multi-bounce motion. The PT moments
+can lag view-dependent lighting; strict surface checks also reduce confidence
+near disocclusions and triangle boundaries. The existing count/decay fallback
+remains in force. No glossy-lobe change detector or moving-light invalidation
+is introduced here.
 
 `B=0` means no direction evidence and falls back to `h=1`. Positive `B` with
 near-zero `|A/B|` represents cancelling directions and is fitted as uniform:
@@ -236,6 +255,55 @@ history count 9.192797. Primary/deep NEE and BSDF hits supplied evidence in
 at most 4.292e-6 (frame 12, pixel (10,40)), within float32 tolerance 1e-5.
 Recorded h times independently read pre-spatial M reproduced effective M exactly,
 and every observed output M matched workload cSum.
+
+## Continuous-camera validation (2026-11-16)
+
+The new motion check renders 28 frames: eight warmup, twelve lateral-motion,
+four stopped, explicit cut/reset and matching fresh state, then graph replacement
+and matching fresh state. It records actual poses and seeds, finite linear HDR,
+raw moments/count, and pre-spatial lighting confidence. Seeds are 0--23 for the
+first 24 frames, 24 for both cut oracles, and 25 for both replacement oracles.
+The observe profile uses the production similarity rule with diagnostic AOVs.
+
+```powershell
+$py = 'build/falcor/verify-env/Scripts/python.exe'
+$runtime = (& $py -B -m scripts.falcor.pdf_pt_runtime --source gltf-v3 --profile observe |
+  Select-Object -Last 1)
+& $py -B -m scripts.falcor.pdf_pt_motion_check `
+  --config experiments/configs/falcor-pt-spatial-comparison/bistro-interior-reference.json `
+  --runtime $runtime --output runs/pdf-pt-new/bistro-motion `
+  --width 320 --height 180 --motion-step .05
+```
+
+Use source `reference` for Classroom. Motion steps up to 0.05 scene units per
+frame are allowed; 0.05 corresponds to 1.5 scene units/s at 30 FPS. Diagnostic
+wall time includes compilation and is not GPU frame time.
+
+Records are retained under `runs/pt-4-trajectories-spatial-compare/validation/`. The 96x64
+Bistro trial `bistro-walking` did not pass the stricter per-moving-frame
+`h<1` diagnostic: five motion frames had no downweighted accepted pair.
+Direction and native lighting history still existed. This trial is retained;
+shader rejection rules were not relaxed. The same sequence at 320x180 passed,
+with active downweighting on every moving frame. Coarse-resolution acceptance
+is therefore a limitation to inspect, not evidence that all motion must reset.
+
+| Passing trial | Resolution | Step/frame | Minimum active h |
+| --- | --- | ---: | ---: |
+| `classroom` | 96x64 | 0.004 | 0.73770696 |
+| `classroom-walking` | 96x64 | 0.05 | 0.67569548 |
+| `bistro-walking-320` | 320x180 | 0.05 | 0.46329129 |
+
+For all three passing trials, all twelve moving frames retained direction evidence and
+native temporal lighting confidence (maximum pre-spatial M=21 on every such
+frame). Explicit cut/reset matched fresh A/B/count bitwise. Graph replacement
+matched fresh HDR, M/W/pHat, A/B and count bitwise across all pixels: maximum
+absolute differences and mismatching pixel counts were zero.
+
+These are bounded single-seed, static-geometry translation checks. They are not
+formal six-view measurements, full-trajectory quality comparisons, timing runs,
+or an unbiasedness test. CPU production-history tests also cover stale previous
+view/projection, resolution changes, invalid reprojection, and stopping. The
+fixed-view archive and its recorded runtime versions remain separate.
 
 ## Tests and limits
 

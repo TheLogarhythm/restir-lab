@@ -6,6 +6,8 @@ numbers come from the running Mogwai script; reuse seeds are not inferred.
 The bounded graph-replacement check removes the used graph and constructs a
 new PathTracer. It compares all HDR pixels and M/W/pHat bits to a separate new
 graph with the same seed and native first-frame state (11 or 19 total frames).
+Camera-cut diagnostics explicitly call tracer.reset(); continuous camera motion
+retains reprojectable history and does not imply a camera-cut reset.
 """
 
 import argparse
@@ -53,7 +55,7 @@ def frame_plan(seed_offset=0, *, camera_cut=False):
         for index in range(6):
             step('cut-history', seed_offset + 100 + index,
                  label='before-cut' if index == 5 else None)
-        step('cut-history', seed_offset + 106, pose='cut', label='after-cut')
+        step('cut-history', seed_offset + 106, pose='cut', reset=True, label='after-cut')
         step('fresh-cut', seed_offset + 106, pose='cut', label='fresh-cut')
     return plan
 

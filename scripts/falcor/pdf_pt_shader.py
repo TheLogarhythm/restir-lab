@@ -146,13 +146,23 @@ float labPdfPairWeight(PathReservoir a, PathReservoir b)
         name = MODULE + 'ReSTIRPT.slang'
         anchor = '    void populateReservoir('
         change(name, anchor, """
-    uint labCameraStamp(uint2 frameDim)
+    uint labCameraStampForMatrix(uint2 frameDim, float4x4 viewProjMatNoJitter)
     {
         uint h = (2166136261u ^ frameDim.x) * 16777619u ^ frameDim.y;
         [unroll] for (int r = 0; r < 4; ++r)
             [unroll] for (int c = 0; c < 4; ++c)
-                h = (h ^ asuint(gScene.camera.data.viewProjMatNoJitter[r][c])) * 16777619u;
+                h = (h ^ asuint(viewProjMatNoJitter[r][c])) * 16777619u;
         return h;
+    }
+
+    uint labCameraStamp(uint2 frameDim)
+    {
+        return labCameraStampForMatrix(frameDim, gScene.camera.data.viewProjMatNoJitter);
+    }
+
+    uint labPreviousCameraStamp(uint2 frameDim)
+    {
+        return labCameraStampForMatrix(frameDim, gScene.camera.data.prevViewProjMatNoJitter);
     }
 
 """ + anchor)

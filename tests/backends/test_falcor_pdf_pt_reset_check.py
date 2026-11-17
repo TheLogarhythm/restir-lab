@@ -32,6 +32,8 @@ class PdfResetCheckTests(unittest.TestCase):
         extended = check.frame_plan(100, camera_cut=True)
         self.assertEqual(len(extended), 19)
         self.assertEqual(extended[-2]['pose'], 'cut')
+        self.assertTrue(extended[-2]['reset'])
+        self.assertFalse(extended[-1]['reset'])
         self.assertEqual(extended[-1]['pose'], 'cut')
         self.assertEqual(extended[-2]['path_seed'], extended[-1]['path_seed'])
         self.assertNotEqual(extended[-2]['graph'], extended[-1]['graph'])

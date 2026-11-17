@@ -17,6 +17,7 @@
 #endif
 
 using uint = std::uint32_t;
+using float4x4 = std::array<std::array<float,4>,4>;
 using std::isfinite;
 using std::max;
 
@@ -92,7 +93,8 @@ struct Scene {
     struct Camera {
         struct Data {
             float3 posW={0,0,0};
-            float viewProjMatNoJitter[4][4]={};
+            float4x4 viewProjMatNoJitter={};
+            float4x4 prevViewProjMatNoJitter={};
         } data;
     } camera;
 } gScene;
@@ -133,7 +135,10 @@ PathReservoir sample;
 void reset() {
     params=Params{};
     gScene=Scene{};
-    for (int i=0;i<4;++i) gScene.camera.data.viewProjMatNoJitter[i][i]=1.f;
+    for (int i=0;i<4;++i) {
+        gScene.camera.data.viewProjMatNoJitter[i][i]=1.f;
+        gScene.camera.data.prevViewProjMatNoJitter[i][i]=1.f;
+    }
     currentHit=HitInfo{};
     previousHit=HitInfo{};
     currentShading=ShadingData{};
@@ -143,7 +148,7 @@ void reset() {
     kLabPdfDecay=.5f;
     kLabPdfHistoryLimit=20.f;
     sample=PathReservoir{};
-    sample.labCamera=labCameraStamp(params.frameDim);
+    sample.labCamera=restirpt.labCameraStamp(params.frameDim);
     PathReservoir prior;
     prior.labMoment={2,0,4,8};
     prior.labCount=6;
@@ -162,7 +167,7 @@ void check(float4 moment, float count, float3 mean) {
     assert(sample.labMoment.y/sample.labMoment.w==mean.y);
     assert(sample.labMoment.z/sample.labMoment.w==mean.z);
     assert(sample.M==7 && sample.weight==11);
-    assert(sample.labCamera==labCameraStamp(params.frameDim));
+    assert(sample.labCamera==restirpt.labCameraStamp(params.frameDim));
 }
 void printStatistics(const char* label) {
     const float4 m=sample.labMoment;
@@ -199,6 +204,46 @@ void updates() {
     assert(lastPrior==2 && lastPrevious.x==2 && lastPrevious.y==0);
     std::cout << "updates=5\n";
 }
+// Production compares the source frame to the camera that generated it.
+// A current-camera comparison incorrectly drops every moving-frame update.
+void continuousCamera() {
+    reset();
+    const uint originalStamp=sample.labCamera;
+    gScene.camera.data.viewProjMatNoJitter[0][3]=.125f;
+    gScene.camera.data.posW.x=.125f;
+    sample.labCamera=restirpt.labCameraStamp(params.frameDim);
+    assert(sample.labCamera!=originalStamp);
+    motion={.25f,-.25f};
+    prevReservoirs.values[5].labCount=0;
+    labCombineHistory(pixel,sample);
+    check({2,2,2,8},4,{.25f,.25f,.25f});
+    assert(lastPrior==2 && lastPrevious.x==2 && lastPrevious.y==0);
+    printStatistics("moving");
+
+    // Use the moving frame as the source of the next frame. Camera projection
+    // may evolve continuously too; validity is based on its previous matrix.
+    prevReservoirs.values.fill(sample);
+    gScene.camera.data.prevViewProjMatNoJitter=gScene.camera.data.viewProjMatNoJitter;
+    gScene.camera.data.viewProjMatNoJitter[0][3]=.25f;
+    gScene.camera.data.viewProjMatNoJitter[1][1]=1.01f;
+    gScene.camera.data.posW.x=.25f;
+    sample=PathReservoir{};
+    sample.labCamera=restirpt.labCameraStamp(params.frameDim);
+    labCombineHistory(pixel,sample);
+    check({2,3,1,8},3,{.25f,.375f,.125f});
+    printStatistics("moving_again");
+
+    // Stopping at the last pose preserves the accumulated direction evidence.
+    prevReservoirs.values.fill(sample);
+    gScene.camera.data.prevViewProjMatNoJitter=gScene.camera.data.viewProjMatNoJitter;
+    motion={0,0};
+    sample=PathReservoir{};
+    sample.labCamera=restirpt.labCameraStamp(params.frameDim);
+    labCombineHistory(pixel,sample);
+    check({2,3.5f,.5f,8},2.5f,{.25f,.4375f,.0625f});
+    printStatistics("stopped");
+    std::cout << "continuous_updates=3\n";
+}
 int rejected=0;
 void rejects(const char* name, const std::function<void()>& edit) {
     reset(); edit();
@@ -227,14 +272,22 @@ void rejections() {
     rejects("near_camera_wrong_depth",[]{
         currentShading.posW={0,0,0}; previousShading.posW={0,0,.00002f};
     });
-    rejects("camera_stamp_changed",[]{
-        gScene.camera.data.viewProjMatNoJitter[0][3]=1.f;
-        uint old=sample.labCamera; sample.labCamera=labCameraStamp(params.frameDim);
-        assert(sample.labCamera!=old);
+    rejects("previous_camera_stamp_mismatch",[]{
+        // Prior matches current, but not the camera that should have produced it.
+        gScene.camera.data.prevViewProjMatNoJitter[0][3]=1.f;
     });
+    rejects("previous_projection_stamp_mismatch",[]{
+        gScene.camera.data.prevViewProjMatNoJitter[1][1]=1.01f;
+    });
+    rejects("explicit_cut_reset",[]{
+        gScene.camera.data.viewProjMatNoJitter[0][3]=10.f;
+        sample.labCamera=restirpt.labCameraStamp(params.frameDim);
+        params.frameCount=0;
+    });
+    assert(motionReads==0 && priorReads==0);
     rejects("resolution_stamp_changed",[]{
         params.frameDim={8,4}; uint old=sample.labCamera;
-        sample.labCamera=labCameraStamp(params.frameDim); assert(sample.labCamera!=old);
+        sample.labCamera=restirpt.labCameraStamp(params.frameDim); assert(sample.labCamera!=old);
     });
     rejects("negative_reprojection",[]{motion.x=-1.f;}); assert(priorReads==0);
     rejects("outside_reprojection",[]{motion.y=1.f;}); assert(priorReads==0);
@@ -258,7 +311,8 @@ void rejections() {
 }
 int main(int argc, char** argv) {
     assert(argc==2);
-    if (std::string(argv[1])=="updates") updates();
+    if (std::string(argv[1])=="continuous_camera") continuousCamera();
+    else if (std::string(argv[1])=="updates") updates();
     else if (std::string(argv[1])=="rejections") rejections();
     else return 2;
 }
