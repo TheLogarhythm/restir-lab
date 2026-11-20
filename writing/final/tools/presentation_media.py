@@ -92,13 +92,14 @@ def _receipt_entry(root: Path, repo: Path, reference: dict, receipt_path: Path) 
     overlays = output.with_suffix('.ass')
     # ASS is a rebuild input, not a slide asset. Portable cores need only the
     # referenced MP4/poster and pinned receipt; check ASS too when it is retained.
-    if overlays.is_file():
+    if overlays.is_file() and 'ass_sha256' in receipt:
         _check_file(overlays, receipt['ass_sha256'], 'overlay')
     probe = receipt['probe']
     try:
-        correct = ((probe['width'], probe['height'], probe['r_frame_rate'], probe['avg_frame_rate'],
+        frames = receipt.get('frame_count', 300)
+        correct = (type(frames) is int and frames > 0 and (probe['width'], probe['height'], probe['r_frame_rate'], probe['avg_frame_rate'],
                     int(probe['nb_read_frames']), float(probe['duration']), probe['codec_name'], probe['pix_fmt'])
-                   == (1920, 1080, '30/1', '30/1', 300, 10.0, 'h264', 'yuv420p'))
+                   == (1920, 1080, '30/1', '30/1', frames, frames / 30, 'h264', 'yuv420p'))
     except (KeyError, TypeError, ValueError):
         correct = False
     if not correct:
@@ -113,7 +114,8 @@ def _receipt_entry(root: Path, repo: Path, reference: dict, receipt_path: Path) 
     return {'scene': receipt['scene'], 'path': reference['path'],
             'sha256': receipt['output_sha256'], 'bytes': output.stat().st_size,
             'poster': {'path': reference['poster'], 'sha256': receipt['poster_sha256'], 'bytes': poster.stat().st_size},
-            'overlays': {'path': overlays.relative_to(root.resolve()).as_posix(), 'sha256': receipt['ass_sha256']},
+            **({'overlays': {'path': overlays.relative_to(root.resolve()).as_posix(),
+                              'sha256': receipt['ass_sha256']}} if 'ass_sha256' in receipt else {}),
             'receipt': {'path': receipt_path.resolve().relative_to(root.resolve()).as_posix(), 'sha256': digest(receipt_path)},
             'probe': probe, 'full_decode_verification': decoded}
 
@@ -178,7 +180,8 @@ def presentation_inputs(root: Path = ROOT, *, repo: Path | None = None) -> dict:
     index = load_current_media(root, repo=repo)
     entries = {entry['path']: entry for entry in index['entries']}
     videos = [{**ref, 'path': str(local_path(root, ref['path'])),
-               'poster': str(local_path(root, ref['poster'])), 'sha256': entries[ref['path']]['sha256']}
+               'poster': str(local_path(root, ref['poster'])), 'sha256': entries[ref['path']]['sha256'],
+               'duration': float(entries[ref['path']]['probe']['duration'])}
               for ref in index['source_references']]
     return {'slides': len(deck_slides(root, 'final')),
             'decks': [{'deck': deck, 'slides': len(deck_slides(root, deck))} for deck in DECKS],

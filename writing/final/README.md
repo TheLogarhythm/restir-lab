@@ -6,16 +6,17 @@ The English final deck keeps the previous Marp source structure and adopts the v
 
 Open **`final.html`** in Chrome or Edge, then enter fullscreen. Arrow keys advance slides; native video controls allow pausing. Only the active slide's video plays. Each demo is a synchronized three-method comparison with full views and identical magnified crops. The magenta rectangles identify the crops. Videos retain 1× speed and 30 FPS playback; GPU FPS is a separate recorded measurement.
 
-The main deck has **15 slides** and a **4:30 rehearsal target**, including **2:00 of demos**. This is a timing plan, not a measured presentation recording. Each original ten-second trajectory loops three times within its thirty-second slot; it does not become a longer camera path. The presenter advances after the third loop. There is no automatic slide advancement.
+The main deck has **17 slides** and a **4:40 rehearsal target**. Media starts when its slide opens and plays once. Advance on the rehearsal cues. The two Bistro comparisons run for 14 seconds with two 2-second holds each. Zero Day and Classroom run continuously for 10 seconds. The final NRD montage plays the four complete 10-second routes in sequence.
 
 | Slides | Time | Content |
 | --- | --- | --- |
-| 1 | 0:00–0:08 | Title and project question |
-| 2–4 | 0:08–0:55 | Integration, PDF PT adaptation and CGNS |
-| 5–9 | 0:55–2:15 | Quality, Emerald visuals, Classroom local failure, covariance, GPU costs |
-| 10–13 | 2:15–4:15 | Four trajectory demos; 30 seconds each |
-| 14 | 4:15–4:27 | Conclusions |
-| 15 | 4:27–4:30 | Thanks |
+| 1 | 0:00–0:08 | Title |
+| 2 | 0:08–0:25 | The Bistro Exterior shadow boundary |
+| 3–5 | 0:25–1:12 | Pipeline, PDF Similarity and CGNS |
+| 6–10 | 1:12–2:28 | Fixed-view results and GPU cost |
+| 11–14 | 2:28–3:34 | Four three-method trajectory comparisons |
+| 15 | 3:34–4:17 | Four final renders with CGNS and NRD |
+| 16–17 | 4:17–4:40 | Takeaways and thanks |
 
 The separate **`appendix.html`** contains seven backup slides: full quality table, stage costs, covariance, temporal ablation, a local CGNS failure, validation limits and full resources. It is outside the timed presentation. PDF versions in `build/` use static video posters; **use HTML for the demo**, not PDF. The full speaker notes live in the main Markdown, and `build/rehearsal-script.md` extracts the spoken paragraphs and timing cues.
 
@@ -27,7 +28,7 @@ The separate **`appendix.html`** contains seven backup slides: full quality tabl
 - `source/playback.js`: active-slide video control, without changing playback speed.
 - `assets/diagrams/`: generated explanatory SVGs. The separately credited CGNS paper excerpt has provenance in `data/cgns-figure2.json`.
 - `assets/figures/`: derived static charts, error maps and scene images. Inputs and processing hashes: `data/figures.json`.
-- `assets/videos/`: current four `*-course-v2.mp4` comparisons and matching posters. `data/current-media.json` binds them to the exact source references and per-scene derivation receipts. `data/media.json` records the earlier presentation style; it is historical provenance, not the current selection.
+- `assets/videos/` contains four FPS comparisons, the CGNS + NRD montage and their posters. `data/current-media.json` pins the active assets. The `*-course-v2` files and receipts preserve the previous course presentation media.
 - `data/`: current asset selection and immutable derivation/source receipts.
 - `templates/handoff/`: English handoff documentation and a thin wrapper around the same build entry point used in the repository.
 - `tools/`: reproducible build and validation scripts.
@@ -61,8 +62,8 @@ The default build only renders existing sources/assets; it does not rewrite the 
 
 ## How the staff feedback is addressed
 
-1. **Subtle differences:** slide 6 uses same-scale signed error-change maps; every demo adds synchronized magnified regions. No denoising, grayscale substitution or per-method exposure adjustment was introduced.
-2. **Judgment and surprises:** slides 5–9 and 14 recommend CGNS for the tested workload, explain the extra cost, expose PDF's Emerald regression and show that temporal/spatial covariance move in opposite directions. The appendix adds a local Classroom regression despite CGNS's whole-scene gain.
+1. **Subtle differences:** slide 6 uses same-scale signed error-change maps; every demo adds synchronized magnified regions. The three-method clips show pre-denoise images on the same display transform. The final montage shows CGNS followed by NRD.
+2. **Judgment and surprises:** slides 6–10 and 16 recommend CGNS for the tested workload, explain the extra cost, expose PDF's Emerald regression and show that temporal/spatial covariance move in opposite directions. The appendix adds a local Classroom regression despite CGNS's whole-scene gain.
 3. **Benefits and failure cases:** the report should retain both improvements and regressions, distinguish relative percentages from percentage points, and separate observations from causal hypotheses. The PDF first-hop representation may lose transport information, but the stored images do not diagnose the regression. Do not turn matching-settings results into equal-time superiority or unbiasedness claims.
 
 Scene attributions and method citations appear in appendix A7. The diagrams are project-authored schematics, and all plotted experiment values are project measurements. No published paper results are presented as our own.
@@ -71,11 +72,11 @@ Expanded result panels are rebuilt by `tools/build_results_panels.py`; source/ou
 
 ## Submission and data handoff
 
-Use `build/final-with-videos.pptx` for PowerPoint submission. MP4s are embedded, with automatic playback and looping on the four demo slides. Non-video pages preserve Marp layout as full-slide images; edit their content in `source/final.md` and rebuild. This is a presentation copy, not a fully editable native-text PowerPoint deck. `build/final.pdf` uses static video posters and does not contain playable video. Keep HTML plus its assets for the browser version.
+Use `build/final-with-videos.pptx` for PowerPoint submission. Five MP4s are embedded with automatic one-pass playback. Non-video pages preserve Marp layout as full-slide images; edit their content in `source/final.md` and rebuild. This is a presentation copy, not a fully editable native-text PowerPoint deck. `build/final.pdf` uses static video posters and does not contain playable video. Keep HTML plus its assets for the browser version.
 
 The retained six-view archive contains CSV statistics, display PNGs, error/covariance arrays and reproducible figure scripts. Full method HDR frames have been retired. CSVs and arrays support replots, crop changes and analysis of the stored metric definitions; display PNGs do not support recomputing arbitrary scene-linear HDR metrics, changing luminance epsilon, or reconstructing the original path reservoirs. Finite 16384-spp references have no independent reference-covariance estimate. Motion videos are qualitative; there is no trajectory reference or motion SMAPE ground truth. Presentation crops selected for observed gains are illustrative, not unbiased scene samples. GPU timing is measured without image export; stage events can be nested.
 
 
 ## Package a reporting handoff
 
-Run `python -B writing/final/tools/package_handoff.py --output build/handoffs/NEW-NAME` after checking the exported deck. The output directory must not exist. This command creates a new main bundle and optional original-video bundle, then verifies their extracted checksums. It does not run at module import. The package's `tools/build_slides.ps1` delegates to `writing/final/tools/build.ps1`; no second build implementation is embedded in the packager. Templates live in `templates/handoff/`. The package includes the current index's pinned media receipts (including selected `build/media-receipts/` files) and available ASS overlay sources. Playback verification needs the four current MP4s, posters and receipts; rebuilding media additionally needs the original twelve videos and their timing records. This is an editing/reporting bundle, not a complete renderer installation.
+Run `python -B writing/final/tools/package_handoff.py --output build/handoffs/NEW-NAME` after checking the exported deck. The output directory must not exist. This command creates a new main bundle and optional original-video bundle, then verifies their extracted checksums. It does not run at module import. The package's `tools/build_slides.ps1` delegates to `writing/final/tools/build.ps1`; no second build implementation is embedded in the packager. Templates live in `templates/handoff/`. The package includes the current index's pinned media receipts (including selected `build/media-receipts/` files) and available ASS overlay sources. Playback verification needs the five current MP4s, posters and receipts. A full media rebuild uses the original trajectory footage and timings, the reviewed Bistro previews in build/presentation-preview-20261119, and the retained CGNS + NRD videos in the experiment runs. This is an editing/reporting bundle, not a complete renderer installation.

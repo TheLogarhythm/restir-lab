@@ -1,0 +1,52 @@
+{
+  "scene": "bistro-interior",
+  "sources": [
+    {
+      "path": "writing/final/build/presentation-preview-20261119/bistro-interior-fps-2s-7s.mp4",
+      "sha256": "935c36bc79d2edbe00f41d341bbc8aed58ce00d221bfe5ffbb1b445766c45c91"
+    }
+  ],
+  "frame_count": 420,
+  "hold_source_frames": [
+    60,
+    210
+  ],
+  "hold_added_frames": 60,
+  "output": "writing/final/assets/videos/bistro-interior-fps.mp4",
+  "output_sha256": "935c36bc79d2edbe00f41d341bbc8aed58ce00d221bfe5ffbb1b445766c45c91",
+  "poster": "writing/final/assets/videos/bistro-interior-fps.png",
+  "poster_sha256": "598972b0a4b2e9a9b5f0e38260df6d6ebc80ebf635c4952d0ee4bf47bdf04b3b",
+  "probe": {
+    "codec_name": "h264",
+    "width": 1920,
+    "height": 1080,
+    "pix_fmt": "yuv420p",
+    "r_frame_rate": "30/1",
+    "avg_frame_rate": "30/1",
+    "duration": "14.000000",
+    "nb_read_frames": "420"
+  },
+  "decode": {
+    "command": [
+      "ffmpeg",
+      "-hide_banner",
+      "-v",
+      "error",
+      "-nostdin",
+      "-xerror",
+      "-err_detect",
+      "explode",
+      "-i",
+      "writing/final/assets/videos/bistro-interior-fps.mp4",
+      "-map",
+      "0:v:0",
+      "-an",
+      "-f",
+      "null",
+      "-"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "all_frames_decoded": true
+  }
+}

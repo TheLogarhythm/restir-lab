@@ -1,0 +1,61 @@
+{
+  "scene": "cgns-nrd-results",
+  "sources": [
+    {
+      "path": "runs/pt-denoiser-showcase-20261119/bistro-interior-nrd/bistro-interior-cgns-nrd.mp4",
+      "sha256": "94db7c642bff23803530a388fbcae245c9adf3db6cca881e0616e73ffafc486a"
+    },
+    {
+      "path": "runs/bistro-exterior-cgns-nrd-preview-20261119/bistro-exterior-cgns-nrd.mp4",
+      "sha256": "d5f80d3decc431e9507e6b56588eda8a570382ae295a33c024f833e6c1358db4"
+    },
+    {
+      "path": "runs/pt-denoiser-showcase-20261119/zero-day-nrd/zero-day-cgns-nrd.mp4",
+      "sha256": "05e38f9a2640f130b545695ef93643454cff442ddb09492d12b6455e23fbe1a3"
+    },
+    {
+      "path": "runs/pt-denoiser-showcase-20261119/classroom-nrd/classroom-cgns-nrd.mp4",
+      "sha256": "65e2ff5c276e27b9706a84e652ee6d0aad753ec099bc23fb24c136976928911f"
+    }
+  ],
+  "frame_count": 1200,
+  "hold_source_frames": [],
+  "hold_added_frames": 0,
+  "output": "writing/final/assets/videos/cgns-nrd-results.mp4",
+  "output_sha256": "ff93d80e11d81a16dc056d0637c177bcdc2f88ecaaf46f7ce6e095707c4db752",
+  "poster": "writing/final/assets/videos/cgns-nrd-results.png",
+  "poster_sha256": "c00bf41abf79b7ef04e601afe8b8c79019fe3004bc3a7a18e47c5f41d7f32709",
+  "probe": {
+    "codec_name": "h264",
+    "width": 1920,
+    "height": 1080,
+    "pix_fmt": "yuv420p",
+    "r_frame_rate": "30/1",
+    "avg_frame_rate": "30/1",
+    "duration": "40.000000",
+    "nb_read_frames": "1200"
+  },
+  "decode": {
+    "command": [
+      "ffmpeg",
+      "-hide_banner",
+      "-v",
+      "error",
+      "-nostdin",
+      "-xerror",
+      "-err_detect",
+      "explode",
+      "-i",
+      "writing/final/assets/videos/cgns-nrd-results.mp4",
+      "-map",
+      "0:v:0",
+      "-an",
+      "-f",
+      "null",
+      "-"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "all_frames_decoded": true
+  }
+}

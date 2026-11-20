@@ -28,7 +28,7 @@
   addEventListener('load', sync);
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) videos.forEach(v => v.pause());
-    else if (active) active.play().catch(() => {});
+    else if (active && !active.ended) active.play().catch(() => {});
   });
   sync();
 })();

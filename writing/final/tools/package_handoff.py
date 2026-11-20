@@ -73,6 +73,8 @@ def package(root, output):
     index = json.loads((final_root / 'data/current-media.json').read_text(encoding='utf-8-sig'))
     for entry in index['entries']:
         for key in ('receipt', 'overlays'):
+            if key == 'overlays' and key not in entry:
+                continue
             source = (final_root / entry[key]['path']).resolve()
             if not source.is_relative_to(final_root):
                 raise ValueError('Escaping current media dependency: ' + str(source))

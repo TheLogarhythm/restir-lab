@@ -31,10 +31,16 @@ def verify():
         count = len(re.findall(r"\b[\w'-]+\b", words))
         schedule.append({'slide': number, 'start_seconds': start, 'end_seconds': end,
                          'spoken_words': count, 'demo': number in demo_slides})
-        spoken.append(f'## Slide {number} | {line}\n\n{words}\n\n' + '\n\n'.join(rest))
-    assert last == 270, last
+        spoken.append(f'## Slide {number} · {line.split(" | ", 1)[0]}\n\n{words}\n\n' + '\n\n'.join(rest))
+    assert last == 280, last
     demo_seconds = sum(row['end_seconds'] - row['start_seconds'] for row in schedule if row['demo'])
-    assert demo_seconds == 120, demo_seconds
+    durations = {entry['path']: float(entry['probe']['duration']) for entry in media['entries']}
+    for ref in media['source_references']:
+        if ref['deck'] == 'final':
+            slot = schedule[ref['slide'] - 1]
+            assert slot['end_seconds'] - slot['start_seconds'] >= durations[ref['path']], ref
+            assert ' loop ' not in slides[ref['slide'] - 1], ref
+    assert demo_seconds == 109, demo_seconds
     links = []
     for deck in DECKS:
         source = ROOT / 'source' / f'{deck}.md'
@@ -72,7 +78,7 @@ def verify():
     build.mkdir(parents=True, exist_ok=True)
     (build / 'verification.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
     (build / 'rehearsal-script.md').write_text(
-        '# Final presentation rehearsal script\n\nTarget: 4:30 including 2:00 demo. Rehearse before recording.\n\n'
+        '# Speech manuscript\n\nRehearsal target **4:40**. Speak the prose. The cues give slide changes and video landmarks.\n\n'
         + '\n\n'.join(spoken) + '\n', encoding='utf-8')
     print(json.dumps({key: value for key, value in record.items() if key not in ('schedule', 'asset_hashes')}))
 

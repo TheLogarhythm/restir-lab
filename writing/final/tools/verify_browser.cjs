@@ -106,13 +106,13 @@ function browserExecutable() {
           }, {timeout: 30000});
           const state = await page.evaluate(() => [...document.querySelectorAll('video')].map(video => ({
             src: video.src, paused: video.paused, time: video.currentTime, rate: video.playbackRate,
-            error: video.error?.message || null, width: video.videoWidth, height: video.videoHeight, duration: video.duration
+            error: video.error?.message || null, width: video.videoWidth, height: video.videoHeight, duration: video.duration, loop: video.loop
           })));
           if (state.filter(video => !video.paused).length !== expectedVideos.length) results.errors.push(`${deck} slide ${i}: hidden video playing`);
           if (state.some(video => video.rate !== 1 || video.error)) results.errors.push(`${deck} slide ${i}: invalid video rate or error`);
           for (const expected of expectedVideos) {
             const active = state.find(video => video.src === pathToFileURL(expected.path).href);
-            if (!active || active.width !== 1920 || active.height !== 1080 || active.duration !== 10) results.errors.push(`${deck} slide ${i}: unexpected video dimensions/duration`);
+            if (!active || active.width !== 1920 || active.height !== 1080 || active.duration !== expected.duration || active.loop) results.errors.push(`${deck} slide ${i}: unexpected video dimensions/duration`);
           }
           results.videos.push({deck, slide: i, clips: expectedVideos.length, state});
           await page.evaluate(() => { for (const video of document.querySelectorAll('.bespoke-marp-active video')) { video.pause(); video.currentTime = 0; } });

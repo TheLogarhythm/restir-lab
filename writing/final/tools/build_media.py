@@ -46,14 +46,14 @@ def run(command: list[str], capture: bool = False):
                           capture_output=capture)
 
 
-def probe(path: Path) -> dict:
+def probe(path: Path, frames: int = 300) -> dict:
     command = ['ffprobe', '-v', 'error', '-select_streams', 'v:0', '-count_frames',
                '-show_entries', 'stream=width,height,r_frame_rate,avg_frame_rate,nb_read_frames,duration,codec_name,pix_fmt',
                '-of', 'json', relative(path)]
     info = json.loads(run(command, True).stdout)['streams'][0]
-    expected = (WIDTH, HEIGHT, '30/1', '30/1', '300')
+    expected = (WIDTH, HEIGHT, '30/1', '30/1', str(frames))
     actual = tuple(info[k] for k in ('width', 'height', 'r_frame_rate', 'avg_frame_rate', 'nb_read_frames'))
-    if actual != expected or abs(float(info['duration']) - 10.0) > 1e-6:
+    if actual != expected or abs(float(info['duration']) - frames / FPS) > 1e-6:
         raise ValueError(f'Unexpected video format: {path}: {info}')
     return info
 
@@ -290,7 +290,17 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.force and (args.check or args.index_only or args.describe or args.pptx_inputs):
         parser.error('--force is only available when building media')
-    if args.index_only:
+    timed = any(ref['path'].endswith('/cgns-nrd-results.mp4')
+                for ref in current.source_references(ROOT))
+    if timed and not (args.check or args.index_only or args.describe or args.pptx_inputs):
+        from build_timed_media import build as build_timed
+        index = build_timed(args.scene, args.force)
+        print(json.dumps({'current_videos': len(index['entries']), 'renderer_launched': False}))
+        return
+    if args.index_only and timed:
+        index = current.create_index(ROOT)
+        write_json(ROOT / current.INDEX, index)
+    elif args.index_only:
         index = index_existing()
     else:
         # A build can restore a missing output; read-only modes require all assets.

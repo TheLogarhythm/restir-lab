@@ -722,3 +722,63 @@ section {
   line-height: 1.2;
   margin-bottom: 6px;
 }
+
+
+section.motivation h2 {
+  position: absolute;
+  top: 27px;
+  left: 58px;
+  right: 58px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+section.motivation h2::before {
+  flex: 0 0 24px;
+  margin-right: 0;
+}
+section.motivation .motivation-prefix {
+  color: #9c4d26;
+  border-right: 1px solid #d4bfa9;
+  padding-right: 13px;
+}
+section.motivation .motivation-layout {
+  display: grid;
+  grid-template-columns: 1.65fr 1fr;
+  gap: 44px;
+  align-items: center;
+  margin-top: 85px;
+}
+section.motivation figure img {
+  border: 1px solid #e4d7c9;
+  border-radius: 4px;
+}
+section.motivation .motivation-details p {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+section.motivation .motivation-details strong {
+  display: inline-grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #30231d;
+  color: white;
+  font-size: 20px;
+}
+section.motivation .motivation-details strong.marker-b {
+  background: #ac4e24;
+}
+section.motivation .motivation-question {
+  margin-top: 38px;
+  padding-top: 17px;
+  border-top: 2px solid #e4d7c9;
+  font-size: 29px;
+  font-weight: 700;
+  line-height: 1.23;
+}

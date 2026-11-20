@@ -1,0 +1,64 @@
+{
+  "scene": "zero-day",
+  "sources": [
+    {
+      "path": "writing/final/assets/videos/zero-day-course-v2.mp4",
+      "sha256": "54f833932373849b892921c3635b757f820accff99b73e4cc5a6eaa3621a4066"
+    },
+    {
+      "path": "runs/pt-4-trajectories-spatial-compare/zero-day/baseline/encode/gpu-frame-timings.json",
+      "sha256": "9e2cfc707f7a98ce412890980717b3506a29bb26b86b681522d4f8d2a548d6f8",
+      "bytes": 831869
+    },
+    {
+      "path": "runs/pt-4-trajectories-spatial-compare/zero-day/pdf-similarity/encode/gpu-frame-timings.json",
+      "sha256": "da9542ba522151f13800322d6185ea6564badfdd3ade4335fc47de49f39975fe",
+      "bytes": 832229
+    },
+    {
+      "path": "runs/pt-4-trajectories-spatial-compare/zero-day/cgns/encode/gpu-frame-timings.json",
+      "sha256": "dd623f64d8d4bcff544ba9bf9449e89aca6253e474e65b10e15ba5926d5e7b27",
+      "bytes": 929869
+    }
+  ],
+  "frame_count": 300,
+  "hold_source_frames": [],
+  "hold_added_frames": 0,
+  "output": "writing/final/assets/videos/zero-day-fps.mp4",
+  "output_sha256": "ef97eef0729cb8f7cb1044e9cb293f01003bb4a6da672426da180a3ced2827b5",
+  "poster": "writing/final/assets/videos/zero-day-fps.png",
+  "poster_sha256": "fc815bf599b90dc4a3c655be82b2e0777a5c331efd49dd51c3875538a816b106",
+  "probe": {
+    "codec_name": "h264",
+    "width": 1920,
+    "height": 1080,
+    "pix_fmt": "yuv420p",
+    "r_frame_rate": "30/1",
+    "avg_frame_rate": "30/1",
+    "duration": "10.000000",
+    "nb_read_frames": "300"
+  },
+  "decode": {
+    "command": [
+      "ffmpeg",
+      "-hide_banner",
+      "-v",
+      "error",
+      "-nostdin",
+      "-xerror",
+      "-err_detect",
+      "explode",
+      "-i",
+      "writing/final/assets/videos/zero-day-fps.mp4",
+      "-map",
+      "0:v:0",
+      "-an",
+      "-f",
+      "null",
+      "-"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "all_frames_decoded": true
+  }
+}

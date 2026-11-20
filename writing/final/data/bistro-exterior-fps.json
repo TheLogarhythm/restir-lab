@@ -1,0 +1,52 @@
+{
+  "scene": "bistro-exterior",
+  "sources": [
+    {
+      "path": "writing/final/build/presentation-preview-20261119/bistro-exterior-fps-pauses.mp4",
+      "sha256": "45f1579f1f4a80ed288bec03fefa37c4371c93b2b9cee1fc961e8d2783a093de"
+    }
+  ],
+  "frame_count": 420,
+  "hold_source_frames": [
+    190,
+    299
+  ],
+  "hold_added_frames": 60,
+  "output": "writing/final/assets/videos/bistro-exterior-fps.mp4",
+  "output_sha256": "45f1579f1f4a80ed288bec03fefa37c4371c93b2b9cee1fc961e8d2783a093de",
+  "poster": "writing/final/assets/videos/bistro-exterior-fps.png",
+  "poster_sha256": "6fb2d4e72182f26742673ed446c496c8c4a8603c2ac2e5e0ed7f126aed5e53ad",
+  "probe": {
+    "codec_name": "h264",
+    "width": 1920,
+    "height": 1080,
+    "pix_fmt": "yuv420p",
+    "r_frame_rate": "30/1",
+    "avg_frame_rate": "30/1",
+    "duration": "14.000000",
+    "nb_read_frames": "420"
+  },
+  "decode": {
+    "command": [
+      "ffmpeg",
+      "-hide_banner",
+      "-v",
+      "error",
+      "-nostdin",
+      "-xerror",
+      "-err_detect",
+      "explode",
+      "-i",
+      "writing/final/assets/videos/bistro-exterior-fps.mp4",
+      "-map",
+      "0:v:0",
+      "-an",
+      "-f",
+      "null",
+      "-"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "all_frames_decoded": true
+  }
+}

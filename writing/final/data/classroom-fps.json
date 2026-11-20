@@ -1,0 +1,64 @@
+{
+  "scene": "classroom",
+  "sources": [
+    {
+      "path": "writing/final/assets/videos/classroom-course-v2.mp4",
+      "sha256": "0a0b3a0e1ab89afed7b50c5ce8fefd113cff85da94737f7c4267fa6eeb0874e0"
+    },
+    {
+      "path": "runs/pt-4-trajectories-spatial-compare/classroom/baseline/encode/gpu-frame-timings.json",
+      "sha256": "fd95cd97d47a482a6bab76b7c70dc77b844b67e865185be3806958eb40130a1e",
+      "bytes": 833761
+    },
+    {
+      "path": "runs/pt-4-trajectories-spatial-compare/classroom/pdf-similarity/encode/gpu-frame-timings.json",
+      "sha256": "66475e3b6a1f07e800fba571b6f6bd4b61c479793d9c686b0adcdbe11cca4618",
+      "bytes": 833366
+    },
+    {
+      "path": "runs/pt-4-trajectories-spatial-compare/classroom/cgns/encode/gpu-frame-timings.json",
+      "sha256": "bf6beb595fa8641ae0c877837aaa1b4a2c0b3d7627dc7bccc38379b6a9f56232",
+      "bytes": 931444
+    }
+  ],
+  "frame_count": 300,
+  "hold_source_frames": [],
+  "hold_added_frames": 0,
+  "output": "writing/final/assets/videos/classroom-fps.mp4",
+  "output_sha256": "6f8b81a98c5684ccf9aa4ed281a14ab817c7ff99b046c3bde8ea6856153acebc",
+  "poster": "writing/final/assets/videos/classroom-fps.png",
+  "poster_sha256": "c4e7c5c4b83f743251a96d6783f0a019d7f501072e934d10b9015da065075daf",
+  "probe": {
+    "codec_name": "h264",
+    "width": 1920,
+    "height": 1080,
+    "pix_fmt": "yuv420p",
+    "r_frame_rate": "30/1",
+    "avg_frame_rate": "30/1",
+    "duration": "10.000000",
+    "nb_read_frames": "300"
+  },
+  "decode": {
+    "command": [
+      "ffmpeg",
+      "-hide_banner",
+      "-v",
+      "error",
+      "-nostdin",
+      "-xerror",
+      "-err_detect",
+      "explode",
+      "-i",
+      "writing/final/assets/videos/classroom-fps.mp4",
+      "-map",
+      "0:v:0",
+      "-an",
+      "-f",
+      "null",
+      "-"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "all_frames_decoded": true
+  }
+}

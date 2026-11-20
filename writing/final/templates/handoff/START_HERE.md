@@ -4,7 +4,7 @@ Group 7 — Luoyi Zhang and Zelin Gao. Snapshot: 17 November 2026.
 
 ## Start here
 
-1. Submit/present `presentation/final-with-videos.pptx` in desktop PowerPoint. It contains 15 slides and four embedded MP4s, with automatic looping on demo slides. Video playback was tested in PowerPoint on the source machine. Internet and external video paths are not needed. Uploaded web previews or other office applications may behave differently; download and rehearse in PowerPoint.
+1. Submit/present `presentation/final-with-videos.pptx` in desktop PowerPoint. It contains 17 slides and five embedded MP4s with automatic one-pass playback. Internet and external video paths are not needed. Uploaded web previews or other office applications may behave differently; download and rehearse in PowerPoint.
 2. PDFs in `presentation/` are static review copies. They cannot play the videos.
 3. Open `writing/final/final.html` in Chrome/Edge for the browser presentation. Keep its `source/playback.js` and `assets/` in their current relative locations. Four comparisons show the three methods simultaneously, with matching crops and authentic GPU timing overlays.
 4. Edit `writing/final/source/final.md` for slide content, layout and speaker notes. The submission PPTX preserves ordinary slides as full-page images; its text cannot be edited as individual PowerPoint paragraphs. The embedded video objects can be selected/replaced. A fully editable native-text PPTX is NOT included. PDF/PPTX/HTML exports are separate snapshots; rebuild after editing the Markdown.
@@ -41,6 +41,6 @@ Use `python -B tools/verify_handoff.py` to check packaged file hashes before edi
 
 This is an editing/reporting handoff, not a self-contained rendering installation. Large scene assets, renderer binaries/build trees, private runtimes, full reference EXRs and retired full method HDR are not included. Historical receipts remain provenance, not a promise that their original paths or inputs still exist. Do not claim the bundle can resume rendering or regenerate retired inputs.
 
-The target talk is 4:30 including 2:00 of demo. Fifteen main slides include a separate final thank-you page. Rehearse timing; it is a plan, not a measured final recording. The current report main.tex is still a course template containing placeholders, not a completed final report.
+The target talk is 4:40. See the speech manuscript for slide cues, the four comparisons and the 40-second CGNS + NRD montage. The current report main.tex is still a course template containing placeholders, not a completed final report.
 
 All original experiment files were copied, never modified. No commit or push was made. This snapshot includes uncommitted workspace changes; the recorded Git HEAD alone does not reproduce the snapshot. See provenance/source-state.json and checksums.sha256.

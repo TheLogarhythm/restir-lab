@@ -6,7 +6,7 @@ size: 16:9
 paginate: true
 title: "ReSTIR Spatial Reuse: Final Presentation"
 author: "Luoyi Zhang and Zelin Gao"
-description: "COMP5411 Group 7 | 4:30 rehearsal target | 16 November 2026"
+description: "COMP5411 Group 7 | 4:40 rehearsal target | 16 November 2026"
 ---
 
 <!-- _class: cover -->
@@ -23,9 +23,31 @@ description: "COMP5411 Group 7 | 4:30 rehearsal target | 16 November 2026"
 <!--
 0:00 to 0:08 | 8 seconds | rehearsal target
 
-We're Group Seven. We compare spatial reuse strategies for cleaner ReSTIR path tracing at a practical GPU cost.
+Hi everyone. We’re Group Seven, and we’re comparing three ways to reuse light paths in ReSTIR.
 
-Cue: Keep title, group and names visible. The images are our finite-sample references, used only to introduce the scenes.
+Cue — Advance at 0:08.
+-->
+
+---
+<!-- _class: motivation -->
+
+## <span class="motivation-prefix">Motivation</span> Nearby pixels can see different light
+
+<div class="motivation-layout">
+  <figure><img src="../assets/figures/bistro-shadow-boundary.png" alt="Bistro Exterior pavement. Marker A lies in shadow, and marker B nearby lies in direct sunlight."></figure>
+  <div class="motivation-details">
+    <p><strong class="marker-a">A</strong> In shadow</p>
+    <p><strong class="marker-b">B</strong> In direct sun</p>
+    <div class="motivation-question">Which neighboring pixel(s) to reuse?</div>
+  </div>
+</div>
+
+<!--
+0:08 to 0:25 | 17 seconds | rehearsal target
+
+At one sample per pixel, path tracing is noisy. Spatial reuse reduces that noise by borrowing paths already sampled at nearby pixels. But look at A and B. They’re right next to each other, on opposite sides of a shadow edge. That’s why the choice of neighbor matters.
+
+Cue — Point to A and B when you mention the shadow edge. Advance at 0:25.
 -->
 
 ---
@@ -42,11 +64,11 @@ Cue: Keep title, group and names visible. The images are our finite-sample refer
 <p class="foot overview-resources"><strong>Resources used:</strong> <a href="https://github.com/NVIDIA-RTX/RTXDI">RTXDI</a>, <a href="https://github.com/NVIDIAGameWorks/Falcor">Falcor</a>, <a href="https://github.com/orion-junkins/ReSTIR-CGNS">official CGNS implementation</a>; scene assets from NVIDIA ORCA, Blender, Bitterli and Beeple.<br><strong>Papers:</strong> <a href="https://benedikt-bitterli.me/restir/">Bitterli et al. [2020]</a> · <a href="https://graphics.cs.utah.edu/research/projects/gris/">Lin et al. [2022]</a> · <a href="https://doi.org/10.1145/3585501">Tokuyoshi [2023]</a> · <a href="https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/">Junkins et al. [2026]</a></p>
 
 <!--
-0:08 to 0:20 | 12 seconds | rehearsal target
+0:25 to 0:38 | 13 seconds | rehearsal target
 
-Since the checkpoint, we adapted PDF Similarity and CGNS to Falcor ReSTIR PT, with scene conversion, consistent reuse weights and a reproducible experiment harness.
+Since the checkpoint, we’ve moved from direct lighting in RTXDI to multi-bounce path tracing in Falcor. We compare ordinary reuse with our adaptations of PDF Similarity and CGNS.
 
-Cue: Point to the spatial stage, then summarize the challenges and delivered work. The roadmap name links to the public ReSTIR Explorer. Resources and foundational papers are linked along the bottom. Pipeline is a project-authored schematic.
+Cue — Point to the highlighted spatial reuse stage. The slide lists the implementation challenges. Advance at 0:38.
 -->
 
 ---
@@ -65,11 +87,11 @@ $$
 <p style="font-size:18px;text-align:center;margin:0;color:#69584b">S: distribution similarity · c: history confidence</p>
 
 <!--
-0:20 to 0:40 | 20 seconds | rehearsal target
+0:38 to 0:55 | 17 seconds | rehearsal target
 
-The original PDF method targets single-bounce connections. Our PT adaptation summarizes contribution-weighted first-hop directions with a vMF lobe. Comparing neighboring lobes scales the proposed neighbor's effective sample count. With insufficient history, ordinary reuse is restored.
+To adapt PDF Similarity to multi-bounce paths, we summarize the directions in which paths leave the first surface. We compare those distributions at neighboring pixels to decide how much the proposed neighbor should contribute.
 
-Cue: Follow the first orange segments, then compare the lobes. Later contributions retain their first direction leaving the visible surface. Similarity changes the influence of the already-proposed neighbor; native path shifting remains. S is similarity, c is joint history confidence. A vMF lobe is a smooth directional approximation.
+Cue — Follow the first segments in the diagram. Advance at 0:55.
 -->
 
 ---
@@ -99,11 +121,11 @@ $$
 <div class="cgns-bottom"><p class="cgns-selection"><strong>Weighted selection</strong><br>Sample neighbors in proportion to compatibility.</p><div class="cgns-definitions"><p><math><mi mathvariant="bold">n</mi><mo>,</mo><msub><mi mathvariant="bold">n</mi><mi>i</mi></msub></math>: primary-hit normals; <math><mi>d</mi><mo>,</mo><msub><mi>d</mi><mi>i</mi></msub></math>: camera distances.</p><p>Position scale: <math><mi>s</mi><mo>=</mo><mi>d</mi><msqrt><mfrac><mi>Ω</mi><mi>π</mi></mfrac></msqrt></math>. Defaults: <math><mi>Ω</mi><mo>=</mo><mn>0.05</mn></math>, <math><mi>β</mi><mo>=</mo><mn>8</mn></math>.</p></div></div>
 
 <!--
-0:40 to 0:55 | 15 seconds | rehearsal target
+0:55 to 1:12 | 17 seconds | rehearsal target
 
-CGNS samples a neighbor using continuous position-and-normal compatibility. Our adaptation caches geometry and the selected neighbor so all reuse stages share one choice.
+Ordinary reuse uses pass-or-fail checks. CGNS gives each candidate a compatibility score based on position and surface normal. Nearby surfaces with similar normals are more likely to support reuse of the same light path.
 
-Cue: Figure 2 and formulas describe the CGNS paper; the acceptance thresholds are the original 2020 criteria, not a claim of identical Falcor checks. Contrast choice of neighbor with PDF's weighting of the ordinary proposed neighbor. Compatibility is a probabilistic guide, not guaranteed visibility or lighting compatibility. Cache adds about 71.2 MiB at 1080p; not a free optimization. Figure 2 is an attributed author figure. Material compatibility motivated the analysis but was omitted from the final heuristic after no measurable benefit in the authors’ tested scenes; this is not a guarantee about all materials.
+Cue — Point to the candidate ranking and the selected neighbor. Advance at 1:12.
 -->
 
 ---
@@ -141,11 +163,11 @@ $Y$: rendered luminance; $Y^{\mathrm{ref}}$: reference luminance.
 
 
 <!--
-0:55 to 1:10 | 15 seconds | rehearsal target
+1:12 to 1:28 | 16 seconds | rehearsal target
 
-CGNS lowers mean SMAPE in all six views, by about four to twenty-three percent. PDF gives smaller gains and some regressions. These are matching-settings results over four seeds, not equal-time comparisons.
+With the same sampling settings, CGNS reduced mean image error in all six fixed views, by about four to twenty-three percent. PDF Similarity gave smaller gains and increased error in some views.
 
-Cue: Indicate the zero line and negative PDF bar. Near-zero Bistro Interior change is only 0.006%; don't sell it as a meaningful win. Four seed means are independent units; the 64 frames are correlated within seeds.
+Cue — Point to the zero line, then the range of CGNS bars. Advance at 1:28.
 -->
 
 ---
@@ -165,11 +187,11 @@ Cue: Indicate the zero line and negative PDF bar. Near-zero Bistro Interior chan
 </div></div>
 
 <!--
-1:10 to 1:30 | 20 seconds | rehearsal target
+1:28 to 1:44 | 16 seconds | rehearsal target
 
-Blue means lower error; red means higher error. Emerald shows the largest CGNS gain and PDF regression. A single directional lobe may lose useful structure, but these images cannot establish the cause.
+Emerald Square shows the biggest difference. Compared with ordinary reuse, CGNS reduced error by about twenty-three percent, while PDF Similarity increased it by about six percent. In this crop, CGNS looks closest to the reference.
 
-Cue: Use the color legend. Map units are percentage points; headline values are relative percentages. Emerald timing is excluded, so do not make a speed claim for this scene.
+Cue — Point to the blue and red regions. Advance at 1:44.
 -->
 
 ---
@@ -183,11 +205,11 @@ Cue: Use the color legend. Map units are percentage points; headline values are 
 <h3>Blackboard B regresses</h3><p>10.932% → 11.340%<br>SMAPE</p></div></div>
 
 <!--
-1:30 to 1:45 | 15 seconds | rehearsal target
+1:44 to 1:58 | 14 seconds | rehearsal target
 
-CGNS improves Classroom overall, but not every region. The selected region A improves strongly, while the blackboard strip gets slightly worse. These local examples show why a whole-scene average cannot tell the complete story.
+Classroom shows why we also look at individual regions. CGNS improves the view overall, and region A improves substantially. The blackboard strip marked B has a small increase in error.
 
-Cue: Identify the marked strips. Numerical values average four seeds and sixteen frames; RGB crops show one frame only. A is gain-selected, B reference-selected. Avoid claiming a causal explanation.
+Cue — Point to the two marked strips. Advance at 1:58.
 -->
 
 ---
@@ -220,11 +242,11 @@ $r_s=\frac{Y_s-\bar Y}{\bar Y+10^{-4}}$: normalized luminance deviation; $s$: se
 <p class="takeaway"><strong>Lower average error does not mean every noise characteristic improves.</strong></p>
 
 <!--
-1:45 to 2:00 | 15 seconds | rehearsal target
+1:58 to 2:11 | 13 seconds | rehearsal target
 
-Covariance measures how strongly noise varies together across frames or nearby pixels. CGNS lowers temporal covariance but raises spatial covariance in all six views. This is a tradeoff in noise structure, not a uniform reduction in correlation.
+Covariance tells us how strongly noise varies together. In all six fixed views, CGNS lowered covariance at the same pixel across frames and raised it between nearby pixels.
 
-Cue: Point to the zero lines. These are relative changes within scenes; do not rank absolute covariance across scenes or equate it with visible flicker. Four seeds limit precision.
+Cue — Point to the opposing sides of the zero line. Advance at 2:11.
 -->
 
 ---
@@ -241,71 +263,93 @@ Cue: Point to the zero lines. These are relative changes within scenes; do not r
 <p class="cost-note">Measured on an RTX 4060 Laptop GPU.</p></div></div>
 
 <!--
-2:00 to 2:15 | 15 seconds | rehearsal target
+2:11 to 2:28 | 17 seconds | rehearsal target
 
-CGNS costs around four to six percent extra GPU time; PDF costs more. Bistro Interior illustrates where time goes: initial sampling, temporal and spatial reuse. Ordinary reuse is cheapest; CGNS offers the strongest observed quality-cost tradeoff here.
+That quality gain comes at a cost. CGNS added about four to six percent to GPU frame time, and PDF Similarity added more. In Bistro Interior, most of the extra work for CGNS was in spatial reuse.
 
-Cue: All stage segments reconcile to full frame time. Initial sampling is the largest measured baseline high-level stage across five eligible views. Nested events must not be added twice. No equal-time superiority claim.
+Cue — Point to spatial reuse in the Bistro Interior breakdown. Advance at 2:28.
 -->
 
 ---
 <!-- _class: demo -->
 <!-- _paginate: false -->
 
-<video class="demo-video" muted playsinline controls loop preload="metadata" poster="../assets/videos/bistro-interior-course-v2.png" src="../assets/videos/bistro-interior-course-v2.mp4" aria-label="Bistro Interior synchronized three-method trajectory comparison"></video>
-<img class="print-poster" src="../assets/videos/bistro-interior-course-v2.png" alt="Bistro Interior demo poster">
+<video class="demo-video" muted playsinline controls preload="metadata" poster="../assets/videos/bistro-interior-fps.png" src="../assets/videos/bistro-interior-fps.mp4" aria-label="Bistro Interior"></video>
+<img class="print-poster" src="../assets/videos/bistro-interior-fps.png" alt="Bistro Interior poster">
 
 <!--
-2:15 to 2:45 | 30 seconds | demo1
+2:28 to 2:46 | 18 seconds | demo
 
-First, Bistro Interior uses our separate glTF runtime. Its fixed-view PDF result was almost unchanged. Watch the moving view without assuming it must show a large improvement, especially near newly visible surfaces where history confidence falls.
+Here’s Bistro Interior. The curves show GPU rendering rate along the same camera path.
+- First hold, about 2:30 — Look at the chair legs.
+- Second hold, about 2:37 — Now look at the chair back.
 
-Cue: Three complete 10-second loops. Do not claim a measured moving-view error ranking; no trajectory reference was rendered. The implementation preserves valid history through continuous camera motion and rejects invalid reprojections.
+Cue — Advance at 2:46.
 -->
 
 ---
 <!-- _class: demo -->
 <!-- _paginate: false -->
 
-<video class="demo-video" muted playsinline controls loop preload="metadata" poster="../assets/videos/bistro-exterior-course-v2.png" src="../assets/videos/bistro-exterior-course-v2.mp4" aria-label="Bistro Exterior synchronized three-method trajectory comparison"></video>
-<img class="print-poster" src="../assets/videos/bistro-exterior-course-v2.png" alt="Bistro Exterior demo poster">
+<video class="demo-video" muted playsinline controls preload="metadata" poster="../assets/videos/bistro-exterior-fps.png" src="../assets/videos/bistro-exterior-fps.mp4" aria-label="Bistro Exterior"></video>
+<img class="print-poster" src="../assets/videos/bistro-exterior-fps.png" alt="Bistro Exterior poster">
 
 <!--
-2:45 to 3:15 | 30 seconds | demo2
+2:46 to 3:04 | 18 seconds | demo
 
-Bistro Exterior is where both extensions improved fixed-view error, with a larger gain for CGNS. Watch how detail and noise change as the camera passes geometry. The crops use the same coordinates and display transform for all methods.
+Now we’re outside the Bistro. Watch the magnified view along the bottom.
+- First hold, about 2:52 — Compare the edges of the sign.
+- Second hold, about 2:58 — Look at the thin chair legs and the pavement beneath them.
 
-Cue: Three 10-second loops at 1×. Pausing may help live discussion; for the 4:30 recording keep the 30-second slot. MP4 compression can hide fine noise; linear HDR metrics remain the quantitative evidence.
+Cue — Advance at 3:04.
 -->
 
 ---
 <!-- _class: demo -->
 <!-- _paginate: false -->
 
-<video class="demo-video" muted playsinline controls loop preload="metadata" poster="../assets/videos/zero-day-course-v2.png" src="../assets/videos/zero-day-course-v2.mp4" aria-label="Zero Day Measure Seven synchronized three-method trajectory comparison"></video>
-<img class="print-poster" src="../assets/videos/zero-day-course-v2.png" alt="Zero Day Measure Seven demo poster">
+<video class="demo-video" muted playsinline controls preload="metadata" poster="../assets/videos/zero-day-fps.png" src="../assets/videos/zero-day-fps.mp4" aria-label="Zero Day Measure Seven"></video>
+<img class="print-poster" src="../assets/videos/zero-day-fps.png" alt="Zero Day Measure Seven poster">
 
 <!--
-3:15 to 3:45 | 30 seconds | demo3
+3:04 to 3:19 | 15 seconds | demo
 
-Zero Day. CGNS gave its smallest fixed-view improvement here, about four percent. This is a useful modest-benefit case. The displayed GPU FPS comes from a separate replay of the same camera sequence, with image export disabled.
+Here’s Zero Day Measure Seven.
 
-Cue: Three 10-second loops. GPU FPS uses a trailing 15-frame mean and excludes CPU/export/encoding. Do not equate smooth 30 FPS playback with the application's rendering rate. The 120-second demo budget includes all four repeated clips.
+Cue — Let the clip play through. Advance at 3:19.
 -->
 
 ---
 <!-- _class: demo -->
 <!-- _paginate: false -->
 
-<video class="demo-video" muted playsinline controls loop preload="metadata" poster="../assets/videos/classroom-course-v2.png" src="../assets/videos/classroom-course-v2.mp4" aria-label="Classroom synchronized three-method trajectory comparison"></video>
-<img class="print-poster" src="../assets/videos/classroom-course-v2.png" alt="Classroom demo poster: three matched method views and equal-location magnified crops">
+<video class="demo-video" muted playsinline controls preload="metadata" poster="../assets/videos/classroom-fps.png" src="../assets/videos/classroom-fps.mp4" aria-label="Classroom"></video>
+<img class="print-poster" src="../assets/videos/classroom-fps.png" alt="Classroom poster">
 
 <!--
-3:45 to 4:15 | 30 seconds | demo4
+3:19 to 3:34 | 15 seconds | demo
 
-Finally, Classroom. The top row shows the matched camera motion; the lower row magnifies identical regions. Compare the noise on surfaces rather than the apparent playback speed. All three play at thirty FPS; the watermark reports GPU rendering performance.
+And this is Classroom. Keep an eye on the blackboard as the camera moves.
 
-Cue: Play the complete 10-second trajectory three times, at 1× speed. First and last seconds are still; middle 8 seconds move. Note that moving-view footage is qualitative, not the fixed-view statistical test. Forty warmup frames are outside the clip. Allow time to watch rather than filling all 30 seconds with narration.
+Cue — Let the clip play through. Advance at 3:34.
+-->
+
+---
+<!-- _class: demo -->
+<!-- _paginate: false -->
+
+<video class="demo-video" muted playsinline controls preload="metadata" poster="../assets/videos/cgns-nrd-results.png" src="../assets/videos/cgns-nrd-results.mp4" aria-label="Final renders with CGNS and NRD"></video>
+<img class="print-poster" src="../assets/videos/cgns-nrd-results.png" alt="Final renders with CGNS and NRD poster">
+
+<!--
+3:34 to 4:17 | 43 seconds | demo
+
+- 3:34 · Bistro Interior — For these one-sample-per-pixel renders, we added NRD, NVIDIA’s real-time denoiser. A few bright speckles still flicker indoors.
+- 3:44 · Bistro Exterior — The outdoor shot looks cleaner overall, especially on the pavement around the chairs.
+- 3:54 · Zero Day — Some noise is still visible around the bright panels.
+- 4:04 · Classroom — In Classroom, the blackboard looks fairly clean as the camera moves past it.
+
+Cue — Let the montage finish at 4:14. Advance at 4:17.
 -->
 
 ---
@@ -321,11 +365,11 @@ Cue: Play the complete 10-second trajectory three times, at 1× speed. First and
 <div class="closing-credits"><div><h3>Resources used</h3><p><a href="https://github.com/NVIDIA-RTX/RTXDI">NVIDIA RTXDI</a> / <a href="https://github.com/NVIDIAGameWorks/Falcor">Falcor</a><br><a href="https://github.com/orion-junkins/ReSTIR-CGNS">CGNS official implementation</a></p><p class="asset-credit">Scene assets: NVIDIA ORCA, Blender,<br>Benedikt Bitterli and Beeple</p></div><div><h3>References</h3><div class="closing-paper-grid"><a href="https://benedikt-bitterli.me/restir/">Bitterli et al. [2020]<span>ReSTIR</span></a><a href="https://graphics.cs.utah.edu/research/projects/gris/">Lin et al. [2022]<span>GRIS / ReSTIR PT</span></a><a href="https://doi.org/10.1145/3585501">Tokuyoshi [2023]<span>PDF Similarity</span></a><a href="https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/">Junkins et al. [2026]<span>CGNS</span></a></div></div></div>
 
 <!--
-4:15 to 4:27 | 12 seconds | rehearsal target
+4:17 to 4:37 | 20 seconds | rehearsal target
 
-CGNS offers the best tradeoff. PDF’s gains are limited and costlier. Correlation and visibility challenges remain, including briefly stretched noise patterns during motion.
+Of the three methods we tested, CGNS gave the best balance of image quality and GPU cost. It improved all six fixed views with a modest increase in frame time. The walkthroughs also show where there’s room to improve, especially around visibility boundaries and during camera motion.
 
-Cue: Move to the Thanks slide at 4:27. This is a recommendation for the tested implementations and settings, not a universal algorithm ranking. PDF SMAPE higher than CGNS in all 6;PDF frame time higher in all 5 eligible views. Open the separate appendix only for questions. Resources and scene credits are fully linked there.
+Cue — Advance to the thank-you slide at 4:37.
 -->
 
 ---
@@ -335,9 +379,9 @@ Cue: Move to the Thanks slide at 4:27. This is a recommendation for the tested i
 # Thanks for listening
 
 <!--
-4:27 to 4:30 | 3 seconds | rehearsal target
+4:37 to 4:40 | 3 seconds | rehearsal target
 
 Thank you for listening.
 
-Cue: Hold the final slide and finish at 4:30.
+Cue — Finish at 4:40.
 -->

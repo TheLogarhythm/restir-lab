@@ -21,10 +21,10 @@ try {
   $shape.Name = 'Embedded demo ' + [IO.Path]::GetFileNameWithoutExtension($video.path)
   $play = $shape.AnimationSettings.PlaySettings
   $play.PlayOnEntry = -1
-  $play.LoopUntilStopped = -1
-  $play.RewindMovie = -1
+  $play.LoopUntilStopped = 0
+  $play.RewindMovie = 0
   $play.HideWhileNotPlaying = 0
-  $entries += @{slide=[int]$video.slide;shape_id=$shape.Id;path=[string]$video.path;sha256=$video.sha256;autoplay=$true;loop=$true}
+  $entries += @{slide=[int]$video.slide;shape_id=$shape.Id;path=[string]$video.path;sha256=$video.sha256;autoplay=$true;loop=$false}
  }
  $out = Join-Path $buildRoot 'final-with-videos.pptx'
  $deck.SaveAs($out,24)

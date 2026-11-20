@@ -1,0 +1,25 @@
+{
+  "origin": {
+    "path": "runs/pt-4-trajectories-spatial-compare/bistro-exterior/baseline/encode/video.mp4",
+    "sha256": "a55f245197f99e786e39d18c7ccd44cea0d8da9756f17e8e20a424b6e88b5442"
+  },
+  "video_frame": 150,
+  "crop_xywh": [
+    640,
+    600,
+    640,
+    360
+  ],
+  "marker_xy": [
+    [
+      400,
+      132
+    ],
+    [
+      400,
+      155
+    ]
+  ],
+  "output": "writing/final/assets/figures/bistro-shadow-boundary.png",
+  "sha256": "ec234b2acb33833524421f8fc3fde8ff2d69b20546f0d4784cc4ad83a18146e4"
+}
