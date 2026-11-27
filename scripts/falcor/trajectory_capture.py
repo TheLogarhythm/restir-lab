@@ -29,7 +29,7 @@ GPU_TOTAL_EVENT = "/onFrameRender/gpu_time"
 RESOLUTION = [1920, 1080]
 # The tracked receipt binds existing user approval; the local preflight is provenance only.
 APPROVAL_RECEIPT = ROUTES / "approved-routes.json"
-PREFLIGHT = ROOT / "build/pt-trajectory-production/preflight.json"
+PREFLIGHT = ROOT / "runs/provenance/pt-trajectory-production/preflight.json"
 
 
 def _json(path):
