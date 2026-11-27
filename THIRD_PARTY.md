@@ -1,66 +1,41 @@
 # Third-party materials
 
-## Course materials
+## Renderers and method sources
 
-The original `proposal.tex`, `report.tex`, and `projguidelines.pdf` came from the [COMP5411 course webpage](https://course.cse.ust.hk/comp5411/). They are preserved in `writing/course/templates/` and `writing/course/guidelines/`; working copies are under `writing/course/`.
+| Component | Version and notice |
+| --- | --- |
+| RTXDI | [v3.1.0](https://github.com/NVIDIA-RTX/RTXDI/tree/a6efab966b7c3b272da0461578eb56ac61c7cbff) · NVIDIA RTX SDKs License |
+| Falcor | [9.0 at `759aad0`](https://github.com/NVIDIAGameWorks/Falcor/tree/759aad033ff610fb0d82c74f7e0a508d0096d5f2) · [BSD-3-Clause-style notice](https://github.com/NVIDIAGameWorks/Falcor/blob/759aad033ff610fb0d82c74f7e0a508d0096d5f2/LICENSE.md) |
 
-## Renderer and assets
+Submodules, dependencies, and derived source files retain their upstream notices. The RTXDI build pins DXC `v1.8.2505.1`, DLSS `a8ed84e2d1cc1efa7bef63fb9394be6cb06c0d74`, and MathLib `v11`. Falcor pins its build dependencies through [Packman](https://github.com/NVIDIAGameWorks/Falcor/blob/759aad033ff610fb0d82c74f7e0a508d0096d5f2/dependencies.xml) and the [integration record](renderers/falcor/integration.json).
 
-| Material | Source and revision | License |
-| --- | --- | --- |
-| RTXDI | [v3.1.0](https://github.com/NVIDIA-RTX/RTXDI/tree/a6efab966b7c3b272da0461578eb56ac61c7cbff) | NVIDIA RTX SDKs License; submodule unchanged |
-| Cornell Box and Arcade | [RTXDI Assets](https://github.com/NVIDIA-RTX/RTXDI-Assets/tree/1da7b749ef0e3fb606ab46dde8e5bfbacd078a02) | Root MIT notice; [file hashes](scenes/manifest.yaml) |
-| Bistro | [RTXDI Assets](https://github.com/NVIDIA-RTX/RTXDI-Assets/tree/1da7b749ef0e3fb606ab46dde8e5bfbacd078a02/bistro); [original ORCA source](https://developer.nvidia.com/orca/amazon-lumberyard-bistro) | ORCA scene CC BY 4.0; [bundle hash](scenes/manifest.yaml) |
-| BistroMirror composite | [RTXDI Assets](https://github.com/NVIDIA-RTX/RTXDI-Assets/blob/1da7b749ef0e3fb606ab46dde8e5bfbacd078a02/bistro_with_mirrors-rtxdi.scene.json); archway/bar mirrors, sphere-with-holes and BrainStem | Root MIT notice; Bistro CC BY 4.0; [BrainStem bundled notice](https://github.com/NVIDIA-RTX/RTXDI-Assets/blob/1da7b749ef0e3fb606ab46dde8e5bfbacd078a02/BrainStem/README.md) attributes Keith Hunter / Smith Micro and Poser Pro EULA clause (g); [bundle hash](scenes/manifest.yaml) |
-| Zero-Day Measure One/Seven | [NVIDIA ORCA / Beeple](https://developer.nvidia.com/orca/beeple-zero-day) | CC BY 4.0; source and conversions remain in ignored `assets/` |
-| San Miguel 2.1 (low-poly) | [McGuire archive](https://casual-effects.com/g3d/data10/); Guillermo M. Leal Llaguno, 2017 updates by Morgan McGuire, Guedis Cardenas, Michael Mara and Nicholas Hull | Bundled license: research and educational use with attribution; source/conversion in ignored `assets/` |
-| Classroom | [Blender demo](https://www.blender.org/download/demo-files/), Christophe Seux; [source ZIP](https://download.blender.org/demo/test/classroom.zip) | CC0; source/conversion in ignored `assets/` |
-| Open Sans font | RTXDI Assets, `fonts/OpenSans/` | Bundled Apache 2.0 notice |
+- Falcor supplies the native PathTracer and ReSTIR PT. The live demo combines the two project PT adaptations in a private runtime and uses NVIDIA Real-Time Denoisers (NRD) through a graph based on Falcor's [PathTracerNRD example](https://github.com/NVIDIAGameWorks/Falcor/blob/759aad033ff610fb0d82c74f7e0a508d0096d5f2/scripts/PathTracerNRD.py). The San Miguel sky is a project port of Donut's procedural sky.
+- The RTXDI DI and Falcor PT versions of PDF Similarity are independent implementations based on Tokuyoshi (2023). The PT version uses first-hop direction statistics and an effective-confidence rule based on Lin et al.'s GRIS formulation. [Tokuyoshi](https://doi.org/10.1145/3585501) · [Lin et al.](https://doi.org/10.1145/3528223.3530158) · [DI implementation](docs/reproductions/rtxdi.md#pdf-similarity) · [PT implementation](docs/reproductions/falcor-pt.md#pdf-similarity)
+- The RTXDI DI and Falcor PT versions of CGNS are independent project adaptations informed by Junkins et al. (2026) and their pinned author code. [Paper](https://doi.org/10.1145/3820024) · [Author code `f28d553`](https://github.com/orion-junkins/ReSTIR-CGNS/tree/f28d553f3b2552b1be829feffea6d1abb1945e1d) · [DI implementation](docs/reproductions/rtxdi.md#cgns) · [PT implementation](docs/reproductions/falcor-pt.md#cgns)
+- The RTXDI integration uses pinned NVIDIA transport interfaces for scene loading, emitter indexing, readback, and reference rendering. The visible-GGX sampler follows Heitz (2018), *Sampling the GGX Distribution of Visible Normals*. [Scene patch](scripts/run/rtxdi_external.patch) · [Experiment patch](scripts/run/rtxdi_experiments.patch) · [Readback](scripts/run/rtxdi_experiments/LabExperiment.h) · [Reference shader](scripts/run/rtxdi_experiments/ReferenceSamples.hlsl) · [Donut emissive-strength adapter](scripts/run/rtxdi_emission.py) · [Comparison notes](docs/reproductions/rtxdi.md#fixed-view-di-gi-and-pt-comparison)
 
-Nested submodules retain their notices. RTXDI CMake fetches DXC `v1.8.2505.1`, DLSS `a8ed84e2d1cc1efa7bef63fb9394be6cb06c0d74`, and MathLib `v11`. Falcor 9.0 is pinned at `759aad033ff610fb0d82c74f7e0a508d0096d5f2`; its [BSD-3-Clause-style license and component notices](https://github.com/NVIDIAGameWorks/Falcor/blob/759aad033ff610fb0d82c74f7e0a508d0096d5f2/LICENSE.md) remain intact. Packman dependencies retain their separate licenses. The small build/run/graph adapters are project integration code developed with Codex; the native PathTracer and ReSTIR PT are upstream implementations. [Pitch illustrations](writing/course/slides/sources.md) have separate attribution.
+## Scene assets and fonts
 
-## Provenance
+Source archives, hashes, and conversion details are recorded in the [scene manifest](scenes/manifest.yaml). The project's Tungsten converter follows the [Tungsten WO3 layout and transform conventions](https://github.com/tunabrain/tungsten).
 
-Codex assisted the project documentation, validation script, scene records, conversion tools, and RTXDI runners. The [external-scene patch](scripts/run/rtxdi_external.patch) is project integration code; pinned RTXDI source is restored after building its local variant. Record later contributions and external code in the report.
+| Asset | Attribution and license |
+| --- | --- |
+| Cornell Box and Arcade | [RTXDI Assets at `1da7b74`](https://github.com/NVIDIA-RTX/RTXDI-Assets/tree/1da7b749ef0e3fb606ab46dde8e5bfbacd078a02), MIT root notice |
+| Bistro and BistroMirror | [Amazon Lumberyard Bistro](https://developer.nvidia.com/orca/amazon-lumberyard-bistro), CC BY 4.0. The [RTXDI Assets composite](https://github.com/NVIDIA-RTX/RTXDI-Assets/blob/1da7b749ef0e3fb606ab46dde8e5bfbacd078a02/bistro_with_mirrors-rtxdi.scene.json) carries the root MIT notice. BrainStem is by Keith Hunter and owned by Smith Micro Software, Inc. Its [bundled notice](https://github.com/NVIDIA-RTX/RTXDI-Assets/blob/1da7b749ef0e3fb606ab46dde8e5bfbacd078a02/BrainStem/README.md) cites Poser Pro EULA clause (g). |
+| Zero-Day Measure One and Seven | [NVIDIA ORCA and Beeple](https://developer.nvidia.com/orca/beeple-zero-day), CC BY 4.0 |
+| San Miguel 2.1 (low-poly) | Guillermo M. Leal Llaguno, with 2017 updates by Morgan McGuire, Guedis Cardenas, Michael Mara, and Nicholas Hull. Bundled research and educational-use terms require attribution. [McGuire archive](https://casual-effects.com/g3d/data10/) |
+| Classroom | Christophe Seux, [Blender demo](https://www.blender.org/download/demo-files/), CC0 |
+| Emerald Square (Dusk) | [NVIDIA ORCA](https://developer.nvidia.com/orca/nvidia-emerald-square), Nicholas Hull, Kate Anderson, and Nir Benty, CC BY-NC-SA 3.0 |
+| Sun Temple | [Epic Games](https://developer.nvidia.com/ue4-sun-temple), CC BY-NC-SA 4.0 |
+| Veach Ajar | [Benedikt Bitterli](https://benedikt-bitterli.me/resources/), CC0/public domain per bundled notice |
+| Open Sans | RTXDI Assets `fonts/OpenSans/`, Apache 2.0 per bundled notice |
 
-The [Multi-scene experiment integration](scripts/run/rtxdi_experiments.patch) and [readback helper](scripts/run/rtxdi_experiments/LabExperiment.h) were developed with Codex. The integration adapts pinned RTXDI and corrects its global emitter-geometry indexing in controlled builds; NVIDIA notices and licensing remain applicable to upstream code.
+## Course materials and presentation figures
 
-The [conventional reference shader](scripts/run/rtxdi_experiments/ReferenceSamples.hlsl), reference runner and analysis tools are project code developed with Codex, using pinned RTXDI's light, material and visibility interfaces.
-
-The local renderer builds apply [emissive-strength support](scripts/run/rtxdi_emission.py) to Donut temporarily and restore its source afterward.
-
-The [PDF Similarity extension](docs/reproductions/pdf-similarity.md) is an independent implementation developed with Codex from Tokuyoshi's 2023 paper. Its build-time spatial shader adaptation retains the pinned NVIDIA source notice; no author implementation was imported.
-
-The [CGNS extension](docs/reproductions/cgns.md) is an independent DI adaptation developed with Codex from Junkins et al. (2026), with [author code `f28d553`](https://github.com/orion-junkins/ReSTIR-CGNS/tree/f28d553f3b2552b1be829feffea6d1abb1945e1d) as an algorithm reference. Its generated spatial shader preserves the pinned RTXDI source notice; implementation differences are recorded in the reproduction note.
-
-The [Falcor ReSTIR PT CGNS adaptation](docs/reproductions/falcor-cgns-pt.md) is independent project code informed by Junkins et al. (2026) and the pinned author implementation. Its private runtime overlay modifies Falcor shaders without removing their upstream NVIDIA BSD-3-Clause-style notices; Falcor and its dependencies retain their original notices and licenses. It is not the authors' renderer.
-
-The [Falcor PDF-guided PT adaptation](docs/reproductions/falcor-pdf-pt.md) is independent
-project code developed with Codex from Tokuyoshi (2023) and the weighted-GRIS
-confidence formulation of Lin et al. (2022). It reuses the project's scalar vMF
-math and adds first-hop statistics and effective-confidence handling through
-private Falcor shader overlays. Upstream notices remain intact; no Tokuyoshi
-author implementation was imported.
-
-The [spatial-reuse comparison](docs/reproductions/spatial-reuse.md), common
-transport corrections and conventional path reference are project integration
-code developed with Codex. They use pinned NVIDIA sampling/ray/material interfaces
-and preserve upstream notices. The local visible-GGX PDF follows Heitz (2018),
-*Sampling the GGX Distribution of Visible Normals*, JCGT 7(4).
-
-The local progress presentation reproduces Figure 2 from Yusuke Tokuyoshi, *Efficient Spatial Resampling Using the PDF Similarity* (2023), [DOI: 10.1145/3585501](https://doi.org/10.1145/3585501), with attribution on slide 4. The source paper and generated figure crop are Git-ignored; [extraction provenance](writing/progress/data/paper-figure.json) records the source hash and crop. Copyright remains with the owner/author(s), with publication rights licensed to ACM; no open license is asserted for this figure.
-
-## Additional scene imports
-
-- [Emerald Square](https://developer.nvidia.com/orca/nvidia-emerald-square): NVIDIA / Nicholas Hull, Kate Anderson and Nir Benty; CC BY-NC-SA 3.0. Uses the ORCA Dusk variant.
-- [Sun Temple](https://developer.nvidia.com/ue4-sun-temple): Epic Games; CC BY-NC-SA 4.0.
-- [Veach Ajar](https://benedikt-bitterli.me/resources/): Benedikt Bitterli; bundled notice confirms CC0/public domain.
-
-Original notices remain in ignored `assets/prepared/<scene>/`; archive hashes and
-adaptations are in [the scene manifest](scenes/manifest.yaml). The Tungsten converter
-follows the documented WO3 layout and transform conventions in
-[Tungsten](https://github.com/tunabrain/tungsten); it is a local implementation.
+- The [COMP5411 course site](https://course.cse.ust.hk/comp5411/) supplied the original [proposal and report templates](writing/course/templates/README.md) and [project guidelines](writing/course/guidelines/README.md).
+- Illustration credits for the pitch are listed with the slides. The progress presentation uses Tokuyoshi's Figure 2 from *Efficient Spatial Resampling Using the PDF Similarity* (2023). The authors retain copyright, with publication rights licensed to ACM. [Pitch sources](writing/course/slides/sources.md) · [Progress figure record](writing/progress/data/paper-figure.json)
+- The final presentation includes a crop of Figure 2 from Junkins et al. (2026), CC BY 4.0. [Figure record](writing/final/data/cgns-figure2.json)
 
 ## ReSTIR Atlas icon
 
-The Atlas header embeds the [Tabler Prism Light icon](https://tabler.io/icons/icon/prism-light), from [Tabler Icons](https://github.com/tabler/tabler-icons/blob/main/icons/outline/prism-light.svg), retrieved 2026-10-31. Copyright (c) 2020-2026 Paweł Kuna, MIT. The [full license](web/restir-map/public/licenses/tabler-icons-LICENSE.txt) ships with the static site. Only SVG presentation attributes were adapted; no icon library dependency was added.
+The Atlas uses the [Tabler Prism Light icon](https://github.com/tabler/tabler-icons/blob/main/icons/outline/prism-light.svg) with adapted SVG presentation attributes. Copyright 2020–2026 Paweł Kuna. [MIT license](web/restir-map/public/licenses/tabler-icons-LICENSE.txt)

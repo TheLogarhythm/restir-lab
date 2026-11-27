@@ -2,7 +2,7 @@
 
 Add meaningful numerical and small-scene checks as rendering code is integrated: controlled reservoir selection statistics, estimator/reference agreement, invalid values, reprojection/history resets, and repeatable captures.
 
-Run `python -B -m unittest discover -s tests -t . -v` for asset-conversion, launcher, multi-scene experiment and offline analysis regressions (install with `python -m pip install -e ".[exr]" -r scripts/run/requirements.txt`; no Blender/GPU needed). With MSVC, PDF tests execute shared direction-reservoir math and the adapted RTXDI spatial loops on deterministic inputs. GPU validation is recorded in the [implementation note](../docs/reproductions/pdf-similarity.md). `python scripts/check_scaffold.py` checks repository structure, not rendering correctness.
+Run `python -B -m unittest discover -s tests -t . -v` for asset-conversion, launcher, multi-scene experiment and offline analysis regressions (install with `python -m pip install -e ".[exr]" -r scripts/run/requirements.txt`; no Blender/GPU needed). With MSVC, PDF tests execute shared direction-reservoir math and the adapted RTXDI spatial loops on deterministic inputs. The checks cover the [RTXDI implementation](../docs/reproductions/rtxdi.md#pdf-similarity). `python scripts/check_scaffold.py` checks repository structure, not rendering correctness.
 
 Run the object-material, emitter-visibility and authored-light conversion fixture with Blender: `blender --background --factory-startup --disable-autoexec --python-exit-code 1 --python tests/blender_classroom.py`.
 For camera sensor-fit and pixel-aspect checks, use the same command with `tests/blender_camera.py`.
@@ -115,7 +115,7 @@ also declared in [scripts/falcor/requirements.txt](../scripts/falcor/requirement
 The separate bounded native validation commands are in the
 [Falcor integration guide](../renderers/falcor/README.md).
 
-The [PDF-guided PT adaptation](../docs/reproductions/falcor-pdf-pt.md) keeps its
+The [PDF-guided PT adaptation](../docs/reproductions/falcor-pt.md#pdf-similarity) keeps its
 synthetic runtime/receipt, configuration, capture/campaign, reset-plan and saved-AOV
 checks in `cpu`. The direction/history C++ checks and the two production-MIS numerical
 checks run in `native`; they compile shared math and extracted pinned Falcor shader

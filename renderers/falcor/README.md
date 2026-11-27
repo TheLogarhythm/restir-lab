@@ -58,8 +58,6 @@ This establishes the official research environment, not a paper reproduction or 
 
 The existing RTXDI binaries, runners, scenes and experiment state are independent. Falcor scripts live outside the frozen campaign's source globs; scene config is `.pyscene`, with the run profile under `experiments/configs/`. Falcor's own bundled RTXDI 1.3.0 dependency is separate from the lab's RTXDI 3.1.0.
 
-See [the integration decisions](../../docs/superpowers/backend-and-analysis.md#repository-and-backend-isolation).
-
 ## Verification on 2026-10-28
 
 **Completed:** VS2022 x64 Release build, complete runtime deployment, native D3D12 PathTracer and ReSTIR PT smoke captures, and visible Mogwai startup. Device: RTX 4060 Laptop, driver 560.94, D3D12 SM6.8. Upstream tracked sources remain clean. `setup.ps1 -CheckOnly`, 18 CPU adapter tests and the scaffold check pass.
@@ -100,4 +98,4 @@ Validation was local on Windows. The POSIX lock path and remote CI were not exec
 
 ## Shared offline analysis
 
-Saved smoke outputs can now be read through the common `records`/`analysis` interface and `scripts/analyze_run.py`; see [shared analysis](../../docs/shared-analysis.md). The native smoke validation still requires nonblack FLOAT32 EXR. The shared decoder permits valid black HDR for general analysis. Historical smoke repeats lack independent RNG/history metadata and remain ineligible for independent-repeat covariance.
+Saved smoke outputs can now be read through the common `records`/`analysis` interface and `scripts/analyze_run.py`; see [metrics and saved-result analysis](../../docs/metrics.md). The native smoke validation still requires nonblack FLOAT32 EXR. The shared decoder permits valid black HDR for general analysis. Historical smoke repeats lack independent RNG/history metadata and remain ineligible for independent-repeat covariance.

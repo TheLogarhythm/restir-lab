@@ -82,7 +82,7 @@ cut can call `tracer.reset()` to clear direction statistics; a fresh graph is
 required to reset both direction and native lighting reservoirs in pinned
 Falcor. Each preview starts with a newly constructed graph.
 
-See [PDF PT implementation and validation](../../docs/reproductions/falcor-pdf-pt.md)
+See [PDF PT implementation and validation](../../docs/reproductions/falcor-pt.md#pdf-similarity)
 for the mathematical scope and motion diagnostic. Motion support is not a proof
 of unbiasedness or a temporal image-quality measurement.
 

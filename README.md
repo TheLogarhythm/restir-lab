@@ -37,9 +37,9 @@ Each 10-second clip shows three methods on the same camera path. Click either pr
 
 ## Project guide
 
-The [ReSTIR DI baseline](results/summaries/di-baseline/README.md) evaluates Cornell Box, Arcade and Bistro using RTXDI `v3.1.0`. [PDF Similarity](docs/reproductions/pdf-similarity.md) and [CGNS](docs/reproductions/cgns.md) are available for DI. PDF's sparse evaluation is complete. The [CGNS spatial-reuse study](docs/reproductions/spatial-reuse.md) covers DI, GI and PT; retained results and their limits are documented separately.
+RTXDI and Falcor use separate pinned builds. Both write scene-linear images, settings and timings for offline analysis. The RTXDI work includes the [DI baseline](results/summaries/di-baseline/README.md), [PDF Similarity and CGNS experiments](docs/reproductions/rtxdi.md), and a historical DI/GI/PT comparison. The final study compares the three [Falcor PT methods](docs/reproductions/falcor-pt.md).
 
-Start with the [scope](docs/scope.md), [literature review](docs/literature/README.md), and [roadmap](docs/roadmap.md). Follow [setup](docs/setup.md) to run RTXDI, then use the [scene manifest](scenes/README.md) and [experiment protocol](experiments/protocol.md) for comparisons.
+Start with [setup](docs/setup.md) and the [experiment guides](docs/reproductions/README.md). See the [scene catalogue](scenes/README.md), [experiment protocol](experiments/protocol.md) and [literature guide](docs/literature/README.md) for inputs and context.
 
 | Directory                  | Contents                                            |
 | -------------------------- | --------------------------------------------------- |
@@ -47,11 +47,11 @@ Start with the [scope](docs/scope.md), [literature review](docs/literature/READM
 | `scenes/`                  | Asset provenance and scene settings                 |
 | `experiments/`, `results/` | Configurations and research results                 |
 | `scripts/`, `tests/`       | Runners, analysis, and regression tests             |
-| `docs/`                    | Plans, literature, decisions, and observations      |
+| `docs/`                    | Setup, experiments, metrics, and literature        |
 | `writing/`                 | Course templates, working documents, and references |
 
-See the [comparison workflow](docs/comparison.md) for fixed-view spatial-reuse experiments. For the six fixed Falcor ReSTIR PT views, see the [scene preparation guide](experiments/configs/falcor-pt-spatial-comparison/PREPARATION.md) and [ordinary spatial reuse / CGNS configuration](experiments/configs/falcor-pt-spatial-comparison/README.md).
+Prepare the pinned inputs before running the [six-view Falcor benchmark](docs/reproductions/pt-6-views-spatial-compare.md). [Scene preparation](experiments/configs/falcor-pt-spatial-comparison/PREPARATION.md)
 
 Local assets, builds, and runs are ignored. Edit the [proposal](writing/course/proposal/main.tex) and [report](writing/course/report/main.tex); preserve the [original templates](writing/course/templates/README.md). The [final presentation](writing/final/README.md) includes the three-method PT comparison and trajectory demos. See [contributing](CONTRIBUTING.md), [third-party sources](THIRD_PARTY.md), and [licensing](LICENSE).
 
-Shared Python metrics and RTXDI/Falcor saved-result readers are documented in [shared offline analysis](docs/shared-analysis.md). Existing renderer commands remain available.
+See [metrics and saved-result analysis](docs/metrics.md) to inspect an RTXDI or Falcor capture.

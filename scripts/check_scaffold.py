@@ -12,8 +12,10 @@ errors = []
 required = [
     'README.md', 'LICENSE', 'THIRD_PARTY.md', 'CONTRIBUTING.md', 'AGENTS.md',
     '.gitignore', '.gitattributes', '.github/workflows/scaffold.yml',
-    'docs/scope.md', 'docs/roadmap.md', 'docs/setup.md', 'docs/architecture.md',
-    'docs/decisions', 'docs/literature/notes', 'docs/reproductions', 'docs/observations',
+    'docs/scope.md', 'docs/roadmap.md', 'docs/setup.md', 'docs/metrics.md',
+    'docs/reproductions/README.md', 'docs/reproductions/falcor-pt.md',
+    'docs/reproductions/pt-6-views-spatial-compare.md', 'docs/reproductions/rtxdi.md',
+    'docs/reproductions/cgns-di-gi-pt.md',
     'renderers/README.md', 'renderers/rtxdi', 'renderers/falcor',
     'scenes/manifest.yaml', 'scenes/configs/rtxdi', 'scenes/configs/falcor',
     'scenes/trajectories', 'scenes/procedural', 'scenes/authoring',

@@ -6,7 +6,7 @@
 
 The remaining sections preserve the original rendering, budget and policy decisions. Their old paths describe historical sources; they are not commands to resume the archived campaign.
 
-Approved plan, revised 2026-10-19. Evaluate the [RTXDI adaptation](../../docs/reproductions/pdf-similarity.md) under the [experiment protocol](../protocol.md). Preserve all completed method renders and direct comparison products, then generate the sparse references below within the explicitly approved reference-and-analysis window. Reference eligibility follows the current scene-specific policy below. See [the runner](../../scripts/run/rtxdi_pdf_controlled.py) and [setup](../../docs/setup.md#controlled-pdf-comparison).
+Approved plan, revised 2026-10-19. Evaluate the [RTXDI adaptation](../../docs/reproductions/rtxdi.md#pdf-similarity) under the [experiment protocol](../protocol.md). Preserve all completed method renders and direct comparison products, then generate the sparse references below within the explicitly approved reference-and-analysis window. Reference eligibility follows the current scene-specific policy below. See [the runner](../../scripts/run/rtxdi_pdf_controlled.py) and [setup](../../docs/setup.md#rtxdi).
 
 ## Current override: Bistro fixed-sample references, 2026-10-19
 
