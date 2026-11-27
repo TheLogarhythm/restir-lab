@@ -1,57 +1,44 @@
 # ReSTIR Spatial Reuse: Implementation and Evaluation
 
-This project reproduces and evaluates selected ReSTIR methods for HKUST COMP5411 Advanced Computer Graphics, taught by [Professor Pedro V. Sander](https://cse.hkust.edu.hk/~psander/).
+This HKUST COMP5411 project compares ordinary spatial reuse, PDF Similarity, and compatibility-guided neighbor selection (CGNS) in Falcor 9.0. The earlier RTXDI experiments focus on direct illumination.
+
+![Six reference views: Bistro Interior, Bistro Exterior, Classroom, Emerald Square, Veach Ajar, and Zero Day Measure Seven](results/figures/benchmark-scenes.jpg)
+
+The six benchmark views, shown as 16,384-spp reference renders. [Scene credits](THIRD_PARTY.md#scene-assets-and-fonts)
 
 ## ReSTIR PT results
 
-We compare ordinary spatial reuse, PDF Similarity, and CGNS on Falcor 9.0. The box in each reference image marks the region shown in all four crops.
+At 1920 × 1080 and one sample per pixel, all three methods use temporal reuse and are evaluated against 16,384-spp references.
 
-### Emerald Square
+- **CGNS** achieved the lowest whole-image SMAPE in all 24 paired comparisons across six fixed views. It reduced error by 3.9–22.7% relative to ordinary reuse and added about 4–6% to GPU frame time in the five timed views.
+- **PDF Similarity** reduced error by 2.1% in Bistro Exterior, nearly tied ordinary reuse in Bistro Interior, and increased error by 5.6% in Emerald Square.
+- CGNS lowered temporal noise covariance and raised spatial covariance in every fixed view.
 
-![Emerald Square reference with the marked crop beside ordinary spatial reuse, PDF Similarity, CGNS, and the reference crop](results/figures/emerald-square-comparison.png)
+![Emerald Square per-pixel SMAPE differences for CGNS minus original reuse and PDF Similarity minus original reuse](results/figures/smape-improvement.png)
 
-### Bistro Interior
+Both maps subtract original reuse pixel by pixel. Blue marks lower error and red marks higher error, with the same ±20 percentage-point display scale. [Six-view results and CSVs](results/summaries/falcor-pt-spatial-reuse/README.md)
 
-![Bistro Interior reference with the marked crop beside ordinary spatial reuse, PDF Similarity, CGNS, and the reference crop](results/figures/bistro-interior-comparison.png)
+![Emerald Square reference and matching crops for ordinary reuse, PDF Similarity, CGNS, and the reference](results/figures/emerald-square-comparison.png)
 
-### Six-view statistics
+The marked Emerald Square crop illustrates a local CGNS improvement. [Bistro Interior comparison](results/figures/bistro-interior-comparison.png)
 
-All three methods use the same rendering settings at 1080p and 1 spp with temporal reuse enabled. Whole-image SMAPE is averaged over four seeds against 16,384 spp references. [Results and CSVs](results/summaries/falcor-pt-spatial-reuse/README.md) · [Benchmark protocol](docs/reproductions/pt-6-views-spatial-compare.md)
-
-| View            | Ordinary<br>SMAPE (%) | PDF<br>SMAPE (%) | CGNS<br>SMAPE (%) | Ordinary<br>GPU (ms) | PDF<br>GPU (ms) | CGNS<br>GPU (ms) |
-| --------------- | --------------------: | ---------------: | ----------------: | -------------------: | --------------: | ---------------: |
-| Emerald Square  |                 25.55 |            26.99 |         **19.74** |                    — |               — |                — |
-| Bistro Interior |                 28.04 |            28.04 |         **25.30** |                37.28 |           41.33 |            38.85 |
-| Bistro Exterior |                 16.67 |            16.32 |         **15.12** |                40.50 |           44.38 |            42.90 |
-| Classroom       |                 17.33 |            17.19 |         **16.03** |                32.13 |           40.78 |            33.85 |
-| Veach Ajar      |                 16.75 |            16.78 |         **15.89** |                22.53 |           27.22 |            23.42 |
-| Zero Day        |                 19.09 |            18.74 |         **18.34** |                69.71 |           75.40 |            72.55 |
-
-### Camera trajectory demos
-
-Each 10-second clip shows three methods on the same camera path. Click either preview to open its MP4. [Trajectory settings](scenes/trajectories/README.md)
-
-|                                                              Bistro Exterior                                                              |                                                Zero Day Measure Seven                                                |
-| :---------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
-| [![Watch the Bistro Exterior comparison](results/figures/bistro-exterior-trajectory.jpg)](results/figures/bistro-exterior-trajectory.mp4) | [![Watch the Zero Day comparison](results/figures/zero-day-trajectory.jpg)](results/figures/zero-day-trajectory.mp4) |
+[Bistro Exterior walkthrough](results/figures/bistro-exterior-trajectory.mp4) · [Zero Day Measure Seven walkthrough](results/figures/zero-day-trajectory.mp4) · [Camera trajectories](scenes/trajectories/README.md)
 
 ## Project guide
 
-RTXDI and Falcor use separate pinned builds. Both write scene-linear images, settings and timings for offline analysis. The RTXDI work includes the [DI baseline](results/summaries/di-baseline/README.md), [PDF Similarity and CGNS experiments](docs/reproductions/rtxdi.md), and a historical DI/GI/PT comparison. The final study compares the three [Falcor PT methods](docs/reproductions/falcor-pt.md).
+- Prepare the pinned renderer builds and scene inputs. [Setup](docs/setup.md) · [Scene catalogue](scenes/README.md)
+- Reproduce the six-view comparison or inspect the saved results. [Falcor methods](docs/reproductions/falcor-pt.md) · [Benchmark protocol](docs/reproductions/pt-6-views-spatial-compare.md) · [Metrics](docs/metrics.md)
+- Explore the earlier direct-lighting work. [RTXDI baseline](results/summaries/di-baseline/README.md) · [RTXDI experiments](docs/reproductions/rtxdi.md)
+- Read the write-up and presentation materials. [Report source](writing/course/report/main.tex) · [Final presentation](writing/final/README.md) · [Literature guide](docs/literature/README.md)
 
-Start with [setup](docs/setup.md) and the [experiment guides](docs/reproductions/README.md). See the [scene catalogue](scenes/README.md), [experiment suites](experiments/suites/README.md), [experiment protocol](experiments/protocol.md) and [literature guide](docs/literature/README.md) for inputs and context.
+## Live Falcor demo
 
-| Directory                  | Contents                                            |
-| -------------------------- | --------------------------------------------------- |
-| `renderers/`               | Pinned RTXDI and Falcor 9.0 submodules              |
-| `scenes/`                  | Asset provenance and scene settings                 |
-| `experiments/`, `results/` | Configurations and research results                 |
-| `scripts/`, `tests/`       | Runners, analysis, and regression tests             |
-| `docs/`                    | Setup, experiments, metrics, and literature        |
-| `writing/`                 | Course templates, working documents, and references |
+With the Windows runtime and scene assets prepared, launch the demo from PowerShell at the repository root.
 
-Prepare the pinned inputs before running the [six-view Falcor benchmark](docs/reproductions/pt-6-views-spatial-compare.md). [Scene preparation](experiments/configs/falcor-pt-spatial-comparison/PREPARATION.md)
+```powershell
+.\run-demo.ps1 -Scene Classroom
+```
 
-Local assets, builds, and runs are ignored. Edit the [proposal](writing/course/proposal/main.tex) and [report](writing/course/report/main.tex); preserve the [original templates](writing/course/templates/README.md). The [final presentation](writing/final/README.md) includes the three-method PT comparison and trajectory demos. See [contributing](CONTRIBUTING.md), [third-party sources](THIRD_PARTY.md), and [licensing](LICENSE).
+Use **Graphs** to switch scenes and spatial reuse methods, or select Raw, Accumulation, or NRD. Run `.\run-demo.ps1 -PrecompileShaders` to prepare shaders for all seven presets. The shader-cache replay exercised all 63 scene, method, and display combinations. [Demo setup](docs/setup.md#falcor-and-live-demo)
 
-See [metrics and saved-result analysis](docs/metrics.md) to inspect an RTXDI or Falcor capture.
+[Contributing](CONTRIBUTING.md) · [Third-party sources](THIRD_PARTY.md) · [License](LICENSE)
