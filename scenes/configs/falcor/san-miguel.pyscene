@@ -1,0 +1,14 @@
+# The converted low-poly glTF contains no directional light. Reproduce FullSample's default sun.
+from falcor import DirectionalLight, EnvMap, float3
+from pathlib import Path
+from math import sqrt
+
+root = Path(__file__).resolve().parents[3]
+sceneBuilder.importScene(str(root / "assets/converted/san-miguel/san-miguel.gltf"))
+sceneBuilder.envMap = EnvMap(str(root / "assets/generated/san-miguel/live-default-sky.exr"))
+sun = DirectionalLight("FullSample procedural sun")
+direction = (0.15, -1.0, 0.3)
+length = sqrt(sum(x * x for x in direction))
+sun.direction = float3(*(x / length for x in direction))
+sun.intensity = float3(1.0, 1.0, 1.0)
+sceneBuilder.addLight(sun)

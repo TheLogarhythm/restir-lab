@@ -1,0 +1,12 @@
+# Use the registered interior material plan without writing a capture-specific audit file.
+from pathlib import Path
+import sys
+import falcor
+
+root = Path(__file__).resolve().parents[3]
+if str(root) not in sys.path:
+    sys.path.insert(0, str(root))
+from scripts.falcor.adapted_scene_loader import load_plan_file
+plan = root / "scenes/configs/falcor/bistro-gltf/scene-plan.json"
+load_plan_file(sceneBuilder, falcor, plan, project_root=root,
+               factor_shader_verified=True, material_optimization_disabled=True)
