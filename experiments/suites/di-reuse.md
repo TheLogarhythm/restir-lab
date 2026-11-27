@@ -1,186 +1,52 @@
-# DI reuse controls
+# RTXDI direct-lighting reuse controls
 
-Adapted RTXDI v3.1 author code; implementation checks, not paper-equivalent results.
+The suite compares initial sampling, temporal reuse, spatial reuse and combined reuse in Cornell Box, Arcade and Bistro on RTXDI v3.1.0. It uses 1920×1080, seed 1 and 128 frames. All modes share 24 local, 8 environment and 1 analytic sun candidate, with no BRDF candidates. Spatial reuse uses four neighbors at radius 32 pixels and temporal history is capped at 20. Denoising, antialiasing, accumulation, tone mapping and visibility shortcuts are disabled. Ray-traced bias correction and final visibility are enabled. [Configuration](../configs/di-reuse.json) · [Scene profiles](../../scenes/configs/rtxdi/README.md)
+
+| Scenario | Camera and history | Saved frames |
+| --- | --- | --- |
+| Static | Fixed camera, empty initial history | 1, 8, 32, 128 |
+| Motion | Hold 1–32, linear translation 33–96, hold 97–128 | 1, 32, 33, 64, 96, 97, 128 |
+| Reset | Fixed camera, clear reservoirs and previous depth before frame 65 | 1, 32, 64, 65, 72, 96, 128 |
+
+The sample index is `seed * 1048576 + logical_frame - 1`. Reset clears history while leaving the RNG schedule in place. The runs use fixed scene time and camera settings.
 
 ## Run
 
-With the [RTXDI environment](../../docs/setup.md) and scene assets installed, from the repository root:
+Use PowerShell at the repository root after preparing the RTXDI build and scene assets. Use an unused output name. [Setup](../../docs/setup.md#rtxdi)
 
 ~~~powershell
 python -m pip install -r scripts/run/requirements.txt
-python scripts/run/build_rtxdi_experiments.py
-python scripts/run/rtxdi_reuse.py --scene all --scenario all --check
-python scripts/run/rtxdi_reuse.py --scene all --scenario all --diagnostics --output-name di
+python -B scripts/run/build_rtxdi_experiments.py
+python -B scripts/run/rtxdi_reuse.py --scene all --scenario all --check
+python -B scripts/run/rtxdi_reuse.py --scene all --scenario all --diagnostics --output-name di
 ~~~
 
-Active scenes: cornell-box, arcade, bistro. `--scene all` uses these three;
-Zero-Day remains available by explicit ID for later validation. Each
-scene/scenario runs initial, temporal, spatial, combined in separate processes.
---mode combined selects one mode; --scenario
-static, motion or reset selects one sequence. Defaults: static, all modes,
-1920×1080, seed 1. --resolution 640 360 is useful for smoke checks.
-
-Experiments default to headless rendering (no window, UI or swapchain). Add
-`--windowed` for manual inspection; keep that window unminimized and do not change
-UI settings. Close FullSample before building; avoid concurrent renderer builds/runs.
-The build restores official sources, executable and shaders. Re-run the build
-command after changing the renderer revision, build script, integration patch,
-helper or reference shader; recorded hashes reject stale builds.
-
-## Controls
-
-[Experiment definition](../configs/di-reuse.json): 128 frames; 33 initial candidates:
-24 power-sampled local lights (`POWER_RIS`), 8 importance-sampled environment
-directions and 1 analytic-sun candidate, with no BRDF candidates. All current scene profiles
-provide a procedural environment. Spatial budget: 4 neighbors, radius 32 pixels,
-history limit 20.
-The four modes differ only in reuse. Initial means initial RIS + final shading.
-
-The local/environment allocation follows [ReSTIR DI §5](https://cs.dartmouth.edu/~wjarosz/publications/bitterli20spatiotemporal.html),
-with one extra candidate for the sample's independent directional sun
-(`analytic_sun: true`). RTXDI uses a mip-PDF/presampled light pool rather than the
-paper's alias table. Material conversion and the remaining algorithm settings
-are not paper-matched; each run's saved configuration defines its lighting target.
-
-[Scene profiles](../../scenes/configs/rtxdi/README.md) specify resources, camera/FOV,
-motion endpoint, lighting and preview exposure. Cameras are applied every frame;
-scene animation is frozen. Bistro uses the full scene wrapper, including its lights
-and additional models.
-
-| Scenario | Sequence | Captures |
-| --- | --- | --- |
-| static | Fixed camera, empty history at frame 1 | 1, 8, 32, 128 |
-| motion | Hold 1–32; linear translation to the scene's endpoint over 33–96; hold 97–128 | 1, 32, 33, 64, 96, 97, 128 |
-| reset | Fixed camera; clear DI reservoirs and invalidate previous depth before frame 65 | 1, 32, 64, 65, 72, 96, 128 |
-
-Sampling frame = seed × 1048576 + logical frame − 1, independent of wall time.
-Reset clears history without restarting the random sequence.
-
-Denoising/input formatting, AA/TAA/DLSS, image accumulation, bloom, tone mapping,
-auto exposure, pixel jitter, checkerboard, boiling filtering, visibility shortcuts
-and disocclusion sample boosts are disabled/bypassed. Raytraced bias correction,
-final visibility, material textures, emission, compositing and transparency remain.
-
-## Outputs
-
-`--output-name di` selects `runs/di/`; omission uses a UTC timestamp.
-Names accept 1–64 letters, digits, hyphens or underscores, starting with a letter
-or digit; reserved device names and existing directories are rejected.
-`runs/<name>/<scene>/<scenario>/<mode>/seed-<n>/` contains:
-
-- config.json, resolved.json, manifest.json, renderer.log: frame trajectory,
-  requested/resolved settings, loaded scene, code/build/asset hashes and hardware.
-- frame-*.pfm.gz: lossless gzip (level 6) of scene-linear RGB float32 decoded from
-  RGBA16_FLOAT after compositing and transparency; source values are preserved.
-- frame-*.png: viewing copies using the scene's fixed exposure, per-channel
-  Reinhard x/(1+x), then sRGB. No image-dependent normalization; metrics read PFM.
-- timings.csv: all upstream GPU sections, one row per logical frame. Synchronous
-  timings exclude capture/readback, file I/O, UI and present. Only `--windowed`
-  includes a raw display blit. Reset clearing precedes timing. Use the same window
-  mode for timing comparisons; these are not real-time FPS measurements.
-- captures.json: finite/brightness checks and, with --diagnostics, final reservoir
-  M mean/median/p95/max over valid reservoirs and valid fraction over all pixels.
-  M is multiplicity, not the candidate budget or independent sample count.
-  Requested neighbor budget is recorded; accepted-neighbor counts are not measured.
-
-HDR is compressed directly, without an intermediate PFM file. Successful conversion
-removes temporary GPU readbacks; failed runs retain partial outputs.
-Records use relative filesystem paths: command/config/output paths are relative
-to the run directory; scene source paths and code paths to the repository root,
-located by `repository_root`; asset hash keys to the scene's asset root.
-Renaming the suite within `runs/` preserves these
-paths; `run_id` remains its original identifier. Renderer log mount names such as
-`/Assets/Media` are virtual filesystem labels, not host paths.
-Equal-time comparisons remain separate work.
+`--scene all` selects the three baseline scenes. Use `--mode combined` or `--scenario static` to narrow a run, and `--resolution 640 360` for a smoke test. Headless is the default. Use `--windowed` for inspection and compare timings in the same window mode. Each run records resolved settings, hardware, HDR `.pfm.gz` captures, fixed-exposure PNG previews and per-frame GPU timings. Timings exclude export, UI and present.
 
 ## References and analysis
 
-Generate references for an existing baseline, then compare its linear images:
+Build the conventional reference variant, validate it against the baseline, then render and analyze. A reference matches the baseline's camera, resolution, lighting and asset hashes. Identical physical targets share a reference. The independent streams use the same fixed camera and sample the lighting with upstream BSDF and visibility in FP32. [Reference code](../../scripts/run/rtxdi_reference.py)
 
 ~~~powershell
-python scripts/run/build_rtxdi_experiments.py --reference
-python scripts/run/rtxdi_reference.py --baseline runs/di --output-name di-reference --check
-python scripts/run/rtxdi_reference.py --baseline runs/di --output-name di-reference
-python scripts/analysis/di_reuse.py --baseline runs/di --references runs/di-reference
+python -B scripts/run/build_rtxdi_experiments.py --reference
+python -B scripts/run/rtxdi_reference.py --baseline runs/di --output-name di-reference --check
+python -B scripts/run/rtxdi_reference.py --baseline runs/di --output-name di-reference
+python -B scripts/analysis/di_reuse.py --baseline runs/di --references runs/di-reference
 ~~~
 
-Reference generation and analysis accept `--scene <IDs>` and
-`--scenario static|motion|reset`. References inherit baseline resolution, camera
-and lighting; current assets must match their recorded hashes. Identical targets
-share one reference.
-
-Two streams (default seeds 1001 and 2001) accumulate 16 samples per light class
-per batch. Default checkpoints are 256, 512, 1024, 2048 and 4096 samples **per
-class per stream per pixel**. Their average is the reference, so the default cap
-is 8192 samples per class across both streams. Override with `--seeds`,
-`--batch-samples` (1–64) and `--checkpoints` (doubling multiples of the batch size).
-
-The separate `FullSampleReference.exe` and `shaders/full-sample-reference/`
-evaluate every light sample using the upstream BSDF and final visibility.
-Local lights are sampled directly from their power PDF mipmap, environment
-directions from their PDF mipmap, and distant lights uniformly with their angular
-extent. There is no reservoir or shared RIS pool. `--local-sampling UNIFORM`
-provides a local-light sampling cross-check. Lighting/HDR buffers and progressive
-averaging use FP32. Camera samples stay fixed: averaging reduces illumination
-noise, not aliasing. Upstream emission/background/approximate glass composition
-are retained; this is a matched renderer reference, not independent physical truth.
+The default streams are seeds 1001 and 2001, with 16 samples per batch per light class per stream. Checkpoints are 256, 512, 1024, 2048 and 4096 samples per class per stream per pixel. Average the two streams for the reference, with a default cap of 8192 samples per class across both. The published references used 2,048 samples per class per stream for Cornell Box, 8,192 for Arcade and 262,144 for Bistro. The acceptance ratio was 0.1 for Cornell Box and Arcade and 0.3 for Bistro. [Published settings and results](../../results/summaries/di-baseline/README.md)
 
 ### Convergence and resume
 
-For stream images `A_n`, `B_n` at checkpoint `n`, let `R_n = (A_n+B_n)/2` and
-`RMAE(I,R) = mean(abs(I-R)) / (mean(abs(R)) + 1e-12)`, over all linear RGB values.
-A checkpoint passes when both:
-
-- Stream disagreement: `RMAE(A_n, R_n) <= alpha * E_n`.
-- Checkpoint change: `RMAE(R_(n/2), R_n) <= alpha * E_n`.
-
-`E_n` is the lowest RMAE among baseline captures of the same target, measured
-against `R_n`. `alpha` defaults to 0.1 (`--noise-ratio`);
-`--scene-noise-ratio SCENE=RATIO` overrides one scene and is saved in its record.
-Disclose relaxed thresholds when reporting results.
-
-Each target stops after **two consecutive passing checkpoints**. The first
-cannot pass; default sampling can therefore stop no earlier than 1024. Reaching
-the cap without passing leaves it unconverged. Only full-image RMAE determines
-acceptance; quadrant metrics and NRMSE are diagnostic. This checks empirical
-agreement and stability, not true residual error or shared estimator bias.
+Let `R_n` be the mean of the two reference streams at checkpoint `n`, and `E_n` the lowest baseline full-image RGB RMAE against that mean for the same target. A checkpoint passes when both half-stream disagreement and the change from `R_(n/2)` are at most `alpha * E_n`. Require two successive passing checkpoints. The default `alpha` is 0.1. Record overrides from `--noise-ratio` or `--scene-noise-ratio`. Targets that reach their cap without passing remain unconverged. This test measures empirical stability and agreement.
 
 ~~~powershell
-python scripts/run/rtxdi_reference.py --baseline runs/di --resume runs/di-reference
-python scripts/run/rtxdi_reference.py --baseline runs/di --resume runs/di-reference --reassess-only
+python -B scripts/run/rtxdi_reference.py --baseline runs/di --resume runs/di-reference
+python -B scripts/run/rtxdi_reference.py --baseline runs/di --resume runs/di-reference --reassess-only
 ~~~
 
-Resume with the original seeds, batch size and sampling strategy; extend the
-original doubling sequence with `--checkpoints` for a higher cap. Completed
-segments are reused after target, build, image-hash and accumulation-lineage
-checks. Unfinished segments restart from the preceding saved FP32 stream mean
-and sampling sequence; earlier batches are not resampled. Each segment reloads
-the scene, and failed attempts remain in seed/checkpoint/attempt directories.
-`--reassess-only` checks all saved pairs without rendering and retains the latest
-reference. Legacy uninterrupted streams and NRMSE records require a new suite.
+Resume with the original seeds, sample allocation and batch size. A higher cap requires approval and an extension of the original doubling checkpoints. The runner verifies target, build, image hashes and sampling lineage before reusing completed work. `--reassess-only` checks saved reference pairs without rendering.
 
 ### Analysis outputs
 
-Analysis writes a new `<baseline>/analysis/` directory (`--output` overrides it):
-
-- `summary.md`: endpoint RMAE/NRMSE and phase-averaged GPU cost, error trajectories,
-  reference acceptance ratios and interpretation limits.
-- `metrics.csv`, `summary.csv`, `timings.csv`: complete capture metrics, seed
-  summaries and GPU timings by phase. RMAE uses linear RGB; NRMSE is
-  `sqrt(mean((I-R)^2)/(mean(R^2)+1e-12))`. No exposure fitting is applied.
-- `representative-images.png`, `tail-diagnostics.csv`: one endpoint per scene
-  (static when available), using the lowest baseline seed. The latter records
-  the fraction of squared RGB error in the worst 1% of pixels, rounded up.
-- `analysis.json`: selection, input/code hashes and completion status.
-
-Settings, builds, hardware and seed/capture coverage must match across compared
-modes. Timing records must cover every configured frame once, with finite,
-nonnegative durations. Reference precision is rechecked against the evaluated images; insufficient
-references mark the report provisional. Seeds are scored independently; standard
-deviation is omitted for one seed. Correlated frames are not independent repeats.
-GPU cost uses static frames 33 onward, or the full selected non-static sequence;
-these are fixed-parameter, synchronous measurements, not equal-time comparisons.
-
-Both baseline and reference HDR use `.pfm.gz`; hashes cover compressed bytes.
-A bounded 512 MiB decoded-image cache serves metrics and figures without disk
-extraction. Existing analysis directories are never overwritten.
+Analysis writes new metrics and timing CSVs, endpoint images, error trajectories and a summary. It computes RMAE and NRMSE on scene-linear RGB, checks capture and reference coverage, and marks insufficient reference precision as provisional. GPU cost uses frames 33–128 for static views and the full sequence for other scenarios. These are matched-setting measurements with one independent seed. [Analysis commands](../../scripts/analysis/README.md) · [Baseline data](../../results/summaries/di-baseline/README.md)

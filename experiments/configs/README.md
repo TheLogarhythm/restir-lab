@@ -1,11 +1,13 @@
-# Configurations
+# Experiment configurations
 
-These are the configurations used by the retained experiment workflows:
+| Workflow | Configuration |
+| --- | --- |
+| RTXDI DI baseline | [di-reuse.json](di-reuse.json) |
+| RTXDI static comparison | [DI example](di-comparison-static.json) · [DI/GI/PT with CGNS](cgns-di-gi-pt-static.json) |
+| RTXDI controlled PDF Similarity | [pdf-controlled.json](pdf-controlled.json) |
+| Falcor smoke run | [falcor-sanity-check.json](falcor-sanity-check.json) |
+| Falcor six-view PT benchmark | [Suite and schedule](pt-6-views-spatial-compare.json) · [Shared method settings](falcor-pt-spatial-comparison/restir-pt-spatial-comparison.json) |
 
-- [di-reuse.json](di-reuse.json) defines the RTXDI DI reuse baseline.
-- [di-comparison-static.json](di-comparison-static.json) and [cgns-di-gi-pt-static.json](cgns-di-gi-pt-static.json) define the comparison workflows.
-- [pdf-controlled.json](pdf-controlled.json) is the declared matrix for the controlled PDF campaign, including view overrides, schedules, ROIs and execution order. The runner resolves scene defaults and freezes effective conditions in each suite. Changes remain subject to [experiment protocol](../protocol.md) approvals.
-- [falcor-sanity-check.json](falcor-sanity-check.json) configures the Falcor integration smoke test.
-- [Falcor ReSTIR PT spatial comparison](falcor-pt-spatial-comparison/README.md) defines the shared settings for ordinary spatial reuse and CGNS. Its six [camera presets](../views/falcor-pt-spatial-comparison/) select reusable [scene profiles and inventories](../scenes/falcor-pt-spatial-comparison/). See the [preparation guide](falcor-pt-spatial-comparison/PREPARATION.md) for the two Bistro variants and four other scenes.
+The Falcor suite selects separate camera presets, scene profiles and resource inventories. Its active scene lock binds these inputs to the reference catalog. Use the preparation guide for the exact asset and runtime requirements. [Cameras](../views/falcor-pt-spatial-comparison/) · [Profiles and inventories](../scenes/falcor-pt-spatial-comparison/) · [Scene lock](falcor-pt-spatial-comparison/scene-inputs-v2.json) · [Preparation](falcor-pt-spatial-comparison/PREPARATION.md) · [Reference catalog](../references/README.md)
 
-Superseded Falcor scout and diagnostic configurations are preserved as historical records under `runs/falcor-pt-spatial-comparison/provenance/archived-configs/`. The old Bistro FBX composition and glass-bypass scene wrappers and their three dedicated launchers have been retired; the archived paths describe the historical runs and are not current runnable entry points.
+See [experiment suites](../suites/README.md) for commands and comparison settings.

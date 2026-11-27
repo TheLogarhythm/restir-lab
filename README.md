@@ -39,7 +39,7 @@ Each 10-second clip shows three methods on the same camera path. Click either pr
 
 RTXDI and Falcor use separate pinned builds. Both write scene-linear images, settings and timings for offline analysis. The RTXDI work includes the [DI baseline](results/summaries/di-baseline/README.md), [PDF Similarity and CGNS experiments](docs/reproductions/rtxdi.md), and a historical DI/GI/PT comparison. The final study compares the three [Falcor PT methods](docs/reproductions/falcor-pt.md).
 
-Start with [setup](docs/setup.md) and the [experiment guides](docs/reproductions/README.md). See the [scene catalogue](scenes/README.md), [experiment protocol](experiments/protocol.md) and [literature guide](docs/literature/README.md) for inputs and context.
+Start with [setup](docs/setup.md) and the [experiment guides](docs/reproductions/README.md). See the [scene catalogue](scenes/README.md), [experiment suites](experiments/suites/README.md), [experiment protocol](experiments/protocol.md) and [literature guide](docs/literature/README.md) for inputs and context.
 
 | Directory                  | Contents                                            |
 | -------------------------- | --------------------------------------------------- |

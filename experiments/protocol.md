@@ -1,27 +1,21 @@
 # Experiment protocol
 
-The PDF campaign completed on 2026-10-19 was explicitly compacted on 2026-10-23 under the retired-experiment exception below. Its local archive at `runs/pdf-similarity-archive/` retains selected linear HDR sufficient for reported sparse metrics, complete video-source PNG and all measurements/settings. Full temporal HDR and reference-generation/resume media are not retained. This exception does not relax raw-data requirements for new experiments.
-
 ## Before comparison
 
-State the target claim and implementation origin (author code, port, or independent). Pin code, dependencies, and scenes. Match the integrand: direct-only and full indirect illumination need different references. Validate geometry, cameras, BSDFs, lights, units, animation, bounce limits, and color handling across backends.
+State the claim and identify author code, adaptations and independent implementations. Pin code, dependencies, scenes, camera, rendering controls and reference targets. Match the transport integrand, including direct versus indirect lighting, geometry, materials, lights, bounce limits and color conventions. Set the GPU budget, sample caps and reference precision criteria before running. Changes require explicit approval.
 
 ## Run records
 
-Each run has a unique ID and a manifest with the actual command, resolved config, code/dependency commits, dirty-state indication, scene hash, GPU/VRAM, driver, OS, compiler, resolution, seeds, and output paths. Preserve failed runs and explain exclusions.
-
-For sequences, record trajectory, frame time, history initialization/reset policy, and warm-up. Evaluate both history start-up/disocclusion and steady state. Label single-seed baselines as descriptive; comparisons claiming repeatability require independent runs. Correlated frames are not independent repeats.
+Record a unique run ID, exact command, resolved settings, code and dependency revisions, asset hashes, dirty state, OS, compiler, GPU and VRAM, driver, resolution, seeds and output paths. Preserve failed attempts and explain exclusions. For sequences, record frame time, trajectory, warm-up, resets and disocclusion. Treat independent seeds as replicates and consecutive history-sharing frames as repeated measurements within each run.
 
 ## Images and references
 
-Retain scene-linear floating-point radiance before denoising and tone mapping. Retired experiments may be compacted with explicit user approval: retain display images, statistics, settings and a hash inventory, and record that pixel-error recalculation requires new renders. Generate high-sample reference images or sequences for the same transport target, preferably using a checked conventional estimator. Record reference settings and convergence checks. Do not use a different renderer's image as ground truth without validating transport and material equivalence.
+Retain scene-linear HDR before denoising and display transforms. Use a high-sample reference with matched camera, scene and transport, and record precision checks. Cross-renderer comparisons require validated material and transport equivalence. Compact retired outputs only with explicit approval and retain measurements, settings, display evidence and a hash inventory. Record whether recalculation needs new renders.
 
 ## Performance and quality
 
-Report sampling settings, GPU pass/total times and dynamic behavior; distinguish fixed-parameter baselines from equal-time comparisons. Include equal-time quality and memory for the final method evaluation. Define timing boundaries and separately account for initialization, compilation, and file I/O. Fix resolution and record denoising/upscaling settings. Keep unprocessed outputs even when showing denoised images.
-
-Define error metrics, HDR handling, normalization, masks, and aggregation. For temporal diagnostics, compare against a moving reference rather than treating legitimate motion as flicker. Report variability across independent runs.
+Report metric definitions, normalization, masks and aggregation. For moving cameras, compare temporal errors against matched moving references. Report GPU pass and frame timing boundaries, separating initialization, export and file I/O. Distinguish matched settings from equal time. Include equal-time quality and memory for the final method evaluation, and report timing variability across independent runs. Record sampling, denoising and upscaling settings.
 
 ## Ablations and records
 
-Vary candidate generation, temporal reuse, spatial reuse, and relevant weighting separately where possible. Register summaries and artifact locations in `results/index.csv`, with config and run IDs supporting each claim.
+Vary candidate generation, temporal reuse, spatial reuse and weighting independently where possible. Register results by config and run ID in the [results index](../results/index.csv). [Suite guides](suites/README.md)

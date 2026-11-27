@@ -1,102 +1,46 @@
-# PDF Similarity controlled comparison
+# RTXDI PDF Similarity suite
 
-**Current storage policy — 2026-10-23:** Explicit user approval retires the full original capture/reference-generation tree into the local `runs/pdf-similarity-archive/` directory. Retain 768 complete video-source PNGs, 456 method keyframes, 442 other PNGs, 198 method HDRs, 30 reference/sensitivity HDRs, all original statistics/settings/logs and audit snapshots. Old MP4 and NPZ files are removed only after archive verification. This replaces the full-media retention and resume instructions below; sampling, metrics and historical reference eligibility do not change. Use the archive inventory and derived inputs for current paths. Never resume or automatically recreate the retired campaign.
+The controlled comparison pairs PDF off and on in the same FullSamplePdf build at 1920×1080, using independent method seeds 1, 2 and 3. It uses combined reuse, `pdf_history_mode=0`, vMF parameters 100/10/1000, candidate counts 24/8/1 for local/environment/sun, four neighbors at radius 32 pixels, and lighting history 20. Match the camera, lights, visibility, initialization and exposure for each pair. Disable denoising, antialiasing, jitter and bloom. [Configuration](../configs/pdf-controlled.json) · [Implementation and setup](../../docs/reproductions/rtxdi.md#pdf-similarity)
 
-## Historical execution protocol (18–19 October 2026)
+## Conditions and measurements
 
-The remaining sections preserve the original rendering, budget and policy decisions. Their old paths describe historical sources; they are not commands to resume the archived campaign.
+| Condition | Schedule |
+| --- | --- |
+| Cornell Box, Arcade, Bistro Interior and Bistro Exterior static | 128 frames. Save 1, 20, 40 and 128. Score frame 128 and average GPU time over frames 41–128. |
+| Arcade, Bistro Interior and Bistro Exterior camera motion | 96 frames at logical 30 FPS. Hold 1–32, move over 33–64, then hold 65–96. |
+| Bistro lighting change | Same 96-frame schedule and fixed camera. The selected emissive group follows a mirrored cosine ramp from 1× to 2× to 1× over frames 33–64. |
 
-Approved plan, revised 2026-10-19. Evaluate the [RTXDI adaptation](../../docs/reproductions/rtxdi.md#pdf-similarity) under the [experiment protocol](../protocol.md). Preserve all completed method renders and direct comparison products, then generate the sparse references below within the explicitly approved reference-and-analysis window. Reference eligibility follows the current scene-specific policy below. See [the runner](../../scripts/run/rtxdi_pdf_controlled.py) and [setup](../../docs/setup.md#rtxdi).
+The main matrix has 48 method runs. The Bistro Interior spatial-only ablation adds six. The two Bistro static views add 24 method runs at two and eight neighbors. Equal-time estimates also use the measured four-neighbor points and interpolate only within overlapping GPU-time ranges.
 
-## Current override: Bistro fixed-sample references, 2026-10-19
+Score full-image and selected-region scene-linear luminance SMAPE, with RGB RMAE and NRMSE as diagnostics. Dynamic spatial scores use only frames 32, 48 and 96. Local TRMAE uses pairs 31→32, 47→48 and 95→96. Average GPU time separately over each 32-frame phase and include all direction updates. The logical 30 FPS rate sets the frame schedule. [Metric definitions](../../docs/metrics.md) · [Results](../../results/summaries/pdf-similarity/README.md)
 
-The user-authorized **Bistro-only** policy supersedes the original Bistro precision gates and reference-preservation instructions recorded below. Keep the frozen union of **15 physical states** and its logical-frame mapping: Cornell and Arcade retain their **five precision-accepted states** and existing results; the remaining **10 frozen Bistro states** use **seed 1001 only, exactly 262,144 cumulative local samples, 64/8/4 local/environment/infinite samples per batch, at 1920x1080**. Keep every state's original camera, scene and lighting identity. Reuse matching seed-1001 checkpoints and their complete resume ancestry through 262,144 local samples; do not substitute a higher checkpoint or average with seed 2001.
+## Reference targets and budget
 
-For Bistro, **fixed-sample single-stream ready** means the frozen state and provenance are validated and the exact sample target is complete. It does **not** mean the former precision criteria passed. Mark the original full-image/ROI uncertainty checks, independent dual-stream agreement and two-consecutive-checkpoint tests, reference-gradient checks, and paired-method-difference sensitivity checks **`not_evaluated`**. They do not gate this authorized fixed-sample reference or its metrics/maps. Report the resulting quantitative comparisons with that limitation; do not describe these Bistro references as precision accepted or infer that reference uncertainty is negligible. Cornell/Arcade precision acceptances retain their original meaning.
+The fixed union contains 15 distinct physical states. Use matched camera, scene, lighting and corrected direct-light transport for each reference. Static scores use frame 128. Dynamic references cover the three scored frames and their adjacent support frames. Deduplicate identical physical states.
 
-Preserve **all 78 method runs**, all **three method seeds**, temporal HDR/timings, all **nine raw comparison products**, the frozen 15-state mapping, and the **five retained DI/Zero-Day directories**. No method rerender is authorized or needed. Mark previous Bistro reference-dependent metrics, maps, panels and analysis derivatives **stale**, then regenerate them into a **new versioned output** using the fixed-sample references; retain the old outputs as historical evidence. Keep Cornell/Arcade references, metrics and products unchanged.
+| States | Reference rule |
+| --- | --- |
+| Cornell and Arcade, five states | Independent seeds 1001 and 2001. Allocate 64/8/4 local/environment/infinite samples per batch. Require two consecutive passing checkpoints with a 0.1 uncertainty ratio, covering full-image and selected-region SMAPE/RMAE, local gradients and sensitivity of paired differences. The cap is 1,048,576 local samples per stream. The reported references passed at 16,384 local samples per stream. |
+| Bistro, ten states | Seed 1001 only, exactly 262,144 cumulative local samples, with the same 64/8/4 allocation. Validate exact identity, sample count and restart lineage. Independent-stream precision, checkpoint stability, gradients and sensitivity are recorded as `not_evaluated`. |
 
-Cleanup is authorized only for obsolete large reference media/caches strictly inside `runs/pdf-controlled-20261018/references/bistro`: seed-2001 reference images/resume caches, seed-1001 media/caches above 262,144 local samples, and legacy dual-stream averaged reference/previous-reference/display media. Preserve useful seed-1001 checkpoints through 262,144 and complete resume ancestry, every config/manifest/source/provenance/deletion record and other metadata, and the new fixed-policy references. Preserve original Cornell/Arcade, all method/raw-video products and retained DI/Zero-Day directories. Inventory and review exact file paths/hashes before individual-file deletion; this does not authorize recursive cleanup of other directories.
+The original suite used a 30-hour wall-clock budget. The completed sparse reference and analysis phase used a separately approved 15-hour window. Record a new approval before changing budgets or precision criteria.
 
-**Transition status: reviewed and relaunched under absolute-deadline supervision.** Old worker/supervisor/renderer exited before changes; the reviewed 32-file cleanup completed, stale Bistro claims were invalidated, and 359 tests passed with one file-symlink-privilege skip. The same Windows task started the fresh `sparse-launch-plan-20261019-bistro-fixed.json` at 08:04 UTC for references/analysis only; startup verifies 10,485 pinned inputs. Old plans/claims remain intact. The existing authorized window remains unchanged and ends **2026-10-19 16:00 UTC / 2026-10-19 24:00 Hong Kong time**; no extension is implied. Stop at that deadline and report incomplete states or products.
+## Commands
 
-The 10:17 UTC supervision failure prompted a related lifecycle repair: the new supervisor creates the worker suspended and atomically assigns it to a noninherited Windows kill-on-close Job Object before execution. Membership verification, redirected logs, exclusive claims and the absolute deadline remain enforced; a supervisor-host failure terminates the contained worker/renderers. Five real Windows CPU tests and independent review passed, followed by 362 regression tests (one file-symlink-privilege skip). The existing task relaunched at 10:38 UTC with `sparse-launch-plan-20261019-bistro-fixed-recovery-1017.json`; original launch plans/claims remain preserved. Four Bistro references and the original five precision records survived intact; one interrupted reference without a checkpoint restarts in a fresh attempt. The fresh claim completed and production rendering resumed at 10:46 UTC in attempt-1 with zero previous samples; actual supervisor/worker/renderer identities and all four retained Bistro HDR hashes were verified. Sampling/build/method/asset/window settings are unchanged.
+With the RTXDI assets ready, build the two variants and use a fresh suite name for a technical pilot. The pilot checks finite captures, replay, resets and scene alignment.
 
-Final execution status 2026-10-19: **15/15 sparse physical states ready** (Bistro 10 fixed-budget, Cornell/Arcade 5 original precision-passed). No skipped conditions or current fixed-policy failures. All three method-seed spatial/ROI/maps/GPU/localTRMAE, spatial-only ablation, 2/4/8 budgets and bounded equal-time products are saved and independently verified. Production completed 13:47:21UTC, final audits completed before the unchanged 16:00UTC deadline, and the supervised process chain exited with task result 0/no future run. Bistro precision remains not evaluated. The final report preserves neutral/negative/ROI/seed-discordant findings and explains constrained-interpolation limitations; no remaining automatic experiment work is required.
+~~~powershell
+python -B scripts/run/build_rtxdi_pdf.py
+python -B scripts/run/build_rtxdi_experiments.py --reference
+$suite = 'pdf-controlled-reproduction'
+python -B scripts/run/rtxdi_pdf_controlled.py --output-name $suite --pilot-only
+~~~
 
-## Questions and controls
+For sparse evaluation with all 78 matching method captures, first validate the prepared inputs and reference policy. Then use a pinned launch plan and its matching approved window. Replace the three JSON filenames with the corresponding records for the prepared suite.
 
-Where does PDF-based spatial reuse help or hurt image error, GPU cost and temporal behavior? Separate camera motion from changing lighting; improvements are not assumed.
+~~~powershell
+python -B scripts/run/rtxdi_pdf_controlled.py --output-name $suite --references-only --validate-only --reference-window REFERENCE_WINDOW.json --reference-policy BISTRO_POLICY.json
+python -B scripts/run/rtxdi_pdf_controlled.py --output-name $suite --references-only --reference-window REFERENCE_WINDOW.json --launch-plan LAUNCH_PLAN.json
+~~~
 
-Compare PDF off/on in the same `FullSamplePdf` build, using combined reuse and seeds 1/2/3. Match resolved scene/camera/light states, candidate generation, visibility, initialization and exposure. Keep `pdf_history_mode=0`, alpha/beta/lambda=100/10/1000, 24/8/1 local/environment/sun candidates, four spatial neighbors and lighting history 20. Disable denoising, AA, jitter and bloom; measure linear HDR before tone mapping. Fix the display transform/exposure per condition. Reset light and direction histories only at sequence start.
-
-## Bounded comparison matrix
-
-| Condition | Purpose | Resolution |
-| --- | --- | --- |
-| Cornell static | Simple control | 1920x1080 |
-| Arcade static | Detailed emissive/material control | 1920x1080 |
-| Bistro interior static | Shadow boundaries, glossy surfaces and fine geometry | 1920x1080 |
-| Bistro exterior static | Outdoor geometry/illumination; start from the native `Outside` camera | 1920x1080 |
-| Arcade translation | Camera-motion control | 1920x1080 |
-| Bistro interior translation/turn | Disocclusion and changing glossy highlights | 1920x1080 |
-| Bistro exterior translation/turn | Outdoor visibility and shadow changes | 1920x1080 |
-| Bistro changing light, fixed camera | Isolate adaptation to lighting changes | 1920x1080 |
-
-Eight conditions give 48 method runs (24 off/on pairs), excluding pilots/ablations/equal-time sweeps; Bistro accounts for five conditions. Preview and freeze poses, paths, lighting and diagnostic regions before inspecting method differences. Keep outdoor coverage and report scenes separately. All formal renders and references use 1920x1080 with spatial radius 32 px.
-
-Static runs use 128 frames: retain captures 1/20/40/128, evaluate frame-128 quality across seeds, and average steady GPU times over frames 41-128. Temporal clips retain **96 consecutive frames at a fixed logical 30 FPS**: frames 1-32 stationary, 33-64 moving/changing, 65-96 stopped. Interpolate camera position and orientation over 32 increments from the held starting pose. Preserve every temporal HDR frame, resolved pose/light state and timing for all three seeds, plus complete synchronized 30 FPS raw comparison videos for seed 1. GPU execution/export speed must not advance scene time. Quality is evaluated only at the sparse frames/pairs below; GPU costs still cover all three phases. 30 FPS is the logical/playback rate, not a performance claim.
-
-## Measurements
-
-- **SMAPE, primary spatial metric:** `100 * mean(abs(Y(I)-Y(R)) / (abs(Y(I))+abs(Y(R))+1e-4))`, where `Y` uses linear RGB weights (0.2126, 0.7152, 0.0722). Report percent, without a factor of two. PDF Similarity uses SMAPE but does not fully specify its convention; we explicitly adopt a luminance version with the normalization/epsilon reported by [CGNS, footnote 3](https://research.nvidia.com/labs/rtr/publication/junkins2026compatibility/). Retain linear RGB RMAE for continuity and NRMSE/selected ROI error as diagnostics. Absolute scores are not reproductions of the paper's figures.
-- **TRMAE, local temporal diagnostic:** adopt [Işık et al. 2021, Section 5.1.1, Eq. 16](https://techmatt.github.io/pdfs/interactiveMonteCarloDenoising.pdf): `mean(||delta(I)-delta(R)||_1 / (||delta(R)||_1+0.01)) / 3`, with RGB L1 norms and adjacent-frame differences `delta(I)_t=I_t-I_(t-1)`. Use linear radiance, unchanged radiance units/frame interval, no warping or division by seconds. Evaluate only **31->32, 47->48 and 95->96**, averaging pixels separately for each pair and seed before summarizing independent seeds. These are local observations, without whole-clip or phase-average TRMAE claims. Inspect the complete raw videos alongside spatial error: constant bias can have small temporal error.
-- **GPU cost:** initial, spatial and total times, including all direction updates and light preparation/PDF rebuilding/presampling. Record timing boundaries and exclude export/I/O. Both PDF off/on allocate direction banks; disclose their 126.6 MiB at 1080p relative to ordinary DI.
-
-Label each local temporal pair with both frames and its hold/change/recovery phase. Keep one quantitative temporal metric initially. CGNS's lag-three relative autocovariance measures persistence across independent static sequences; reserve it for the later CGNS study, since it does not directly measure flicker. Correlated frames are not independent repeats.
-
-## Error visualization
-
-Generate maps after reference acceptance, directly from aligned linear HDR inputs:
-
-- **Error magnitude:** map the per-pixel SMAPE term above to `magma`, with one fixed 0-100% scale. The dark-to-bright palette follows the [FLIP tool's error-map presentation](https://github.com/NVlabs/flip/blob/main/src/cpp/FLIP.h); label these maps SMAPE, since the palette does not change the metric.
-- **Signed residual:** show `100 * (Y(I)-Y(R)) / (abs(Y(R))+1e-4)` with a zero-centered blue-white-red scale, blue for darker and red for brighter than reference. Use a shared -50% to +50% display range, inspired by [PDF Similarity, Figs. 10-11](https://doi.org/10.1145/3585501). This explicit normalization is our diagnostic convention. Clip only the display, record the clipped-pixel fraction, and retain unclipped values. A single-frame residual is not evidence of bias by itself.
-- **Temporal localization:** visualize the per-pixel TRMAE term only for 31->32, 47->48 and 95->96, before spatial averaging. Record one shared display scale across methods/pairs and state the range and clipping. Label each map with both frames of its difference.
-
-For seed 1, export static frame-128 and temporal frame-32/48/96 panels with Reference / PDF off / PDF on, corresponding error maps, and identical preselected ROI crops. Save only the declared local temporal maps; sparse coverage does not support full reference sequences/videos or error-map movies. Retain the full raw comparison videos. Use shared colorbars, units and scales across methods, frames and crops; never normalize each image independently. Save figure inputs/settings and use full-image, all-seed metrics at the selected states for conclusions.
-
-## Changing lighting
-
-[ReSTIR DI](https://research.nvidia.com/labs/rtr/publication/bitterli2020spatiotemporal/) supports dynamic lighting. Pinned RTXDI updates light data and [current/previous index mappings](https://github.com/NVIDIA-RTX/RTXDI/blob/a6efab966b7c3b272da0461578eb56ac61c7cbff/Doc/Integration.md); its Bistro scene already includes emissive-material animation. The controlled runner freezes unrelated animation and records per-frame material updates and light correspondence.
-
-Use one existing Bistro emissive group, initially the named pink string-light material, with fixed camera/geometry. Verify it affects the selected receivers before freezing the view. Modulate its original intensity positively **1 -> 2 -> 1** over frames 33-64 using 16 cosine-ramp increments and their mirrored return; then hold. This needs only 17 distinct lighting states. Keep other emitters/environment unchanged and preserve light identities. Do not reset history during the change. Global scaling of all lights can leave their relative distribution unchanged.
-
-Apply absolute intensity from the saved original value before material-buffer upload/light preparation. Validate current/previous correspondence and refreshed sampling PDFs; leave unrelated Bistro animations off. Moving emitters, light birth/death, abrupt steps and sky-texture changes remain later extensions. This test targets PDF-history adaptation without adding geometry animation.
-
-## References and budget
-
-The following records the original precision-based plan. Its 15-state selection, method preservation and deadline remain applicable. Its dual-stream precision gates and instruction to preserve every Bistro checkpoint are superseded **for Bistro only** by the current override above; they must not be used as Bistro completion gates. The five Cornell/Arcade acceptances remain precision accepted under the original policy.
-
-Generate conventional direct-light images only for static frame **128**, temporal representative frames **32/48/96**, and preceding support frames **31/47/95**. Deduplicate by exact physical state across frames, methods, seeds, ablations and equal-time runs: the frozen union is **15 states**. The user-authorized Arcade-first execution order supersedes the original four-statics-first order: after the already accepted Cornell and Arcade static states, finish the remaining three independent Arcade states (47, 48 and shared 95/96), then resume remaining Bistro work. Preserve every completed Bistro checkpoint and unfinished attempt. This changes execution priority only; the frozen 15-state inventory and logical frame mapping remain unchanged. Freeze each target's exact camera, lighting and scene state throughout accumulation; advance only sampling RNG. Include resolved lighting in reference identity/provenance. Reuse references only for identical states, never interpolate between poses. Support frames supply only the declared adjacent-pair diagnostics.
-
-Audit build/lighting provenance and DI's geometric-hemisphere support before reusing old references; regenerate references from the earlier estimator that omitted this support gate. Preserve the five retained DI/Zero-Day directories. Old RMAE acceptance alone does not validate SMAPE or temporal gradients. Check independent half-stream agreement and checkpoint stability for SMAPE/RMAE, interpreted regions and consecutive-reference differences, including their effect on reported TRMAE and its normalization. Require two accepted checkpoints, targeting reference uncertainty below 10% of the best method's corresponding error. Check reported method differences against reference-stream/checkpoint changes; otherwise report them as inconclusive. Do not inherit the historical Bistro ratio of 0.3 automatically.
-
-References use two independent streams at 1920x1080; batches request 64/8/4 local/environment/infinite samples. Record each segment's allocation and cumulative requested counts separately per stream; absent light classes execute no samples. Checkpoint progress counts local samples (64 per batch), not equal samples in every class. Keep the 0.1 uncertainty ratio, two consecutive passing checkpoints, full-image/ROI SMAPE and RMAE gates, local reference-gradient checks and method-difference sensitivity checks unchanged.
-
-For each selected target, retain all matching captures from the 78 method runs as precision inputs, including other held frames and parameter variants. Sparse evaluation must not loosen the best-method error threshold. Save each ready static comparison before continuing expensive remaining references; preserve and report cap failures while processing independent targets within the window.
-
-The reference maximum remains 1,048,576 local samples per stream. Stop at the first two consecutive passing checkpoints; changing the maximum or precision requires prior explicit user approval.
-
-The user approved a new **15-hour window, 2026-10-19 09:00 through 24:00 Hong Kong time**, covering both sparse references and analysis. Save this authorization in `runs/pdf-controlled-20261018/reference-window.json`; the existing 30-hour `execution-budget.json` remains unchanged and is superseded only for this explicitly authorized window. Stop when the window ends and report incomplete coverage. Preserve all **78 completed method runs** (48 main, 6 spatial-only, 24 new equal-time), all three seeds, full temporal HDR/timings and all nine raw comparison products. Run only references and analysis; existing method captures remain immutable. Without accepted references, direct comparisons remain visual observations; error metrics and maps stay gated. Keep accepted HDR references and fixed-exposure display copies; calculate metrics from HDR.
-
-## Order and cleanup
-
-These original implementation/campaign steps are retained for provenance. During the current transition, apply the Bistro override above to reference eligibility, stale-product regeneration and cleanup; the continuation has passed tests/review and relaunched with the fixed Bistro policy.
-
-1. Implement metrics/error-map export, deterministic orientation/time/light controls, continuous capture and frozen-state references. Validate binaries/reference target keys. No additional baseline-only campaign is needed.
-2. Run a small technical pilot: Cornell sanity plus Bistro interior/exterior and representative motion/light states. Check finite HDR, replay, exact frame alignment/reset behavior and build/state provenance. Freeze the matrix; reference precision and measured light influence are validated later.
-3. Preserve the completed method runs and labeled raw comparison panels/videos. Validate the 15-state selection and saved authorization without GPU work, then resume references only during the approved window. Validate reference precision and lighting influence before sparse error panels and quantitative conclusions; keep neutral/unfavorable findings.
-4. Limit the spatial-only ablation to one preselected Bistro view. For equal time, sweep neighbor budgets 2/4/8 on the two Bistro static views; compare only overlapping measured GPU-time ranges and confirm selected pairs with three seeds. Keep separate from fixed-setting reports; accumulation is not equal-time real-time work.
-5. Once a pilot passes and no formal result/reference depends on its artifacts, keep a compact validation record (configs, source/build/asset hashes, checks, cost and outcome), then delete bulky outputs/logs. Preserve unresolved failure diagnostics and formal artifacts; leave the five retained run directories untouched.
-
-For Oct 25, prioritize verified static pairs, representative temporal panels/local diagnostics and complete raw comparison videos; label unfinished coverage. Complete evaluation alongside CGNS integration. Staff feedback is addressed through challenging views, temporal evaluation, trustworthy references and clear explanations of when PDF reuse helps or struggles. Exploratory work remains on local branch `research/restir-limits` (`fc4c5c3`).
+The first command in this block verifies inputs without rendering. The second renders the authorized reference targets and analyzes them. The default worker without `--references-only` applies the original reference policy. [Runner details](../../scripts/run/README.md#controlled-campaign-maintenance)
