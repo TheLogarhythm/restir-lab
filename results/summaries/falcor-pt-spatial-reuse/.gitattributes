@@ -1,0 +1,5 @@
+# Preserve the checksums of the recorded benchmark exports.
+quality-frames.csv -text
+quality-seeds.csv -text
+stage-summary.csv -text
+summary.csv -text

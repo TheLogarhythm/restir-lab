@@ -16,7 +16,7 @@ We compare ordinary spatial reuse, PDF Similarity, and CGNS on Falcor 9.0. The b
 
 ### Six-view statistics
 
-All three methods use the same rendering settings at 1080p and 1 spp with temporal reuse enabled. Whole-image SMAPE is averaged over four seeds against 16,384 spp references. [Experiment settings and timing details](docs/reproductions/pt-6-views-spatial-compare.md)
+All three methods use the same rendering settings at 1080p and 1 spp with temporal reuse enabled. Whole-image SMAPE is averaged over four seeds against 16,384 spp references. [Results and CSVs](results/summaries/falcor-pt-spatial-reuse/README.md) · [Benchmark protocol](docs/reproductions/pt-6-views-spatial-compare.md)
 
 | View            | Ordinary<br>SMAPE (%) | PDF<br>SMAPE (%) | CGNS<br>SMAPE (%) | Ordinary<br>GPU (ms) | PDF<br>GPU (ms) | CGNS<br>GPU (ms) |
 | --------------- | --------------------: | ---------------: | ----------------: | -------------------: | --------------: | ---------------: |
