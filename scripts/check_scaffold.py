@@ -18,7 +18,7 @@ required = [
     'docs/reproductions/cgns-di-gi-pt.md',
     'renderers/README.md', 'renderers/rtxdi', 'renderers/falcor',
     'scenes/manifest.yaml', 'scenes/configs/rtxdi', 'scenes/configs/falcor',
-    'scenes/trajectories', 'scenes/procedural', 'scenes/authoring',
+    'scenes/trajectories',
     'experiments/protocol.md', 'experiments/configs', 'experiments/suites',
     'scripts/assets', 'scripts/run', 'scripts/analysis', 'tests',
     'results/index.csv', 'results/summaries', 'results/figures',
