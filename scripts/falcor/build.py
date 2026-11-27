@@ -8,12 +8,13 @@ import os
 import shutil
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 
 if __package__:
-    from .process_utils import check_renderer_idle, exclusive_operation, stop_process
+    from .process_utils import check_renderer_idle, exclusive_operation, publish_directory, stop_process
 else:
-    from process_utils import check_renderer_idle, exclusive_operation, stop_process
+    from process_utils import check_renderer_idle, exclusive_operation, publish_directory, stop_process
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "renderers/falcor/upstream"
@@ -110,7 +111,7 @@ def prepare_cmake_dependencies(pin, run):
                 check_cmake_dependency(staged, dep)
                 if path.exists():
                     path.rmdir()  # Remove only the still-empty destination.
-                staged.rename(path)
+                publish_directory(staged, path)
         result.append(
             "-DFETCHCONTENT_SOURCE_DIR_" + name.upper() + "=" + path.as_posix()
         )
@@ -266,6 +267,9 @@ def _build(args):
         raise RuntimeError("VS2022 C++ compiler missing")
     env = os.environ.copy()
     env["PM_PACKAGES_ROOT"] = str(OUTPUT / "packman-cache")
+    # Use the host interpreter to bootstrap Packman. Falcor's embedded Python
+    # is a separate pinned package in dependencies.xml.
+    env.setdefault("PM_PYTHON_EXT", sys.executable)
     index = int(env.get("GIT_CONFIG_COUNT", "0"))
     settings = {
         "http.sslBackend": "openssl",

@@ -6,6 +6,21 @@ import os
 from pathlib import Path
 import signal
 import subprocess
+import time
+
+
+def publish_directory(staged, destination):
+    """Keep the rename atomic while Windows releases newly created files."""
+    deadline = time.monotonic() + 60
+    while True:
+        try:
+            staged.rename(destination)
+            return
+        except OSError as error:
+            if (getattr(error, "winerror", None) not in (5, 32, 33)
+                    or destination.exists() or time.monotonic() >= deadline):
+                raise
+            time.sleep(1)
 
 
 @contextmanager

@@ -35,6 +35,25 @@ class FalcorRunnerTests(unittest.TestCase):
                 b._build(types.SimpleNamespace(check_only=False, jobs=4))
             initialize.assert_not_called()
 
+    def test_dependency_publication_retries_windows_lock_and_preserves_existing_checkout(self):
+        from scripts.falcor import process_utils
+
+        staged, destination = Mock(), Mock()
+        denied = PermissionError("directory is in use")
+        denied.winerror = 5
+        destination.exists.return_value = False
+        staged.rename.side_effect = [denied, None]
+        with patch.object(process_utils.time, "sleep") as sleep:
+            process_utils.publish_directory(staged, destination)
+            self.assertEqual(staged.rename.call_count, 2)
+            sleep.assert_called_once()
+
+            destination.exists.return_value = True
+            staged.rename.side_effect = denied
+            with self.assertRaises(PermissionError):
+                process_utils.publish_directory(staged, destination)
+            sleep.assert_called_once()
+
     def test_dependency_download_failure_can_be_retried(self):
         b = importlib.import_module("scripts.falcor.build")
         with tempfile.TemporaryDirectory() as d:
