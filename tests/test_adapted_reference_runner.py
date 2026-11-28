@@ -38,7 +38,7 @@ class AdaptedReferenceRunnerTests(unittest.TestCase):
     def test_renderer_environment_does_not_leave_bytecode_setting_changed(self):
         import os
         from scripts.falcor.adapted_reference_runner import isolated_python_environment
-        with patch.dict(os.environ):
+        with patch.object(os, "environ", os.environ.copy()):
             os.environ.pop('PYTHONDONTWRITEBYTECODE', None)
             with isolated_python_environment():
                 self.assertEqual(os.environ['PYTHONDONTWRITEBYTECODE'], '1')

@@ -12,7 +12,7 @@ class SpatialMeasurementTests(unittest.TestCase):
         import os
         from unittest.mock import patch
         from scripts.falcor import spatial_campaign as campaign
-        with patch.dict(os.environ, {"FALCOR_DEVMODE": "1"}):
+        with patch.object(os, "environ", {**os.environ, "FALCOR_DEVMODE": "1"}):
             try:
                 with self.assertRaisesRegex(RuntimeError, "FALCOR_DEVMODE"):
                     campaign.run_campaign(measure.ROOT / "tmp/not-created",
@@ -23,7 +23,7 @@ class SpatialMeasurementTests(unittest.TestCase):
     def test_capture_and_measure_reject_development_shader_override(self):
         import os
         from unittest.mock import patch
-        with patch.dict(os.environ, {"FALCOR_DEVMODE": "1"}):
+        with patch.object(os, "environ", {**os.environ, "FALCOR_DEVMODE": "1"}):
             for launch in (capture.launch, measure.launch):
                 with self.subTest(launch=launch.__module__):
                     try:

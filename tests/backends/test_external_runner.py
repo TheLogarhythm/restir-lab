@@ -35,7 +35,7 @@ class ExternalRunnerTests(unittest.TestCase):
                     "--camera-direction", "0", "0", "1", "--interactive"]
             with patch.object(runner, "ROOT", root), patch.object(runner, "EXE", exe), \
                  patch.object(runner, "validate_integration"), \
-                 patch.object(sys, "argv", argv), patch.dict(os.environ, {"RTXDI_EMISSIVE_SCALE": "99", "RTXDI_EXPOSURE_BIAS": "20"}, clear=True), \
+                 patch.object(sys, "argv", argv), patch.object(os, "environ", {"RTXDI_EMISSIVE_SCALE": "99", "RTXDI_EXPOSURE_BIAS": "20"}), \
                  patch.object(runner.subprocess, "check_output", return_value="test-commit"), \
                  patch.object(runner.subprocess, "run", side_effect=execute):
                 self.assertEqual(runner.main(), 0)
