@@ -17,7 +17,7 @@
 /results/summaries/di-baseline/README.md -text
 
 # Preserve hash-registered report sources and the English derivative.
-/THIRD_PARTY.md -text
+/THIRD_PARTY.md -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /writing/progress/data/scene-gallery-readme.txt -text
 /writing/progress/data/overview.csv -text
 /writing/progress/data/overview.schema.json -text

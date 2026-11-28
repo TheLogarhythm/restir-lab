@@ -34,7 +34,7 @@ Source archives, hashes, and conversion details are recorded in the [scene manif
 
 - The [COMP5411 course site](https://course.cse.ust.hk/comp5411/) supplied the original [proposal and report templates](writing/course/templates/README.md) and [project guidelines](writing/course/guidelines/README.md).
 - Illustration credits for the pitch are listed with the slides. The progress presentation uses Tokuyoshi's Figure 2 from *Efficient Spatial Resampling Using the PDF Similarity* (2023). The authors retain copyright, with publication rights licensed to ACM. [Pitch sources](writing/course/slides/sources.md) · [Progress figure record](writing/progress/data/paper-figure.json)
-- The final presentation includes a crop of Figure 2 from Junkins et al. (2026), CC BY 4.0. [Figure record](writing/final/data/cgns-figure2.json)
+- The final presentation includes a crop of Figure 2 from Junkins et al. (2026), CC BY 4.0. [Presentation figure record on GitHub](https://github.com/TheLogarhythm/restir-lab/blob/main/writing/final/data/cgns-figure2.json)
 
 ## ReSTIR Atlas icon
 
