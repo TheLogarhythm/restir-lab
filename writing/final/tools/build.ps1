@@ -13,7 +13,6 @@ $finalRoot = Split-Path $PSScriptRoot
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $finalRoot '../..'))
 $buildRoot = Join-Path $finalRoot 'build'
 $theme = Join-Path $finalRoot 'source/theme.css'
-New-Item -ItemType Directory -Force -Path $buildRoot | Out-Null
 function Invoke-Python([string]$Script) {
     & $Python -B (Join-Path $PSScriptRoot $Script) @args
     if ($LASTEXITCODE -ne 0) { throw "Python failed: $Script" }
@@ -25,6 +24,27 @@ if ($Figures) {
     }
 }
 if ($Media) { Invoke-Python 'build_media.py' }
+$decks = @('final','appendix')
+$assetAttribute = '(?i)\s(?:src|poster)\s*=\s*(?<quote>["''])(?<reference>.*?)\k<quote>'
+$missingAssets = foreach ($deck in $decks) {
+    $source = Join-Path $finalRoot "source/$deck.md"
+    $sourceUri = [UriBuilder]::new('file', '', -1, $source).Uri
+    $references = [regex]::Matches([IO.File]::ReadAllText($source), $assetAttribute) |
+        ForEach-Object { [Net.WebUtility]::HtmlDecode($_.Groups['reference'].Value).Trim() }
+    foreach ($reference in $references | Select-Object -Unique) {
+        if (-not $reference -or $reference.StartsWith('//')) { continue }
+        # Windows PowerShell can treat a file URL query as part of its path.
+        $assetUri = [Uri]::new($sourceUri, ($reference -split '[?#]', 2)[0])
+        if ($assetUri.IsFile -and -not (Test-Path -LiteralPath $assetUri.LocalPath -PathType Leaf)) {
+            "${deck}.md: $reference"
+        }
+    }
+}
+if ($missingAssets) {
+    $newline = [Environment]::NewLine
+    throw ('Missing local presentation assets.' + $newline + ($missingAssets -join $newline) + $newline +
+        'Restore the listed files or rebuild with -Figures or -Media when the archived inputs are available. See writing/final/README.md.')
+}
 $node = (Get-Command node.exe).Source
 $candidates = @()
 if ($Marp) { $candidates += $Marp }
@@ -49,7 +69,8 @@ function Invoke-Marp([string]$Source) {
     & $node $marpCli $Source --html --theme-set $theme @args
     if ($LASTEXITCODE -ne 0) { throw 'Marp build failed' }
 }
-foreach ($deck in @('final','appendix')) {
+New-Item -ItemType Directory -Force -Path $buildRoot | Out-Null
+foreach ($deck in $decks) {
     $source = Join-Path $finalRoot "source/$deck.md"
     $htmlPath = Join-Path $finalRoot "$deck.html"
     Invoke-Marp $source --output $htmlPath

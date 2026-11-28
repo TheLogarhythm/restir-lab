@@ -8,7 +8,11 @@ REPO = ROOT.parents[1]
 
 def refresh_table(root=ROOT):
     repo = root.parents[1]
-    with (repo/'runs/pt-6-views-spatial-compare/statistics/summary.csv').open(encoding='utf-8-sig', newline='') as stream:
+    summary = repo / 'results/summaries/falcor-pt-spatial-reuse/summary.csv'
+    if not summary.exists():
+        # Existing reporting handoffs carry the original archive copy of this CSV.
+        summary = repo / 'runs/pt-6-views-spatial-compare/statistics/summary.csv'
+    with summary.open(encoding='utf-8-sig', newline='') as stream:
         rows = list(csv.DictReader(stream))
     views=['bistro-interior','bistro-exterior','classroom','emerald-square','veach-ajar','zero-day-measure-seven']
     names=['Bistro Interior','Bistro Exterior','Classroom','Emerald Square','Veach Ajar','Zero Day Measure Seven']

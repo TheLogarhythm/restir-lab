@@ -26,7 +26,7 @@ try {
   $play.HideWhileNotPlaying = 0
   $entries += @{slide=[int]$video.slide;shape_id=$shape.Id;path=[string]$video.path;sha256=$video.sha256;autoplay=$true;loop=$false}
  }
- $out = Join-Path $buildRoot 'final-with-videos.pptx'
+ $out = Join-Path $buildRoot 'slides.pptx'
  $deck.SaveAs($out,24)
  $receipt = @{slides=$deck.Slides.Count;videos=$entries;file=$out;playback_checks=@();current_media_index=$spec.current_media_index}
  if ($VerifyPlayback) {

@@ -1,10 +1,9 @@
-"""Build the timed release from approved previews and retained renderer videos."""
+"""Build the timed release from approved presentation clips and retained renderer videos."""
 from io import BytesIO
 import json
 import math
 import os
 from pathlib import Path
-import shutil
 import subprocess
 from tempfile import TemporaryDirectory
 
@@ -18,10 +17,10 @@ ASSETS = ROOT / 'assets/videos'
 RESULTS = 'cgns-nrd-results'
 ORDER = ('bistro-interior', 'bistro-exterior', 'zero-day', 'classroom')
 TITLES = ('Bistro Interior', 'Bistro Exterior', 'Zero Day Measure Seven', 'Classroom')
-PREVIEWS = {
-    'bistro-interior': ('bistro-interior-fps-2s-7s.mp4', (60, 210),
+REVIEWED_BISTRO = {
+    'bistro-interior': ((60, 210),
         '935c36bc79d2edbe00f41d341bbc8aed58ce00d221bfe5ffbb1b445766c45c91'),
-    'bistro-exterior': ('bistro-exterior-fps-pauses.mp4', (190, 299),
+    'bistro-exterior': ((190, 299),
         '45f1579f1f4a80ed288bec03fefa37c4371c93b2b9cee1fc961e8d2783a093de'),
 }
 COLORS = ('#30231D', '#785385', '#AC4E24')
@@ -132,8 +131,6 @@ def results_video(target, poster):
     sources, paths = [], []
     for scene in ORDER:
         folder = root / f'{scene}-nrd'
-        if scene == 'bistro-exterior':
-            folder = REPO / 'runs/bistro-exterior-cgns-nrd-preview-20261119'
         evidence = current.read_json(folder / 'preview-manifest.json')
         source = folder / f'{scene}-cgns-nrd.mp4'
         if evidence['status'] != 'completed' or evidence['video_probe']['nb_read_frames'] != '300':
@@ -206,11 +203,9 @@ def make(scene, force):
         if (course.digest(target),course.digest(poster)) == (receipt['output_sha256'],receipt['poster_sha256']):
             return
     frames, holds = 300, ()
-    if scene in PREVIEWS:
-        name, holds, checksum = PREVIEWS[scene]
-        source = ROOT / 'build/presentation-preview-20261119' / name
-        origins = [pinned(source, checksum)]
-        shutil.copyfile(source,target)
+    if scene in REVIEWED_BISTRO:
+        holds, checksum = REVIEWED_BISTRO[scene]
+        origins = [pinned(target, checksum)]
         frames = 420
     elif scene == RESULTS:
         origins = results_video(target, poster)

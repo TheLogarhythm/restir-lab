@@ -20,6 +20,17 @@ def load_media():
     return presentation_media
 
 
+class TrackedReceiptTests(unittest.TestCase):
+    def test_checkout_matches_pinned_video_receipts(self):
+        media = load_media()
+        root = TOOLS.parent
+        index = media.load_current_media(root, verify_assets=False)
+        for entry in index['entries']:
+            receipt = entry['receipt']
+            with self.subTest(path=receipt['path']):
+                self.assertEqual(media.digest(root / receipt['path']), receipt['sha256'])
+
+
 class CurrentMediaTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()

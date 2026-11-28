@@ -118,8 +118,12 @@ def package(root, output):
         tree(FINAL / relative)
     for name in ('final.html', 'appendix.html', 'README.md'):
         copy(root / FINAL / name, core / FINAL / name)
-    for name in ('final.pdf', 'appendix.pdf', 'final-notes.txt', 'rehearsal-script.md', 'final-with-videos.pptx'):
-        copy(root / FINAL / 'build' / name, core / 'presentation' / name)
+    for name in ('final.pdf', 'appendix.pdf', 'final-notes.txt', 'rehearsal-script.md'):
+        copy(final_root / 'build' / name, core / 'presentation' / name)
+    deck = final_root / 'build/slides.pptx'
+    if not deck.is_file():
+        deck = final_root / 'build/final-with-videos.pptx'
+    copy(deck, core / 'presentation/final-with-videos.pptx')
     for source in current_assets:
         target = core / source.relative_to(root)
         if not target.exists():

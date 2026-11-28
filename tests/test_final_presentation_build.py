@@ -39,9 +39,9 @@ class PresentationBuildTests(unittest.TestCase):
             repo = Path(directory)
             root = repo / 'writing/final'
             (root / 'source').mkdir(parents=True)
-            archive = repo / 'runs/pt-6-views-spatial-compare/statistics'
-            archive.mkdir(parents=True)
-            with (archive / 'summary.csv').open('w', newline='') as stream:
+            summary_dir = repo / 'results/summaries/falcor-pt-spatial-reuse'
+            summary_dir.mkdir(parents=True)
+            with (summary_dir / 'summary.csv').open('w', newline='') as stream:
                 writer = csv.DictWriter(stream, fieldnames=['view','method','smape_percent','smape_seed_sd'])
                 writer.writeheader()
                 for view in ('bistro-interior','bistro-exterior','classroom','emerald-square','veach-ajar','zero-day-measure-seven'):
