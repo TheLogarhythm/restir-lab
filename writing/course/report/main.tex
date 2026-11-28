@@ -6,65 +6,269 @@
 \usepackage{titling}
 \usepackage{fancyhdr}
 \usepackage{abstract}
+\usepackage{amsmath,amssymb,booktabs,capt-of,url}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Evaluating Spatial Reuse in ReSTIR Path Tracing},pdfauthor={Luoyi Zhang and Zelin Gao}}
 \geometry{left=20mm,right=20mm,top=30mm,bottom=30mm}
 
-% ------------------ Project variables (edit these) ------------------
-\newcommand{\GroupNumber}{X}
-\newcommand{\ProjectName}{ReSTIR Spatial Reuse: Implementation and Evaluation}
-\newcommand{\ProjectAuthors}{Student A and Student B}
-% --------------------------------------------------------------------
-
+\newcommand{\GroupNumber}{7}
+\newcommand{\ProjectName}{Evaluating Spatial Reuse in ReSTIR Path Tracing}
+\newcommand{\ProjectAuthors}{Luoyi Zhang and Zelin Gao}
 \newcommand{\DocTitle}{Project Report}
 \title{{\bf\ProjectName}}
 \author{Group \GroupNumber\\ \ProjectAuthors}
 \date{HKUST - COMP5411 - Fall 2026}
 \fancypagestyle{fancy}{
-    %\fancyhf{} % clear all header and footer fields
     \fancyhead[L]{\DocTitle\\ {\bf\ProjectName}}
     \fancyhead[R]{\theauthor}
     \fancyfoot[C]{\thepage}
 }
 \pagestyle{fancy}
 \setlength{\headheight}{20pt}
-\setlength{\parindent}{0pt}     % No indent for new paragraphs
-\setlength{\parskip}{0.25\baselineskip}  % Small vertical space
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.25\baselineskip}
+\raggedbottom
+\urlstyle{tt}
+% Run .\build.ps1 in this folder to compile the PDF with TeX Live.
+\newcommand{\panel}[2]{\includegraphics[width=#2]{figures/#1.png}}
+\newcommand{\fullview}{../../../results/figures/emerald-square-comparison.png}
+
 
 \begin{document}
-\twocolumn[
+\twocolumn[{
 \maketitle
 \begin{onecolabstract}
-This document serves as a template for your project report. Fill in the project variables at the top, delete this section replacing it by an abstract of about 150-180 words, and fill in the remaining sections below. You should organize your report in a format similar to a short academic paper discussing your design and methodology, the details of the technical challenges faced, implementation details, and results including diagrams and results figures, where applicable. There are no hard length constraints in the report (we expect roughly 3500 words would suffice for sections before the appendix). Do not change the formatting and fonts as these sections will be included in a course proceedings. Please keep sections for introduction, results and conclusion (1, 3, and 4), but you may change section 2 to another name and insert additional sections there as you see fit based on your project. The appendix sections A-C are private and will only be read by the course staff.
+At one sample per pixel, a path tracer often misses light that a neighboring pixel has sampled. We compare two ways of deciding how much that neighbor can help. In Falcor's ReSTIR path tracer, PDF Similarity weights a proposed neighbor by the directions of contributing paths at the two pixels. Compatibility-guided neighbor selection (CGNS) searches nearby surfaces for a donor before shifting its path. Both methods can reuse one neighbor per pixel. Against 16,384-sample references, CGNS reduces mean luminance error by 3.9--22.7\% across six fixed views, at a GPU frame-time cost of 4.0--5.9\% in the five views with usable timings. PDF Similarity nearly ties ordinary reuse in Bistro Interior and increases error by 5.6\% in Emerald Square. CGNS also changes the pattern of the noise. Fluctuations three frames apart have lower covariance in every view, while nearby pixels in the same frame have higher covariance. In Classroom, a furniture edge improves substantially even as a blackboard in the same image becomes slightly less accurate.
 \center\rule{0.75\linewidth}{0.5pt}\vspace{0.8em}
 \end{onecolabstract}
-]
-
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=0.77\linewidth]{\fullview}
+\captionof{figure}{\textbf{A fence in Emerald Square, at one sample per pixel.} The box locates the same $128\times128$ pixels in each crop. CGNS resolves more of the hedge and pavement in this frame. We chose the crop for its visible improvement. Figure~\ref{fig:maps} shows where each method gains and loses across the whole view.}
+\label{fig:teaser}
+\end{minipage}
+\vspace{0.75\baselineskip}
+}]
 \thispagestyle{plain}
 
-%-----------------
-
 \section{Introduction}
-[Add content here]
+In Fig.~\ref{fig:teaser}, neighboring camera rays hit the metal fence, the leaves behind it or the pavement below. A sample found on a leaf may be a poor choice for the fence in front of it. Differences in depth and surface orientation help identify those boundaries.
+
+Reservoir-based spatiotemporal importance resampling (ReSTIR) makes such choices many times per frame. A pixel keeps one selected sample along with weights summarizing the candidates it considered. A neighbor can borrow that sample and evaluate it at its own surface. At low sample counts, this gives a pixel access to paths that it would seldom discover for itself. The same sample can also influence several pixels or survive for several frames. Whole-image error tells us how closely the result matches a reference, but two images with similar error can have quite different noise patterns.
+
+We began with direct illumination in RTXDI~\cite{rtxdi}. In our static Bistro Exterior test, turning on PDF Similarity reduced luminance error from 42.24\% to 34.48\%. The single-bounce setting gives a direction a fairly direct interpretation because it points toward the sampled light. We wanted to know how much that clue still tells us when the next hit can scatter light again. We therefore built the final comparison in one multi-bounce renderer, Falcor ReSTIR PT~\cite{falcor}. For each Falcor view, we rendered a reference with the same scene, camera and light transport.
+
+We give each receiving pixel room for one spatial donor. It can spend work looking for a promising surface, or take the ordinary proposal and reduce its influence when the two pixels have different directional histories. We implemented both choices. We compare image error, noise covariance across pixels and frames, and GPU time. The fence and a second example in Classroom let us ask which parts of an image benefit when its mean error improves.
 
 \section{Method}
-[Add content here; can rename this section and insert more sections here as you see fit.]
+\subsection{Reusing a path at another pixel}
+Bitterli et al.~\cite{bitterli} introduced ReSTIR for direct lighting in scenes with many lights. Lin et al.~\cite{lin} developed generalized resampled importance sampling (GRIS) and showed how to reuse entire paths. A path sampled at a donor pixel must first be mapped, or \emph{shifted}, into the receiving pixel's domain. Its contribution can change after the shift, for instance if a connection becomes occluded. We use Falcor's native path generation, shifts and visibility tests for all three methods.
+
+Each frame starts with initial path sampling. Temporal reuse brings in a reservoir from the preceding frame, when reprojection is valid. One spatial round then proposes a donor for each receiving pixel. We use point reservoirs and an unpaired neighbor. Falcor checks the proposed surface and evaluates the shifted path where eligible. Multiple importance sampling (MIS) accounts for the participating reservoirs when combining their samples.
+
+In \emph{ordinary reuse}, the renderer draws a pixel from a disk of screen-space offsets. With shading normals $n_i,n_j$ and camera distances $d_i,d_j$ at receiver $i$ and donor $j$, the geometry gate requires $n_i\cdot n_j\geq0.5$ and $|d_j-d_i|<0.1d_i$. A candidate just inside the cutoffs passes the same gate as a close match. PDF Similarity keeps this proposal and changes the weight of an eligible donor. CGNS changes which donor the renderer tests.
+
+\subsection{Weighting a donor by directional agreement}
+Tokuyoshi~\cite{tokuyoshi} approximates the directional probability density function (PDF) of useful single-bounce connections at each pixel. Extending this idea to a multi-bounce path requires choosing which direction to record. We use the direction leaving the first visible surface. For a direct connection at that surface we record the direction to the light. For a contribution reached after scattering we record the first scattering direction. Paths that agree on this first step may still reach different lights.
+
+We collect evidence during initial sampling. Each candidate with a valid first direction $\omega_k$ and positive scalar sampling weight $w_k$ contributes $w_k\omega_k$ and $w_k$ to two running sums, even if another candidate wins the reservoir draw. Their ratio is the weighted mean direction vector. Its orientation gives the axis of a von Mises--Fisher lobe, and its length determines the fitted concentration. Tight clusters of directions produce narrow lobes. Opposing clusters can cancel in the mean. In that case even strong directional structure may give a broad fit. Figure~\ref{fig:direction} illustrates the information available to the comparison.
+
+\begin{figure}[tb]
+\centering
+\panel{direction}{\linewidth}
+\caption{The first-hop approximation. A lobe summarizes the directions of contributing paths at one pixel. Its overlap with the neighboring lobe depends on their orientations and concentrations.}
+\label{fig:direction}
+\end{figure}
+
+We reproject valid directional moments with decay 0.95. A separate evidence count $e$ tracks frames with usable directional energy, with the same decay and a cap of 20. Let $S_{ij}\in[0,1]$ be the overlap score of the two fitted lobes and $M_j$ the donor reservoir's count. We use an effective donor count
+\begin{align}
+c &= \operatorname{clamp}\big((\min(e_i,e_j)-1)/19,0,1\big),\nonumber\\
+M'_j &= M_j\big[(1-c)+cS_{ij}\big]. \label{eq:pdf}
+\end{align}
+If either pixel has no directional energy, we keep $M_j$. Equation~\ref{eq:pdf} also gives ordinary weighting when only one frame of evidence is available. This matters after a history reset because a reservoir may represent many sampling candidates before there is enough directional evidence to discount it.
+
+The effective count must agree everywhere it enters the estimator. We use $M'_j$ in forward and reverse MIS, in the reservoir merge and in the count passed on to future reuse. A change confined to the merge would leave the other terms describing a different donor weight. We tested the two endpoints in Classroom. Forcing the multiplier to one recovered ordinary output, and forcing it to zero matched a separately implemented center-only merge. These controls test the wiring of the adaptation. Establishing unbiasedness for intermediate, data-dependent weights would require an estimator analysis.
+
+\subsection{Choosing a donor by geometry}
+Junkins et al.~\cite{junkins} use primary-hit geometry to choose which neighbors to send to the path tracer. Following their paper and public implementation, we score candidate $j$ from the receiver's world-space position $x_i$, shading normal $n_i$ and distance $d_i$ from the camera. The score is
+\begin{align}
+s_i &= d_i\sqrt{0.05/\pi},\nonumber\\
+g_{ij} &= \exp\big(-\|x_i-x_j\|/s_i\big)
+           \max(n_i\cdot n_j,0)^8. \label{eq:cgns}
+\end{align}
+A fixed screen-space offset spans a greater world-space distance far from the camera. The scale $s_i$ lets the falloff grow with that distance. The normal term gives less weight to surfaces that are close in space but face different directions.
+
+Starting at a randomized offset in Falcor's disk pattern, we examine up to 32 proposals within a 30-pixel radius. We skip the center, duplicates, off-screen pixels and invalid surfaces. For each positive score, a one-entry weighted reservoir replaces its current choice with probability $g_{ij}/\sum_k g_{ik}$ over the candidates seen so far. We stop after processing the first score of at least 0.5. This candidate can end the search while an earlier candidate still wins the draw. If every score is invalid or zero, spatial reuse proceeds without a donor. Only the chosen neighbor goes on to the native geometry and shift checks.
+
+Falcor uses the neighbor to generate the workload, retrace the compacted set of paths and merge the reservoirs. Repeating the search at each stage both costs reads and requires exact agreement about the winner. We cache surface attributes once per frame and store the winning pixel ID once per spatial round. The three stages then consume the same choice. Two RGBA32F textures and one R32Uint texture add 36 bytes per pixel, or 71.2 MiB at $1920\times1080$. This allocation covers the explicit CGNS cache.
+
+Our implementation retains Falcor's point reservoirs. The authors' Fast configuration also uses area reservoirs and splatting~\cite{junkins}. They report a 6--29\% SMAPE reduction in their experiments. Agreement in direction is informative, but the two sets of percentage changes depend on different sampling configurations, scenes and references.
+
+\subsection{Measurements}
+The six views are Bistro Interior, Bistro Exterior, Classroom, Emerald Square, Veach Ajar and Zero Day Measure Seven. The two Bistro views have separate scene configurations as well as different cameras. For each view we bind the same camera, geometry, light sources and transport settings to the three methods and to a conventional 16,384-spp Falcor reference. We render at $1920\times1080$, with one sample per pixel (spp), Russian roulette and a maximum of ten surface bounces. All methods use one spatial round and a 30-pixel radius. Each method sends at most one spatial donor per pixel to the path-shift stage. CGNS can examine up to 32 geometric candidates to select that donor. Temporal reuse is enabled with a maximum history of 20. An extra ordinary run disables temporal reuse to measure how much of the improvement comes from history alone.
+
+\begin{table*}[t]
+\centering
+\caption{\textbf{Whole-image quality and GPU cost at matched settings.} SMAPE is mean $\pm$ sample SD of four seed means. Relative gain is $100(1-E_{\rm CGNS}/E_{\rm ord})$. GPU times are whole-frame milliseconds. Lower is better for SMAPE and time. Dashes denote the excluded Emerald timings. The two Bistro views use different cameras.}
+\label{tab:main}
+\small
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l rrr r rrr@{}}
+\toprule
+& \multicolumn{3}{c}{Luminance SMAPE (\%)} & CGNS gain & \multicolumn{3}{c}{GPU time (ms)}\\
+\cmidrule(lr){2-4}\cmidrule(l){6-8}
+View & Ordinary & PDF Sim. & CGNS & (\%) & Ordinary & PDF Sim. & CGNS\\
+\midrule
+Bistro Interior & $28.044\pm.023$ & $28.042\pm.023$ & $\mathbf{25.302}\pm.021$ & 9.78 & 37.28 & 41.33 & 38.85\\
+Bistro Exterior & $16.667\pm.004$ & $16.319\pm.007$ & $\mathbf{15.118}\pm.011$ & 9.30 & 40.50 & 44.38 & 42.90\\
+Classroom       & $17.332\pm.023$ & $17.195\pm.015$ & $\mathbf{16.027}\pm.026$ & 7.53 & 32.13 & 40.78 & 33.85\\
+Emerald Square  & $25.550\pm.038$ & $26.988\pm.040$ & $\mathbf{19.738}\pm.022$ & 22.75 & --- & --- & ---\\
+Veach Ajar      & $16.751\pm.042$ & $16.778\pm.044$ & $\mathbf{15.894}\pm.027$ & 5.11 & 22.53 & 27.22 & 23.42\\
+Zero Day        & $19.089\pm.020$ & $18.738\pm.021$ & $\mathbf{18.339}\pm.024$ & 3.93 & 69.71 & 75.40 & 72.55\\
+\bottomrule
+\end{tabular*}
+\end{table*}
+
+Each quality run starts in a fresh process. Frames 1--40 build history. For frames 41--56 we export the scene-linear HDR image before exposure or tone mapping, with denoising and image accumulation disabled. We convert linear RGB to luminance $Y=0.2126R+0.7152G+0.0722B$. For frame $t$ of seed $s$, whole-image symmetric mean absolute percentage error (SMAPE) is
+\begin{equation}
+E_{s,t}=100\,\mathrm{mean}_{p}
+\frac{|Y_{s,t,p}-Y^{\rm ref}_p|}
+{|Y_{s,t,p}|+|Y^{\rm ref}_p|+10^{-4}} . \label{eq:error}
+\end{equation}
+The mean includes background pixels. This convention omits the factor of two used in some definitions of SMAPE. We average the 16 frame scores within each seed, then average the four seed means. Scoring an image averaged over frames would instead measure accumulated output. We use seeds as replicates because successive frames share reservoirs. Below, a difference in percentage points (pp) subtracts two SMAPE values. A relative gain divides that difference by the ordinary baseline.
+
+For timing, a separate export-free run records the whole GPU frame on an NVIDIA GeForce RTX 4060 Laptop GPU. We use the same 40-frame warm-up and 64 measured frames (41--104), followed by one frame to drain the profiler. We report the retained recheck for Veach Ajar. Emerald Square gave unstable timings on repeat runs, so its row contains only quality measurements. Each reported time is one run mean. The experiment measures cost at matched sampling settings and gives no estimate of run-to-run timing variation.
 
 \section{Results}
-[Add content here]
+
+
+
+\begin{figure*}[t]
+\centering
+\panel{maps}{0.86\linewidth}
+\caption{\textbf{Emerald Square, per-pixel change in luminance SMAPE.} Each map shows the difference in error relative to ordinary reuse. Blue means lower error and red means higher error. The common color scale clips at $\pm20$ percentage points. The area fractions in the text use the unclipped maps.}
+\label{fig:maps}
+\end{figure*}
+
+\subsection{Whole-image error}
+CGNS has the lowest mean SMAPE in every view (Table~\ref{tab:main}). In all 24 matched view--seed pairs, CGNS has lower SMAPE than both ordinary reuse and PDF Similarity. The smallest relative gain is 3.93\% in Zero Day Measure Seven. The largest is 22.75\% in Emerald Square, where ordinary reuse gives 25.550\% SMAPE and CGNS gives 19.738\%. For Emerald the paired change is $-5.812\pm0.043$ pp, with the standard deviation computed across the four differences. The table reports each method's own seed variation.
+
+PDF Similarity produces a different pattern. Its best relative gain is 2.09\% in Bistro Exterior. In Bistro Interior, the two means round to the same value at two decimal places. The paired change is $-0.00164\pm0.00133$ pp, with three seeds improving and one worsening. In Veach Ajar the error rises slightly. Emerald Square is the conspicuous failure, with an increase of $1.438\pm0.005$ pp, or 5.63\% relative. The strong direct-lighting result that motivated the experiment did not carry over at the same magnitude to the Bistro path-traced views. Differences in transport, references and acquisition between the two renderers prevent attributing that change to path length alone.
+
+The ordinary temporal-off control puts these differences in perspective. Enabling temporal reuse while leaving ordinary spatial reuse in place reduces mean SMAPE by 56.6--82.6\%, depending on the view. All three methods in the main comparison use temporal reuse. The three-way comparison therefore measures the effect of changing the spatial reuse strategy after temporal history has built up.
+
+\begin{figure*}[t]
+\centering
+\panel{classroom}{0.92\linewidth}
+\caption{\textbf{Two details in Classroom with opposite outcomes.} A contains a furniture edge and B crosses the blackboard. The panels show the neighborhood of each marked strip. The reported SMAPE values score only its horizontal center line of 128 pixels, over all four seeds and 16 frames.}
+\label{fig:class}
+\end{figure*}
+
+\subsection{Where the changes occur}
+
+The Emerald fence makes a good illustration but a poor basis for estimating how often CGNS helps. We chose the crop after looking for an improvement, and it shows only one frame. Figure~\ref{fig:maps} shows the full view. For each pixel, we average the error difference relative to ordinary reuse over four seeds and 16 frames per seed. For CGNS, 62.7\% of all pixels improve by more than 1 pp and 17.4\% worsen by more than 1 pp. For PDF Similarity the corresponding shares are 9.5\% and 37.9\%. The balance falls within $\pm1$ pp, including background pixels where the methods agree. We use one point as a common threshold for counting area. How visible a one-point change is depends on the surrounding image.
+
+
+In Classroom, the choice of a region can reverse the ranking (Fig.~\ref{fig:class}). We located strip A by searching $9\times128$ neighborhoods for a large observed advantage for CGNS. Along its 128-pixel center line, ordinary reuse gives 40.834\% SMAPE and CGNS gives 29.204\%, an improvement of 11.63 pp. We chose strip B on the blackboard from structure and material contrast in the reference image, without consulting the gain map. Here ordinary reuse gives 10.932\%, PDF Similarity gives 10.894\%, and CGNS gives 11.340\%. The blackboard loss is small, but it occurs in a view where CGNS lowers whole-image error by 7.53\%.
+
+World-space separation and normal agreement could help distinguish the overlapping surfaces near the furniture. On a continuous surface, both cues can stay much the same across a shadow edge. The crops identify places to test that explanation. They do not record which candidates the renderer rejected or which shifted paths lost visibility. The two methods also differ in how many surfaces they inspect. A direct test of the geometric score would feed CGNS and a uniform selector the same visited candidate list and pass one donor from each to the same shift code.
+
+\subsection{Noise shared across pixels and frames}
+SMAPE compares each sample image with a reference. For covariance, we measure variation across independent runs. Let $\mu(p,t)$ denote the mean luminance across the four seeds at pixel $p$ and frame $t$. We center each run on that mean and normalize by local brightness,
+\begin{equation}
+r_s(p,t)=\frac{Y_{s,t,p}-\mu(p,t)}{\mu(p,t)+10^{-4}} .
+\end{equation}
+For each pair of locations we take the sample covariance of their residuals across seeds. For temporal covariance the pair is the same pixel three frames apart, giving 13 valid frame pairs. For spatial covariance we average over a radius-eight disk in the same frame, clipped to the image bounds and including the center variance term. We then average over pixels and valid frames. Both quantities are signed, dimensionless and independent of the reference image.
+
+\begin{figure}[tb]
+\centering
+\panel{covariance}{\linewidth}
+\caption{Relative change in temporal covariance at lag three (left) and spatial covariance within eight pixels (right), measured against ordinary reuse.}
+\label{fig:cov}
+\end{figure}
+The direction of the CGNS change is the same in all six views (Fig.~\ref{fig:cov}). Temporal covariance falls by 8.8--40.4\%, while spatial covariance rises by 1.7--24.9\%. In Bistro Interior, for example, SMAPE falls by 9.78\% even as spatial covariance rises from 0.00500 to 0.00625. PDF Similarity again depends on the view. In Emerald its temporal covariance rises by 13.0\% along with its mean error. With four independent runs, estimates for individual pixels are noisy, and neither statistic measures perceived flicker along a moving camera trajectory.
+
+\subsection{GPU cost}
+Ordinary reuse gives the shortest GPU frame time in all five timed views. CGNS adds 3.95--5.92\%, versus 8.16--26.93\% for PDF Similarity. Thus, at the measured settings, CGNS has both lower mean error and a shorter frame time than PDF Similarity in every timed view. The ordinary baseline still saves between 0.89 and 2.85 ms per frame over CGNS in those views. An equal-time experiment would have to specify what the baseline does with that time and then measure the resulting image.
+
+\begin{table}[tb]
+\centering
+\caption{GPU milliseconds per frame in Bistro Interior. The spatial column includes CGNS attribute caching and donor selection. Other includes the rest of the GPU frame.}
+\label{tab:stage}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ & Initial & Temporal & Spatial & Other\\
+\midrule
+Ordinary & 13.9 & 9.3 & 10.9 & 3.2\\
+PDF Similarity & 14.6 & 11.2 & 12.3 & 3.2\\
+CGNS & 13.9 & 9.1 & 12.7 & 3.2\\
+\bottomrule
+\end{tabular}
+\end{table}
+The profiler locates the extra work (Table~\ref{tab:stage}). In Bistro Interior the CGNS spatial pass takes about 1.8 ms more than the ordinary pass. Its surface cache and donor selection account for 0.38 and 0.59 ms inside that pass. The cost of PDF Similarity is spread more widely. Initial sampling writes directional moments, temporal reuse carries them forward, and spatial reuse evaluates their agreement. Considering only the spatial stage would miss the 1.9 ms increase in temporal time, which is larger than the 1.4 ms increase in spatial time for this view.
+
+\subsection{Camera motion and display}
+Four recorded camera paths revisit fine features such as chair slats in Bistro Interior and the Classroom blackboard. In the opening view of a separate Bistro walkthrough (Fig.~\ref{fig:nrd}), applying NVIDIA Real-Time Denoisers (NRD)~\cite{nrd} to CGNS makes the lit floor pattern and chair slats easier to distinguish. The moving-camera runs use a later history-handling revision and lack matched moving references. They let us inspect noise in motion, while the numerical ranking comes from raw fixed-view renders. The accompanying demo exposes Raw, Accumulation and NRD at the same camera pose so these effects can be inspected separately.
+
+\begin{figure}[t]
+\centering
+\panel{nrd}{\linewidth}
+\caption{The same crop of Bistro Interior with raw CGNS (left) and CGNS followed by NRD (right), at 1 spp. The change in grain comes from denoising.}
+\label{fig:nrd}
+\end{figure}
 
 \section{Conclusion}
-[Add content here]
+CGNS was the best spatial reuse method we tested for image quality. At one sample per pixel with one spatial donor, it achieved the lowest whole-image SMAPE in all six views, reducing error by 3.9--22.7\% compared with ordinary spatial reuse. It ran faster than PDF Similarity in all five timed views and added 4.0--5.9\% to the GPU frame time of ordinary spatial reuse. In Bistro Interior, the added GPU time was concentrated in the spatial reuse pass.
 
-\clearpage %KEEP THIS NEW PAGE BEFORE APPENDIX STARTS
+PDF Similarity gave smaller gains where it helped and increased SMAPE by 5.6\% in Emerald Square. CGNS lowered temporal noise covariance and raised spatial covariance in every view. The quality ranking at equal GPU time remains open.
+
+\section*{Acknowledgments}
+We thank Amazon Lumberyard for Bistro, Christophe Seux for Classroom, Nicholas Hull, Kate Anderson and Nir Benty for Emerald Square, and Beeple for Zero Day Measure Seven. We used Veach Ajar from Benedikt Bitterli's scene collection. The demo also uses San Miguel by Guillermo M. Leal Llaguno and Sun Temple by Epic Games. The Bistro Interior composite includes Keith Hunter's BrainStem model. Full asset credits and licenses are listed in \path{THIRD_PARTY.md}.
+
+\begin{thebibliography}{9}
+\bibitem{rtxdi} NVIDIA. \href{https://github.com/NVIDIA-RTX/RTXDI/releases/tag/v3.1.0}{RTX Direct Illumination (RTXDI)}, version 3.1.0.
+\bibitem{falcor} NVIDIA. \href{https://github.com/NVIDIAGameWorks/Falcor/releases/tag/9.0}{Falcor real-time rendering framework}, version 9.0.
+\bibitem{bitterli} B. Bitterli, C. Wyman, M. Pharr, P. Shirley, A. Lefohn, and W. Jarosz. \href{https://doi.org/10.1145/3386569.3392481}{Spatiotemporal reservoir resampling for real-time ray tracing with dynamic direct lighting.} \emph{ACM Trans. Graph.} 39(4), 2020.
+\bibitem{lin} D. Lin, M. Kettunen, B. Bitterli, J. Pantaleoni, C. Yuksel, and C. Wyman. \href{https://doi.org/10.1145/3528223.3530158}{Generalized resampled importance sampling: Foundations of ReSTIR.} \emph{ACM Trans. Graph.} 41(4), 2022.
+\bibitem{tokuyoshi} Y. Tokuyoshi. \href{https://doi.org/10.1145/3585501}{Efficient spatial resampling using the PDF similarity.} \emph{Proc. ACM Comput. Graph. Interact. Tech.} 6(1), 2023.
+\bibitem{junkins} O. Junkins, M. Kettunen, D. Lin, R. Ramamoorthi, and C. Wyman. \href{https://doi.org/10.1145/3820024}{Compatibility-guided neighbor selection for ReSTIR.} \emph{Proc. ACM Comput. Graph. Interact. Tech.} 9(4), 2026.
+\bibitem{nrd} NVIDIA. \href{https://github.com/NVIDIA-RTX/NRD}{NVIDIA Real-Time Denoisers (NRD)}, Falcor package version 3.1.0.
+\end{thebibliography}
+
+
+\clearpage
 \section*{Appendix}
 \appendix
-
 \section{Division of work}
-[Here you should succinctly state what each member did and a percentage workload breakdown. If members cannot agree on the percentage breakdown, please state that and email the instructor separately.]
+Luoyi Zhang and Zelin Gao jointly drafted the proposal, set up the codebase, discussed the experimental design and prepared the final presentation. Luoyi ran the experiments. Zelin led the report writing. Luoyi Zhang contributed roughly \textbf{60\%} of the work and Zelin Gao contributed roughly \textbf{40\%}.
 
 \section{Implemented files}
-[If you used libraries or AI coding tools, please specify exactly here which files or sections of your submitted source code were implemented by you and what kind of AI aid you used, where applicable. You are encouraged to take advantage of libraries and other resources as long as you discuss what you implemented and what you used from the source. The difficulty level of your project will be graded taking this into consideration.]
+\textbf{Handwritten algorithm sections.} In \path{scripts/falcor/}, we wrote \path{pdf_pt_mis.h}'s effective-neighbor-count rule and the parts of \path{pdf_pt_mis.py} applying it to forward and reverse MIS, merging and output confidence. We wrote the single-neighbor weighted update in \path{cgns_single_wrs.h} and the candidate loop and stopping rule in \path{cgns_single_selector.slang}. Codex assisted in checking both algorithms.
 
+\textbf{Integration and analysis.} In the same directory, \path{pdf_pt_shader.py} records first-hop statistics, \path{pdf_pt_direction.h} accumulates them and \path{pdf_pt_history.slang} reprojects valid evidence. The cached CGNS selector uses \path{cgns_cached_select.cs.slang} and \path{cgns_cached_dispatch.inl}. \path{fixed_view_suite.py}, \path{spatial_capture.py} and \path{spatial_measure.py} schedule jobs, export quality frames and collect export-free timings. The live controls are in \path{scripts/falcor/live_demo/}. Under \path{src/metrics/}, \path{error_metrics.py} and \path{covariance_metrics.py} compute the reported metrics. Codex assisted with shader and render-graph adapters, build and run tools, manuscript drafting, figures, numerical checks and typesetting.
+
+\textbf{Upstream work.} Falcor 9.0 (revision \texttt{759aad0}) provides Mogwai, path tracing, shifts and reservoirs. We used its PathTracerNRD example for denoising. RTXDI v3.1.0 supplied the earlier direct-lighting renderer. The CGNS authors' code (revision \texttt{f28d553}) informed our adaptation. Scene credits include NVIDIA ORCA and Amazon Lumberyard, Christophe Seux (Classroom), Benedikt Bitterli's scene collection (Veach Ajar) and Beeple (Zero Day Measure Seven). Full attributions are in \path{THIRD_PARTY.md}.
+
+\newpage
 \section{Running instructions}
-[How do we run your submitted program?]
+\textbf{Interactive renderer.} Use Windows 11 x64, an NVIDIA RTX GPU with a D3D12-capable driver, and Python 3.11 or newer. Extract \path{code.zip} and keep its directory layout. It includes the prebuilt private \path{Mogwai.exe}, runtime libraries and shaders, so the demo launches without building Falcor. From PowerShell in the extracted project root, run
+\begin{verbatim}
+.\run-demo.ps1 -Scene Classroom
+\end{verbatim}
+The $1920\times1080$ demo uses the native \emph{Graphs} panel in the same window (F6 toggles it). \emph{Scene} switches between installed scenes. \emph{Spatial reuse} selects Original (ordinary reuse), PDF Similarity or CGNS at the current camera pose, and \emph{Display} selects Raw, Accumulation or NRD. Accumulation restarts when the camera or method changes.
 
+To limit archive size, the package supplies scene assets for Classroom and Veach Ajar. The demo supports seven presets once all assets are provisioned. Follow \path{docs/setup.md} to add Bistro Interior, Bistro Exterior, San Miguel, Sun Temple or Zero Day Measure Seven.
+
+The package starts with an empty Slang shader cache, so the first load and first use of a method or display mode can take longer. To warm the cache in advance for an installed scene, install Pillow with \texttt{python -m pip install Pillow}, then append \texttt{-PrecompileShaders} to the launch command.
+
+\textbf{Benchmark and data.} We benchmarked raw fixed-view renders. See the CSVs under \path{results/summaries/falcor-pt-spatial-reuse/} for per-frame scores, seed means and GPU timing summaries. The optional \path{runs/pt-6-views-spatial-compare/} archive is outside the code package.
+
+To reproduce the benchmark, use a Git checkout and prepare the additional benchmark scenes, pinned dependencies and reference inputs. The guide in \path{docs/reproductions/pt-6-views-spatial-compare.md} gives the full procedure. In the benchmark Python environment, run
+{\footnotesize
+\begin{verbatim}
+pip install -r scripts/falcor/requirements.txt
+python -B -m scripts.falcor.fixed_view_suite --plan
+\end{verbatim}
+}
+For a fresh capture, run the same module with \texttt{--check}, then \texttt{--prepare --output} and \texttt{--run --output}, using the same new batch directory for preparation and capture.
 \end{document}
