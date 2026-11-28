@@ -2,6 +2,21 @@
 
 This HKUST COMP5411 project compares ordinary spatial reuse, PDF Similarity, and compatibility-guided neighbor selection (CGNS) in Falcor 9.0. The earlier RTXDI experiments focus on direct illumination.
 
+## Run the Falcor demo from source
+
+The repository contains the renderer integration and seven scene presets. Build Falcor locally and install a scene to try the comparison. Veach Ajar is a small first download (about 9 MB) and its converter runs in Python. Start with the [Windows build prerequisites](docs/setup.md#falcor-and-live-demo).
+
+From PowerShell in the cloned repository, run these commands.
+
+```powershell
+python -m pip install -r scripts/assets/requirements.txt
+.\scripts\falcor\setup.ps1 -Jobs 4
+python -B scripts/assets/install_scene.py --scene veach-ajar
+.\run-demo.ps1 -Scene "Veach Ajar"
+```
+
+The first launch builds the project's demo executable from the Falcor Release build and compiles shaders as needed. Later launches reuse the local executable. In the **Graphs** panel (F6), use **Spatial reuse** to compare Original, PDF Similarity and CGNS, **Display** to switch between Raw, Accumulation and NRD, and **Scene** to switch between installed scenes in the same window. [Install Classroom and the other scenes](docs/setup.md#install-more-scenes)
+
 ![Six reference views: Bistro Interior, Bistro Exterior, Classroom, Emerald Square, Veach Ajar, and Zero Day Measure Seven](results/figures/benchmark-scenes.jpg)
 
 The six benchmark views, shown as 16,384-spp reference renders. [Scene credits](THIRD_PARTY.md#scene-assets-and-fonts)
@@ -29,16 +44,6 @@ The marked Emerald Square crop illustrates a local CGNS improvement. [Bistro Int
 - Prepare the pinned renderer builds and scene inputs. [Setup](docs/setup.md) · [Scene catalogue](scenes/README.md)
 - Reproduce the six-view comparison or inspect the saved results. [Falcor methods](docs/reproductions/falcor-pt.md) · [Benchmark protocol](docs/reproductions/pt-6-views-spatial-compare.md) · [Metrics](docs/metrics.md)
 - Explore the earlier direct-lighting work. [RTXDI baseline](results/summaries/di-baseline/README.md) · [RTXDI experiments](docs/reproductions/rtxdi.md)
-- Read the write-up and presentation materials. [Report source](writing/course/report/main.tex) · [Final presentation](writing/final/README.md) · [Literature guide](docs/literature/README.md)
-
-## Live Falcor demo
-
-With the Windows runtime and scene assets prepared, launch the demo from PowerShell at the repository root.
-
-```powershell
-.\run-demo.ps1 -Scene Classroom
-```
-
-Use **Graphs** to switch scenes and spatial reuse methods, or select Raw, Accumulation, or NRD. Run `.\run-demo.ps1 -PrecompileShaders` to prepare shaders for all seven presets. The shader-cache replay exercised all 63 scene, method, and display combinations. [Demo setup](docs/setup.md#falcor-and-live-demo)
+- Read the write-up and presentation materials. [Report source](writing/course/report/main.tex) · [Presentation sources](writing/final/README.md) · [Literature guide](docs/literature/README.md)
 
 [Contributing](CONTRIBUTING.md) · [Third-party sources](THIRD_PARTY.md) · [License](LICENSE)

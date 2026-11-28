@@ -65,6 +65,24 @@ use a recorded neutral-gray fallback. Bump and volumes are omitted.
 Both retain `.conversion.json` records. Validate resource hashes and inspect the
 [preview](../run/README.md) after conversion; this is not full Cycles equivalence.
 
+### Falcor environment maps
+
+For Classroom, use Blender 5.2 to convert `classroom.blend` with the command above. The [benchmark preparation guide](../../experiments/configs/falcor-pt-spatial-comparison/PREPARATION.md#classroom-emerald-square-veach-ajar-and-zero-day) gives the archive hash, extraction path and Zero Day Measure Seven conversion.
+
+Both Falcor presets also use a pinned RTXDI environment map. With Git LFS installed, run the following from the project root to fetch only the Classroom map. For Measure Seven use `environment/derelict_overpass_4k.exr` in the last command.
+
+```powershell
+$previousLfsSetting = $env:GIT_LFS_SKIP_SMUDGE
+try {
+    $env:GIT_LFS_SKIP_SMUDGE = '1'
+    git -c core.autocrlf=true submodule update --init -- renderers/rtxdi
+    git -C renderers/rtxdi -c core.autocrlf=true submodule update --init -- Assets/Media
+} finally {
+    $env:GIT_LFS_SKIP_SMUDGE = $previousLfsSetting
+}
+git -C renderers/rtxdi/Assets/Media lfs pull --include=environment/urban_street_04_4k.exr --exclude=
+```
+
 ## Emerald Square, Sun Temple and Veach Ajar
 
 Use `install_scene.py --scene <id>` with `emerald-square`, `sun-temple`, or
