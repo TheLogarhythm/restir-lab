@@ -2,6 +2,10 @@
 
 import json
 from pathlib import Path
+from io import StringIO
+import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 from types import SimpleNamespace
@@ -13,23 +17,137 @@ from scripts.falcor.live_demo.graph import METHODS, MODES, SOURCES, build_graph,
 
 
 class LauncherTests(unittest.TestCase):
-    def test_interactive_selector_prepares_sky_but_classroom_only_acceptance_skips_it(self):
+    def setUp(self):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        self.root = Path(directory.name)
+        self.runtime = self.root / "runtime"
+        (self.runtime / "Mogwai.exe").parent.mkdir()
+        (self.runtime / "Mogwai.exe").touch()
+        for folder in ("experiments/views/falcor-pt-spatial-comparison",
+                       "experiments/scenes/falcor-pt-spatial-comparison",
+                       "scenes/configs/rtxdi", "scenes/configs/falcor"):
+            shutil.copytree(ROOT / folder, self.root / folder)
+        self.install_gltf("assets/converted/classroom/classroom.gltf")
+        self.install_gltf("assets/converted/veach-ajar/veach-ajar.gltf")
+        self.install_files(
+            "assets/converted/classroom/classroom.scene.json",
+            "renderers/rtxdi/Assets/Media/environment/urban_street_04_4k.exr",
+        )
+
+    def install_files(self, *names):
+        for name in names:
+            path = self.root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.touch()
+
+    def install_gltf(self, name):
+        gltf = self.root / name
+        self.install_files(name, str(Path(name).with_suffix(".bin")))
+        gltf.write_text(json.dumps({"buffers": [{"uri": gltf.with_suffix(".bin").name}]}), encoding="utf8")
+
+    def test_minimal_package_launches_and_presents_both_scenes_without_site_packages(self):
+        # Exercise the Python fallback with site packages disabled. The renderer
+        # subprocess is replaced at its boundary so GPU hardware is unnecessary.
+        program = """
+import json
+from pathlib import Path
+import sys
+from types import SimpleNamespace
+from unittest.mock import MagicMock, patch
+
+from scripts.falcor.live_demo import launcher, scenes
+from scripts.falcor.live_demo.controller import Session
+
+root = Path(sys.argv[1])
+with patch.object(launcher, "ROOT", root), patch.object(launcher, "run_session") as run:
+    launcher.main(["--runtime", str(root / "runtime")])
+with patch.object(scenes, "ROOT", root):
+    scenes.main([])
+config = json.loads(json.dumps(run.call_args.args[2]))
+assert config["scene"] is None
+assert (config["width"], config["height"]) == (1920, 1080)
+renderer = MagicMock()
+renderer.pollLiveSessionActions.return_value = [("Scene", "Veach Ajar")]
+with patch("scripts.falcor.live_demo.window.WindowIdentity", return_value=SimpleNamespace(
+        hwnd=1, title=lambda *args: None, visible=lambda hwnd: True,
+        resize_client=lambda resize, poll, width, height: (width, height))):
+    session = Session(renderer, config, root)
+    session.poll_actions()
+assert renderer.setLiveSessionPanel.call_args.args[0] == ("Classroom", "Veach Ajar")
+assert session.commands[0][:2] == ("Scene", "Veach Ajar")
+"""
+        process = subprocess.run([sys.executable, "-B", "-S", "-c", program, str(self.root)],
+                                 cwd=ROOT, capture_output=True, text=True)
+        self.assertEqual(process.returncode, 0, process.stderr)
+        self.assertEqual([line.partition(":")[0] for line in process.stdout.splitlines()],
+                         ["Classroom", "Veach Ajar"])
+
+    def test_all_acceptance_covers_the_installed_scene_methods_and_returns_to_classroom(self):
         from scripts.falcor.live_demo import launcher
 
-        with tempfile.TemporaryDirectory() as directory:
-            (Path(directory) / "Mogwai.exe").touch()
-            with (patch.object(launcher, "prepare_sky") as prepare,
-                  patch.object(launcher, "run_session") as run,
-                  patch.object(launcher, "verify") as verify):
-                launcher.main(["--runtime", directory])
-                prepare.assert_called_once_with()
-                config = run.call_args.args[2]
-                self.assertIsNone(config["scene"])
-                self.assertEqual((config["width"], config["height"]), (1920, 1080))
-                prepare.reset_mock()
-                launcher.main(["--runtime", directory, "--acceptance", "classroom"])
-                prepare.assert_not_called()
-                verify.assert_called_once()
+        with (patch.object(launcher, "ROOT", self.root), patch.object(launcher, "run_session") as run,
+              patch.object(launcher, "verify")):
+            launcher.main(["--runtime", str(self.runtime), "--acceptance", "all"])
+        config = run.call_args.args[2]
+        rows = config["sequence"]
+        self.assertEqual(config["scene"], "Classroom")
+        self.assertEqual(list(dict.fromkeys(row["Scene"] for row in rows)), ["Classroom", "Veach Ajar"])
+        self.assertEqual(rows[-1]["Scene"], "Classroom")
+        self.assertEqual({(row["Scene"], row["Method"], row["Display"]) for row in rows},
+                         {(scene, method, mode) for scene in ("Classroom", "Veach Ajar")
+                          for method in METHODS for mode in MODES})
+
+    def test_precompile_skips_uninstalled_scenes_and_reports_explicit_missing_scene(self):
+        from scripts.falcor.live_demo import launcher, precompile
+
+        with (patch.object(launcher, "ROOT", self.root), patch.object(precompile, "warm") as warm,
+              patch("sys.stderr", new_callable=StringIO) as stderr):
+            launcher.main(["--runtime", str(self.runtime), "--precompile-shaders"])
+            rows = warm.call_args.args[1]["sequence"]
+            self.assertEqual(list(dict.fromkeys(row["Scene"] for row in rows)), ["Classroom", "Veach Ajar"])
+            with self.assertRaises(SystemExit) as failure:
+                launcher.main(["--runtime", str(self.runtime), "--precompile-shaders", "--scene", "San Miguel"])
+        self.assertEqual(failure.exception.code, 2)
+        self.assertIn("San Miguel is unavailable", stderr.getvalue())
+        self.assertIn("assets/converted/san-miguel/san-miguel.gltf", stderr.getvalue())
+        self.assertEqual(warm.call_count, 1)
+
+    def test_wrapper_with_missing_gltf_geometry_cannot_be_selected(self):
+        from scripts.falcor.live_demo import launcher
+
+        (self.root / "assets/converted/veach-ajar/veach-ajar.bin").unlink()
+        with patch.object(launcher, "ROOT", self.root), patch.object(launcher, "run_session") as run:
+            launcher.main(["--runtime", str(self.runtime)])
+        self.assertEqual(run.call_args.args[2]["scenes"], ("Classroom",))
+
+    def test_optional_scene_choices_refresh_on_relaunch_with_complete_assets(self):
+        from scripts.falcor.live_demo import launcher
+
+        self.install_files(
+            "assets/prepared/bistro-orca-v5-2/Bistro_v5_2/BistroExterior.pyscene",
+            "assets/prepared/bistro-orca-v5-2/Bistro_v5_2/BistroExterior.fbx",
+            "assets/prepared/bistro-orca-v5-2/Bistro_v5_2/san_giuseppe_bridge_4k.hdr",
+            "assets/prepared/sun-temple/SunTemple_v4/SunTemple/SunTemple.pyscene",
+            "assets/prepared/sun-temple/SunTemple_v4/SunTemple/SunTemple.fbx",
+            "assets/prepared/sun-temple/SunTemple_v4/SunTemple/SunTemple_Skybox.hdr",
+            "assets/generated/bistro/environment.exr",
+            "renderers/rtxdi/Assets/Media/environment/derelict_overpass_4k.exr",
+        )
+        plan = json.loads((self.root / "scenes/configs/falcor/bistro-gltf/scene-plan.json").read_text(encoding="utf-8-sig"))
+        self.install_files(*(entry["path"] for entry in plan["scene"]["dependencies"]))
+        self.install_gltf("assets/converted/san-miguel/san-miguel.gltf")
+        self.install_gltf("assets/converted/zero-day/measure-seven-viewer/measure-seven.gltf")
+        with patch.object(launcher, "ROOT", self.root), patch.object(launcher, "run_session") as run:
+            launcher.main(["--runtime", str(self.runtime)])
+            first_launch = tuple(run.call_args.args[2]["scenes"])
+            self.assertEqual(first_launch, ("Bistro Exterior", "Bistro Interior", "Classroom",
+                                            "Sun Temple", "Veach Ajar", "Zero Day Measure Seven"))
+            self.install_files("assets/generated/san-miguel/live-default-sky.exr")
+            launcher.main(["--runtime", str(self.runtime)])
+            self.assertEqual(tuple(run.call_args.args[2]["scenes"]),
+                             ("Bistro Exterior", "Bistro Interior", "Classroom", "San Miguel",
+                              "Sun Temple", "Veach Ajar", "Zero Day Measure Seven"))
 
 
 class AcceptanceCaptureTests(unittest.TestCase):
@@ -327,7 +445,8 @@ class LiveGraphTests(unittest.TestCase):
         falcor = SimpleNamespace(RenderGraph=Graph, createPass=Pass, exit=lambda _: None,
                                  recreateLiveDevice=lambda: None,
                                  presentLiveSessionStatus=lambda: events.append(("status_frame",)))
-        settings = {"root": ROOT, "sequence": None, "scene": None, "method": "PDF Similarity", "mode": "Raw"}
+        settings = {"root": ROOT, "scenes": ["Classroom"], "sequence": None, "scene": None,
+                    "method": "PDF Similarity", "mode": "Raw"}
         with (patch.dict("sys.modules", falcor=falcor),
               patch("scripts.falcor.live_demo.scenes.load_scene", load_scene),
               patch("scripts.falcor.live_demo.controller.camera_state", return_value={}),
@@ -369,7 +488,8 @@ class LiveGraphTests(unittest.TestCase):
                     ))
                     return 0.0
 
-                settings = {"root": ROOT, "sequence": sequence, "scene": None, "method": "CGNS", "mode": "Raw"}
+                settings = {"root": ROOT, "scenes": ["Sun Temple"], "sequence": sequence,
+                            "scene": None, "method": "CGNS", "mode": "Raw"}
                 falcor = SimpleNamespace(RenderGraph=Graph, createPass=Pass, float3=vector,
                                          recreateLiveDevice=lambda: None, presentLiveSessionStatus=lambda: None)
                 with (patch.dict("sys.modules", falcor=falcor),

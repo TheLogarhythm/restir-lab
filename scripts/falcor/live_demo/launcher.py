@@ -9,7 +9,7 @@ import subprocess
 
 from .acceptance import acceptance_steps, validate_sequence, verify
 from .graph import METHODS, MODES
-from .scenes import ROOT, SCENE_NAMES, prepare_sky
+from .scenes import ROOT, scene_availability
 
 
 def run_session(executable, output, config, environment=None):
@@ -53,7 +53,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(prog="python -m scripts.falcor.live_demo", description=__doc__)
     parser.add_argument("--runtime", type=Path, required=True, help="Private live runtime containing Mogwai.exe")
     parser.add_argument("--output", type=Path, help="Fresh output directory (default under runs/)")
-    parser.add_argument("--scene", choices=SCENE_NAMES, help="Optional startup scene; otherwise show the scene selector")
+    parser.add_argument("--scene", metavar="SCENE",
+                        help="Installed startup scene (see python -m scripts.falcor.live_demo.scenes)")
     parser.add_argument("--method", choices=METHODS, help="Startup spatial method (default CGNS)")
     parser.add_argument("--mode", choices=MODES, help="Startup display mode (default Raw)")
     parser.add_argument("--width", type=int, default=1920)
@@ -69,32 +70,42 @@ def main(argv=None):
         parser.error("Unset FALCOR_DEVMODE so the private runtime loads its own shaders")
     if args.precompile_shaders and (args.method or args.mode):
         parser.error("Shader precompilation exercises all methods and display modes")
-    executable = (args.runtime / "Mogwai.exe").resolve(strict=True)
-    rows = acceptance_steps(args.acceptance) if args.acceptance else None
+    availability = scene_availability(ROOT)
+    scenes = tuple(name for name, reason in availability.items() if reason is None)
+    setup = "See docs/setup.md#falcor-and-live-demo for asset preparation."
+    if args.scene:
+        if args.scene not in availability:
+            parser.error(f"Unknown scene {args.scene!r}. Installed scenes: {', '.join(scenes) or 'none'}.")
+        if args.scene not in scenes:
+            parser.error(f"{args.scene} is unavailable: {availability[args.scene]}. {setup}")
+    if not scenes:
+        parser.error(f"No live scenes are installed. {setup}")
+    rows = acceptance_steps(args.acceptance, scenes=scenes) if args.acceptance else None
     if args.sequence:
         rows = json.loads(args.sequence.read_text(encoding="utf8"))
     if args.precompile_shaders:
         from . import precompile
 
-        rows = precompile.precompile_steps(args.scene)
-        cache_directory = precompile.cache_directory(executable.parent)
+        rows = precompile.precompile_steps(args.scene, scenes=scenes)
     if rows is not None:
         validate_sequence(rows)
+        for name in dict.fromkeys(row["Scene"] for row in rows):
+            if name not in scenes:
+                parser.error(f"{name} is unavailable: {availability[name]}. {setup}")
         import PIL  # Fail before launching Mogwai if image validation is unavailable.
-    # Interactive users can select San Miguel later from the native panel.
-    if rows is None or args.scene == "San Miguel" or any(row["Scene"] == "San Miguel" for row in rows):
-        prepare_sky()
+    executable = (args.runtime / "Mogwai.exe").resolve(strict=True)
     output = (args.output or ROOT / "runs" / ("live-session-" + datetime.now().strftime("%Y%m%d-%H%M%S-%f"))).resolve()
     config = {"root": str(ROOT), "runtime": str(executable.parent), "width": args.width, "height": args.height,
-              "scene": args.scene or (rows[0]["Scene"] if rows else None),
+              "scenes": scenes, "scene": args.scene or (rows[0]["Scene"] if rows else None),
               "method": args.method or (rows[0]["Method"] if rows else "CGNS"),
               "mode": args.mode or (rows[0]["Display"] if rows else "Raw"),
               "suite": args.acceptance, "sequence": rows, "precompile_shaders": args.precompile_shaders}
     if args.precompile_shaders:
         from functools import partial
 
-        scenes = ", ".join(dict.fromkeys(row["Scene"] for row in rows))
-        print(f"Precompiling shaders for {scenes} at {args.width}x{args.height}", flush=True)
+        cache_directory = precompile.cache_directory(executable.parent)
+        targets = ", ".join(dict.fromkeys(row["Scene"] for row in rows))
+        print(f"Precompiling shaders for {targets} at {args.width}x{args.height}", flush=True)
         print(f"Slang cache directory: {cache_directory}", flush=True)
         precompile.warm(output, config, cache_directory, partial(run_session, executable))
     else:

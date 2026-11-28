@@ -27,8 +27,9 @@ PACK_EVENT = re.compile(rb"Live Slang cache: (hit|write) [1-9][0-9]* modules ([0
 PACK_NAME = re.compile(r"[0-9a-f]{64}\.irpack")
 
 
-def precompile_steps(scene=None):
-    scenes = (scene,) if scene else SCENE_NAMES
+def precompile_steps(scene=None, *, scenes=SCENE_NAMES):
+    if scene:
+        scenes = (scene,)
     return [
         {"Scene": name, "Method": method, "Display": mode,
          "label": f"{name.lower().replace(' ', '-')}-{index:02d}-{method.lower().replace(' ', '-')}-{mode.lower()}",

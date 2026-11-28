@@ -5,10 +5,13 @@ from dataclasses import dataclass
 import json
 import math
 from pathlib import Path
+from urllib.parse import unquote
 
 
 ROOT = Path(__file__).resolve().parents[3]
 SKY = "assets/generated/san-miguel/live-default-sky.exr"
+BISTRO_PLAN = "scenes/configs/falcor/bistro-gltf/scene-plan.json"
+SKY_PREPARATION = "python -B -m scripts.falcor.live_demo.scenes --prepare"
 
 
 @dataclass(frozen=True)
@@ -19,28 +22,43 @@ class _ScenePreset:
     rtxdi_camera: bool = False
     dont_optimize_materials: bool = False
     requires_sky: bool = False
+    assets: tuple[str, ...] = ()
+    gltf: str | None = None
 
 
 # The order here is the order shown in the scene selector.
 # Exposures for the five fixed views come from their display recipes.
 _PRESETS = {
-    "bistro-exterior": _ScenePreset("Bistro Exterior", 0.0),
+    "bistro-exterior": _ScenePreset("Bistro Exterior", 0.0, assets=(
+        "assets/prepared/bistro-orca-v5-2/Bistro_v5_2/BistroExterior.fbx",
+        "assets/prepared/bistro-orca-v5-2/Bistro_v5_2/san_giuseppe_bridge_4k.hdr",
+    )),
     "bistro-interior": _ScenePreset(
         "Bistro Interior", 7.0, "scenes/configs/falcor/bistro-interior.pyscene",
-        dont_optimize_materials=True,
+        dont_optimize_materials=True, assets=(BISTRO_PLAN,),
     ),
-    "classroom": _ScenePreset("Classroom", 0.0),
+    "classroom": _ScenePreset("Classroom", 0.0, gltf="assets/converted/classroom/classroom.gltf", assets=(
+        "assets/converted/classroom/classroom.scene.json",
+        "renderers/rtxdi/Assets/Media/environment/urban_street_04_4k.exr",
+        "scenes/configs/falcor/gallery-lights.py",
+    )),
     # +8 EV makes the walls and foliage in the shaded courtyard visible.
     "san-miguel": _ScenePreset(
         "San Miguel", 8.0, "scenes/configs/falcor/san-miguel.pyscene",
-        rtxdi_camera=True, requires_sky=True,
+        rtxdi_camera=True, requires_sky=True, gltf="assets/converted/san-miguel/san-miguel.gltf",
     ),
     "sun-temple": _ScenePreset(
         "Sun Temple", None, "assets/prepared/sun-temple/SunTemple_v4/SunTemple/SunTemple.pyscene",
-        rtxdi_camera=True,
+        rtxdi_camera=True, assets=(
+            "assets/prepared/sun-temple/SunTemple_v4/SunTemple/SunTemple.fbx",
+            "assets/prepared/sun-temple/SunTemple_v4/SunTemple/SunTemple_Skybox.hdr",
+        ),
     ),
-    "veach-ajar": _ScenePreset("Veach Ajar", 0.0),
-    "zero-day-measure-seven": _ScenePreset("Zero Day Measure Seven", 6.0),
+    "veach-ajar": _ScenePreset("Veach Ajar", 0.0, gltf="assets/converted/veach-ajar/veach-ajar.gltf"),
+    "zero-day-measure-seven": _ScenePreset(
+        "Zero Day Measure Seven", 6.0, gltf="assets/converted/zero-day/measure-seven-viewer/measure-seven.gltf",
+        assets=("renderers/rtxdi/Assets/Media/environment/derelict_overpass_4k.exr",),
+    ),
 }
 SCENE_IDS = {key: spec.name for key, spec in _PRESETS.items()}
 SCENE_NAMES = tuple(SCENE_IDS.values())
@@ -70,7 +88,7 @@ def _resolve_preset(scene_name, root):
 
     if spec.requires_sky and not (root / SKY).is_file():
         raise FileNotFoundError(
-            "Prepare the San Miguel sky with python -m scripts.falcor.live_demo.scenes --prepare"
+            f"Prepare the San Miguel sky with {SKY_PREPARATION}"
         )
     path = root / source
     if not path.is_file():
@@ -82,6 +100,55 @@ def preset(scene_name, root=None):
     """Resolve the registered camera and an existing scene without importing Falcor."""
     _, source, camera, exposure = _resolve_preset(scene_name, root)
     return source, camera, exposure
+
+
+def _require_asset(path, root):
+    relative = path.relative_to(root)
+    if not path.is_file():
+        raise FileNotFoundError(f"Missing {relative.as_posix()}")
+    if path.stat().st_size <= 256:
+        with path.open("rb") as handle:
+            if handle.readline().rstrip() == b"version https://git-lfs.github.com/spec/v1":
+                raise FileNotFoundError(f"Fetch the Git LFS content for {relative.as_posix()}")
+
+
+def _check_installation(spec, root):
+    for asset in spec.assets:
+        _require_asset(root / asset, root)
+    if spec.gltf:
+        gltf = root / spec.gltf
+        _require_asset(gltf, root)
+        document = _read(gltf)
+        for entry in document.get("buffers", []) + document.get("images", []):
+            uri = entry.get("uri")
+            if uri and not uri.startswith("data:"):
+                _require_asset(gltf.parent / unquote(uri), root)
+    if BISTRO_PLAN in spec.assets:
+        plan = _read(root / BISTRO_PLAN)
+        scene = plan["scene"]
+        required = [entry["path"] for entry in scene["dependencies"]]
+        required.extend(model["descriptor"] for model in plan["models"])
+        required.append(scene["environment"]["path"])
+        for asset in dict.fromkeys(required):
+            _require_asset(root / asset, root)
+    if spec.requires_sky and not (root / SKY).is_file():
+        raise FileNotFoundError(f"Prepare the San Miguel sky with {SKY_PREPARATION}")
+
+
+def scene_availability(root=None):
+    """Return preset names in menu order, with reasons for unavailable presets."""
+    root = ROOT if root is None else Path(root).resolve(strict=True)
+    results = {}
+    for spec in _PRESETS.values():
+        try:
+            _check_installation(spec, root)
+            source, _, _ = preset(spec.name, root)
+            _require_asset(source, root)
+        except (OSError, ValueError, KeyError) as error:
+            results[spec.name] = str(error)
+        else:
+            results[spec.name] = None
+    return results
 
 
 def load_scene(m, scene_name, root=None):
@@ -147,7 +214,9 @@ def main(argv=None):
     if args.prepare:
         print(prepare_sky())
         return
-    for name in SCENE_NAMES:
+    for name, reason in scene_availability().items():
+        if reason is not None:
+            continue
         source, _, ev = preset(name)
         print(f"{name}: {source.relative_to(ROOT)} (EV {ev:g})")
 

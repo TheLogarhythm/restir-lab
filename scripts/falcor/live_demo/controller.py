@@ -34,7 +34,7 @@ def apply_pose(camera, pose):
 
 class Session:
     def __init__(self, renderer, config, output):
-        from .scenes import SCENE_NAMES
+        from .scenes import scene_availability
         from .window import WindowIdentity
         self.renderer = renderer
         self.config, self.output = config, Path(output)
@@ -59,8 +59,13 @@ class Session:
         self.awaiting_loaded_frame = False
         self.capture_index = 0
         self.state = {"Scene": None, "Method": config["method"], "Display": config["mode"]}
+        scenes = config.get("scenes")
+        if scenes is None:
+            scenes = [name for name, reason in scene_availability(self.root).items() if reason is None]
+        if not scenes:
+            raise ValueError("No live scenes are installed. See docs/setup.md#falcor-and-live-demo.")
         self.window = WindowIdentity()
-        renderer.setLiveSessionPanel(SCENE_NAMES, tuple(METHODS), MODES)
+        renderer.setLiveSessionPanel(tuple(scenes), tuple(METHODS), MODES)
         renderer.ui = True
         renderer.frameCapture.outputDir = str(self.output)
         renderer.frameCapture.captureAllOutputs = False

@@ -16,36 +16,41 @@ def step(scene, method, mode, label, *, camera=None, frames=None):
     return result
 
 
-def acceptance_steps(suite):
+def acceptance_steps(suite, *, scenes=SCENE_NAMES):
     methods = ("CGNS", "PDF Similarity", "Original")
     rows = []
-    for method in methods:
-        for mode in MODES:
-            label = (method + "-" + mode).lower().replace(" ", "-")
-            rows.append(step("Classroom", method, mode, label))
-            if mode == "Accumulation" and method == "CGNS":
-                for camera, suffix in (("Nudge camera right", "moved"), ("Reset camera", "restored")):
-                    rows.append(step("Classroom", method, mode, label + "-" + suffix, camera=camera))
-    rows.append(step("Classroom", "CGNS", "Raw", "return-cgns-raw"))
+    classroom = suite == "classroom" or "Classroom" in scenes
+    if classroom:
+        for method in methods:
+            for mode in MODES:
+                label = (method + "-" + mode).lower().replace(" ", "-")
+                rows.append(step("Classroom", method, mode, label))
+                if mode == "Accumulation" and method == "CGNS":
+                    for camera, suffix in (("Nudge camera right", "moved"), ("Reset camera", "restored")):
+                        rows.append(step("Classroom", method, mode, label + "-" + suffix, camera=camera))
+        rows.append(step("Classroom", "CGNS", "Raw", "return-cgns-raw"))
     if suite == "all":
-        rows.extend([
-            step("Classroom", "CGNS", "Accumulation", "before-accum-method-switch"),
-            {**step("Classroom", "PDF Similarity", "Accumulation", "after-accum-method-switch"),
-             "probe": "method-reset"},
-            step("Classroom", "PDF Similarity", "NRD", "before-nrd-camera-move"),
-            step("Classroom", "PDF Similarity", "NRD", "before-nrd-method-switch", camera="Nudge camera right"),
-            step("Classroom", "CGNS", "NRD", "after-nrd-method-switch"),
-            step("Classroom", "CGNS", "NRD", "nrd-camera-restored", camera="Reset camera"),
-        ])
-        for scene in SCENE_NAMES:
+        if classroom:
+            rows.extend([
+                step("Classroom", "CGNS", "Accumulation", "before-accum-method-switch"),
+                {**step("Classroom", "PDF Similarity", "Accumulation", "after-accum-method-switch"),
+                 "probe": "method-reset"},
+                step("Classroom", "PDF Similarity", "NRD", "before-nrd-camera-move"),
+                step("Classroom", "PDF Similarity", "NRD", "before-nrd-method-switch", camera="Nudge camera right"),
+                step("Classroom", "CGNS", "NRD", "after-nrd-method-switch"),
+                step("Classroom", "CGNS", "NRD", "nrd-camera-restored", camera="Reset camera"),
+            ])
+        for scene in scenes:
             if scene == "Classroom":
                 continue
             for method in methods:
                 for mode in MODES:
                     label = (scene + "-" + method + "-" + mode).lower().replace(" ", "-")
                     rows.append(step(scene, method, mode, label))
-        rows.append(step("Bistro Interior", "CGNS", "Raw", "return-bistro-interior"))
-        rows.append(step("Classroom", "CGNS", "Raw", "return-classroom"))
+        if "Bistro Interior" in scenes:
+            rows.append(step("Bistro Interior", "CGNS", "Raw", "return-bistro-interior"))
+        if classroom:
+            rows.append(step("Classroom", "CGNS", "Raw", "return-classroom"))
     return rows
 
 
